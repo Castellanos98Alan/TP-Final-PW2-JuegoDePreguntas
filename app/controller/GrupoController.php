@@ -9,8 +9,8 @@ class GrupoController{
     public function show()
     {
         $data = [
-            "nombre_grupo" => "Grupo Los Crack de Messi",
-            "participantes" => [
+            "mensaje" => "Grupo TP Programación Web 2",
+            "integrantes" => [
                 ["nombre" => "Arrojas Brian Arian"],
                 ["nombre" => "Castellano Alan"],
                 ["nombre" => "Frias Uriel"],
@@ -18,6 +18,6 @@ class GrupoController{
                 ["nombre" => "Ibañez Juan"]
             ]
         ];
-        $this->render->renderiza("grupo", $data);
+        $this->render->renderiza("Grupo", $data);
     }
 }

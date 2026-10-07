@@ -42,24 +42,16 @@ Options -Indexes
     # nunca pasan por index.php ni por el router.
     RewriteRule ^public/ - [L]
 
-    # ── CONDICIONES ── (aplican a las dos reglas de abajo)
-    # Solo reescribir si la URL NO es un archivo real en disco.
-    # Ej: /css/estilo.css NO se reescribe porque el archivo existe.
-    RewriteCond %{REQUEST_FILENAME} !-f
-
-    # Solo reescribir si la URL NO es un directorio real en disco.
-    RewriteCond %{REQUEST_FILENAME} !-d
+    # ── CONDICIONES ──
+    # Solo reescribir si la URL NO es un archivo ni un directorio real en disco.
 
     # ── REGLA 1: /controller/method ──────────────────────
-    # ^([^/]+)/([^/]+)$  →  captura dos segmentos separados por /
-    #   $1 = primer segmento  (controller)
-    #   $2 = segundo segmento (method)
-    # [L]   = Last: si esta regla coincide, no evaluar las siguientes.
-    # [QSA] = Query String Append: conserva parámetros adicionales.
-    #   /evento/editar?id=5 llega como controller=evento&method=editar&id=5
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^([^/]+)/([^/]+)$ index.php?controller=$1&method=$2 [L,QSA]
 
     # ── REGLA 2: /controller (sin method) ────────────────
-    # Si solo viene el controller, el router usa el método default ('show').
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^([^/]+)$         index.php?controller=$1           [L,QSA]
 </IfModule>
