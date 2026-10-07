@@ -13,3 +13,7 @@
 [05:53:01] [INFO] SELECT * FROM evento LIMIT 1
 [05:53:03] [INFO] SELECT * FROM evento LIMIT 1
 [05:53:07] [INFO] SELECT * FROM evento LIMIT 1
+[18:28:13] [INFO] SELECT * FROM evento LIMIT 1
+[18:28:15] [INFO] SELECT * FROM evento LIMIT 1
+[18:28:17] [INFO] SELECT id, usuario FROM usuarios WHERE usuario = 'facu' AND password = '81dc9bdb52d04dc20036dbd8313ed055'
+[18:28:17] [INFO] SELECT * FROM evento LIMIT 1
