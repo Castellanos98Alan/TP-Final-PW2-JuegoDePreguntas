@@ -5,6 +5,7 @@ namespace app;
 use app\controller\LoginController;
 use app\controller\LobbyController;
 use app\controller\PartidaController;
+use app\controller\GrupoController;
 use app\model\LoginModel;
 use app\model\LobbyModel;
 use app\model\PartidaModel;
@@ -94,4 +95,12 @@ class Configuration
         // Ruta por defecto: controlador 'login', método 'show'
         return new Router($this, "login", "show");
     }
+
+    public function getGrupoController()
+    {
+        return new GrupoController(
+            $this->getRender()
+        );
+    }
+
 }
