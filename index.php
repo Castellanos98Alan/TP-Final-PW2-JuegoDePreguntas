@@ -7,7 +7,7 @@ require_once("app/Configuration.php");
 $configuration = new Configuration();
 $router = $configuration->getRouter();
 
-$router->dispatch(
+/*$router->dispatch(
     Request::get("controller", "evento"),
     Request::get("method", "show")
-);
+); */
