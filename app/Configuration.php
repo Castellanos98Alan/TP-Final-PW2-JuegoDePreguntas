@@ -2,98 +2,51 @@
 
 namespace app;
 
-use app\controller\EventoController;
 use app\controller\LoginController;
-use app\controller\LugaresController;
-use app\controller\ReservaController;
-use app\model\EventoModel;
+use app\controller\LobbyController;
+use app\controller\PartidaController;
 use app\model\LoginModel;
-use app\model\LugaresModel;
-use app\model\ReservaModel;
+use app\model\LobbyModel;
+use app\model\PartidaModel;
 use MustacheRender;
 use MyDatabase;
 use Router;
 
 require_once("helper/Autoloader.php");
 
-
-
 class Configuration
 {
-
     public function __construct()
     {
     }
 
-    public function getLugaresController()
-    {
-        return new LugaresController(
-            $this->getLugaresModel(),
-            $this->gerRender()
-        );
-    }
-
-    public function getReservaController()
-    {
-        return new ReservaController(
-            $this->getReservaModel(),
-            $this->gerRender()
-        );
-    }
-
-    public function getEventoController()
-    {
-        return new EventoController(
-            $this->getEventoModel(),
-            $this->gerRender()
-        );
-    }
+    // --- Controladores Públicos ---
 
     public function getLoginController()
     {
         return new LoginController(
-            $this->getLoginModel()
+            $this->getLoginModel(),
+            $this->getRender()
         );
     }
 
-    // Los privados
-    private function getReservaModel()
+    public function getLobbyController()
     {
-        return new ReservaModel(
-            $this->getDatabase()
+        return new LobbyController(
+            $this->getLobbyModel(),
+            $this->getRender()
         );
     }
 
-    private function getLugaresModel()
+    public function getPartidaController()
     {
-        return new LugaresModel(
-            $this->getDatabase()
+        return new PartidaController(
+            $this->getPartidaModel(),
+            $this->getRender()
         );
     }
 
-    private function getDatabase()
-    {
-        $config = parse_ini_file("config/config.ini");
-
-        return new MyDatabase($config["db_host"],
-            $config["db_user"],
-            $config["db_pass"],
-            $config["db_name"],
-            $config["db_port"]
-        );
-    }
-
-    private function gerRender()
-    {
-        return new MustacheRender();
-    }
-
-    private function getEventoModel()
-    {
-        return new EventoModel(
-            $this->getDatabase()
-        );
-    }
+    // --- Modelos Privados ---
 
     private function getLoginModel()
     {
@@ -102,8 +55,43 @@ class Configuration
         );
     }
 
+    private function getLobbyModel()
+    {
+        return new LobbyModel(
+            $this->getDatabase()
+        );
+    }
+
+    private function getPartidaModel()
+    {
+        return new PartidaModel(
+            $this->getDatabase()
+        );
+    }
+
+    // --- Servicios de Infraestructura ---
+
+    private function getDatabase()
+    {
+        $config = parse_ini_file("config/config.ini");
+
+        return new MyDatabase(
+            $config["db_host"],
+            $config["db_user"],
+            $config["db_pass"],
+            $config["db_name"],
+            $config["db_port"]
+        );
+    }
+
+    private function getRender()
+    {
+        return new MustacheRender();
+    }
+
     public function getRouter()
     {
-        return new Router($this, "evento", "show");
+        // Ruta por defecto: controlador 'login', método 'show'
+        return new Router($this, "login", "show");
     }
 }
