@@ -7,49 +7,46 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
         :root {
-            --celeste: #75AADB;
-            --celeste-oscuro: #4A7AAE;
-            --blanco: #FFFFFF;
-            --verde-cancha: #2E7D32;
-            --dorado: #F4C542;
+            --color1: #A5BEFA;
+            --color2: #64B7CC;
+            --color3: #FFFFFF;
+            --color4: #B3093F;
+            --color5: #FF3877;
+            --color6: #451531;
         }
 
         body {
-            background: linear-gradient(180deg,
-            var(--celeste) 0%, var(--celeste) 15%,
-            var(--blanco) 15%, var(--blanco) 30%,
-            var(--celeste) 30%, var(--celeste) 100%);
-            background-attachment: fixed;
+            background-color: var(--color5);
             font-family: 'Segoe UI', Arial, sans-serif;
         }
 
         .header-evento {
-            background-color: var(--celeste-oscuro);
-            border-bottom: 6px solid var(--dorado);
+            background-color: var(--color6);
+            border-bottom: 6px solid var(--color5);
         }
 
         .header-evento h1 {
-            color: var(--blanco);
+            color: var(--color3);
         }
 
         .card-contenido {
-            background-color: var(--blanco);
+            background-color: var(--color3);
             border-radius: 8px;
-            border-top: 6px solid var(--verde-cancha);
+            border-top: 6px solid var(--color4);
         }
 
         .btn-cancha {
-            background-color: var(--verde-cancha) !important;
-            color: var(--blanco) !important;
+            background-color: var(--color4) !important;
+            color: var(--color3) !important;
         }
 
         .btn-cancha:hover {
-            background-color: #1B5E20 !important;
+            background-color: var(--color6) !important;
         }
 
         .footer-evento {
-            background-color: var(--celeste-oscuro);
-            color: var(--blanco);
+            background-color: var(--color6);
+            color: var(--color3);
         }
     </style>
 </head>
