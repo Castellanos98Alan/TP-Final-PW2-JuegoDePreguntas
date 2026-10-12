@@ -18,6 +18,6 @@ class GrupoController{
                 ["nombre" => "Ibañez Juan"]
             ]
         ];
-        $this->render->renderiza("Grupo", $data);
+        $this->render->renderiza("grupo", $data);
     }
 }
