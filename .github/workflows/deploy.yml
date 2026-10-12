@@ -15,6 +15,15 @@ jobs:
       - name: Instalar lftp
         run: sudo apt-get update -qq && sudo apt-get install -y lftp
 
+      - name: Crear config.ini de produccion
+        run: |
+          mkdir -p config
+          echo "db_host = ${{ secrets.DB_HOST }}" > config/config.ini
+          echo "db_user = ${{ secrets.DB_USER }}" >> config/config.ini
+          echo "db_pass = ${{ secrets.DB_PASS }}" >> config/config.ini
+          echo "db_name = ${{ secrets.DB_NAME }}" >> config/config.ini
+          echo "db_port = 3306" >> config/config.ini
+
       - name: Desplegar por FTP
         env:
           FTP_USER: ${{ secrets.FTP_USER }}
@@ -25,6 +34,6 @@ jobs:
           lftp -e "
           set ftp:ssl-allow no;
           open -u $FTP_USER,$FTP_PASS $FTP_HOST;
-          mirror -R ./ htdocs/ --exclude .git* --exclude .github/ --exclude config/config.ini;
+          mirror -R ./ htdocs/ --exclude .git* --exclude .github/;
           bye
           "
