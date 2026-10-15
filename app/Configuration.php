@@ -10,6 +10,7 @@ use app\controller\GrupoController;
 use app\model\LoginModel;
 use app\model\LobbyModel;
 use app\model\PartidaModel;
+use app\model\RegistroModel;
 use MustacheRender;
 use MyDatabase;
 use Router;
@@ -103,10 +104,14 @@ class Configuration
             $this->getRender()
         );
     }
-
+    private function getRegistroModel(){
+        return new RegistroModel(
+            $this->getDatabase());
+    }
     public function getRegistroController()
     {
         return new RegistroController(
+            $this->getRegistroModel(),
             $this->getRender()
         );
     }

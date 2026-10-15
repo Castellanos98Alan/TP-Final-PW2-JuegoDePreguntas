@@ -1,0 +1,60 @@
+[01:13:17] [INFO] SELECT id FROM usuario WHERE username = 'juanperez98'
+[01:13:17] [INFO] SELECT id FROM usuario WHERE mail = 'asd_123@gmail.com'
+[01:13:17] [INFO] INSERT INTO usuario (
+                    nombre_completo, 
+                    anio_nacimiento, 
+                    sexo, 
+                    pais, 
+                    ciudad, 
+                    mail, 
+                    username, 
+                    password, 
+                    foto_perfil, 
+                    esta_activo, 
+                    id_rol, 
+                    puntaje_acumulado
+                ) VALUES (
+                    'Juan Pérez',
+                    1999,
+                    'Masculino',
+                    'argentina',
+                    'Buenos Aires',
+                    'asd_123@gmail.com',
+                    'juanperez98',
+                    '9c48d58a586c1509579344d2bd36910c',
+                    'perfil_6ad15e0d08f116.44872919.jpg',
+                    1,
+                    1,
+                    0
+                )
+[01:16:46] [INFO] SELECT id FROM usuario WHERE username = 'juanperez98'
+[01:17:05] [INFO] SELECT id FROM usuario WHERE username = 'juanperez98'
+[01:17:41] [INFO] SELECT id FROM usuario WHERE username = 'juanperez123'
+[01:17:41] [INFO] SELECT id FROM usuario WHERE mail = 'asd_1234@gmail.com'
+[01:17:41] [INFO] INSERT INTO usuario (
+                    nombre_completo, 
+                    anio_nacimiento, 
+                    sexo, 
+                    pais, 
+                    ciudad, 
+                    mail, 
+                    username, 
+                    password, 
+                    foto_perfil, 
+                    esta_activo, 
+                    id_rol, 
+                    puntaje_acumulado
+                ) VALUES (
+                    'Juanito',
+                    1999,
+                    'Masculino',
+                    'argentina',
+                    'Buenos Aires',
+                    'asd_1234@gmail.com',
+                    'juanperez123',
+                    '358cc9b70b67894a5710e9440bfb3e79',
+                    'perfil_6ad15f15373dd9.21173851.jpg',
+                    1,
+                    1,
+                    0
+                )
