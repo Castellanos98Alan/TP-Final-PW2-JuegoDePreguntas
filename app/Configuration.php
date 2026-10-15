@@ -2,6 +2,7 @@
 
 namespace app;
 
+use app\controller\RegistroController;
 use app\controller\LoginController;
 use app\controller\LobbyController;
 use app\controller\PartidaController;
@@ -99,6 +100,13 @@ class Configuration
     public function getGrupoController()
     {
         return new GrupoController(
+            $this->getRender()
+        );
+    }
+
+    public function getRegistroController()
+    {
+        return new RegistroController(
             $this->getRender()
         );
     }
