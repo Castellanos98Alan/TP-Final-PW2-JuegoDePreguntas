@@ -324,3 +324,8 @@
             WHERE username = :usuario
             AND password = :password
             AND esta_activo = 1
+[18:09:55] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
