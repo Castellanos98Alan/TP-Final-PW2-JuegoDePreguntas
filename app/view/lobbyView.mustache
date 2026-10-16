@@ -1,0 +1,109 @@
+<style>
+    .lobby {
+        width: 100%;
+        max-width: 860px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+    }
+
+    .lobby-perfil {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        padding: 24px;
+        background: rgba(7, 20, 42, 0.85);
+        border: 1px solid rgba(185, 139, 59, 0.4);
+        border-radius: 12px;
+    }
+
+    .lobby-foto {
+        width: 96px;
+        height: 96px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #D4AF55;
+    }
+
+    .lobby-datos h2 {
+        font-family: 'Permanent Marker', cursive;
+        font-size: 30px;
+        font-weight: normal;
+        color: #F1CD73;
+        line-height: 1.1;
+    }
+
+    .lobby-datos p {
+        margin-top: 4px;
+        color: #B6C9E6;
+        font-size: 15px;
+    }
+
+    .lobby-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+    }
+
+    .stat {
+        padding: 18px;
+        text-align: center;
+        background: rgba(7, 20, 42, 0.85);
+        border: 1px solid rgba(185, 139, 59, 0.4);
+        border-radius: 12px;
+    }
+
+    .stat strong {
+        display: block;
+        font-size: 28px;
+        color: #F1CD73;
+    }
+
+    .stat span {
+        font-size: 13px;
+        color: #B6C9E6;
+    }
+
+    .lobby-acciones {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+    }
+
+    .lobby-acciones .btn-link {
+        justify-content: center;
+        padding: 18px;
+        font-size: 16px;
+    }
+
+    @media (max-width: 600px) {
+        .lobby-perfil {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+
+<section class="lobby">
+    <div class="lobby-perfil">
+        <img class="lobby-foto" src="public/{{foto_perfil}}" alt="Foto de perfil de {{username}}">
+
+        <div class="lobby-datos">
+            <h2>{{nombre_completo}}</h2>
+            <p>@{{username}}</p>
+            <p>{{ubicacion}}</p>
+        </div>
+    </div>
+
+    <div class="lobby-stats">
+        <div class="stat"><strong>{{puntaje_acumulado}}</strong><span>puntos acumulados</span></div>
+        <div class="stat"><strong>#{{posicion}}</strong><span>en el ranking</span></div>
+        <div class="stat"><strong>{{miembro_desde}}</strong><span>miembro desde</span></div>
+    </div>
+
+    <div class="lobby-acciones">
+        <a href="#" class="btn-link btn-gold">Jugar partida</a>
+        <a href="?controller=ranking&method=show" class="btn-link btn-outline">Ver ranking</a>
+    </div>
+</section>
