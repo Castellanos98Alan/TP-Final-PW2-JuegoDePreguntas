@@ -50,3 +50,9 @@
         }
     </style>
 </head>
+<header class="header-evento w3-container w3-padding-16">
+    <div class="w3-bar">
+        <a href="/Preguntados/" class="w3-bar-item w3-button w3-text-white" style="font-weight: bold;">Animequiz</a>
+        <a href="/Preguntados/registro" class="w3-bar-item w3-button w3-right btn-cancha w3-round">Registrarse</a>
+    </div>
+</header>

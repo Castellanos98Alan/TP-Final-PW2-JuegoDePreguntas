@@ -1,4 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <div class="container py-5">
     <div class="row justify-content-center">
@@ -46,16 +48,19 @@
                         </div>
 
                         <div class="p-3 bg-light rounded-3 border mb-3">
-                            <label class="form-label fw-bold text-secondary small text-uppercase mb-2">Ubicación</label>
-                            <div class="ratio ratio-21x9 mb-3 rounded overflow-hidden border">
-                                <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-58.65,-34.72,-58.50,-34.60&layer=mapnik" loading="lazy"></iframe>
+                            <label class="form-label fw-bold text-secondary small text-uppercase mb-2">Ubicación (Seleccioná en el mapa)</label>
+
+                            <div id="ubicacion-alerta" class="small text-muted mb-2">
+                                📍 Hacé click en tu ciudad en el mapa para marcarla.
                             </div>
+                            <div id="mapa" class="rounded border mb-3" style="height: 250px; width: 100%;"></div>
+
                             <div class="row g-2">
                                 <div class="col-6">
-                                    <input type="text" class="form-control" name="pais" value="{{pais}}" placeholder="País" required>
+                                    <input type="text" class="form-control" id="pais" name="pais" value="{{pais}}" placeholder="País" readonly required>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" class="form-control" name="ciudad" value="{{ciudad}}" placeholder="Ciudad" required>
+                                    <input type="text" class="form-control" id="ciudad" name="ciudad" value="{{ciudad}}" placeholder="Ciudad" readonly required>
                                 </div>
                             </div>
                         </div>
@@ -112,3 +117,43 @@
         </div>
     </div>
 </div>
+<script>
+    const map = L.map('mapa').setView([-34.6037, -58.3816], 4);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    let marker;
+
+    map.on('click', function(e) {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+
+        if (marker) {
+            marker.setLatLng(e.latlng);
+        } else {
+            marker = L.marker(e.latlng).addTo(map);
+        }
+
+        const alerta = document.getElementById('ubicacion-alerta');
+        alerta.innerText = "⏳ Buscando ubicación...";
+
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.address) {
+                        const pais = data.address.country || 'Desconocido';
+                        const ciudad = data.address.city || data.address.town || data.address.village || data.address.state || 'Desconocida';
+
+                        document.getElementById('pais').value = pais;
+                        document.getElementById('ciudad').value = ciudad;
+
+                        alerta.innerText = `✓ Ubicación seleccionada: ${ciudad}, ${pais}`;
+                    }
+                })
+                .catch(() => {
+                    alerta.innerText = "⚠️ Error al detectar la ciudad. Volvé a hacer click.";
+                });
+    });
+</script>

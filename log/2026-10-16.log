@@ -58,3 +58,96 @@
                     1,
                     0
                 )
+[05:28:13] [INFO] SELECT id FROM usuario WHERE username = 'brian14'
+[05:28:13] [INFO] SELECT id FROM usuario WHERE mail = 'brian14@gmail.com'
+[05:30:28] [INFO] SELECT id FROM usuario WHERE username = 'brian14'
+[05:30:28] [INFO] SELECT id FROM usuario WHERE mail = 'brian14@gmail.com'
+[05:38:15] [INFO] SELECT id FROM usuario WHERE username = 'brian14'
+[05:38:15] [INFO] SELECT id FROM usuario WHERE email = 'brian14@gmail.com'
+[05:38:15] [INFO] INSERT INTO usuario (
+                    nombre_completo, 
+                    anio_nacimiento, 
+                    sexo, 
+                    pais, 
+                    ciudad, 
+                    mail, 
+                    username, 
+                    password, 
+                    foto_perfil, 
+                    esta_activo, 
+                    id_rol, 
+                    puntaje_acumulado
+                ) VALUES (
+                    'Arrojas Brian',
+                    1999,
+                    'Masculino',
+                    'Argentina',
+                    'Tandil',
+                    'brian14@gmail.com',
+                    'brian14',
+                    '165edbb8caf5ce3631e88b671e91dbfe',
+                    'perfil_6ad19c2760bcb7.90631068.jpg',
+                    1,
+                    1,
+                    0
+                )
+[05:39:58] [INFO] SELECT id FROM usuario WHERE username = 'brian14'
+[05:39:58] [INFO] SELECT id FROM usuario WHERE mail = 'brian14@gmail.com'
+[05:42:28] [INFO] SELECT id FROM usuario WHERE username = 'brian14'
+[05:42:28] [INFO] SELECT id FROM usuario WHERE mail = 'brian14@gmail.com'
+[05:42:28] [INFO] INSERT INTO usuario (
+                    nombre_completo, 
+                    anio_nacimiento, 
+                    sexo, 
+                    pais, 
+                    ciudad, 
+                    mail, 
+                    username, 
+                    password, 
+                    foto_perfil, 
+                    esta_activo, 
+                    id_rol, 
+                    puntaje_acumulado
+                ) VALUES (
+                    'Arrojas Brian',
+                    1999,
+                    'Masculino',
+                    'Argentina',
+                    'Tandil',
+                    'brian14@gmail.com',
+                    'brian14',
+                    '165edbb8caf5ce3631e88b671e91dbfe',
+                    'perfil_6ad19d24e7ad03.94673138.jpg',
+                    1,
+                    1,
+                    0
+                )
+[05:49:13] [INFO] SELECT id FROM usuario WHERE username = 'brian12'
+[05:49:13] [INFO] SELECT id FROM usuario WHERE mail = 'brian12@gmail.com'
+[05:49:13] [INFO] INSERT INTO usuario (
+                    nombre_completo, 
+                    anio_nacimiento, 
+                    sexo, 
+                    pais, 
+                    ciudad, 
+                    mail, 
+                    username, 
+                    password, 
+                    foto_perfil, 
+                    esta_activo, 
+                    id_rol, 
+                    puntaje_acumulado
+                ) VALUES (
+                    'Brian',
+                    1920,
+                    'Masculino',
+                    'Argentina',
+                    'Córdoba',
+                    'brian12@gmail.com',
+                    'brian12',
+                    '165edbb8caf5ce3631e88b671e91dbfe',
+                    'perfil_6ad19eb9bd0bb6.80400307.jpg',
+                    1,
+                    1,
+                    0
+                )
