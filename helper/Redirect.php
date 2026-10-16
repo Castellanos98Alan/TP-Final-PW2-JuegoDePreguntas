@@ -4,7 +4,7 @@ class Redirect
 {
     public static function to($url)
     {
-        header("Location: /Preguntados" . $url);
+        header("Location: /TP-Final-PW2-JuegoDePreguntas" . $url);
         exit();
     }
 
