@@ -12,4 +12,9 @@ class Redirect
     {
         self::to('/');
     }
+
+    public static function toLobby()
+    {
+        self::to('/?controller=lobby&method=show');
+    }
 }

@@ -8,10 +8,12 @@ use Request;
 class LoginController
 {
     private $model;
+    private $render;
 
-    public function __construct($model)
+    public function __construct($model, $render)
     {
         $this->model = $model;
+        $this->render = $render;
     }
 
     public function login()
@@ -23,9 +25,24 @@ class LoginController
         }
 
         $_SESSION['usuario_id'] = $usuario['id'];
-        $_SESSION['usuario'] = $usuario['usuario'];
-        Redirect::toIndex();
+        $_SESSION['usuario'] = $usuario['username'];
+
+        Redirect::toLobby();
     }
+
+    public function show()
+    {
+        if (isset($_SESSION['usuario_id'])) {
+            Redirect::toLobby();
+        }
+
+        $data = [
+            'login_error' => Request::get('login_error') === '1'
+        ];
+
+        $this->render->renderiza("login", $data);
+    }
+
 
     public function logout()
     {

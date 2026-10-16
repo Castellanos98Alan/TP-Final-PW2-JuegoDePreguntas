@@ -151,3 +151,176 @@
                     1,
                     0
                 )
+[15:55:09] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'alan'
+            AND password = '81dc9bdb52d04dc20036dbd8313ed055'
+            AND esta_activo = 1
+[15:55:52] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'alan'
+            AND password = 'fa246d0262c3925617b0c72bb20eeb1d'
+            AND esta_activo = 1
+[16:27:13] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'alan'
+            AND password = '81dc9bdb52d04dc20036dbd8313ed055'
+            AND esta_activo = 1
+[16:27:25] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'alan'
+            AND password = '934b535800b1cba8f96a5d72f72f1611'
+            AND esta_activo = 1
+[16:27:33] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = '41005584'
+            AND password = '761c7920f470038d4c8a619c79eddd62'
+            AND esta_activo = 1
+[16:27:37] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'alan'
+            AND password = '3a029f04d76d32e79367c4b3255dda4d'
+            AND esta_activo = 1
+[16:27:42] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'alan'
+            AND password = '81dc9bdb52d04dc20036dbd8313ed055'
+            AND esta_activo = 1
+[16:31:12] [INFO] SELECT id FROM usuario WHERE username = 'Pansito'
+[16:31:12] [INFO] SELECT id FROM usuario WHERE mail = 'maxelectro123@gmail.com'
+[16:31:12] [INFO] INSERT INTO usuario (
+                    nombre_completo, 
+                    anio_nacimiento, 
+                    sexo, 
+                    pais, 
+                    ciudad, 
+                    mail, 
+                    username, 
+                    password, 
+                    foto_perfil, 
+                    esta_activo, 
+                    id_rol, 
+                    puntaje_acumulado
+                ) VALUES (
+                    'Alan Castellanos',
+                    1998,
+                    'Masculino',
+                    'Argentina',
+                    'San Justo',
+                    'maxelectro123@gmail.com',
+                    'Pansito',
+                    '81dc9bdb52d04dc20036dbd8313ed055',
+                    'perfil_6ad23530d80a09.83281573.png',
+                    1,
+                    1,
+                    0
+                )
+[16:31:29] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'maxelectro123@gmail.com'
+            AND password = '81dc9bdb52d04dc20036dbd8313ed055'
+            AND esta_activo = 1
+[16:31:45] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'Alan Castellanos'
+            AND password = '81dc9bdb52d04dc20036dbd8313ed055'
+            AND esta_activo = 1
+[16:32:19] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'Alan Castellanos'
+            AND password = '81dc9bdb52d04dc20036dbd8313ed055'
+            AND esta_activo = 1
+[16:32:33] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'Alan Castellanos'
+            AND password = '202cb962ac59075b964b07152d234b70'
+            AND esta_activo = 1
+[16:32:39] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'Alan Castellanos'
+            AND password = '81dc9bdb52d04dc20036dbd8313ed055'
+            AND esta_activo = 1
+[17:12:25] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'alan'
+            AND password = '81dc9bdb52d04dc20036dbd8313ed055'
+            AND esta_activo = 1
+[17:12:31] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'alan'
+            AND password = 'c1876dc80e5fc8f1cd1b1e3d2cc1703b'
+            AND esta_activo = 1
+[17:41:09] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'alan'
+            AND password = '132651104217a043ae4ecf18f7dac1b6'
+            AND esta_activo = 1
+[17:41:16] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = '' OR 1=1 --'
+            AND password = '132651104217a043ae4ecf18f7dac1b6'
+            AND esta_activo = 1
+[17:43:59] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'alan'
+            AND password = '81dc9bdb52d04dc20036dbd8313ed055'
+            AND esta_activo = 1
+[17:56:20] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[17:56:29] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[17:56:34] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[17:57:59] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = 'facu'
+            AND password = '3ec3baf3455d78bfa771616fd0713aaa'
+            AND esta_activo = 1
+[17:58:09] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = '' OR 1=1 --'
+            AND password = '8d4646eb2d7067126eb08adb0672f7bb'
+            AND esta_activo = 1
+[17:58:54] [INFO] SELECT id FROM usuario WHERE username = 'Pedro'
+[17:58:54] [INFO] SELECT id FROM usuario WHERE mail = 'a@hotmail.com'
+[17:58:54] [INFO] INSERT INTO usuario (
+                    nombre_completo, 
+                    anio_nacimiento, 
+                    sexo, 
+                    pais, 
+                    ciudad, 
+                    mail, 
+                    username, 
+                    password, 
+                    foto_perfil, 
+                    esta_activo, 
+                    id_rol, 
+                    puntaje_acumulado
+                ) VALUES (
+                    '' OR 1=1 --',
+                    1920,
+                    'Masculino',
+                    'Argentina',
+                    'Buenos Aires',
+                    'a@hotmail.com',
+                    'Pedro',
+                    '81dc9bdb52d04dc20036dbd8313ed055',
+                    'perfil_6ad249be420408.90848152.png',
+                    1,
+                    1,
+                    0
+                )
+[17:59:54] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
