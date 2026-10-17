@@ -38,48 +38,59 @@ class RegistroModel
         $passwordHash = md5($datos['password']);
 
         $sql = "INSERT INTO usuario (
-                    nombre_completo, 
-                    anio_nacimiento, 
-                    sexo, 
-                    pais, 
-                    ciudad, 
-                    mail, 
-                    username, 
-                    password, 
-                    foto_perfil, 
-                    esta_activo, 
-                    id_rol, 
-                    puntaje_acumulado
-                ) VALUES (
-                    '{$datos['nombre_completo']}',
-                    {$datos['anio_nacimiento']},
-                    '{$datos['sexo']}',
-                    '{$datos['pais']}',
-                    '{$datos['ciudad']}',
-                    '{$datos['mail']}',
-                    '{$datos['username']}',
-                    '{$passwordHash}',
-                    '{$nombreFoto}',
-                    1,
-                    1,
-                    0
-                )";
+            nombre_completo, 
+            anio_nacimiento, 
+            sexo, 
+            pais, 
+            ciudad, 
+            mail, 
+            username, 
+            password, 
+            foto_perfil, 
+            esta_activo, 
+            id_rol, 
+            puntaje_acumulado
+        ) VALUES (
+            :nombre_completo,
+            :anio_nacimiento,
+            :sexo,
+            :pais,
+            :ciudad,
+            :mail,
+            :username,
+            :password,
+            :foto_perfil,
+            1,
+            1,
+            0
+        )";
 
-        $this->database->execute($sql);
+        $parametros = [
+            'nombre_completo' => $datos['nombre_completo'],
+            'anio_nacimiento' => (int)$datos['anio_nacimiento'],
+            'sexo'            => $datos['sexo'],
+            'pais'            => $datos['pais'],
+            'ciudad'          => $datos['ciudad'],
+            'mail'            => $datos['mail'],
+            'username'        => $datos['username'],
+            'password'        => $passwordHash,
+            'foto_perfil'     => $nombreFoto
+        ];
+
+        $this->database->execute($sql, $parametros);
 
         return ['exito' => true];
     }
 
 
     private function existeUsername($username){
-        $sql = "SELECT id FROM usuario WHERE username = '$username'";
-        return $this->database->queryOne($sql) !== null;
+        $sql = "SELECT id FROM usuario WHERE username = :username";
+        return $this->database->queryOne($sql, ['username' => $username]) !== null;
     }
 
-
     private function existeMail($mail){
-        $sql = "SELECT id FROM usuario WHERE mail = '$mail'";
-        return $this->database->queryOne($sql) !== null;
+        $sql = "SELECT id FROM usuario WHERE mail = :mail";
+        return $this->database->queryOne($sql, ['mail' => $mail]) !== null;
     }
 
 
