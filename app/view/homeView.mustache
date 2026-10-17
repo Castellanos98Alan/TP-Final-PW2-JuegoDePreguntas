@@ -1,0 +1,118 @@
+<style>
+    /* Imágenes laterales que se difuminan hacia el centro */
+    .home-bg-lado {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 46vw;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.6;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .home-bg-izq {
+        left: 0;
+        background-image: linear-gradient(rgba(7, 19, 41, 0.35), rgba(7, 19, 41, 0.35)), url('public/fondo-izq.jpg');
+        -webkit-mask-image: linear-gradient(to right, #000 0%, #000 30%, transparent 100%);
+        mask-image: linear-gradient(to right, #000 0%, #000 30%, transparent 100%);
+    }
+
+    .home-bg-der {
+        right: 0;
+        background-image: linear-gradient(rgba(7, 19, 41, 0.35), rgba(7, 19, 41, 0.35)), url('public/fondo-der.jpg');
+        -webkit-mask-image: linear-gradient(to left, #000 0%, #000 30%, transparent 100%);
+        mask-image: linear-gradient(to left, #000 0%, #000 30%, transparent 100%);
+    }
+
+    .home {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 760px;
+        text-align: center;
+    }
+
+    .home-title {
+        font-family: 'Permanent Marker', cursive;
+        font-size: clamp(40px, 9vw, 76px);
+        line-height: 1;
+        letter-spacing: 2px;
+        color: #F1CD73;
+        text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .home-subtitle {
+        margin-top: 10px;
+        font-size: 14px;
+        letter-spacing: 5px;
+        font-weight: 700;
+        color: #B6C9E6;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .home-text {
+        margin: 28px auto 0;
+        max-width: 520px;
+        font-size: 17px;
+        line-height: 1.6;
+        color: #DCE6F8;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .home-actions {
+        margin-top: 36px;
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .home-actions .btn-link {
+        padding: 14px 32px;
+        font-size: 15px;
+    }
+
+    .home-note {
+        margin-top: 22px;
+        font-size: 13px;
+        color: #B6C9E6;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .home-note a {
+        color: #F1CD73;
+    }
+
+    /* En celular las imágenes quedan más tenues para no tapar el texto */
+    @media (max-width: 700px) {
+        .home-bg-lado {
+            width: 60vw;
+            opacity: 0.3;
+        }
+    }
+</style>
+
+<div class="home-bg-lado home-bg-izq" aria-hidden="true"></div>
+<div class="home-bg-lado home-bg-der" aria-hidden="true"></div>
+
+<section class="home">
+    <h2 class="home-title">PREGUNTADOS</h2>
+    <p class="home-subtitle">ANIME EDITION</p>
+
+    <p class="home-text">
+        Respondé preguntas sobre anime, sumá puntos y subí en el ranking.
+        Creá tu cuenta para empezar a jugar.
+    </p>
+
+    <div class="home-actions">
+        <a href="?controller=registro&method=show" class="btn-link btn-gold">Crear cuenta</a>
+        <a href="?controller=login&method=show" class="btn-link btn-outline">Ingresar</a>
+    </div>
+
+    <p class="home-note">
+        ¿Querés conocer al equipo? <a href="?controller=grupo&method=show">Ver el grupo</a>
+    </p>
+</section>
