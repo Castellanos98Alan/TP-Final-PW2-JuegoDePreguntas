@@ -30,6 +30,8 @@ class RegistroController
             'sexo'             => 'Sexo',
             'pais'             => 'País',
             'ciudad'           => 'Ciudad',
+            'latitud'          => 'Ubicación en el mapa',
+            'longitud'         => 'Ubicación en el mapa',
             'email'             => 'Correo electrónico',
             'username'         => 'Nombre de usuario',
             'password'         => 'Contraseña',
