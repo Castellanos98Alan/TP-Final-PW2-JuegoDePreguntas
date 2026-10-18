@@ -30,7 +30,7 @@ class RegistroController
             'sexo'             => 'Sexo',
             'pais'             => 'País',
             'ciudad'           => 'Ciudad',
-            'mail'             => 'Correo electrónico',
+            'email'             => 'Correo electrónico',
             'username'         => 'Nombre de usuario',
             'password'         => 'Contraseña',
             'repetir_password' => 'Repetir contraseña'
@@ -52,7 +52,7 @@ class RegistroController
             $this->mostrarError("El sexo seleccionado no es válido.", $datos);
             return;
         }
-        if (!filter_var($datos['mail'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
             $this->mostrarError("El correo electrónico ingresado no tiene un formato válido.", $datos);
             return;
         }

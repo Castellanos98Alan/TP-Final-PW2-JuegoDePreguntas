@@ -20,7 +20,7 @@ class RegistroModel
             ];
         }
 
-        if ($this->existeMail($datos['mail'])) {
+        if ($this->existeMail($datos['email'])) {
             return [
                 'exito' => false,
                 'error' => 'El correo electrónico ya se encuentra registrado.'
@@ -43,7 +43,7 @@ class RegistroModel
             sexo, 
             pais, 
             ciudad, 
-            mail, 
+            email, 
             username, 
             password, 
             foto_perfil, 
@@ -56,7 +56,7 @@ class RegistroModel
             :sexo,
             :pais,
             :ciudad,
-            :mail,
+            :email,
             :username,
             :password,
             :foto_perfil,
@@ -71,7 +71,7 @@ class RegistroModel
             'sexo'            => $datos['sexo'],
             'pais'            => $datos['pais'],
             'ciudad'          => $datos['ciudad'],
-            'mail'            => $datos['mail'],
+            'email'            => $datos['email'],
             'username'        => $datos['username'],
             'password'        => $passwordHash,
             'foto_perfil'     => $nombreFoto
@@ -88,9 +88,9 @@ class RegistroModel
         return $this->database->queryOne($sql, ['username' => $username]) !== null;
     }
 
-    private function existeMail($mail){
-        $sql = "SELECT id FROM usuario WHERE mail = :mail";
-        return $this->database->queryOne($sql, ['mail' => $mail]) !== null;
+    private function existeMail($email){
+        $sql = "SELECT id FROM usuario WHERE email = :email";
+        return $this->database->queryOne($sql, ['email' => $email]) !== null;
     }
 
 
