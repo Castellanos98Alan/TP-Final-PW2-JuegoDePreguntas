@@ -36,6 +36,7 @@ class RegistroModel
         }
 
         $passwordHash = md5($datos['password']);
+        $token = bin2hex(random_bytes(32));
 
         $sql = "INSERT INTO usuario (
             nombre_completo, 
@@ -51,7 +52,8 @@ class RegistroModel
             foto_perfil, 
             esta_activo, 
             id_rol, 
-            puntaje_acumulado
+            puntaje_acumulado,
+            token_validacion
         ) VALUES (
             :nombre_completo,
             :anio_nacimiento,
@@ -64,9 +66,10 @@ class RegistroModel
             :username,
             :password,
             :foto_perfil,
+            0,
             1,
-            1,
-            0
+            0,
+            :token_validacion
         )";
 
         $parametros = [
@@ -75,17 +78,18 @@ class RegistroModel
             'sexo'            => $datos['sexo'],
             'pais'            => $datos['pais'],
             'ciudad'          => $datos['ciudad'],
-            'latitud'  => !empty($datos['latitud']) ? $datos['latitud'] : null,
-            'longitud' => !empty($datos['longitud']) ? $datos['longitud'] : null,
-            'email'            => $datos['email'],
+            'latitud'         => !empty($datos['latitud']) ? $datos['latitud'] : null,
+            'longitud'        => !empty($datos['longitud']) ? $datos['longitud'] : null,
+            'email'           => $datos['email'],
             'username'        => $datos['username'],
             'password'        => $passwordHash,
-            'foto_perfil'     => $nombreFoto
+            'foto_perfil'     => $nombreFoto,
+            'token_validacion'=> $token
         ];
 
         $this->database->execute($sql, $parametros);
 
-        return ['exito' => true];
+        return ['exito' => true, 'token' => $token];
     }
 
 
@@ -112,4 +116,19 @@ class RegistroModel
 
         return null;
     }
+
+    public function activarCuenta($token)
+    {
+        $sql = "SELECT id FROM usuario WHERE token_validacion = :token";
+        $usuario = $this->database->queryOne($sql, ['token' => $token]);
+
+        if ($usuario) {
+            $updateSql = "UPDATE usuario SET esta_activo = 1, token_validacion = NULL WHERE id = :id";
+            $this->database->execute($updateSql, ['id' => $usuario['id']]);
+            return true;
+        }
+
+        return false;
+    }
+
 }

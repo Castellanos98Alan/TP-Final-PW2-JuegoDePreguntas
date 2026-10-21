@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use Mailer;
 use Redirect;
 
 class RegistroController
@@ -80,7 +81,20 @@ class RegistroController
             return;
         }
 
-        Redirect::toIndex();}
+        Mailer::enviarCorreoValidacion($datos['email'], $resultado['token']);
+        Redirect::to('/?controller=login&method=show&registro_pendiente=1');
+    }
+
+    public function activar()
+    {
+        $token = $_GET['token'] ?? '';
+
+        if (!empty($token) && $this->model->activarCuenta($token)) {
+            Redirect::to('/?controller=login&method=show&cuenta_activada=1');
+        } else {
+            $this->mostrarError("El enlace de activación es inválido o ya expiró.", []);
+        }
+    }
 
     private function mostrarError($mensajeError, $datosPrevios)
     {
