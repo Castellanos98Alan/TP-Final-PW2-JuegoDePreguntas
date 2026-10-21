@@ -14,16 +14,16 @@ class Mailer
         $mail = new PHPMailer(true);
 
         try {
+            $config = parse_ini_file(__DIR__ . "/../config/config.ini");
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'animequizsite@gmail.com';
-            $mail->Password   = 'rgchioomjbtwxbmg';
+            $mail->Username   = $config['smtp_user'];
+            $mail->Password   = $config['smtp_pass'];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
             $mail->CharSet    = 'UTF-8';
-
-            $mail->setFrom('animequizsite@gmail.com', 'Animequiz');
+            $mail->setFrom($config['smtp_user'], 'Animequiz');
             $mail->addAddress($emailDestino);
 
             $protocolo = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";

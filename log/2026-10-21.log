@@ -314,3 +314,73 @@
             WHERE esta_activo = 1
             AND id_rol = 1
             AND puntaje_acumulado > :puntaje
+[05:07:53] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:08:33] [INFO] SELECT id FROM usuario WHERE username = :username
+[05:08:33] [INFO] SELECT id FROM usuario WHERE email = :email
+[05:08:33] [INFO] INSERT INTO usuario (
+            nombre_completo, 
+            anio_nacimiento, 
+            sexo, 
+            pais, 
+            ciudad,
+            latitud, 
+            longitud,
+            email, 
+            username, 
+            password, 
+            foto_perfil, 
+            esta_activo, 
+            id_rol, 
+            puntaje_acumulado,
+            token_validacion
+        ) VALUES (
+            :nombre_completo,
+            :anio_nacimiento,
+            :sexo,
+            :pais,
+            :ciudad,
+            :latitud,
+            :longitud,
+            :email,
+            :username,
+            :password,
+            :foto_perfil,
+            0,
+            1,
+            0,
+            :token_validacion
+        )
+[05:09:07] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[05:09:13] [INFO] SELECT id FROM usuario WHERE token_validacion = :token
+[05:09:13] [INFO] UPDATE usuario SET esta_activo = 1, token_validacion = NULL WHERE id = :id
+[05:09:19] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[05:09:20] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:09:20] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
