@@ -29,3 +29,31 @@ CREATE TABLE IF NOT EXISTS usuario (
 INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, username, password, foto_perfil, esta_activo, id_rol, puntaje_acumulado)
 VALUES ('Facundo Docente', 1995, 'Masculino', 'Argentina', 'Buenos Aires', 'facu@unlam.edu.ar', 'facu', MD5('1234'), 'default.png', 1, 1, 0)
     ON DUPLICATE KEY UPDATE password = MD5('1234'), esta_activo = 1;
+
+CREATE TABLE IF NOT EXISTS partida (
+                                       id INT AUTO_INCREMENT PRIMARY KEY,
+                                       id_usuario INT NOT NULL,
+                                       puntaje INT DEFAULT 0,
+                                       resultado VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+    );
+
+INSERT INTO partida (id_usuario, puntaje, resultado)
+VALUES
+    (
+        (SELECT id FROM usuario WHERE username = 'facu'),
+        100,
+        'Ganada'
+    ),
+    (
+        (SELECT id FROM usuario WHERE username = 'facu'),
+        0,
+        'Perdida'
+    ),
+    (
+        (SELECT id FROM usuario WHERE username = 'facu'),
+        120,
+        'Ganada'
+    );

@@ -26,8 +26,26 @@ class LoginController
 
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['usuario'] = $usuario['username'];
+        $_SESSION['rol'] = $usuario['id_rol'];
 
-        Redirect::toLobby();
+        switch ($usuario['id_rol']) {
+
+            case 1:
+                Redirect::to('/?controller=lobby&method=show');
+                break;
+
+            case 2:
+                Redirect::to('/?controller=editor&method=show');
+                break;
+
+            case 3:
+                Redirect::to('/?controller=admin&method=show');
+                break;
+
+            default:
+                Redirect::toIndex();
+                break;
+        }
     }
 
     public function show()

@@ -37,4 +37,20 @@ class LobbyModel {
         return $resultado['posicion'];
     }
 
+    public function obtenerPartidasDelJugador($idUsuario)
+    {
+        $sql = "SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC";
+
+        return $this->database->queryAll(
+            $sql,
+            ['idUsuario' => $idUsuario]
+        );
+    }
+
 }
