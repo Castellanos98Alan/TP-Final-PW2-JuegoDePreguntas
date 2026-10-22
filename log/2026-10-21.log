@@ -1,0 +1,435 @@
+[02:38:36] [INFO] SELECT id FROM usuario WHERE username = :username
+[02:38:36] [INFO] SELECT id FROM usuario WHERE email = :email
+[02:38:36] [INFO] INSERT INTO usuario (
+            nombre_completo, 
+            anio_nacimiento, 
+            sexo, 
+            pais, 
+            ciudad,
+            latitud, 
+            longitud,
+            email, 
+            username, 
+            password, 
+            foto_perfil, 
+            esta_activo, 
+            id_rol, 
+            puntaje_acumulado
+        ) VALUES (
+            :nombre_completo,
+            :anio_nacimiento,
+            :sexo,
+            :pais,
+            :ciudad,
+            :latitud,
+            :longitud,
+            :email,
+            :username,
+            :password,
+            :foto_perfil,
+            1,
+            1,
+            0
+        )
+[02:39:07] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[02:39:07] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[02:39:07] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[02:44:59] [INFO] SELECT id FROM usuario WHERE username = :username
+[02:44:59] [INFO] SELECT id FROM usuario WHERE email = :email
+[02:47:35] [INFO] SELECT id FROM usuario WHERE username = :username
+[02:47:35] [INFO] SELECT id FROM usuario WHERE email = :email
+[02:47:35] [INFO] INSERT INTO usuario (
+            nombre_completo, 
+            anio_nacimiento, 
+            sexo, 
+            pais, 
+            ciudad,
+            latitud, 
+            longitud,
+            email, 
+            username, 
+            password, 
+            foto_perfil, 
+            esta_activo, 
+            id_rol, 
+            puntaje_acumulado,
+            token_validacion
+        ) VALUES (
+            :nombre_completo,
+            :anio_nacimiento,
+            :sexo,
+            :pais,
+            :ciudad,
+            :latitud,
+            :longitud,
+            :email,
+            :username,
+            :password,
+            :foto_perfil,
+            0,
+            1,
+            0,
+            :token_validacion
+        )
+[03:56:29] [INFO] SELECT id FROM usuario WHERE token_validacion = :token
+[03:56:29] [INFO] UPDATE usuario SET esta_activo = 1, token_validacion = NULL WHERE id = :id
+[03:56:41] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[03:56:41] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[03:56:41] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[04:15:49] [INFO] SELECT id FROM usuario WHERE username = :username
+[04:15:49] [INFO] SELECT id FROM usuario WHERE email = :email
+[04:15:49] [INFO] INSERT INTO usuario (
+            nombre_completo, 
+            anio_nacimiento, 
+            sexo, 
+            pais, 
+            ciudad,
+            latitud, 
+            longitud,
+            email, 
+            username, 
+            password, 
+            foto_perfil, 
+            esta_activo, 
+            id_rol, 
+            puntaje_acumulado,
+            token_validacion
+        ) VALUES (
+            :nombre_completo,
+            :anio_nacimiento,
+            :sexo,
+            :pais,
+            :ciudad,
+            :latitud,
+            :longitud,
+            :email,
+            :username,
+            :password,
+            :foto_perfil,
+            0,
+            1,
+            0,
+            :token_validacion
+        )
+[04:16:41] [INFO] SELECT id FROM usuario WHERE token_validacion = :token
+[04:16:41] [INFO] UPDATE usuario SET esta_activo = 1, token_validacion = NULL WHERE id = :id
+[04:23:11] [INFO] SELECT id FROM usuario WHERE username = :username
+[04:23:11] [INFO] SELECT id FROM usuario WHERE email = :email
+[04:23:11] [INFO] INSERT INTO usuario (
+            nombre_completo, 
+            anio_nacimiento, 
+            sexo, 
+            pais, 
+            ciudad,
+            latitud, 
+            longitud,
+            email, 
+            username, 
+            password, 
+            foto_perfil, 
+            esta_activo, 
+            id_rol, 
+            puntaje_acumulado,
+            token_validacion
+        ) VALUES (
+            :nombre_completo,
+            :anio_nacimiento,
+            :sexo,
+            :pais,
+            :ciudad,
+            :latitud,
+            :longitud,
+            :email,
+            :username,
+            :password,
+            :foto_perfil,
+            0,
+            1,
+            0,
+            :token_validacion
+        )
+[04:24:04] [INFO] SELECT id FROM usuario WHERE token_validacion = :token
+[04:24:04] [INFO] UPDATE usuario SET esta_activo = 1, token_validacion = NULL WHERE id = :id
+[04:24:13] [INFO] SELECT id FROM usuario WHERE token_validacion = :token
+[04:24:37] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[04:24:37] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:24:37] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[04:30:11] [INFO] SELECT id FROM usuario WHERE username = :username
+[04:30:11] [INFO] SELECT id FROM usuario WHERE email = :email
+[04:30:11] [INFO] INSERT INTO usuario (
+            nombre_completo, 
+            anio_nacimiento, 
+            sexo, 
+            pais, 
+            ciudad,
+            latitud, 
+            longitud,
+            email, 
+            username, 
+            password, 
+            foto_perfil, 
+            esta_activo, 
+            id_rol, 
+            puntaje_acumulado,
+            token_validacion
+        ) VALUES (
+            :nombre_completo,
+            :anio_nacimiento,
+            :sexo,
+            :pais,
+            :ciudad,
+            :latitud,
+            :longitud,
+            :email,
+            :username,
+            :password,
+            :foto_perfil,
+            0,
+            1,
+            0,
+            :token_validacion
+        )
+[04:31:03] [INFO] SELECT id FROM usuario WHERE token_validacion = :token
+[04:31:03] [INFO] UPDATE usuario SET esta_activo = 1, token_validacion = NULL WHERE id = :id
+[04:31:51] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[04:31:51] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:31:51] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[04:34:12] [INFO] SELECT id FROM usuario WHERE username = :username
+[04:34:12] [INFO] SELECT id FROM usuario WHERE email = :email
+[04:34:12] [INFO] INSERT INTO usuario (
+            nombre_completo, 
+            anio_nacimiento, 
+            sexo, 
+            pais, 
+            ciudad,
+            latitud, 
+            longitud,
+            email, 
+            username, 
+            password, 
+            foto_perfil, 
+            esta_activo, 
+            id_rol, 
+            puntaje_acumulado,
+            token_validacion
+        ) VALUES (
+            :nombre_completo,
+            :anio_nacimiento,
+            :sexo,
+            :pais,
+            :ciudad,
+            :latitud,
+            :longitud,
+            :email,
+            :username,
+            :password,
+            :foto_perfil,
+            0,
+            1,
+            0,
+            :token_validacion
+        )
+[04:34:22] [INFO] SELECT id FROM usuario WHERE token_validacion = :token
+[04:34:22] [INFO] UPDATE usuario SET esta_activo = 1, token_validacion = NULL WHERE id = :id
+[04:34:29] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[04:34:29] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:34:29] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[05:07:53] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:08:33] [INFO] SELECT id FROM usuario WHERE username = :username
+[05:08:33] [INFO] SELECT id FROM usuario WHERE email = :email
+[05:08:33] [INFO] INSERT INTO usuario (
+            nombre_completo, 
+            anio_nacimiento, 
+            sexo, 
+            pais, 
+            ciudad,
+            latitud, 
+            longitud,
+            email, 
+            username, 
+            password, 
+            foto_perfil, 
+            esta_activo, 
+            id_rol, 
+            puntaje_acumulado,
+            token_validacion
+        ) VALUES (
+            :nombre_completo,
+            :anio_nacimiento,
+            :sexo,
+            :pais,
+            :ciudad,
+            :latitud,
+            :longitud,
+            :email,
+            :username,
+            :password,
+            :foto_perfil,
+            0,
+            1,
+            0,
+            :token_validacion
+        )
+[05:09:07] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[05:09:13] [INFO] SELECT id FROM usuario WHERE token_validacion = :token
+[05:09:13] [INFO] UPDATE usuario SET esta_activo = 1, token_validacion = NULL WHERE id = :id
+[05:09:19] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[05:09:20] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:09:20] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[05:23:04] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:23:04] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[05:26:07] [INFO] SELECT id FROM usuario WHERE username = :username
+[05:26:07] [INFO] SELECT id FROM usuario WHERE email = :email
+[05:26:07] [INFO] INSERT INTO usuario (
+            nombre_completo, 
+            anio_nacimiento, 
+            sexo, 
+            pais, 
+            ciudad,
+            latitud, 
+            longitud,
+            email, 
+            username, 
+            password, 
+            foto_perfil, 
+            esta_activo, 
+            id_rol, 
+            puntaje_acumulado,
+            token_validacion
+        ) VALUES (
+            :nombre_completo,
+            :anio_nacimiento,
+            :sexo,
+            :pais,
+            :ciudad,
+            :latitud,
+            :longitud,
+            :email,
+            :username,
+            :password,
+            :foto_perfil,
+            0,
+            1,
+            0,
+            :token_validacion
+        )

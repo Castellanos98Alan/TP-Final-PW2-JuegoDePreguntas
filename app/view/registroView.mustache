@@ -62,14 +62,16 @@
                                 <div class="col-6">
                                     <input type="text" class="form-control" id="ciudad" name="ciudad" value="{{ciudad}}" placeholder="Ciudad" readonly required>
                                 </div>
+                                <input type="hidden" id="latitud" name="latitud" value="{{latitud}}">
+                                <input type="hidden" id="longitud" name="longitud" value="{{longitud}}">
                             </div>
                         </div>
 
                         <div class="row g-3 mb-3">
                             <div class="col-12 col-sm-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control rounded-3" id="mail" name="mail" value="{{mail}}" placeholder="Correo" required>
-                                    <label for="mail">Correo electrónico</label>
+                                    <input type="email" class="form-control rounded-3" id="email" name="email" value="{{email}}" placeholder="Correo" required>
+                                    <label for="email">Correo electrónico</label>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
@@ -129,6 +131,8 @@
     map.on('click', function(e) {
         const lat = e.latlng.lat;
         const lng = e.latlng.lng;
+        document.getElementById('latitud').value = lat;
+        document.getElementById('longitud').value = lng;
 
         if (marker) {
             marker.setLatLng(e.latlng);

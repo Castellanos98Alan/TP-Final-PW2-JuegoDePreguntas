@@ -20,7 +20,7 @@ class RegistroModel
             ];
         }
 
-        if ($this->existeMail($datos['mail'])) {
+        if ($this->existeMail($datos['email'])) {
             return [
                 'exito' => false,
                 'error' => 'El correo electrónico ya se encuentra registrado.'
@@ -36,33 +36,40 @@ class RegistroModel
         }
 
         $passwordHash = md5($datos['password']);
+        $token = bin2hex(random_bytes(32));
 
         $sql = "INSERT INTO usuario (
             nombre_completo, 
             anio_nacimiento, 
             sexo, 
             pais, 
-            ciudad, 
-            mail, 
+            ciudad,
+            latitud, 
+            longitud,
+            email, 
             username, 
             password, 
             foto_perfil, 
             esta_activo, 
             id_rol, 
-            puntaje_acumulado
+            puntaje_acumulado,
+            token_validacion
         ) VALUES (
             :nombre_completo,
             :anio_nacimiento,
             :sexo,
             :pais,
             :ciudad,
-            :mail,
+            :latitud,
+            :longitud,
+            :email,
             :username,
             :password,
             :foto_perfil,
+            0,
             1,
-            1,
-            0
+            0,
+            :token_validacion
         )";
 
         $parametros = [
@@ -71,15 +78,18 @@ class RegistroModel
             'sexo'            => $datos['sexo'],
             'pais'            => $datos['pais'],
             'ciudad'          => $datos['ciudad'],
-            'mail'            => $datos['mail'],
+            'latitud'         => !empty($datos['latitud']) ? $datos['latitud'] : null,
+            'longitud'        => !empty($datos['longitud']) ? $datos['longitud'] : null,
+            'email'           => $datos['email'],
             'username'        => $datos['username'],
             'password'        => $passwordHash,
-            'foto_perfil'     => $nombreFoto
+            'foto_perfil'     => $nombreFoto,
+            'token_validacion'=> $token
         ];
 
         $this->database->execute($sql, $parametros);
 
-        return ['exito' => true];
+        return ['exito' => true, 'token' => $token];
     }
 
 
@@ -88,9 +98,9 @@ class RegistroModel
         return $this->database->queryOne($sql, ['username' => $username]) !== null;
     }
 
-    private function existeMail($mail){
-        $sql = "SELECT id FROM usuario WHERE mail = :mail";
-        return $this->database->queryOne($sql, ['mail' => $mail]) !== null;
+    private function existeMail($email){
+        $sql = "SELECT id FROM usuario WHERE email = :email";
+        return $this->database->queryOne($sql, ['email' => $email]) !== null;
     }
 
 
@@ -106,4 +116,19 @@ class RegistroModel
 
         return null;
     }
+
+    public function activarCuenta($token)
+    {
+        $sql = "SELECT id FROM usuario WHERE token_validacion = :token";
+        $usuario = $this->database->queryOne($sql, ['token' => $token]);
+
+        if ($usuario) {
+            $updateSql = "UPDATE usuario SET esta_activo = 1, token_validacion = NULL WHERE id = :id";
+            $this->database->execute($updateSql, ['id' => $usuario['id']]);
+            return true;
+        }
+
+        return false;
+    }
+
 }

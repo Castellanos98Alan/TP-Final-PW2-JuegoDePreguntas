@@ -37,7 +37,9 @@ class LoginController
         }
 
         $data = [
-            'login_error' => Request::get('login_error') === '1'
+            'login_error'        => Request::get('login_error') === '1',
+            'registro_pendiente' => Request::get('registro_pendiente') === '1',
+            'cuenta_activada'    => Request::get('cuenta_activada') === '1'
         ];
 
         $this->render->renderiza("login", $data);

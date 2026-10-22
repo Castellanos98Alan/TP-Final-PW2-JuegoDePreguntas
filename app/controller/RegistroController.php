@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use Mailer;
 use Redirect;
 
 class RegistroController
@@ -30,7 +31,9 @@ class RegistroController
             'sexo'             => 'Sexo',
             'pais'             => 'País',
             'ciudad'           => 'Ciudad',
-            'mail'             => 'Correo electrónico',
+            'latitud'          => 'Ubicación en el mapa',
+            'longitud'         => 'Ubicación en el mapa',
+            'email'             => 'Correo electrónico',
             'username'         => 'Nombre de usuario',
             'password'         => 'Contraseña',
             'repetir_password' => 'Repetir contraseña'
@@ -52,7 +55,7 @@ class RegistroController
             $this->mostrarError("El sexo seleccionado no es válido.", $datos);
             return;
         }
-        if (!filter_var($datos['mail'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
             $this->mostrarError("El correo electrónico ingresado no tiene un formato válido.", $datos);
             return;
         }
@@ -78,7 +81,20 @@ class RegistroController
             return;
         }
 
-        Redirect::toIndex();}
+        Mailer::enviarCorreoValidacion($datos['email'], $resultado['token']);
+        Redirect::to('/?controller=login&method=show&registro_pendiente=1');
+    }
+
+    public function activar()
+    {
+        $token = $_GET['token'] ?? '';
+
+        if (!empty($token) && $this->model->activarCuenta($token)) {
+            Redirect::to('/?controller=login&method=show&cuenta_activada=1');
+        } else {
+            $this->mostrarError("El enlace de activación es inválido o ya expiró.", []);
+        }
+    }
 
     private function mostrarError($mensajeError, $datosPrevios)
     {

@@ -1,18 +1,21 @@
-[06:14:37] [INFO] SELECT id FROM usuario WHERE username = :username
-[06:14:37] [INFO] SELECT id FROM usuario WHERE mail = :mail
-[06:16:27] [INFO] SELECT id, username
+[08:15:15] [INFO] SELECT id, username
             FROM usuario
             WHERE username = :usuario
             AND password = :password
             AND esta_activo = 1
-[06:16:34] [INFO] SELECT id, username
+[08:15:15] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
+                pais, ciudad,
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[08:15:15] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
-            WHERE username = :usuario
-            AND password = :password
-            AND esta_activo = 1
-[06:17:34] [INFO] SELECT id FROM usuario WHERE username = :username
-[06:17:34] [INFO] SELECT id FROM usuario WHERE mail = :mail
-[06:17:51] [INFO] SELECT id FROM usuario WHERE username = :username
-[06:17:51] [INFO] SELECT id FROM usuario WHERE mail = :mail
-[06:18:40] [INFO] SELECT id FROM usuario WHERE username = :username
-[06:18:40] [INFO] SELECT id FROM usuario WHERE mail = :mail
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[08:16:18] [INFO] SELECT id FROM usuario WHERE username = :username
+[08:16:18] [INFO] SELECT id FROM usuario WHERE mail = :mail
