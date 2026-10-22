@@ -27,11 +27,11 @@ class LoginModel
     {
         $passwordHash = md5($password);
 
-        $sql = "SELECT id, username
-            FROM usuario
-            WHERE username = :usuario
-            AND password = :password
-            AND esta_activo = 1";
+        $sql = "SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1";
 
         return $this->database->queryOne(
             $sql,
