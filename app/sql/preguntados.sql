@@ -30,6 +30,14 @@ INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email
 VALUES ('Facundo Docente', 1995, 'Masculino', 'Argentina', 'Buenos Aires', 'facu@unlam.edu.ar', 'facu', MD5('1234'), 'default.png', 1, 1, 0)
     ON DUPLICATE KEY UPDATE password = MD5('1234'), esta_activo = 1;
 
+INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, username, password, foto_perfil, esta_activo, id_rol, puntaje_acumulado)
+VALUES ('Administrador', 1995, 'Masculino', 'Argentina', 'Buenos Aires', 'admin@admin.com.ar', 'admin', MD5('admin'), 'default.png', 1, 3, 0)
+    ON DUPLICATE KEY UPDATE password = MD5('1234'), esta_activo = 1;
+
+INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, username, password, foto_perfil, esta_activo, id_rol, puntaje_acumulado)
+VALUES ('Editor', 1995, 'Masculino', 'Argentina', 'Buenos Aires', 'editor@editor.edu.ar', 'editor', MD5('editor'), 'default.png', 1, 2, 0)
+    ON DUPLICATE KEY UPDATE password = MD5('1234'), esta_activo = 1;
+
 CREATE TABLE IF NOT EXISTS partida (
                                        id INT AUTO_INCREMENT PRIMARY KEY,
                                        id_usuario INT NOT NULL,

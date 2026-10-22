@@ -10,18 +10,6 @@ class LoginModel
         $this->database = $database;
     }
 
-//    public function autenticar($usuario, $password)
-//    {
-//        $passwordHash = md5($password);
-//
-//        $sql = "SELECT id, username
-//            FROM usuario
-//            WHERE username = '$usuario'
-//            AND password = '$passwordHash'
-//            AND esta_activo = 1";
-//
-//        return $this->database->queryOne($sql);
-//    }
 
     public function autenticar($usuario, $password)
     {
