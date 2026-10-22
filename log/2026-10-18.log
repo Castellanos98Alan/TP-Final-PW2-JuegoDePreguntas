@@ -1,0 +1,18 @@
+[06:14:37] [INFO] SELECT id FROM usuario WHERE username = :username
+[06:14:37] [INFO] SELECT id FROM usuario WHERE mail = :mail
+[06:16:27] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[06:16:34] [INFO] SELECT id, username
+            FROM usuario
+            WHERE username = :usuario
+            AND password = :password
+            AND esta_activo = 1
+[06:17:34] [INFO] SELECT id FROM usuario WHERE username = :username
+[06:17:34] [INFO] SELECT id FROM usuario WHERE mail = :mail
+[06:17:51] [INFO] SELECT id FROM usuario WHERE username = :username
+[06:17:51] [INFO] SELECT id FROM usuario WHERE mail = :mail
+[06:18:40] [INFO] SELECT id FROM usuario WHERE username = :username
+[06:18:40] [INFO] SELECT id FROM usuario WHERE mail = :mail
