@@ -7,10 +7,15 @@ use app\controller\LoginController;
 use app\controller\LobbyController;
 use app\controller\PartidaController;
 use app\controller\GrupoController;
+use app\controller\AdminController;
+use app\controller\EditorController;
+
 use app\model\LoginModel;
 use app\model\LobbyModel;
 use app\model\PartidaModel;
 use app\model\RegistroModel;
+use app\model\AdminModel;
+use app\model\EditorModel;
 use MustacheRender;
 use MyDatabase;
 use Router;
@@ -41,6 +46,22 @@ class Configuration
         );
     }
 
+    public function getAdminController()
+    {
+        return new AdminController(
+            $this->getAdminModel(),
+            $this->getRender()
+        );
+    }
+
+    public function getEditorController()
+    {
+        return new EditorController(
+            $this->getEditorModel(),
+            $this->getRender()
+        );
+    }
+
     public function getPartidaController()
     {
         return new PartidaController(
@@ -61,6 +82,20 @@ class Configuration
     private function getLobbyModel()
     {
         return new LobbyModel(
+            $this->getDatabase()
+        );
+    }
+
+    private function getAdminModel()
+    {
+        return new AdminModel(
+            $this->getDatabase()
+        );
+    }
+
+    private function getEditorModel()
+    {
+        return new EditorModel(
             $this->getDatabase()
         );
     }

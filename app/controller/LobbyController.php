@@ -22,6 +22,7 @@ namespace app\controller;
          }
 
          $jugador = $this->model->obtenerDatosDelJugador($_SESSION['usuario_id']);
+         $partidas = $this->model->obtenerPartidasDelJugador($_SESSION['usuario_id']);
 
          if($jugador === null){
              session_destroy();
@@ -35,7 +36,8 @@ namespace app\controller;
              'ubicacion'         => $jugador['ciudad'] . ', ' . $jugador['pais'],
              'puntaje_acumulado' => $jugador['puntaje_acumulado'],
              'posicion'          => $this->model->obtenerPosicionRanking($jugador['puntaje_acumulado']),
-             'miembro_desde'     => $jugador['miembro_desde']
+             'miembro_desde'     => $jugador['miembro_desde'],
+             'partidas'          => $partidas
          ];
 
          $this->render->renderiza("lobby", $data);

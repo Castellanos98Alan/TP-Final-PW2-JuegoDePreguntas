@@ -384,65 +384,65 @@
             WHERE username = :usuario
             AND password = :password
             AND esta_activo = 1
-[23:38:28] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:38:28] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:38:28] [INFO] SELECT COUNT(*) + 1 AS posicion
                 FROM usuario
                 WHERE esta_activo = 1
                 AND id_rol = 1
                 ADN puntaje_acumulado = :puntaje
-[23:55:10] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:55:10] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
-[23:56:12] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:56:12] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
-                AND esta_activo = 1
-[23:56:12] [INFO] SELECT COUNT(*) + 1 AS posicion
-            FROM usuario
-            WHERE esta_activo = 1
-            AND id_rol = 1
-            AND puntaje_acumulado > :puntaje
-[23:56:12] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
-                pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:56:12] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
             WHERE esta_activo = 1
             AND id_rol = 1
             AND puntaje_acumulado > :puntaje
-[23:57:17] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:56:12] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[23:56:12] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[23:57:17] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
+                pais, ciudad,
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:57:17] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
@@ -454,28 +454,28 @@
             WHERE username = :usuario
             AND password = :password
             AND esta_activo = 1
-[23:57:26] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:57:26] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:57:26] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
             WHERE esta_activo = 1
             AND id_rol = 1
             AND puntaje_acumulado > :puntaje
-[23:57:54] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:57:54] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:57:54] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
@@ -487,28 +487,28 @@
             WHERE username = :usuario
             AND password = :password
             AND esta_activo = 1
-[23:58:48] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:58:48] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:58:48] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
             WHERE esta_activo = 1
             AND id_rol = 1
             AND puntaje_acumulado > :puntaje
-[23:58:53] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:58:53] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:58:53] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
@@ -520,42 +520,42 @@
             WHERE username = :usuario
             AND password = :password
             AND esta_activo = 1
-[23:58:58] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:58:58] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:58:58] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
             WHERE esta_activo = 1
             AND id_rol = 1
             AND puntaje_acumulado > :puntaje
-[23:59:01] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:59:01] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:59:01] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
             WHERE esta_activo = 1
             AND id_rol = 1
             AND puntaje_acumulado > :puntaje
-[23:59:02] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:59:02] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:59:02] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
@@ -567,14 +567,14 @@
             WHERE username = :usuario
             AND password = :password
             AND esta_activo = 1
-[23:59:28] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:59:28] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:59:28] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
@@ -586,28 +586,28 @@
             WHERE username = :usuario
             AND password = :password
             AND esta_activo = 1
-[23:59:44] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:59:44] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:59:44] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
             WHERE esta_activo = 1
             AND id_rol = 1
             AND puntaje_acumulado > :puntaje
-[23:59:49] [INFO] SELECT nombre_completo, 
-                username, 
-                foto_perfil, 
+[23:59:49] [INFO] SELECT nombre_completo,
+                username,
+                foto_perfil,
                 pais, ciudad,
-                puntaje_acumulado, 
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
-                FROM usuario 
-                WHERE id = :id 
+                puntaje_acumulado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
                 AND esta_activo = 1
 [23:59:49] [INFO] SELECT COUNT(*) + 1 AS posicion
             FROM usuario
