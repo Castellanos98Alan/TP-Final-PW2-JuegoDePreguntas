@@ -79,6 +79,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 15px;
         }
 
         .brand-link {
@@ -98,6 +99,7 @@
             justify-content: center;
             color: #F1CD73;
             font-size: 20px;
+            flex-shrink: 0;
         }
 
         .brand-text h1 {
@@ -123,13 +125,43 @@
             gap: 14px;
         }
 
-        .user-greeting {
-            color: #B6C9E6;
-            font-size: 14px;
+        /* BOTÓN DE PERFIL CON FOTO REAL Y USERNAME */
+        .header-user-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 14px 4px 5px;
+            background: rgba(16, 39, 73, 0.55);
+            border: 1px solid rgba(212, 175, 85, 0.45);
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.2s ease;
         }
 
-        .user-greeting strong {
+        .header-user-btn:hover {
+            border-color: #F1CD73;
+            background: rgba(212, 175, 85, 0.15);
+            box-shadow: 0 0 12px rgba(241, 205, 115, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .header-user-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #D4AF55;
+            box-shadow: 0 0 6px rgba(212, 175, 85, 0.4);
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .header-user-name {
             color: #F1CD73;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            line-height: 1;
         }
 
         .btn-link {
@@ -142,6 +174,7 @@
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
+            white-space: nowrap;
         }
 
         .btn-outline {
@@ -175,9 +208,29 @@
             padding: 40px 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             position: relative;
             z-index: 1;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .header-container {
+                padding: 10px 14px;
+            }
+            .brand-text span {
+                display: none;
+            }
+            .header-user-name {
+                display: none;
+            }
+            .header-user-btn {
+                padding: 3px;
+            }
+            .btn-link {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -195,7 +248,20 @@
 
         <nav class="nav-actions">
             <?php if (isset($_SESSION['usuario'])): ?>
-                <span class="user-greeting">Hola, <strong><?= htmlspecialchars($_SESSION['usuario']) ?></strong></span>
+                <?php
+                $nombreFoto = !empty($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'default.png';
+                $rutaFoto = 'public/' . $nombreFoto;
+
+                if (!file_exists($rutaFoto)) {
+                    $rutaFoto = 'public/FondoPerfilLuffy.png';
+                }
+                ?>
+                <a href="?controller=perfil&method=show" class="header-user-btn" title="Ver mi perfil">
+                    <img src="<?= htmlspecialchars($rutaFoto) ?>"
+                         alt="Foto de <?= htmlspecialchars($_SESSION['usuario']) ?>"
+                         class="header-user-avatar">
+                    <span class="header-user-name"><?= htmlspecialchars($_SESSION['usuario']) ?></span>
+                </a>
                 <a href="?controller=login&method=logout" class="btn-link btn-outline">Cerrar Sesión</a>
             <?php else: ?>
                 <a href="?controller=login&method=show" class="btn-link btn-outline">Ingresar</a>

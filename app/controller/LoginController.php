@@ -27,6 +27,7 @@ class LoginController
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['usuario'] = $usuario['username'];
         $_SESSION['rol'] = $usuario['id_rol'];
+        $_SESSION['foto_perfil'] = $usuario['foto_perfil'];
 
         switch ($usuario['id_rol']) {
 

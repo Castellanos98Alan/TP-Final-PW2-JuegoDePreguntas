@@ -1,0 +1,136 @@
+[19:04:35] [INFO] SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[19:05:14] [INFO] SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[19:05:14] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[19:05:14] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[19:05:14] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[19:05:14] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[19:05:14] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[19:05:14] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[19:40:11] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[19:40:11] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[19:40:11] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[19:40:16] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[19:40:16] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[19:40:16] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[19:40:31] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[19:40:31] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[19:40:31] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[19:40:35] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[19:40:35] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[19:40:35] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje

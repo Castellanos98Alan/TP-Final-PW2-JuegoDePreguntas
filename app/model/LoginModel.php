@@ -15,7 +15,7 @@ class LoginModel
     {
         $passwordHash = md5($password);
 
-        $sql = "SELECT id, username, id_rol
+        $sql = "SELECT id, username, id_rol, foto_perfil
         FROM usuario
         WHERE username = :usuario
         AND password = :password
