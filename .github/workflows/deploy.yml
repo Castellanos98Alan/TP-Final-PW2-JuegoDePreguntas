@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+      - main
+  workflow_dispatch: # Te agrega un botón en GitHub para forzar el deploy manualmente cuando quieras
 
 jobs:
   deploy:
@@ -23,6 +25,8 @@ jobs:
           echo "db_pass = ${{ secrets.DB_PASS }}" >> config/config.ini
           echo "db_name = ${{ secrets.DB_NAME }}" >> config/config.ini
           echo "db_port = 3306" >> config/config.ini
+          echo "smtp_user = ${{ secrets.SMTP_USER || 'animequizsite@gmail.com' }}" >> config/config.ini
+          echo "smtp_pass = ${{ secrets.SMTP_PASS || 'wzqyostxcvemsxqa' }}" >> config/config.ini
 
       - name: Desplegar por FTP
         env:
@@ -33,7 +37,11 @@ jobs:
           echo "Iniciando deploy a InfinityFree..."
           lftp -e "
           set ftp:ssl-allow no;
+          set ftp:passive-mode true;
+          set net:timeout 30;
+          set net:max-retries 15;
+          set net:reconnect-interval-base 5;
           open -u $FTP_USER,$FTP_PASS $FTP_HOST;
-          mirror -R ./ htdocs/ --exclude .git* --exclude .github/;
+          mirror -R --continue --verbose --parallel=1 ./ htdocs/ --exclude .git/ --exclude .github/ --exclude .gitignore;
           bye
           "
