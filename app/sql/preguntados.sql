@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS rol (id INT AUTO_INCREMENT PRIMARY KEY,nombre VARCHAR
 INSERT IGNORE INTO rol (id, nombre) VALUES (1, 'jugador'), (2, 'editor'), (3, 'administrador');
 
 CREATE TABLE IF NOT EXISTS usuario (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_completo VARCHAR(100) NOT NULL,
+                                       id INT AUTO_INCREMENT PRIMARY KEY,
+                                       nombre_completo VARCHAR(100) NOT NULL,
     anio_nacimiento INT NOT NULL,
     sexo ENUM('Masculino', 'Femenino', 'Prefiero no cargarlo') NOT NULL,
     pais VARCHAR(100) NOT NULL,

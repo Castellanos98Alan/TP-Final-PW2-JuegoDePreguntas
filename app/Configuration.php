@@ -2,6 +2,7 @@
 
 namespace app;
 
+use app\controller\PerfilController;
 use app\controller\RegistroController;
 use app\controller\LoginController;
 use app\controller\LobbyController;
@@ -13,6 +14,7 @@ use app\controller\EditorController;
 use app\model\LoginModel;
 use app\model\LobbyModel;
 use app\model\PartidaModel;
+use app\model\PerfilModel;
 use app\model\RegistroModel;
 use app\model\AdminModel;
 use app\model\EditorModel;
@@ -147,6 +149,21 @@ class Configuration
     {
         return new RegistroController(
             $this->getRegistroModel(),
+            $this->getRender()
+        );
+    }
+
+    private function getPerfilModel()
+    {
+        return new PerfilModel(
+            $this->getDatabase()
+        );
+    }
+
+    public function getPerfilController()
+    {
+        return new PerfilController(
+            $this->getPerfilModel(),
             $this->getRender()
         );
     }

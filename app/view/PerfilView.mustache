@@ -1,0 +1,466 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+
+<style>
+    body {
+        background:
+                linear-gradient(
+                        rgba(2, 8, 25, 0.45),
+                        rgba(2, 8, 25, 0.55)
+                ),
+                url("public/Fondo-Home2.png") !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
+    }
+
+    .pf-container {
+        width: 100%;
+        max-width: 1150px;
+        margin: 10px auto 40px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .pf-grid {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .pf-col {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 0;
+    }
+
+    .pf-panel {
+        background: linear-gradient(160deg, rgba(3, 14, 38, .88), rgba(8, 31, 77, .88));
+        border: 1px solid #d4a72c;
+        border-radius: 18px;
+        padding: 22px;
+        box-shadow:
+                inset 0 0 25px rgba(0,0,0,.25),
+                0 0 15px rgba(41, 89, 255, .08);
+    }
+
+    .pf-panel h2 {
+        color: #f5c84b;
+        font-size: 21px;
+        margin-bottom: 18px;
+        border-bottom: 1px solid rgba(245, 200, 75, .25);
+        padding-bottom: 12px;
+    }
+
+    /* ===== CABECERA ===== */
+    .pf-cabecera {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+    }
+
+    .pf-avatar {
+        width: 118px;
+        height: 118px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+        border: 3px solid #d4af55;
+        box-shadow: 0 0 18px rgba(245, 200, 75, .35);
+    }
+
+    .pf-nombre {
+        font-family: 'Permanent Marker', cursive;
+        font-size: clamp(28px, 5vw, 40px);
+        line-height: 1.05;
+        color: #F1CD73;
+        letter-spacing: 1px;
+        word-break: break-word;
+    }
+
+    .pf-nombre-completo {
+        margin-top: 6px;
+        font-size: 17px;
+        color: #F3F5FA;
+    }
+
+    .pf-ubicacion {
+        margin-top: 4px;
+        font-size: 14px;
+        color: #a9bfdf;
+    }
+
+    .pf-badge {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 4px 12px;
+        border: 1px solid #d4a72c;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #f5c84b;
+        background: rgba(212, 175, 85, .12);
+    }
+
+    /* ===== ESTADÍSTICAS ===== */
+    .pf-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 14px;
+        margin-top: 22px;
+    }
+
+    .pf-stat {
+        background: linear-gradient(145deg, #06132e, #0b285f);
+        border: 1px solid rgba(212, 167, 44, .6);
+        border-radius: 14px;
+        padding: 16px 10px;
+        text-align: center;
+        box-shadow: inset 0 0 20px rgba(0,0,0,.35);
+    }
+
+    .pf-stat strong {
+        display: block;
+        font-size: 26px;
+        color: #f5c84b;
+        margin-bottom: 4px;
+    }
+
+    .pf-stat span {
+        color: #c6d7f5;
+        font-size: 13px;
+    }
+
+    /* ===== RESUMEN ===== */
+    .pf-fila {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 2px;
+        border-bottom: 1px solid rgba(255,255,255,.10);
+        font-size: 14px;
+    }
+
+    .pf-fila:last-child {
+        border-bottom: none;
+    }
+
+    .pf-fila span {
+        color: #a9bfdf;
+    }
+
+    .pf-fila strong {
+        color: #f5c84b;
+        text-align: right;
+    }
+
+    /* ===== MAPA ===== */
+    #pf-mapa {
+        width: 100%;
+        height: 300px;
+        border-radius: 12px;
+        border: 1px solid rgba(212, 167, 44, .6);
+        z-index: 1;
+    }
+
+    .pf-sin-datos {
+        text-align: center;
+        color: #a9bfdf;
+        padding: 30px 10px;
+    }
+
+    .pf-pin {
+        width: 24px;
+        height: 24px;
+        background: #f5c84b;
+        border: 3px solid #06132d;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        box-shadow: 0 2px 8px rgba(0,0,0,.5);
+    }
+
+    .pf-pin::after {
+        content: "";
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        top: 5px;
+        left: 5px;
+        border-radius: 50%;
+        background: #06132d;
+    }
+
+    /* ===== QR ===== */
+    .pf-qr-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        text-align: center;
+    }
+
+    .pf-qr-img {
+        display: block;
+        width: 200px;
+        height: 200px;
+        background: #fff;
+        padding: 12px;
+        border-radius: 12px;
+        border: 3px solid #d4af55;
+    }
+
+    .pf-qr-texto {
+        font-size: 13px;
+        color: #a9bfdf;
+        line-height: 1.5;
+    }
+
+    .pf-qr-url {
+        display: block;
+        margin-top: 6px;
+        font-size: 12px;
+        color: #B6C9E6;
+        word-break: break-all;
+    }
+
+    .pf-btn {
+        font-family: inherit;
+        cursor: pointer;
+        padding: 10px 22px;
+        border-radius: 25px;
+        border: 1px solid #d4a72c;
+        background: linear-gradient(90deg, #06132e, #0d347c, #06132e);
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        transition: .3s;
+    }
+
+    .pf-btn:hover,
+    .pf-btn:focus-visible {
+        color: #06132d;
+        background: linear-gradient(90deg, #b98211, #f5c84b, #b98211);
+        box-shadow: 0 0 20px rgba(245, 200, 75, .45);
+    }
+
+    /* ===== PARTIDAS ===== */
+    .pf-partidas {
+        margin-top: 20px;
+    }
+
+    .pf-partida {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: center;
+        padding: 14px 4px;
+        border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+
+    .pf-partida:last-child {
+        border-bottom: none;
+    }
+
+    .pf-partida-titulo {
+        color: #f5c84b;
+        font-weight: bold;
+    }
+
+    .pf-partida-detalle {
+        color: #a9bfdf;
+        font-size: 13px;
+        margin-top: 4px;
+    }
+
+    .pf-partida-puntos {
+        color: #f5c84b;
+        font-weight: bold;
+    }
+
+    /* ===== NO ENCONTRADO ===== */
+    .pf-vacio {
+        max-width: 520px;
+        margin: 40px auto;
+        text-align: center;
+    }
+
+    .pf-vacio p {
+        color: #c6d7f5;
+        margin-bottom: 20px;
+    }
+
+    .pf-vacio a {
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+        .pf-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .pf-cabecera {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        #pf-mapa {
+            height: 240px;
+        }
+    }
+</style>
+
+<div class="pf-container">
+
+    {{#no_encontrado}}
+        <div class="pf-panel pf-vacio">
+            <h2>Perfil no encontrado</h2>
+            <p>Este jugador no existe o su cuenta todavía no fue activada.</p>
+            <a href="?controller=lobby&method=show" class="pf-btn">Volver al lobby</a>
+        </div>
+    {{/no_encontrado}}
+
+    {{^no_encontrado}}
+
+        <div class="pf-grid">
+
+            <!-- COLUMNA IZQUIERDA -->
+            <div class="pf-col">
+
+                <div class="pf-panel">
+                    <div class="pf-cabecera">
+                        <img src="{{foto_perfil}}" alt="Foto de {{username}}" class="pf-avatar">
+                        <div>
+                            <div class="pf-nombre">{{username}}</div>
+                            <div class="pf-nombre-completo">{{nombre_completo}}</div>
+                            <div class="pf-ubicacion">📍 {{ubicacion}}</div>
+                            {{#es_propio}}
+                                <span class="pf-badge">Tu perfil</span>
+                            {{/es_propio}}
+                        </div>
+                    </div>
+
+                    <div class="pf-stats">
+                        <div class="pf-stat">
+                            <strong>{{puntaje_acumulado}}</strong>
+                            <span>puntaje final</span>
+                        </div>
+
+                        {{#es_jugador}}
+                            <div class="pf-stat">
+                                <strong>#{{posicion}}</strong>
+                                <span>en el ranking</span>
+                            </div>
+                        {{/es_jugador}}
+
+                        <div class="pf-stat">
+                            <strong>{{cantidad_partidas}}</strong>
+                            <span>partidas realizadas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pf-panel">
+                    <h2>🗺️ Ubicación</h2>
+                    {{#tiene_ubicacion}}
+                        <div id="pf-mapa" data-lat="{{latitud}}" data-lng="{{longitud}}"></div>
+                    {{/tiene_ubicacion}}
+                    {{^tiene_ubicacion}}
+                        <div class="pf-sin-datos">Este jugador no cargó su ubicación en el mapa.</div>
+                    {{/tiene_ubicacion}}
+                </div>
+
+            </div>
+
+            <!-- COLUMNA DERECHA -->
+            <div class="pf-col">
+
+                <div class="pf-panel">
+                    <h2>📊 Resumen de juego</h2>
+                    <div class="pf-fila"><span>Mejor puntaje</span><strong>{{mejor_puntaje}} pts</strong></div>
+                    <div class="pf-fila"><span>Promedio por partida</span><strong>{{promedio}} pts</strong></div>
+                    <div class="pf-fila"><span>Miembro desde</span><strong>{{miembro_desde}}</strong></div>
+                    <div class="pf-fila"><span>Ubicación</span><strong>{{ubicacion}}</strong></div>
+                </div>
+
+                <div class="pf-panel">
+                    <h2>🔗 Compartir perfil</h2>
+                    <div class="pf-qr-wrap">
+                        {{#tiene_qr}}
+                            <img class="pf-qr-img" src="{{qr_imagen}}" alt="Código QR del perfil de {{username}}">
+                            <p class="pf-qr-texto">
+                                Escaneá el código para abrir este perfil desde otro dispositivo.
+                                <a class="pf-qr-url" href="{{url_perfil}}">{{url_perfil}}</a>
+                            </p>
+                            <a class="pf-btn" href="{{qr_imagen}}" download="qr-{{username}}.png">Descargar QR</a>
+                        {{/tiene_qr}}
+                        {{^tiene_qr}}
+                            <p class="pf-qr-texto">
+                                No se pudo generar el código QR.
+                                <a class="pf-qr-url" href="{{url_perfil}}">{{url_perfil}}</a>
+                            </p>
+                        {{/tiene_qr}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PARTIDAS -->
+        <div class="pf-panel pf-partidas">
+            <h2>🎮 Partidas realizadas</h2>
+
+            {{#partidas}}
+                <div class="pf-partida">
+                    <div>
+                        <div class="pf-partida-titulo">Partida #{{id}}</div>
+                        <div class="pf-partida-detalle">{{fecha}} · {{resultado}}</div>
+                    </div>
+                    <div class="pf-partida-puntos">{{puntaje}} pts</div>
+                </div>
+            {{/partidas}}
+
+            {{^partidas}}
+                <div class="pf-sin-datos">Todavía no jugó ninguna partida.</div>
+            {{/partidas}}
+        </div>
+
+    {{/no_encontrado}}
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+    (function () {
+        // ---- MAPA ----
+        var contenedorMapa = document.getElementById('pf-mapa');
+        if (contenedorMapa && typeof L !== 'undefined') {
+            var lat = parseFloat(contenedorMapa.dataset.lat);
+            var lng = parseFloat(contenedorMapa.dataset.lng);
+
+            if (!isNaN(lat) && !isNaN(lng)) {
+                var mapa = L.map(contenedorMapa, {scrollWheelZoom: false}).setView([lat, lng], 11);
+
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '&copy; OpenStreetMap'
+                }).addTo(mapa);
+
+                L.marker([lat, lng], {
+                    icon: L.divIcon({
+                        className: '',
+                        html: '<div class="pf-pin"></div>',
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 28]
+                    })
+                }).addTo(mapa);
+            }
+        }
+    })();
+</script>
