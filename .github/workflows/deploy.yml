@@ -5,7 +5,7 @@ on:
     branches:
       - master
       - main
-  workflow_dispatch: # Te agrega un botón en GitHub para forzar el deploy manualmente cuando quieras
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -42,6 +42,6 @@ jobs:
           set net:max-retries 15;
           set net:reconnect-interval-base 5;
           open -u $FTP_USER,$FTP_PASS $FTP_HOST;
-          mirror -R --continue --verbose --parallel=1 ./ htdocs/ --exclude .git/ --exclude .github/ --exclude .gitignore;
+          mirror -R --continue --verbose --parallel=1 --no-perms ./ htdocs/ --exclude-glob .git* --exclude-glob .github* --exclude-glob .gitignore;
           bye
           "
