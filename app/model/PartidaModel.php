@@ -215,12 +215,15 @@ class PartidaModel
                     p.tipo_pregunta,
                     p.recurso,
                     p.dificultad,
-                    a.nombre AS anime
+                    a.nombre AS anime,
+                    c.nombre AS categoria
 
                 FROM pregunta p
 
                 JOIN anime a
                     ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
 
                 LEFT JOIN usuario_pregunta up
                     ON p.id = up.pregunta_id
@@ -269,12 +272,15 @@ class PartidaModel
                     p.tipo_pregunta,
                     p.recurso,
                     p.dificultad,
-                    a.nombre AS anime
+                    a.nombre AS anime,
+                    c.nombre AS categoria
 
                 FROM pregunta p
 
                 JOIN anime a
                     ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
 
                 WHERE p.dificultad = :dificultad
 

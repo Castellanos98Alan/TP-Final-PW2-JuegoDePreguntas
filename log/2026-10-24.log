@@ -11755,3 +11755,3026 @@
                 )
             ON DUPLICATE KEY UPDATE
                 pregunta_id = pregunta_id
+[18:24:38] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[18:24:38] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[18:24:38] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[18:47:05] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[18:47:05] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[18:47:05] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[18:47:12] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[18:47:12] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[18:47:12] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[18:47:12] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[18:47:17] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 3
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 2
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 3
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 2
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 3
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[18:47:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 2
+[18:47:21] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 3
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 2
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 3
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 2
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 3
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[18:47:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 2
+[18:47:28] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[18:47:33] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[18:47:39] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[18:47:45] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[18:47:45] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[18:47:45] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[18:47:45] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[18:47:47] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[18:47:47] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[18:47:47] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[18:47:47] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[18:47:53] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[18:47:53] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[18:47:53] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[18:47:53] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[18:48:19] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[18:48:19] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[18:48:19] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[18:48:19] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[18:48:21] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[18:52:05] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[18:54:27] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[18:54:27] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[18:54:27] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[18:54:27] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[18:54:27] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[18:54:27] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[18:54:27] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[18:54:28] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[18:54:28] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[18:54:28] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :id
+[18:54:28] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[18:54:30] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:22:18] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:22:18] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:22:18] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:22:19] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:22:23] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:22:23] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:22:23] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:22:23] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:22:23] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:22:23] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:22:23] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:22:35] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:22:35] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:22:35] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:22:39] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:22:39] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:22:39] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:22:43] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:22:43] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:22:43] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:22:46] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:22:46] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:22:46] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:22:54] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:22:54] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:22:54] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:22:58] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:22:58] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:22:58] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:05] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:05] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:05] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:07] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:07] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:07] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:12] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:12] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:12] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :id
+[20:23:12] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[20:23:22] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:23:25] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:23:25] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:23:25] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:23:25] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:23:25] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:23:25] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:23:25] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:27] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:27] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:27] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:30] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:30] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:30] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:33] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:33] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:33] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:36] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:36] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:36] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:39] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:39] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:39] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:43] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:43] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:43] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:49] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:49] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:49] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:51] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:51] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:51] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:23:57] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:23:57] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:23:57] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:24:03] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:24:03] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:24:03] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:24:09] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:24:09] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:24:09] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :id
+[20:24:09] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[20:24:12] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:24:16] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:24:16] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 AND p.id NOT IN (:preguntaExcluir0) ORDER BY RAND()
+                  LIMIT 2
+[20:24:29] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:24:29] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 AND p.id NOT IN (:preguntaExcluir0) ORDER BY RAND()
+                  LIMIT 2
+[20:24:42] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:24:42] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:24:42] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 2
+[20:24:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:24:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 3
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 3
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 2
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 3
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 2
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 3
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:25:47] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 ORDER BY RAND()
+                  LIMIT 2
+[20:25:47] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:25:50] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:25:50] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 AND p.id NOT IN (:preguntaExcluir0) ORDER BY RAND()
+                  LIMIT 2
+[20:25:50] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:25:50] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:25:50] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 AND p.id NOT IN (:preguntaExcluir0, :preguntaExcluir1) ORDER BY RAND()
+                  LIMIT 1
+[20:25:50] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:25:50] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 3
+[20:25:50] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 2
+[20:25:50] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:25:51] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:25:51] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:25:51] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :id
+[20:25:51] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[20:25:54] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:25:54] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:25:54] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:25:55] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC

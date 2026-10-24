@@ -195,7 +195,13 @@ class PartidaController
                 $indiceActual + 1,
 
             'puntaje' =>
-                $partida['puntaje']
+                $partida['puntaje'],
+
+             'esImagen' =>
+                $pregunta['tipo_pregunta']  === 'imagen',
+
+            'esAudio' =>
+                $pregunta['tipo_pregunta'] === 'audio'
         ];
 
         echo $this->render->renderiza(
