@@ -1,0 +1,444 @@
+<style>
+    .partida-page {
+        min-height: calc(100vh - 140px);
+        background:
+                radial-gradient(circle at top left, rgba(255, 191, 0, 0.08), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(54, 113, 255, 0.10), transparent 35%),
+                linear-gradient(180deg, #0c2242 0%, #07152a 100%);
+        color: white;
+        padding: 40px 20px;
+        box-sizing: border-box;
+    }
+
+    .partida-container {
+        max-width: 1180px;
+        margin: 0 auto;
+    }
+
+    .partida-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .partida-info {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .partida-chip {
+        background: rgba(7, 22, 45, 0.9);
+        border: 1px solid #d8aa32;
+        color: white;
+        padding: 10px 16px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .partida-chip strong {
+        color: #f4c34a;
+    }
+
+    .puntaje-box {
+        background: linear-gradient(135deg, #d8aa32, #f3d173);
+        color: #06142a;
+        padding: 11px 22px;
+        border-radius: 999px;
+        font-weight: 800;
+        box-shadow: 0 0 20px rgba(216, 170, 50, 0.18);
+    }
+
+    .partida-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 190px;
+        gap: 30px;
+        align-items: start;
+    }
+
+    .zona-juego {
+        min-width: 0;
+    }
+
+    .numero-pregunta {
+        text-align: center;
+        color: #f4c34a;
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        margin-bottom: 16px;
+        text-transform: uppercase;
+    }
+
+    .pregunta-card {
+        position: relative;
+        background:
+                linear-gradient(180deg, rgba(21, 58, 104, 0.98), rgba(7, 22, 45, 0.98));
+        border: 2px solid #d8aa32;
+        border-radius: 24px;
+        padding: 36px 30px;
+        margin-bottom: 30px;
+        text-align: center;
+        overflow: hidden;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+    }
+
+    .pregunta-card::before,
+    .pregunta-card::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 90px;
+        height: 1px;
+        background: #d8aa32;
+        opacity: 0.55;
+    }
+
+    .pregunta-card::before {
+        left: 0;
+    }
+
+    .pregunta-card::after {
+        right: 0;
+    }
+
+    .pregunta-texto {
+        position: relative;
+        z-index: 1;
+        font-size: clamp(22px, 3vw, 32px);
+        line-height: 1.35;
+        font-weight: 800;
+        margin: 0;
+    }
+
+    .respuestas-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .respuesta-btn {
+        width: 100%;
+        min-height: 76px;
+        border: 2px solid #d8aa32;
+        border-radius: 999px;
+        background:
+                linear-gradient(180deg, #12345f 0%, #081c38 100%);
+        color: white;
+        padding: 14px 22px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        cursor: pointer;
+        transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        text-align: left;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    }
+
+    .respuesta-btn:hover {
+        transform: translateY(-2px);
+        background:
+                linear-gradient(180deg, #194d87 0%, #0b2b54 100%);
+        border-color: #f3d173;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .respuesta-btn:active {
+        transform: scale(0.99);
+    }
+
+    .respuesta-letra {
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #d8aa32;
+        color: #06142a;
+        font-weight: 900;
+        font-size: 18px;
+        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.18);
+    }
+
+    .respuesta-texto {
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .escalera {
+        background:
+                linear-gradient(180deg, rgba(8, 26, 52, 0.98), rgba(4, 15, 30, 0.98));
+        border: 1px solid #d8aa32;
+        border-radius: 20px;
+        padding: 18px 14px;
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .escalera-titulo {
+        color: #f4c34a;
+        text-align: center;
+        font-size: 13px;
+        text-transform: uppercase;
+        font-weight: 900;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+    }
+
+    .nivel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 15px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.80);
+        border-radius: 8px;
+    }
+
+    .nivel:last-child {
+        border-bottom: none;
+    }
+
+    .nivel-premio {
+        color: #f4c34a;
+        font-weight: 900;
+    }
+
+    .pie-juego {
+        margin-top: 24px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+        .partida-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .escalera {
+            order: -1;
+        }
+
+        .escalera {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+        }
+
+        .escalera-titulo {
+            grid-column: 1 / -1;
+        }
+
+        .nivel {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            min-height: 36px;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .partida-page {
+            padding: 25px 12px;
+        }
+
+        .respuestas-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .pregunta-card {
+            padding: 28px 20px;
+        }
+
+        .respuesta-btn {
+            min-height: 68px;
+        }
+
+        .partida-header {
+            align-items: stretch;
+        }
+
+        .puntaje-box {
+            width: 100%;
+            text-align: center;
+        }
+
+        .escalera {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>
+
+
+<div class="partida-page">
+
+    <div class="partida-container">
+
+        <div class="partida-header">
+
+            <div class="partida-info">
+
+                <div class="partida-chip">
+                    Anime:
+                    <strong>{{pregunta.anime}}</strong>
+                </div>
+
+                <div class="partida-chip">
+                    Dificultad:
+                    <strong>{{pregunta.dificultad}}</strong>
+                </div>
+
+            </div>
+
+            <div class="puntaje-box">
+                Puntaje: {{puntaje}}
+            </div>
+
+        </div>
+
+
+        <div class="partida-layout">
+
+            <main class="zona-juego">
+
+                <div class="numero-pregunta">
+                    Pregunta {{numeroPregunta}} de 15
+                </div>
+
+
+                <div class="pregunta-card">
+
+                    <h1 class="pregunta-texto">
+                        {{pregunta.enunciado}}
+                    </h1>
+
+                </div>
+
+
+                <form
+                        action="?controller=partida&method=responder"
+                        method="POST"
+                        class="respuestas-grid"
+                >
+
+                    <input
+                            type="hidden"
+                            name="idPregunta"
+                            value="{{pregunta.id}}"
+                    >
+
+
+                    <button
+                            type="submit"
+                            name="respuesta"
+                            value="A"
+                            class="respuesta-btn"
+                    >
+                        <span class="respuesta-letra">
+                            A
+                        </span>
+
+                        <span class="respuesta-texto">
+                            {{pregunta.respuesta_a}}
+                        </span>
+                    </button>
+
+
+                    <button
+                            type="submit"
+                            name="respuesta"
+                            value="B"
+                            class="respuesta-btn"
+                    >
+                        <span class="respuesta-letra">
+                            B
+                        </span>
+
+                        <span class="respuesta-texto">
+                            {{pregunta.respuesta_b}}
+                        </span>
+                    </button>
+
+
+                    <button
+                            type="submit"
+                            name="respuesta"
+                            value="C"
+                            class="respuesta-btn"
+                    >
+                        <span class="respuesta-letra">
+                            C
+                        </span>
+
+                        <span class="respuesta-texto">
+                            {{pregunta.respuesta_c}}
+                        </span>
+                    </button>
+
+
+                    <button
+                            type="submit"
+                            name="respuesta"
+                            value="D"
+                            class="respuesta-btn"
+                    >
+                        <span class="respuesta-letra">
+                            D
+                        </span>
+
+                        <span class="respuesta-texto">
+                            {{pregunta.respuesta_d}}
+                        </span>
+                    </button>
+
+                </form>
+
+
+                <div class="pie-juego">
+                    Elegí una respuesta para continuar.
+                </div>
+
+            </main>
+
+
+            <aside class="escalera">
+
+                <div class="escalera-titulo">
+                    Camino a la victoria
+                </div>
+
+                <div class="nivel nivel-premio">15</div>
+                <div class="nivel">14</div>
+                <div class="nivel">13</div>
+                <div class="nivel">12</div>
+                <div class="nivel nivel-premio">11</div>
+
+                <div class="nivel">10</div>
+                <div class="nivel">9</div>
+                <div class="nivel">8</div>
+                <div class="nivel">7</div>
+                <div class="nivel nivel-premio">6</div>
+
+                <div class="nivel">5</div>
+                <div class="nivel">4</div>
+                <div class="nivel">3</div>
+                <div class="nivel">2</div>
+                <div class="nivel">1</div>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</div>

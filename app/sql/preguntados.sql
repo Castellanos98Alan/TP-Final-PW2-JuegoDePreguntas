@@ -65,3 +65,80 @@ VALUES
         120,
         'Ganada'
     );
+
+CREATE TABLE IF NOT EXISTS anime (
+                                     id INT AUTO_INCREMENT PRIMARY KEY,
+                                     nombre VARCHAR(100) NOT NULL UNIQUE,
+    imagen VARCHAR(500) DEFAULT NULL,
+    esta_activo TINYINT(1) DEFAULT 1
+    );
+
+
+
+INSERT INTO anime (nombre)
+VALUES
+    ('One Piece'),
+    ('Naruto'),
+    ('Dragon Ball'),
+    ('Bleach'),
+    ('Jujutsu Kaisen'),
+    ('Demon Slayer'),
+    ('Death Note'),
+    ('Pokémon');
+
+
+CREATE TABLE IF NOT EXISTS pregunta (
+                                        id INT AUTO_INCREMENT PRIMARY KEY,
+
+                                        enunciado VARCHAR(500) NOT NULL,
+
+    respuesta_a VARCHAR(255) NOT NULL,
+    respuesta_b VARCHAR(255) NOT NULL,
+    respuesta_c VARCHAR(255) NOT NULL,
+    respuesta_d VARCHAR(255) NOT NULL,
+
+    respuesta_correcta CHAR(1) NOT NULL,
+
+    anime_id INT NOT NULL,
+
+    tipo_pregunta ENUM(
+                          'normal',
+                          'silueta',
+                          'voz',
+                          'recompensa',
+                          'imagen'
+                      ) NOT NULL DEFAULT 'normal',
+
+    recurso VARCHAR(500) DEFAULT NULL,
+
+    dificultad ENUM(
+                       'facil',
+                       'media',
+                       'dificil'
+                   ) NOT NULL,
+
+    esta_activa TINYINT(1) DEFAULT 1,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (anime_id) REFERENCES anime(id)
+    );
+
+CREATE TABLE usuario_pregunta (
+                                  id INT AUTO_INCREMENT PRIMARY KEY,
+
+                                  usuario_id INT NOT NULL,
+                                  pregunta_id INT NOT NULL,
+
+                                  respondida_correctamente TINYINT(1) DEFAULT NULL,
+
+                                  fecha_respuesta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+                                  UNIQUE(usuario_id, pregunta_id),
+
+                                  FOREIGN KEY (usuario_id)
+                                      REFERENCES usuario(id),
+
+                                  FOREIGN KEY (pregunta_id)
+                                      REFERENCES pregunta(id)
+);

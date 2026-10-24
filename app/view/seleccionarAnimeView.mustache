@@ -1,0 +1,77 @@
+<div class="seleccion-anime-container">
+
+    <h1>Elegí tus animes</h1>
+
+    <p>
+        Podés seleccionar uno o varios animes para la partida.
+    </p>
+
+    {{#errorSeleccion}}
+        <div class="mensaje-error">
+            Tenés que seleccionar al menos un anime.
+        </div>
+    {{/errorSeleccion}}
+
+    {{#errorPreguntas}}
+        <div class="mensaje-error">
+            No hay suficientes preguntas para los animes seleccionados.
+        </div>
+    {{/errorPreguntas}}
+
+    <form
+        action="?controller=partida&method=nueva"
+        method="POST"
+    >
+
+        <div class="animes-grid">
+
+            {{#animes}}
+
+                <label class="anime-card">
+
+                    <input
+                        type="checkbox"
+                        name="animes[]"
+                        value="{{id}}"
+                        class="anime-checkbox"
+                    >
+
+                    {{#imagen}}
+                        <img
+                            src="{{imagen}}"
+                            alt="{{nombre}}"
+                            class="anime-imagen"
+                        >
+                    {{/imagen}}
+
+                    <span class="anime-nombre">
+                        {{nombre}}
+                    </span>
+
+                </label>
+
+            {{/animes}}
+
+        </div>
+
+        <div class="acciones-partida">
+
+            <a
+                href="?controller=lobby&method=index"
+                class="btn-volver"
+            >
+                Volver
+            </a>
+
+            <button
+                type="submit"
+                class="btn-comenzar"
+            >
+                Comenzar partida
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
