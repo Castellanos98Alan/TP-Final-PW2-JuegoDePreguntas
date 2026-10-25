@@ -388,3 +388,29 @@ CREATE TABLE usuario_pregunta (
         FOREIGN KEY (pregunta_id)
         REFERENCES pregunta(id)
 );
+
+-- =========================================================
+-- Introducir las imagenes
+-- =========================================================
+
+UPDATE anime SET imagen = 'OnePiece.png' WHERE id = 1;
+UPDATE anime SET imagen = 'Naruto.png' WHERE id = 2;
+UPDATE anime SET imagen = 'DragonBallZ.png' WHERE id = 3;
+UPDATE anime SET imagen = 'Bleach.png' WHERE id = 4;
+UPDATE anime SET imagen = 'JujutsuKaisen.png' WHERE id = 5;
+UPDATE anime SET imagen = 'KimetsuNoYaiba.png' WHERE id = 6;
+UPDATE anime SET imagen = 'DeathNote.png' WHERE id = 7;
+UPDATE anime SET imagen = 'Pokemon.png' WHERE id = 8;
+UPDATE anime SET imagen = 'FullMetalAlchemist.png' WHERE id = 9;
+UPDATE anime SET imagen = 'ShingekiNoKyojin.png' WHERE id = 10;
+UPDATE anime SET imagen = 'HunterXHunter.png' WHERE id = 11;
+UPDATE anime SET imagen = 'Frieren.png' WHERE id = 12;
+
+UPDATE `preguntados2`.`anime` SET `esta_activo` = '0' WHERE (`id` = '4');
+UPDATE `preguntados2`.`anime` SET `esta_activo` = '0' WHERE (`id` = '5');
+UPDATE `preguntados2`.`anime` SET `esta_activo` = '0' WHERE (`id` = '6');
+UPDATE `preguntados2`.`anime` SET `esta_activo` = '0' WHERE (`id` = '7');
+UPDATE `preguntados2`.`anime` SET `esta_activo` = '0' WHERE (`id` = '9');
+UPDATE `preguntados2`.`anime` SET `esta_activo` = '0' WHERE (`id` = '10');
+UPDATE `preguntados2`.`anime` SET `esta_activo` = '0' WHERE (`id` = '11');
+UPDATE `preguntados2`.`anime` SET `esta_activo` = '0' WHERE (`id` = '12');
