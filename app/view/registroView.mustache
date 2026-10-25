@@ -1,124 +1,383 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
+<style>
+    .registro-wrapper {
+        width: 100%;
+        max-width: 680px;
+        margin: 0 auto 40px;
+        box-sizing: border-box;
+    }
 
-            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+    .registro-card {
+        background: #08162d;
+        border: 1px solid #B98B3B;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.75);
+        overflow: hidden;
+        color: #C5D5E8;
+    }
 
-                <div class="card-header bg-primary text-white text-center py-3 border-0">
-                    <h3 class="fw-bold mb-0">Registro de Jugador</h3>
+    .registro-header {
+        background: #0d2345;
+        border-bottom: 1px solid rgba(212, 175, 85, 0.35);
+        padding: 28px 20px 22px;
+        text-align: center;
+    }
+
+    .registro-emblem {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #D4AF55;
+        border-radius: 50%;
+        color: #F1CD73;
+        font-size: 24px;
+        box-shadow: 0 0 14px rgba(212, 175, 85, 0.25);
+    }
+
+    .registro-header h2 {
+        font-family: 'Permanent Marker', cursive;
+        color: #F1CD73;
+        font-size: clamp(24px, 5vw, 32px);
+        margin: 0;
+        letter-spacing: 1px;
+        text-shadow: 0 2px 14px rgba(212, 175, 85, 0.2);
+    }
+
+    .registro-header p {
+        margin: 6px 0 0;
+        color: #9AB4D4;
+        font-size: 13.5px;
+        letter-spacing: 0.5px;
+    }
+
+    .registro-body {
+        padding: 30px 28px 25px;
+        background: #08162d;
+    }
+
+    @media (max-width: 576px) {
+        .registro-body {
+            padding: 20px 16px;
+        }
+    }
+
+    .campo-grupo {
+        margin-bottom: 18px;
+    }
+
+    .campo-fila {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 18px;
+    }
+
+    @media (max-width: 576px) {
+        .campo-fila {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+    }
+
+    .campo-label {
+        display: block;
+        margin-bottom: 8px;
+        color: #F1CD73;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .campo-input,
+    .campo-select {
+        width: 100%;
+        padding: 13px 15px;
+        background-color: #0c2040 !important;
+        border: 1px solid #284c7c !important;
+        border-radius: 9px !important;
+        color: #E6EFFB !important;
+        font-family: inherit;
+        font-size: 14px;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    }
+
+    .campo-input::placeholder {
+        color: #617fA7 !important;
+    }
+
+    .campo-input:focus,
+    .campo-select:focus {
+        background-color: #0f274c !important;
+        border-color: #D4AF55 !important;
+        box-shadow: 0 0 0 3px rgba(212, 175, 85, 0.25) !important;
+        color: #FFFFFF !important;
+    }
+
+    .campo-input[readonly] {
+        background-color: #071428 !important;
+        border-color: #1a3558 !important;
+        color: #92ACCE !important;
+        cursor: not-allowed;
+    }
+
+    .campo-select option {
+        background-color: #0c2040;
+        color: #E6EFFB;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #E6EFFB !important;
+        -webkit-box-shadow: 0 0 0px 1000px #0c2040 inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    .mapa-box {
+        background: #0a1b35;
+        border: 1px solid #284c7c;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 20px;
+    }
+
+    .mapa-titulo {
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #F1CD73;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    #ubicacion-alerta {
+        font-size: 13px;
+        color: #9AB4D4;
+        margin-bottom: 12px;
+    }
+
+    #mapa {
+        height: 230px;
+        width: 100%;
+        border-radius: 9px;
+        border: 1px solid #284c7c;
+        box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6);
+        margin-bottom: 12px;
+    }
+
+    .campo-file {
+        padding: 10px 12px;
+        color: #9AB4D4;
+        background-color: #0c2040;
+        border: 1px solid #284c7c;
+        border-radius: 9px;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 13.5px;
+    }
+
+    .campo-file::file-selector-button {
+        background: #153258;
+        border: 1px solid #284c7c;
+        color: #F1CD73;
+        border-radius: 6px;
+        padding: 6px 14px;
+        margin-right: 14px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .campo-file::file-selector-button:hover {
+        background: #D4AF55;
+        color: #0A1A33;
+        border-color: #F5D78A;
+    }
+
+    .alerta-error {
+        padding: 12px 16px;
+        margin-bottom: 22px;
+        border: 1px solid #8B414D;
+        border-radius: 9px;
+        background: rgba(85, 25, 38, 0.55);
+        color: #FFA4AD;
+        text-align: center;
+        font-size: 13.5px;
+        font-weight: 500;
+    }
+
+    .btn-submit-registro {
+        width: 100%;
+        padding: 15px 20px;
+        border: 1px solid #F5D78A;
+        border-radius: 9px;
+        background: linear-gradient(110deg, #F4D47D, #C99A3D);
+        color: #0A1A33;
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+        transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
+        margin-top: 6px;
+    }
+
+    .btn-submit-registro:hover {
+        filter: brightness(1.08);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 22px rgba(212, 175, 85, 0.35);
+    }
+
+    .registro-footer {
+        background: #071428;
+        border-top: 1px solid rgba(40, 76, 124, 0.6);
+        padding: 18px 20px;
+        text-align: center;
+        font-size: 14px;
+        color: #829fc4;
+    }
+
+    .registro-footer a {
+        color: #F1CD73;
+        font-weight: 700;
+        text-decoration: none;
+        margin-left: 6px;
+        transition: color 0.2s;
+    }
+
+    .registro-footer a:hover {
+        color: #E2ECF7;
+    }
+
+    .leaflet-container {
+        background-color: #0b1d38 !important;
+    }
+
+    .leaflet-control-attribution {
+        background: rgba(8, 22, 45, 0.85) !important;
+        color: #88A5CD !important;
+        font-size: 11px !important;
+    }
+
+    .leaflet-control-attribution a {
+        color: #D4AF55 !important;
+    }
+</style>
+
+<div class="registro-wrapper">
+    <div class="registro-card">
+
+        <div class="registro-header">
+            <div class="registro-emblem" aria-hidden="true">✦</div>
+            <h2>REGISTRO DE JUGADOR</h2>
+            <p>Creá tu perfil y unite a las batallas de trivia</p>
+        </div>
+
+        <div class="registro-body">
+
+            {{#error}}
+                <div class="alerta-error" role="alert">
+                    {{error}}
+                </div>
+            {{/error}}
+
+            <form action="?controller=registro&method=registrar" method="POST" enctype="multipart/form-data">
+
+                <div class="campo-grupo">
+                    <label for="nombre_completo" class="campo-label">Nombre completo</label>
+                    <input type="text" class="campo-input" id="nombre_completo" name="nombre_completo" value="{{nombre_completo}}" placeholder="Ingresá tu nombre completo" required>
                 </div>
 
-                <div class="card-body p-4 p-md-5 bg-white text-dark">
-
-                    {{#error}}
-                        <div class="alert alert-danger text-center fw-semibold py-2">
-                            {{error}}
-                        </div>
-                    {{/error}}
-
-                    <form action="?controller=registro&method=registrar" method="POST" enctype="multipart/form-data">
-
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-3" id="nombre_completo" name="nombre_completo" value="{{nombre_completo}}" placeholder="Nombre completo" required>
-                            <label for="nombre_completo">Nombre completo</label>
-                        </div>
-
-                        <div class="row g-3 mb-3">
-                            <div class="col-12 col-sm-6">
-                                <div class="form-floating">
-                                    <input type="number" class="form-control rounded-3" id="anio_nacimiento" name="anio_nacimiento" value="{{anio_nacimiento}}" placeholder="Año" min="1920" max="2026" required>
-                                    <label for="anio_nacimiento">Año de nacimiento</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="form-floating">
-                                    <select class="form-select rounded-3" id="sexo" name="sexo" required>
-                                        <option value="" selected disabled>Seleccionar...</option>
-                                        <option value="Masculino">Masculino</option>
-                                        <option value="Femenino">Femenino</option>
-                                        <option value="Prefiero no cargarlo">Prefiero no cargarlo</option>
-                                    </select>
-                                    <label for="sexo">Sexo</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-3 bg-light rounded-3 border mb-3">
-                            <label class="form-label fw-bold text-secondary small text-uppercase mb-2">Ubicación (Seleccioná en el mapa)</label>
-
-                            <div id="ubicacion-alerta" class="small text-muted mb-2">
-                                📍 Hacé click en tu ciudad en el mapa para marcarla.
-                            </div>
-                            <div id="mapa" class="rounded border mb-3" style="height: 250px; width: 100%;"></div>
-
-                            <div class="row g-2">
-                                <div class="col-6">
-                                    <input type="text" class="form-control" id="pais" name="pais" value="{{pais}}" placeholder="País" readonly required>
-                                </div>
-                                <div class="col-6">
-                                    <input type="text" class="form-control" id="ciudad" name="ciudad" value="{{ciudad}}" placeholder="Ciudad" readonly required>
-                                </div>
-                                <input type="hidden" id="latitud" name="latitud" value="{{latitud}}">
-                                <input type="hidden" id="longitud" name="longitud" value="{{longitud}}">
-                            </div>
-                        </div>
-
-                        <div class="row g-3 mb-3">
-                            <div class="col-12 col-sm-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control rounded-3" id="email" name="email" value="{{email}}" placeholder="Correo" required>
-                                    <label for="email">Correo electrónico</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control rounded-3" id="username" name="username" value="{{username}}" placeholder="Usuario" required>
-                                    <label for="username">Nombre de usuario</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 mb-3">
-                            <div class="col-12 col-sm-6">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control rounded-3" id="password" name="password" placeholder="Contraseña" required>
-                                    <label for="password">Contraseña</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control rounded-3" id="repetir_password" name="repetir_password" placeholder="Repetir contraseña" required>
-                                    <label for="repetir_password">Repetir contraseña</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="foto_perfil" class="form-label fw-semibold text-secondary small text-uppercase">Foto de perfil</label>
-                            <input class="form-control" type="file" id="foto_perfil" name="foto_perfil" accept="image/*" required>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold rounded-3 shadow-sm">
-                            Registrarse
-                        </button>
-                    </form>
-
+                <div class="campo-fila">
+                    <div>
+                        <label for="anio_nacimiento" class="campo-label">Año de nacimiento</label>
+                        <input type="number" class="campo-input" id="anio_nacimiento" name="anio_nacimiento" value="{{anio_nacimiento}}" placeholder="Ej: 2000" min="1920" max="2026" required>
+                    </div>
+                    <div>
+                        <label for="sexo" class="campo-label">Sexo</label>
+                        <select class="campo-select" id="sexo" name="sexo" required>
+                            <option value="" selected disabled>Seleccionar sexo...</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Prefiero no cargarlo">Prefiero no cargarlo</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="card-footer bg-light text-center py-3 border-0">
-                    <span class="text-muted">¿Ya tienes cuenta?</span>
-                    <a href="/login" class="text-primary fw-bold text-decoration-none ms-1">Inicia sesión</a>
+                <div class="mapa-box">
+                    <span class="mapa-titulo">📍 Ubicación Geográfica</span>
+                    <div id="ubicacion-alerta">
+                        Hacé click en tu ciudad en el mapa para marcarla.
+                    </div>
+                    <div id="mapa"></div>
+
+                    <div class="campo-fila" style="margin-bottom: 0;">
+                        <div>
+                            <label for="pais" class="campo-label" style="font-size: 12px; margin-bottom: 4px;">País</label>
+                            <input type="text" class="campo-input" id="pais" name="pais" value="{{pais}}" placeholder="País seleccionado" readonly required>
+                        </div>
+                        <div>
+                            <label for="ciudad" class="campo-label" style="font-size: 12px; margin-bottom: 4px;">Ciudad</label>
+                            <input type="text" class="campo-input" id="ciudad" name="ciudad" value="{{ciudad}}" placeholder="Ciudad seleccionada" readonly required>
+                        </div>
+                        <input type="hidden" id="latitud" name="latitud" value="{{latitud}}">
+                        <input type="hidden" id="longitud" name="longitud" value="{{longitud}}">
+                    </div>
                 </div>
 
-            </div>
+                <div class="campo-fila">
+                    <div>
+                        <label for="email" class="campo-label">Correo electrónico</label>
+                        <input type="email" class="campo-input" id="email" name="email" value="{{email}}" placeholder="ejemplo@correo.com" required>
+                    </div>
+                    <div>
+                        <label for="username" class="campo-label">Nombre de usuario</label>
+                        <input type="text" class="campo-input" id="username" name="username" value="{{username}}" placeholder="Tu apodo de jugador" required>
+                    </div>
+                </div>
+
+                <div class="campo-fila">
+                    <div>
+                        <label for="password" class="campo-label">Contraseña</label>
+                        <input type="password" class="campo-input" id="password" name="password" placeholder="Creá tu contraseña" required>
+                    </div>
+                    <div>
+                        <label for="repetir_password" class="campo-label">Repetir contraseña</label>
+                        <input type="password" class="campo-input" id="repetir_password" name="repetir_password" placeholder="Repetí tu contraseña" required>
+                    </div>
+                </div>
+
+                <div class="campo-grupo">
+                    <label for="foto_perfil" class="campo-label">Foto de perfil</label>
+                    <input class="campo-file" type="file" id="foto_perfil" name="foto_perfil" accept="image/*" required>
+                </div>
+
+                <button type="submit" class="btn-submit-registro">
+                    Registrarse &nbsp;✦
+                </button>
+            </form>
 
         </div>
+
+        <div class="registro-footer">
+            <span>¿Ya tienes cuenta?</span>
+            <a href="?controller=login&method=show">Inicia sesión</a>
+        </div>
+
     </div>
 </div>
+
 <script>
     const map = L.map('mapa').setView([-34.6037, -58.3816], 4);
 
