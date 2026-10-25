@@ -2,6 +2,6 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/app/sql/creacion de tablas.sql" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/app/sql/preguntas de iniciacion - one piece y naruto.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/app/sql/preguntas de iniciacion - one piece, naruto, pokemon y dbz.sql" dialect="GenericSQL" />
   </component>
 </project>

@@ -767,3 +767,767 @@ VALUES
     NULL,
     'dificil'
 );
+
+-- =========================================================
+-- 25 PREGUNTAS DE DRAGON BALL
+-- =========================================================
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+-- =======================
+-- DRAGON BALL - FACILES
+-- =======================
+
+(
+    '¿Quién es el protagonista principal de Dragon Ball?',
+    'Vegeta',
+    'Goku',
+    'Piccolo',
+    'Gohan',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Cómo se llama la raza de Goku?',
+    'Namekiano',
+    'Saiyajin',
+    'Humano',
+    'Kaioshin',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Quién es el príncipe de los Saiyajin?',
+    'Goku',
+    'Gohan',
+    'Vegeta',
+    'Trunks',
+    'C',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Cómo se llama el hijo mayor de Goku?',
+    'Goten',
+    'Trunks',
+    'Gohan',
+    'Pan',
+    'C',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Quién es el mejor amigo de Goku desde niño?',
+    'Krillin',
+    'Yamcha',
+    'Tien',
+    'Piccolo',
+    'A',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Cómo se llaman los objetos que pueden conceder deseos?',
+    'Esferas del Dragón',
+    'Anillos del Tiempo',
+    'Semillas del Ermitaño',
+    'Pendientes Potara',
+    'A',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Quién es la esposa de Goku?',
+    'Bulma',
+    'Chi-Chi',
+    'Videl',
+    'Android 18',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Quién es la esposa de Vegeta?',
+    'Bulma',
+    'Chi-Chi',
+    'Videl',
+    'Launch',
+    'A',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+-- =======================
+-- DRAGON BALL - MEDIAS
+-- =======================
+
+(
+    '¿Quién entrenó a Goku en el planeta de Kaio-sama?',
+    'Maestro Roshi',
+    'Kaio-sama',
+    'Whis',
+    'Kami',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Qué técnica utiliza Goku para aumentar temporalmente su poder?',
+    'Kaioken',
+    'Makankosappo',
+    'Galick Ho',
+    'Masenko',
+    'A',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Quién destruyó el planeta Vegeta?',
+    'Cell',
+    'Majin Buu',
+    'Freezer',
+    'Beerus',
+    'C',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Quién es el padre de Goku?',
+    'King Vegeta',
+    'Bardock',
+    'Paragus',
+    'Raditz',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Quién es el hermano de Goku?',
+    'Nappa',
+    'Raditz',
+    'Bardock',
+    'Broly',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Quién derrota finalmente a Cell?',
+    'Goku',
+    'Vegeta',
+    'Gohan',
+    'Trunks',
+    'C',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Cómo se llama la fusión de Goten y Trunks?',
+    'Vegito',
+    'Gogeta',
+    'Gotenks',
+    'Kefla',
+    'C',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Qué androide se casa con Krillin?',
+    'Android 16',
+    'Android 17',
+    'Android 18',
+    'Android 19',
+    'C',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+-- =======================
+-- DRAGON BALL - DIFICILES
+-- =======================
+
+(
+    '¿Cómo se llama la técnica especial de Piccolo?',
+    'Kamehameha',
+    'Makankosappo',
+    'Final Flash',
+    'Masenko',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Quién fue el maestro de Piccolo antes de fusionarse con él?',
+    'Kami',
+    'Nail',
+    'Dende',
+    'Guru',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Quién es el Dios de la Destrucción del Universo 7?',
+    'Whis',
+    'Beerus',
+    'Champa',
+    'Zeno',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Quién es el ángel encargado de entrenar a Beerus?',
+    'Vados',
+    'Whis',
+    'Merus',
+    'Shin',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Qué personaje proviene originalmente del Universo 6?',
+    'Hit',
+    'Jiren',
+    'Toppo',
+    'Dyspo',
+    'A',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Quién es el padre de Vegeta?',
+    'Bardock',
+    'King Vegeta',
+    'Paragus',
+    'Nappa',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Cómo se llama la fusión de Goku y Vegeta mediante los pendientes Potara?',
+    'Gogeta',
+    'Vegito',
+    'Gotenks',
+    'Vegetto Jr.',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Qué Saiyajin sobreviviente es hijo de Paragus?',
+    'Raditz',
+    'Broly',
+    'Nappa',
+    'Tarble',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Quién es el Kaioshin del Universo 7?',
+    'Shin',
+    'Beerus',
+    'Whis',
+    'Kibito',
+    'A',
+    (SELECT id FROM anime WHERE nombre = 'Dragon Ball'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+);
+
+
+
+-- =========================================================
+-- 25 PREGUNTAS DE POKÉMON
+-- =========================================================
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+-- =======================
+-- POKÉMON - FACILES
+-- =======================
+
+(
+    '¿Cuál es el Pokémon principal de Ash?',
+    'Charmander',
+    'Pikachu',
+    'Bulbasaur',
+    'Squirtle',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿De qué tipo es Pikachu?',
+    'Fuego',
+    'Agua',
+    'Eléctrico',
+    'Planta',
+    'C',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Cuál de estos es un Pokémon inicial de Kanto?',
+    'Pikachu',
+    'Bulbasaur',
+    'Eevee',
+    'Meowth',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿En qué evoluciona Charmander?',
+    'Charizard',
+    'Charmeleon',
+    'Dragonite',
+    'Magmar',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿En qué evoluciona Squirtle?',
+    'Blastoise',
+    'Wartortle',
+    'Lapras',
+    'Golduck',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Quién acompaña a Jessie y James en el Equipo Rocket?',
+    'Pikachu',
+    'Meowth',
+    'Psyduck',
+    'Eevee',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Qué objeto se utiliza normalmente para capturar Pokémon?',
+    'Pokédex',
+    'Poké Ball',
+    'Poción',
+    'Bicicleta',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+(
+    '¿Cuál es la evolución final de Bulbasaur?',
+    'Ivysaur',
+    'Venusaur',
+    'Vileplume',
+    'Victreebel',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'facil'
+),
+
+-- =======================
+-- POKÉMON - MEDIAS
+-- =======================
+
+(
+    '¿Cuál es el número de Pikachu en la Pokédex Nacional?',
+    '001',
+    '025',
+    '150',
+    '151',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Qué Pokémon ocupa el número 001 de la Pokédex Nacional?',
+    'Charmander',
+    'Bulbasaur',
+    'Squirtle',
+    'Pikachu',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Cuál es la evolución de Magikarp?',
+    'Milotic',
+    'Gyarados',
+    'Dragonair',
+    'Lapras',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Qué tipo es especialmente efectivo contra los Pokémon de tipo Agua?',
+    'Fuego',
+    'Eléctrico',
+    'Roca',
+    'Tierra',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Cuál es la evolución final de Charmander?',
+    'Charmeleon',
+    'Charizard',
+    'Dragonite',
+    'Typhlosion',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Qué Pokémon legendario fue creado a partir del ADN de Mew?',
+    'Moltres',
+    'Mewtwo',
+    'Lugia',
+    'Celebi',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Cómo se llama la enfermera habitual de los Centros Pokémon?',
+    'Misty',
+    'Joy',
+    'Jenny',
+    'Delia',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+(
+    '¿Qué personaje de Kanto es especialista en Pokémon de tipo Agua?',
+    'Brock',
+    'Misty',
+    'Gary',
+    'Tracey',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'media'
+),
+
+-- =======================
+-- POKÉMON - DIFICILES
+-- =======================
+
+(
+    '¿Cuál es el número de Mew en la Pokédex Nacional?',
+    '149',
+    '150',
+    '151',
+    '152',
+    'C',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Qué Pokémon es conocido por tener múltiples evoluciones posibles?',
+    'Ditto',
+    'Eevee',
+    'Porygon',
+    'Togepi',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Cuál de estos Pokémon pertenece originalmente a la región de Johto?',
+    'Totodile',
+    'Squirtle',
+    'Treecko',
+    'Piplup',
+    'A',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Cuál de estos Pokémon es de tipo Fantasma y Veneno?',
+    'Gengar',
+    'Alakazam',
+    'Machamp',
+    'Snorlax',
+    'A',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Qué Pokémon evoluciona a Dragonite?',
+    'Dragonair',
+    'Dratini',
+    'Gyarados',
+    'Salamence',
+    'A',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Qué Pokémon es conocido como el Pokémon Genético?',
+    'Mew',
+    'Mewtwo',
+    'Ditto',
+    'Deoxys',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Cuál es el nombre de la primera región presentada en el anime de Pokémon?',
+    'Johto',
+    'Hoenn',
+    'Kanto',
+    'Sinnoh',
+    'C',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Cuál de estos Pokémon es una evolución de Eevee de tipo Psíquico?',
+    'Umbreon',
+    'Espeon',
+    'Jolteon',
+    'Glaceon',
+    'B',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+),
+
+(
+    '¿Cuál de estos Pokémon es una evolución de Eevee de tipo Siniestro?',
+    'Espeon',
+    'Sylveon',
+    'Umbreon',
+    'Leafeon',
+    'C',
+    (SELECT id FROM anime WHERE nombre = 'Pokémon'),
+    (SELECT id FROM categoria WHERE nombre = 'Normal'),
+    'texto',
+    NULL,
+    'dificil'
+);
