@@ -1,0 +1,657 @@
+[04:52:16] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:52:16] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[04:52:16] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[04:52:23] [INFO] SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[04:52:23] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:52:23] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[04:52:23] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[04:52:25] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:52:25] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[04:52:25] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[04:52:32] [INFO] SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[04:52:32] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:52:32] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[04:52:32] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[04:52:45] [INFO] SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[04:52:45] [INFO] SELECT COUNT(*) AS total FROM usuario WHERE id_rol = 1
+[04:52:45] [INFO] SELECT COUNT(*) AS total FROM partida
+[04:52:45] [INFO] SELECT COUNT(*) AS total FROM pregunta WHERE esta_activa = 1
+[04:52:45] [INFO] SELECT COUNT(*) AS total FROM reporte_pregunta WHERE estado = 'pendiente'
+[04:52:45] [INFO] SELECT 
+                    id, 
+                    descripcion, 
+                    categoria, 
+                    veces_mostrada, 
+                    veces_acertada,
+                    CASE 
+                        WHEN veces_mostrada = 0 THEN 'Sin datos'
+                        WHEN (veces_acertada / veces_mostrada) >= 0.70 THEN 'Fácil'
+                        WHEN (veces_acertada / veces_mostrada) >= 0.35 THEN 'Media'
+                        ELSE 'Difícil'
+                    END AS dificultad,
+                    CASE 
+                        WHEN veces_mostrada = 0 THEN 0
+                        ELSE ROUND((veces_acertada / veces_mostrada) * 100, 1)
+                    END AS porcentaje_aciertos
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY veces_mostrada DESC
+[04:53:17] [INFO] SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[04:53:17] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[04:53:17] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[04:53:17] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[04:53:17] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[04:53:32] [INFO] SELECT id, descripcion, categoria, esta_activa
+                FROM pregunta
+                WHERE id = :id
+[04:53:32] [INFO] SELECT id, descripcion, es_correcta
+                            FROM opcion
+                            WHERE pregunta_id = :id
+[04:53:33] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[04:53:33] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[04:53:33] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[04:53:33] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[04:53:35] [INFO] SELECT id, descripcion, categoria, esta_activa
+                FROM pregunta
+                WHERE id = :id
+[04:53:35] [INFO] SELECT id, descripcion, es_correcta
+                            FROM opcion
+                            WHERE pregunta_id = :id
+[04:53:37] [INFO] UPDATE pregunta
+                        SET descripcion = :descripcion, categoria = :categoria
+                        WHERE id = :id
+[04:53:37] [INFO] UPDATE opcion
+                      SET descripcion = :descripcion, es_correcta = :es_correcta
+                      WHERE id = :id AND pregunta_id = :pregunta_id
+[04:53:37] [INFO] UPDATE opcion
+                      SET descripcion = :descripcion, es_correcta = :es_correcta
+                      WHERE id = :id AND pregunta_id = :pregunta_id
+[04:53:37] [INFO] UPDATE opcion
+                      SET descripcion = :descripcion, es_correcta = :es_correcta
+                      WHERE id = :id AND pregunta_id = :pregunta_id
+[04:53:37] [INFO] UPDATE opcion
+                      SET descripcion = :descripcion, es_correcta = :es_correcta
+                      WHERE id = :id AND pregunta_id = :pregunta_id
+[04:53:37] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[04:53:37] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[04:53:37] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[04:53:37] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[04:53:49] [INFO] SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[04:53:49] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[04:53:49] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[04:53:49] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[04:53:49] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[04:53:49] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:53:49] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[04:53:49] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[04:53:53] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[04:53:53] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[04:53:53] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[04:53:53] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[04:53:54] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:53:54] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[04:53:54] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[04:53:57] [INFO] SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[04:53:57] [INFO] SELECT COUNT(*) AS total FROM usuario WHERE id_rol = 1
+[04:53:57] [INFO] SELECT COUNT(*) AS total FROM partida
+[04:53:57] [INFO] SELECT COUNT(*) AS total FROM pregunta WHERE esta_activa = 1
+[04:53:57] [INFO] SELECT COUNT(*) AS total FROM reporte_pregunta WHERE estado = 'pendiente'
+[04:53:57] [INFO] SELECT 
+                    id, 
+                    descripcion, 
+                    categoria, 
+                    veces_mostrada, 
+                    veces_acertada,
+                    CASE 
+                        WHEN veces_mostrada = 0 THEN 'Sin datos'
+                        WHEN (veces_acertada / veces_mostrada) >= 0.70 THEN 'Fácil'
+                        WHEN (veces_acertada / veces_mostrada) >= 0.35 THEN 'Media'
+                        ELSE 'Difícil'
+                    END AS dificultad,
+                    CASE 
+                        WHEN veces_mostrada = 0 THEN 0
+                        ELSE ROUND((veces_acertada / veces_mostrada) * 100, 1)
+                    END AS porcentaje_aciertos
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY veces_mostrada DESC
+[04:54:02] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:54:02] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[04:54:02] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[04:54:05] [INFO] SELECT COUNT(*) AS total FROM usuario WHERE id_rol = 1
+[04:54:05] [INFO] SELECT COUNT(*) AS total FROM partida
+[04:54:05] [INFO] SELECT COUNT(*) AS total FROM pregunta WHERE esta_activa = 1
+[04:54:05] [INFO] SELECT COUNT(*) AS total FROM reporte_pregunta WHERE estado = 'pendiente'
+[04:54:05] [INFO] SELECT 
+                    id, 
+                    descripcion, 
+                    categoria, 
+                    veces_mostrada, 
+                    veces_acertada,
+                    CASE 
+                        WHEN veces_mostrada = 0 THEN 'Sin datos'
+                        WHEN (veces_acertada / veces_mostrada) >= 0.70 THEN 'Fácil'
+                        WHEN (veces_acertada / veces_mostrada) >= 0.35 THEN 'Media'
+                        ELSE 'Difícil'
+                    END AS dificultad,
+                    CASE 
+                        WHEN veces_mostrada = 0 THEN 0
+                        ELSE ROUND((veces_acertada / veces_mostrada) * 100, 1)
+                    END AS porcentaje_aciertos
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY veces_mostrada DESC
+[04:54:14] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[04:54:14] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[04:54:14] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[05:05:30] [INFO] SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[05:05:30] [INFO] SELECT COUNT(*) AS total FROM usuario WHERE id_rol = 1
+[05:05:30] [INFO] SELECT COUNT(*) AS total FROM partida
+[05:05:30] [INFO] SELECT COUNT(*) AS total FROM pregunta WHERE esta_activa = 1
+[05:05:30] [INFO] SELECT COUNT(*) AS total FROM reporte_pregunta WHERE estado = 'pendiente'
+[05:05:30] [INFO] SELECT 
+                    id, 
+                    descripcion, 
+                    categoria, 
+                    veces_mostrada, 
+                    veces_acertada,
+                    CASE 
+                        WHEN veces_mostrada = 0 THEN 'Sin datos'
+                        WHEN (veces_acertada / veces_mostrada) >= 0.70 THEN 'Fácil'
+                        WHEN (veces_acertada / veces_mostrada) >= 0.35 THEN 'Media'
+                        ELSE 'Difícil'
+                    END AS dificultad,
+                    CASE 
+                        WHEN veces_mostrada = 0 THEN 0
+                        ELSE ROUND((veces_acertada / veces_mostrada) * 100, 1)
+                    END AS porcentaje_aciertos
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY veces_mostrada DESC
+[05:05:52] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:05:52] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[05:05:52] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[05:07:11] [INFO] SELECT id, username, id_rol
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[05:07:11] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:07:11] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:07:11] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[05:07:11] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[05:07:14] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:07:14] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[05:07:14] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[05:08:00] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:08:00] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:08:00] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[05:08:00] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[05:08:52] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:08:52] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[05:08:52] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[05:11:19] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:11:19] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:11:19] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[05:11:19] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[05:11:59] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:11:59] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[05:11:59] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[05:13:30] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:13:30] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[05:13:30] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[05:13:32] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:13:32] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:13:32] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[05:13:32] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[05:14:39] [INFO] SELECT id, descripcion, categoria, esta_activa
+                FROM pregunta
+                WHERE id = :id
+[05:14:39] [INFO] SELECT id, descripcion, es_correcta
+                            FROM opcion
+                            WHERE pregunta_id = :id
+[05:14:43] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:14:43] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:14:43] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[05:14:43] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[05:14:55] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[05:14:55] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[05:14:55] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[05:15:02] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:15:02] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[05:15:02] [INFO] SELECT id, descripcion, categoria
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY id DESC
+[05:15:02] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC

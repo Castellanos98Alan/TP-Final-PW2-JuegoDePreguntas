@@ -72,7 +72,6 @@
             pointer-events: none;
         }
 
-
         .logo span {
             display: block;
             color: white;
@@ -81,13 +80,9 @@
             text-align: center;
         }
 
-
-
         .usuario-header strong {
             color: #f5c84b;
         }
-
-
 
         /* ===========================
            CONTENEDOR
@@ -137,8 +132,6 @@
             position: relative;
             overflow: hidden;
         }
-
-
 
         .perfil::after {
             content: "";
@@ -193,6 +186,17 @@
 
         .perfil-info .ubicacion {
             color: #e6efff;
+        }
+
+        /* ===========================
+           ACCESOS ROLES
+        =========================== */
+
+        .accesos-roles {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
         }
 
         /* ===========================
@@ -406,7 +410,6 @@
         }
 
         @keyframes pulso {
-
             0%, 100% {
                 transform: scale(1);
                 opacity: 0.7;
@@ -416,7 +419,6 @@
                 transform: scale(1.06);
                 opacity: 1;
             }
-
         }
 
         .btn-jugar {
@@ -508,8 +510,6 @@
                     0 0 25px rgba(245, 200, 75, .20);
         }
 
-
-
         .btn-ranking {
             color: white;
             text-decoration: none;
@@ -536,35 +536,28 @@
         }
 
         /* ===========================
-           CREAR PREGUNTA
+           BOTONES DE ACCIÓN
         =========================== */
 
         .crear-pregunta {
             width: 100%;
-
             margin-top: 20px;
-
             display: flex;
             justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .btn-pregunta {
             width: 360px;
-
             padding: 16px;
-
             text-align: center;
-
             border: 1px solid #d4a72c;
             border-radius: 30px;
-
             color: white;
-
             font-size: 16px;
             font-weight: bold;
-
             text-decoration: none;
-
             background:
                     linear-gradient(
                             90deg,
@@ -572,16 +565,12 @@
                             #0d347c,
                             #06132e
                     );
-
             transition: .3s;
-
-            box-shadow:
-                    0 0 12px rgba(31, 89, 255, .15);
+            box-shadow: 0 0 12px rgba(31, 89, 255, .15);
         }
 
         .btn-pregunta:hover {
             color: #06132d;
-
             background:
                     linear-gradient(
                             90deg,
@@ -589,19 +578,36 @@
                             #f5c84b,
                             #b98211
                     );
+            box-shadow: 0 0 20px rgba(245, 200, 75, .45);
+        }
 
-            box-shadow:
-                    0 0 20px rgba(245, 200, 75, .45);
+        .btn-admin {
+            background:
+                    linear-gradient(
+                            90deg,
+                            #4a0e17,
+                            #8b1e2a,
+                            #4a0e17
+                    );
+            color: #f5c84b;
+        }
+
+        .btn-editor {
+            background:
+                    linear-gradient(
+                            90deg,
+                            #0b285f,
+                            #1f5ba0,
+                            #0b285f
+                    );
+            color: #f5c84b;
         }
 
         /* ===========================
            RESPONSIVE
         =========================== */
 
-
-
         @media (max-width: 900px) {
-
             .zona-juego {
                 grid-template-columns: 1fr;
             }
@@ -617,15 +623,9 @@
             .ranking {
                 min-height: 240px;
             }
-
-
-
         }
 
         @media (max-width: 600px) {
-
-
-
             .perfil {
                 flex-direction: column;
                 text-align: center;
@@ -643,7 +643,6 @@
             .btn-jugar {
                 width: 200px;
                 height: 200px;
-
                 font-size: 22px;
             }
 
@@ -655,17 +654,11 @@
             .btn-pregunta {
                 width: 100%;
             }
-
         }
-
     </style>
 </head>
 
 <body>
-
-
-
-
 
 <main class="container">
 
@@ -694,7 +687,6 @@
 
     </section>
 
-
     <!-- ESTADÍSTICAS -->
 
     <section class="estadisticas">
@@ -713,7 +705,6 @@
 
         </div>
 
-
         <div class="estadistica">
 
             <div class="icono">🏆</div>
@@ -727,7 +718,6 @@
             </span>
 
         </div>
-
 
         <div class="estadistica">
 
@@ -745,11 +735,9 @@
 
     </section>
 
-
     <!-- ZONA DE JUEGO -->
 
     <section class="zona-juego">
-
 
         <!-- HISTORIAL -->
 
@@ -758,7 +746,6 @@
             <h2>
                 📊 Últimas partidas
             </h2>
-
 
             {{#partidas}}
 
@@ -780,7 +767,6 @@
 
                     </div>
 
-
                     <div class="partida-puntos">
                         {{puntaje}} pts
                     </div>
@@ -789,7 +775,6 @@
 
             {{/partidas}}
 
-
             {{^partidas}}
 
                 <div style="
@@ -797,15 +782,12 @@
                     color:#a9bfdf;
                     padding:30px 5px;
                 ">
-
                     Todavía no jugaste ninguna partida.
-
                 </div>
 
             {{/partidas}}
 
         </div>
-
 
         <!-- JUGAR -->
 
@@ -838,42 +820,65 @@
 
         </div>
 
-
         <!-- RANKING -->
 
+        <div class="panel ranking">
 
-            <div class="panel ranking">
+            <a
+                    href="?controller=ranking&method=show"
+                    class="btn-ranking">
 
-                <a
-                        href="?controller=ranking&method=show"
-                        class="btn-ranking">
+                Ver ranking
 
-                    Ver ranking
+            </a>
 
-                </a>
-
-            </div>
+        </div>
 
     </section>
 
 
-    <!-- CREAR PREGUNTA -->
+    <!-- BOTONES DE ACCIÓN (CREAR PREGUNTA / PANELES) -->
 
-    <div class="crear-pregunta">
+       <div class="crear-pregunta">
 
-        <a
-                href="?controller=pregunta&method=crear"
-                class="btn-pregunta">
+               {{^es_admin}}
+                   {{^es_editor}}
+                   <a
+                           href="?controller=pregunta&method=crear"
+                           class="btn-pregunta">
 
-            ❓ Crear pregunta
-            &nbsp;&nbsp; ›
+                       ❓ Crear pregunta
+                       &nbsp;&nbsp; ›
 
-        </a>
+                   </a>
+                   {{/es_editor}}
+               {{/es_admin}}
 
-    </div>
+               {{#es_admin}}
+               <a
+                       href="?controller=admin&method=show"
+                       class="btn-pregunta btn-admin">
+
+                   👑 Panel Administrador
+                   &nbsp;&nbsp; ›
+
+               </a>
+               {{/es_admin}}
+
+               {{#es_editor}}
+               <a
+                       href="?controller=editor&method=show"
+                       class="btn-pregunta btn-editor">
+
+                   ✍️ Panel Editor
+                   &nbsp;&nbsp; ›
+
+               </a>
+               {{/es_editor}}
+
+           </div>
 
 </main>
 
 </body>
 </html>
-```

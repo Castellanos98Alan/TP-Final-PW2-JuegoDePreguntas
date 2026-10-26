@@ -29,6 +29,9 @@ namespace app\controller;
              redirect::toIndex();
          }
 
+
+         $rol = $_SESSION['rol'] ?? ($jugador['id_rol'] ?? null);
+
          $data = [
              'username'          => $jugador['username'],
              'nombre_completo'   => $jugador['nombre_completo'],
@@ -37,7 +40,11 @@ namespace app\controller;
              'puntaje_acumulado' => $jugador['puntaje_acumulado'],
              'posicion'          => $this->model->obtenerPosicionRanking($jugador['puntaje_acumulado']),
              'miembro_desde'     => $jugador['miembro_desde'],
-             'partidas'          => $partidas
+             'partidas'          => $partidas,
+
+
+            'es_admin'          => ($rol == 3 || $rol === 'administrador'),
+            'es_editor'         => ($rol == 2 || $rol === 'editor')
          ];
 
          $this->render->renderiza("lobby", $data);

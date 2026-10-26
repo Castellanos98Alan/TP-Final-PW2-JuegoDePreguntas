@@ -27,6 +27,15 @@ class AdminController
             return;
         }
 
-        $this->render->renderiza("admin");
+        $datos = [
+            'total_jugadores'     => $this->model->getTotalJugadores(),
+            'total_partidas'      => $this->model->getTotalPartidas(),
+            'preguntas_activas'   => $this->model->getTotalPreguntasActivas(),
+            'reportes_pendientes' => $this->model->getTotalReportesPendientes(),
+            'preguntas'           => $this->model->getEstadisticasPreguntas(),
+            'username'            => $_SESSION['username'] ?? 'Administrador'
+        ];
+
+        $this->render->renderiza("admin", $datos);
     }
 }

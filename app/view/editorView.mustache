@@ -1,15 +1,286 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-editor view
+    .editor-container {
+        width: 92%;
+        max-width: 1100px;
+        margin: 30px auto 50px;
+        padding: 35px 30px;
+        background: rgba(7, 20, 42, 0.94);
+        border: 1px solid #3B82F6;
+        border-radius: 18px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.45);
+        color: #DCE6F8;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-</body>
-</html>
+    .editor-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(59, 130, 246, 0.35);
+    }
+
+    .editor-title {
+        color: #60A5FA;
+        font-size: 26px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .btn-gold {
+        padding: 8px 16px;
+        border: 1px solid #F5D78A;
+        border-radius: 8px;
+        background: linear-gradient(110deg, #F4D47D, #C99A3D);
+        color: #0A1A33;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .section-card {
+        background: rgba(16, 39, 73, 0.45);
+        border: 1px solid #315B91;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        color: #F1CD73;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+
+    th {
+        background: rgba(16, 39, 73, 0.95);
+        color: #60A5FA;
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #315B91;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid rgba(49, 91, 145, 0.35);
+    }
+
+    .btn-action {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-approve { background: #16A34A; color: white; }
+    .btn-reject { background: #DC2626; color: white; }
+    .btn-edit { background: #2563EB; color: white; }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: #93C5FD;
+        margin-bottom: 6px;
+    }
+
+    input[type="text"], select, textarea {
+        width: 100%;
+        padding: 10px;
+        background: rgba(10, 26, 51, 0.85);
+        border: 1px solid #315B91;
+        border-radius: 6px;
+        color: #FFF;
+        font-size: 13px;
+    }
+
+    .option-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+</style>
+
+<div class="editor-container">
+    <div class="editor-header">
+        <div>
+            <h1 class="editor-title">PANEL DE EDICIÓN</h1>
+            <span style="font-size: 12px; color: #93C5FD;">Sesión iniciada como: {{username}}</span>
+        </div>
+        <a href="?controller=lobby&method=show" class="btn-gold">← VOLVER AL LOBBY</a>
+    </div>
+
+    <!-- 1. Reportes de preguntas -->
+    <div class="section-card">
+        <div class="section-title">REPORTES DE PREGUNTAS</div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 45%;">Pregunta Reportada</th>
+                    <th>Motivo</th>
+                    <th>Comentario</th>
+                    <th style="text-align: center;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#reportes_pendientes}}
+                <tr>
+                    <td>
+                        <strong>{{pregunta_descripcion}}</strong>
+                        {{#categoria}}<br><small style="color: #93C5FD;">{{categoria}}</small>{{/categoria}}
+                    </td>
+                    <td style="color: #FBBF24;">{{motivo}}</td>
+                    <td>{{comentario}}</td>
+                    <td style="text-align: center; white-space: nowrap;">
+                        <a href="?controller=editor&method=editar&id={{pregunta_id}}" class="btn-action btn-edit">Corregir</a>
+                        <form action="?controller=editor&method=resolverReporte" method="POST" style="display:inline; margin-left: 5px;">
+                            <input type="hidden" name="id_reporte" value="{{reporte_id}}">
+                            <input type="hidden" name="accion" value="resuelto">
+                            <button type="submit" class="btn-action btn-approve">Resolver</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/reportes_pendientes}}
+                {{^reportes_pendientes}}
+                <tr>
+                    <td colspan="4" style="text-align: center; color: #88A5CD; padding: 16px;">
+                        No hay reportes de preguntas pendientes.
+                    </td>
+                </tr>
+                {{/reportes_pendientes}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 2. Revisar preguntas nuevas sugeridas -->
+    <div class="section-card">
+        <div class="section-title">REVISAR PREGUNTAS NUEVAS (SUGERIDAS)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pregunta</th>
+                    <th>Categoría</th>
+                    <th>Creador</th>
+                    <th style="text-align: center;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#pendientes}}
+                <tr>
+                    <td>{{descripcion}}</td>
+                    <td>{{categoria}}</td>
+                    <td>{{creador}}</td>
+                    <td style="text-align: center;">
+                        <form action="?controller=editor&method=aprobar" method="POST" style="display:inline;">
+                            <input type="hidden" name="id" value="{{id}}">
+                            <button type="submit" class="btn-action btn-approve">Aprobar</button>
+                        </form>
+                        <form action="?controller=editor&method=rechazar" method="POST" style="display:inline; margin-left: 5px;">
+                            <input type="hidden" name="id" value="{{id}}">
+                            <button type="submit" class="btn-action btn-reject">Rechazar</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/pendientes}}
+                {{^pendientes}}
+                <tr>
+                    <td colspan="4" style="text-align: center; color: #88A5CD; padding: 16px;">
+                        No hay preguntas pendientes de revisión.
+                    </td>
+                </tr>
+                {{/pendientes}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 3. Agregar nueva pregunta -->
+    <div class="section-card">
+        <div class="section-title">AGREGAR NUEVA PREGUNTA</div>
+        <form action="?controller=editor&method=guardar" method="POST">
+            <div class="form-group">
+                <label>Enunciado de la Pregunta:</label>
+                <input type="text" name="descripcion" placeholder="Ej: ¿Quién es el capitán de la tripulación de Sombrero de Paja?" required>
+            </div>
+            <div class="form-group">
+                <label>Categoría Anime:</label>
+                <input type="text" name="categoria" placeholder="Ej: Shonen, Seinen, Isekai" required>
+            </div>
+            <label style="margin-top: 15px;">Opciones de respuesta (Marcá la opción correcta):</label>
+            <div class="option-row">
+                <input type="radio" name="correcta" value="0" checked>
+                <input type="text" name="opciones[]" placeholder="Opción 1" required>
+            </div>
+            <div class="option-row">
+                <input type="radio" name="correcta" value="1">
+                <input type="text" name="opciones[]" placeholder="Opción 2" required>
+            </div>
+            <div class="option-row">
+                <input type="radio" name="correcta" value="2">
+                <input type="text" name="opciones[]" placeholder="Opción 3" required>
+            </div>
+            <div class="option-row">
+                <input type="radio" name="correcta" value="3">
+                <input type="text" name="opciones[]" placeholder="Opción 4" required>
+            </div>
+            <button type="submit" class="btn-action btn-approve" style="margin-top: 12px; padding: 10px 20px; font-size: 13px;">
+                Guardar Pregunta
+            </button>
+        </form>
+    </div>
+
+    <!-- 4. Editar preguntas existentes -->
+    <div class="section-card">
+        <div class="section-title">EDITAR PREGUNTAS ACTIVAS</div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 60%;">Pregunta</th>
+                    <th>Categoría</th>
+                    <th style="text-align: center;">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#activas}}
+                <tr>
+                    <td>{{descripcion}}</td>
+                    <td>{{categoria}}</td>
+                    <td style="text-align: center;">
+                        <a href="?controller=editor&method=editar&id={{id}}" class="btn-action btn-edit">Editar</a>
+                    </td>
+                </tr>
+                {{/activas}}
+                {{^activas}}
+                <tr>
+                    <td colspan="3" style="text-align: center; color: #88A5CD; padding: 16px;">
+                        No hay preguntas activas registradas para editar.
+                    </td>
+                </tr>
+                {{/activas}}
+            </tbody>
+        </table>
+    </div>
+</div>

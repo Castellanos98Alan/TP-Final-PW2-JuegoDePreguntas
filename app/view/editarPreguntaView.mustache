@@ -1,0 +1,166 @@
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .edit-container {
+        width: 90%;
+        max-width: 780px;
+        margin: 30px auto 50px;
+        padding: 35px 30px;
+        background: rgba(7, 20, 42, 0.94);
+        border: 1px solid #B98B3B;
+        border-radius: 18px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.45);
+        color: #DCE6F8;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .edit-title {
+        margin: 0 0 20px;
+        color: #F1CD73;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #A9C2E8;
+        letter-spacing: 0.5px;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 11px 14px;
+        background: rgba(10, 26, 51, 0.85);
+        border: 1px solid #315B91;
+        border-radius: 8px;
+        color: #FFFFFF;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    .input-field:focus {
+        border-color: #D4AF55;
+    }
+
+    .options-section-title {
+        margin: 22px 0 12px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #F1CD73;
+    }
+
+    .option-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+    }
+
+    .option-radio {
+        accent-color: #F1CD73;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    .actions-bar {
+        margin-top: 28px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .btn-save {
+        padding: 10px 22px;
+        border: 1px solid #F5D78A;
+        border-radius: 8px;
+        background: linear-gradient(110deg, #F4D47D, #C99A3D);
+        color: #0A1A33;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: transform 0.2s, filter 0.2s;
+    }
+
+    .btn-save:hover {
+        filter: brightness(1.1);
+        transform: translateY(-2px);
+    }
+
+    .btn-cancel {
+        color: #A9C2E8;
+        font-size: 13px;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .btn-cancel:hover {
+        color: #F1CD73;
+    }
+
+    .warning-box {
+        padding: 12px 16px;
+        border: 1px solid #FF9800;
+        border-radius: 8px;
+        background: rgba(239, 108, 0, 0.15);
+        color: #FFE082;
+        font-size: 12px;
+        margin-bottom: 14px;
+    }
+</style>
+
+<div class="edit-container">
+    <h1 class="edit-title">EDITAR PREGUNTA #{{id}}</h1>
+
+    <form action="?controller=editor&method=guardarEdicion" method="POST">
+        <input type="hidden" name="id" value="{{id}}">
+
+        <div class="form-group">
+            <label>Enunciado:</label>
+            <input type="text" name="descripcion" class="input-field" value="{{descripcion}}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Categoría:</label>
+            <input type="text" name="categoria" class="input-field" value="{{categoria}}" required>
+        </div>
+
+        <div class="options-section-title">
+            Opciones de respuesta (Marcá con el radio cuál es la correcta):
+        </div>
+
+        {{#tiene_opciones}}
+            {{#opciones}}
+            <div class="option-row">
+                <input type="radio" name="correcta" value="{{id}}" class="option-radio" {{checked}}>
+                <input type="text" name="opciones[{{id}}]" class="input-field" value="{{descripcion}}" required>
+            </div>
+            {{/opciones}}
+        {{/tiene_opciones}}
+
+        {{^tiene_opciones}}
+            <div class="warning-box">
+                Esta pregunta no tiene opciones vinculadas en la base de datos (se interrumpió antes de guardar las opciones). Podés volver al panel y crear una nueva completa.
+            </div>
+        {{/tiene_opciones}}
+
+        <div class="actions-bar">
+            {{#tiene_opciones}}
+            <button type="submit" class="btn-save">Guardar Cambios</button>
+            {{/tiene_opciones}}
+            <a href="?controller=editor&method=show" class="btn-cancel">Cancelar y Volver</a>
+        </div>
+    </form>
+</div>
