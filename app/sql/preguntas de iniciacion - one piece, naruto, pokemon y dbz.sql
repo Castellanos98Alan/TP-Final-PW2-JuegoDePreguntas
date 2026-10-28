@@ -3022,10 +3022,659 @@ VALUES
     );
 
 
+USE preguntados2;
+
+-- =========================
+-- Imagenes One piece
+-- =========================
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+    (
+        '¿A qué personaje pertenece este objeto?',
+        'Sanji',
+        'Monkey D. Luffy',
+        'Usopp',
+        'Ace',
+        'B',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/sombrero_luffy.png',
+        'facil'
+    ),
+
+    (
+        '¿Cómo se llama esta espada?',
+        'Wado Ichimonji',
+        'Shusui',
+        'Enma',
+        'Sandai Kitetsu',
+        'C',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/enma.png',
+        'media'
+    ),
+
+    (
+        '¿A qué personaje pertenece este objeto?',
+        'Robin',
+        'Nami',
+        'Vivi',
+        'Perona',
+        'B',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/clima_tact.png',
+        'facil'
+    ),
+
+    (
+        '¿Qué personaje utiliza esta arma?',
+        'Franky',
+        'Usopp',
+        'Brook',
+        'Chopper',
+        'B',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/kabuto.png',
+        'media'
+    ),
+
+    (
+        '¿A qué personaje pertenece esta espada?',
+        'Roronoa Zoro',
+        'Shanks',
+        'Dracule Mihawk',
+        'Silvers Rayleigh',
+        'C',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/yoru.png',
+        'facil'
+    ),
+
+    (
+        '¿Cómo se llama este objeto utilizado para navegar por Grand Line?',
+        'Eternal Compass',
+        'Log Pose',
+        'Vivre Card',
+        'Den Den Mushi',
+        'B',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/log_pose.png',
+        'media'
+    ),
+
+    (
+        '¿Cómo se llama este papel que permite localizar a una persona?',
+        'Wanted Poster',
+        'Vivre Card',
+        'Road Poneglyph',
+        'Log Pose',
+        'B',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/vivre_card.png',
+        'media'
+    ),
+
+    (
+        '¿Cómo se llama este dispositivo utilizado para comunicarse?',
+        'Log Pose',
+        'Transponder',
+        'Den Den Mushi',
+        'Vivre Card',
+        'C',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/den_den_mushi.png',
+        'facil'
+    ),
+
+    (
+        '¿Qué Fruta del Diablo representa esta imagen?',
+        'Mera Mera no Mi',
+        'Ope Ope no Mi',
+        'Gomu Gomu no Mi',
+        'Yami Yami no Mi',
+        'C',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/gomu_gomu.png',
+        'media'
+    ),
+
+    (
+        '¿Qué material se utiliza en estas esposas para debilitar a usuarios de Frutas del Diablo?',
+        'Acero',
+        'Piedra marina',
+        'Adamantium',
+        'Piedra de poneglyph',
+        'B',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/kairoseki.png',
+        'dificil'
+    ),
+
+    (
+        '¿Qué Fruta del Diablo aparece en la imagen?',
+        'Gomu Gomu no Mi',
+        'Mera Mera no Mi',
+        'Yami Yami no Mi',
+        'Ope Ope no Mi',
+        'B',
+        1,
+        4,
+        'imagen',
+        'public/img-objetos/onepiece/mera_mera.png',
+        'facil'
+    );
+
+-- =========================
+-- Imagenes Pokemon
+-- =========================
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+    (
+        '¿Qué objeto de Pokémon aparece en la imagen?',
+        'Poké Ball',
+        'Master Ball',
+        'Super Ball',
+        'Ultra Ball',
+        'A',
+        8,
+        4,
+        'imagen',
+        'public/img-objetos/pokemon/pokeball.png',
+        'facil'
+    ),
+
+    (
+        '¿Qué tipo de Poké Ball aparece en la imagen?',
+        'Ultra Ball',
+        'Master Ball',
+        'Super Ball',
+        'Premier Ball',
+        'B',
+        8,
+        4,
+        'imagen',
+        'public/img-objetos/pokemon/masterball.png',
+        'facil'
+    ),
+
+    (
+        '¿Cómo se llama este dispositivo utilizado por los entrenadores?',
+        'Pokégear',
+        'Pokédex',
+        'PokéNav',
+        'Rotom Phone',
+        'B',
+        8,
+        4,
+        'imagen',
+        'public/img-objetos/pokemon/pokedex.png',
+        'facil'
+    ),
+
+    (
+        '¿Qué objeto permite recuperar puntos de salud de un Pokémon?',
+        'Antídoto',
+        'Revivir',
+        'Poción',
+        'Éter',
+        'C',
+        8,
+        4,
+        'imagen',
+        'public/img-objetos/pokemon/pocion.png',
+        'facil'
+    ),
+
+    (
+        '¿Qué objeto aparece en la imagen?',
+        'Caramelo Raro',
+        'Revivir',
+        'Máximo Elixir',
+        'Pepita',
+        'A',
+        8,
+        4,
+        'imagen',
+        'public/img-objetos/pokemon/caramelo_raro.png',
+        'media'
+    ),
+
+    (
+        '¿Qué piedra evolutiva aparece en la imagen?',
+        'Piedra Agua',
+        'Piedra Trueno',
+        'Piedra Fuego',
+        'Piedra Hoja',
+        'B',
+        8,
+        4,
+        'imagen',
+        'public/img-objetos/pokemon/piedra_trueno.png',
+        'media'
+    ),
+
+    (
+        '¿Qué piedra evolutiva aparece en la imagen?',
+        'Piedra Fuego',
+        'Piedra Lunar',
+        'Piedra Agua',
+        'Piedra Alba',
+        'C',
+        8,
+        4,
+        'imagen',
+        'public/img-objetos/pokemon/piedra_agua.png',
+        'media'
+    ),
+
+    (
+        '¿Qué objeto se utiliza para revivir a un Pokémon debilitado?',
+        'Revivir',
+        'Poción',
+        'Antídoto',
+        'Restaurar Todo',
+        'A',
+        8,
+        4,
+        'imagen',
+        'public/img-objetos/pokemon/revivir.png',
+        'media'
+    ),
+
+    (
+        '¿Qué objeto permite compartir experiencia con otros Pokémon?',
+        'Huevo Suerte',
+        'Repartir Experiencia',
+        'Amuleto',
+        'Campana Alivio',
+        'B',
+        8,
+        4,
+        'imagen',
+        'public/img-objetos/pokemon/repartir_experiencia.png',
+        'dificil'
+    ),
+
+    (
+        '¿Qué tipo de Poké Ball aparece en la imagen?',
+        'Super Ball',
+        'Poké Ball',
+        'Ultra Ball',
+        'Master Ball',
+        'C',
+        8,
+        4,
+        'imagen',
+        'public/img-objetos/pokemon/ultraball.png',
+        'media'
+    );
+
+-- =========================
+-- Imagenes Dragon Ball
+-- =========================
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+    (
+        '¿Qué objeto de Dragon Ball aparece en la imagen?',
+        'Radar del Dragón',
+        'Scouter',
+        'Control de cápsulas',
+        'Detector de ki',
+        'A',
+        3,
+        4,
+        'imagen',
+        'public/img-objetos/dragonball/radar_dragon.png',
+        'facil'
+    ),
+
+    (
+        '¿Cómo se llama este objeto utilizado para almacenar vehículos y otros elementos?',
+        'Cápsula Hoi-Poi',
+        'Semilla del Ermitaño',
+        'Radar del Dragón',
+        'Potara',
+        'A',
+        3,
+        4,
+        'imagen',
+        'public/img-objetos/dragonball/capsula_hoi_poi.png',
+        'facil'
+    ),
+
+    (
+        '¿Cómo se llama este bastón utilizado por Goku cuando era niño?',
+        'Bastón Mágico',
+        'Báculo Sagrado',
+        'Bastón del Kaioshin',
+        'Espada Z',
+        'A',
+        3,
+        4,
+        'imagen',
+        'public/img-objetos/dragonball/baston_magico.png',
+        'facil'
+    ),
+
+    (
+        '¿Qué objeto puede recuperar rápidamente la energía y curar heridas?',
+        'Semilla del Ermitaño',
+        'Fruta del Árbol Sagrado',
+        'Agua Ultra Divina',
+        'Medicina del corazón',
+        'A',
+        3,
+        4,
+        'imagen',
+        'public/img-objetos/dragonball/semilla_ermitanio.png',
+        'facil'
+    ),
+
+    (
+        '¿Cómo se llama este objeto que Goku utiliza para volar durante gran parte de su infancia?',
+        'Nube Kinton',
+        'Nube Kaioshin',
+        'Nube Sagrada',
+        'Nube Shenlong',
+        'A',
+        3,
+        4,
+        'imagen',
+        'public/img-objetos/dragonball/nube_kinton.png',
+        'media'
+    ),
+
+    (
+        '¿A qué personaje pertenece esta espada?',
+        'Trunks',
+        'Gohan',
+        'Goku',
+        'Vegeta',
+        'A',
+        3,
+        4,
+        'imagen',
+        'public/img-objetos/dragonball/espada_trunks.png',
+        'facil'
+    ),
+
+    (
+        '¿Cómo se llaman estos pendientes utilizados para realizar una fusión?',
+        'Potara',
+        'Aretes Z',
+        'Pendientes del Tiempo',
+        'Pendientes de Bills',
+        'A',
+        3,
+        4,
+        'imagen',
+        'public/img-objetos/dragonball/potara.png',
+        'media'
+    ),
+
+    (
+        '¿Cómo se llama este objeto utilizado por los Kaioshin para viajar a través del tiempo?',
+        'Anillo del Tiempo',
+        'Anillo Potara',
+        'Anillo de Zeno',
+        'Anillo del Dragón',
+        'A',
+        3,
+        4,
+        'imagen',
+        'public/img-objetos/dragonball/anillo_tiempo.png',
+        'dificil'
+    ),
+
+    (
+        '¿Qué vehículo aparece en la imagen?',
+        'Máquina del Tiempo de Trunks',
+        'Nave Saiyajin',
+        'Nave de Freezer',
+        'Cápsula espacial de Bulma',
+        'A',
+        3,
+        4,
+        'imagen',
+        'public/img-objetos/dragonball/maquina_tiempo.png',
+        'media'
+    ),
+
+    (
+        '¿Qué Bola de Dragón aparece en la imagen?',
+        'Bola de 1 estrella',
+        'Bola de 4 estrellas',
+        'Bola de 5 estrellas',
+        'Bola de 7 estrellas',
+        'B',
+        3,
+        4,
+        'imagen',
+        'public/img-objetos/dragonball/dragonball_4_estrellas.png',
+        'facil'
+    );
 
 
+-- =========================
+-- Imagenes Naruto
+-- =========================
 
 
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+    (
+        '¿Qué arma ninja aparece en la imagen?',
+        'Shuriken',
+        'Kunai',
+        'Senbon',
+        'Kusarigama',
+        'B',
+        2,
+        4,
+        'imagen',
+        'public/img-objetos/naruto/kunai.png',
+        'facil'
+    ),
+
+    (
+        '¿Qué arma ninja aparece en la imagen?',
+        'Kunai',
+        'Shuriken',
+        'Tantō',
+        'Senbon',
+        'B',
+        2,
+        4,
+        'imagen',
+        'public/img-objetos/naruto/shuriken.png',
+        'facil'
+    ),
+
+    (
+        '¿Qué objeto utilizan los ninjas para representar su aldea?',
+        'Banda ninja',
+        'Cinturón de chakra',
+        'Máscara ANBU',
+        'Protector de brazo',
+        'A',
+        2,
+        4,
+        'imagen',
+        'public/img-objetos/naruto/banda_ninja.png',
+        'facil'
+    ),
+
+    (
+        '¿Qué objeto ninja aparece en la imagen?',
+        'Pergamino de invocación',
+        'Sello explosivo',
+        'Papel de chakra',
+        'Sello maldito',
+        'B',
+        2,
+        4,
+        'imagen',
+        'public/img-objetos/naruto/sello_explosivo.png',
+        'media'
+    ),
+
+    (
+        '¿Qué objeto se utiliza frecuentemente para almacenar técnicas, armas o realizar invocaciones?',
+        'Pergamino',
+        'Banda ninja',
+        'Sello explosivo',
+        'Campana',
+        'A',
+        2,
+        4,
+        'imagen',
+        'public/img-objetos/naruto/pergamino.png',
+        'media'
+    ),
+
+    (
+        '¿Cómo se llama esta espada perteneciente a los Siete Espadachines de la Niebla?',
+        'Kubikiribōchō',
+        'Samehada',
+        'Kusanagi',
+        'Hiramekarei',
+        'B',
+        2,
+        4,
+        'imagen',
+        'public/img-objetos/naruto/samehada.png',
+        'media'
+    ),
+
+    (
+        '¿Cómo se llama esta arma utilizada por Madara Uchiha?',
+        'Gunbai',
+        'Samehada',
+        'Kubikiribōchō',
+        'Bashōsen',
+        'A',
+        2,
+        4,
+        'imagen',
+        'public/img-objetos/naruto/gunbai.png',
+        'dificil'
+    ),
+
+    (
+        '¿Cómo se llama esta espada asociada principalmente a Orochimaru y Sasuke?',
+        'Samehada',
+        'Espada Kusanagi',
+        'Kubikiribōchō',
+        'Nuibari',
+        'B',
+        2,
+        4,
+        'imagen',
+        'public/img-objetos/naruto/kusanagi.png',
+        'media'
+    ),
+
+    (
+        '¿Qué objeto permite descubrir la naturaleza elemental del chakra de un ninja?',
+        'Sello explosivo',
+        'Papel de chakra',
+        'Pergamino',
+        'Etiqueta de sellado',
+        'B',
+        2,
+        4,
+        'imagen',
+        'public/img-objetos/naruto/papel_chakra.png',
+        'dificil'
+    ),
+
+    (
+        '¿A qué organización pertenece este tipo de anillo?',
+        'ANBU',
+        'Akatsuki',
+        'Siete Espadachines',
+        'Raíz',
+        'B',
+        2,
+        4,
+        'imagen',
+        'public/img-objetos/naruto/anillo_akatsuki.png',
+        'media'
+    );
 
 
 
