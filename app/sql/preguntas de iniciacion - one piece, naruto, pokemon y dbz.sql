@@ -1531,3 +1531,1502 @@ VALUES
     NULL,
     'dificil'
 );
+
+-- =======================
+-- POKÉMON - SILUETAS
+-- =======================
+
+
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+-- =========================
+-- FÁCILES
+-- =========================
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Evee',
+    'Raichu',
+    'Pikachu',
+    'Meowth',
+    'C',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/pikachu.png',
+    'facil'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Charmeleon',
+    'Charmander',
+    'Bulbasaur',
+    'Pikachu',
+    'B',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/charmander.png',
+    'facil'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Squirtle',
+    'Totodile',
+    'Psyduck',
+    'Mudkip',
+    'A',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/squirtle.png',
+    'facil'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Turtwig',
+    'Chikorita',
+    'Oddish',
+    'Bulbasaur',
+    'D',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/bulbasaur.png',
+    'facil'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Charizard',
+    'Dragonite',
+    'Aerodactyl',
+    'Salamence',
+    'B',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/dragonite.png',
+    'facil'
+),
+
+-- =========================
+-- MEDIAS
+-- =========================
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Sableye',
+    'Haunter',
+    'Gastly',
+    'Gengar',
+    'D',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/gengar.png',
+    'media'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Zoroark',
+    'Hawlucha',
+    'Lucario',
+    'Greninja',
+    'C',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/lucario.png',
+    'media'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Slaking',
+    'Snorlax',
+    'Ursaring',
+    'Hariyama',
+    'B',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/snorlax.png',
+    'media'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Gyarados',
+    'Milotic',
+    'Dragonair',
+    'Lapras',
+    'A',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/gyarados.png',
+    'media'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Lucario',
+    'Froakie',
+    'Inteleon',
+    'Greninja',
+    'D',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/greninja.png',
+    'media'
+),
+
+-- =========================
+-- DIFÍCILES
+-- =========================
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Mewtwo',
+    'Mew',
+    'Deoxys',
+    'Genesect',
+    'A',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/mewtwo.png',
+    'dificil'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Gyarados',
+    'Rayquaza',
+    'Dragonair',
+    'Serperior',
+    'B',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/rayquaza.png',
+    'dificil'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Haxorus',
+    'Salamence',
+    'Garchomp',
+    'Tyranitar',
+    'C',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/garchomp.png',
+    'dificil'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Marshadow',
+    'Zoroark',
+    'Gengar',
+    'Darkrai',
+    'D',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/darkrai.png',
+    'dificil'
+),
+
+(
+    '¿Qué Pokémon aparece en esta silueta?',
+    'Giratina',
+    'Dialga',
+    'Palkia',
+    'Arceus',
+    'A',
+    8,
+    2,
+    'imagen',
+    'public/img-siluetas/pokemon/giratina.png',
+    'dificil'
+);
+
+-- =======================
+-- OnePiece - SILUETAS
+-- =======================
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+-- =========================
+-- FÁCILES
+-- =========================
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Sanji',
+    'Luffy',
+    'Zoro',
+    'Usopp',
+    'B',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/luffy.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Nami',
+    'Robin',
+    'Zoro',
+    'Chopper',
+    'C',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/zoro.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Sanji',
+    'Franky',
+    'Usopp',
+    'Brook',
+    'A',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/sanji.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Robin',
+    'Nami',
+    'Vivi',
+    'Perona',
+    'B',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/nami.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Usopp',
+    'Chopper',
+    'Brook',
+    'Franky',
+    'B',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/chopper.png',
+    'facil'
+),
+
+-- =========================
+-- MEDIAS
+-- =========================
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Brook',
+    'Franky',
+    'Jinbe',
+    'Usopp',
+    'D',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/usopp.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Robin',
+    'Nami',
+    'Boa Hancock',
+    'Vivi',
+    'A',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/robin.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Brook',
+    'Jinbe',
+    'Franky',
+    'Chopper',
+    'C',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/franky.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Jinbe',
+    'Brook',
+    'Franky',
+    'Sanji',
+    'B',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/brook.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Jinbe',
+    'Arlong',
+    'Hody Jones',
+    'Kaido',
+    'A',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/jinbe.png',
+    'media'
+),
+
+-- =========================
+-- DIFÍCILES
+-- =========================
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Trafalgar Law',
+    'Eustass Kid',
+    'Shanks',
+    'Sabo',
+    'A',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/law.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Shanks',
+    'Mihawk',
+    'Sabo',
+    'Ace',
+    'D',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/ace.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Ace',
+    'Sabo',
+    'Marco',
+    'Shanks',
+    'B',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/sabo.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Mihawk',
+    'Shanks',
+    'Rayleigh',
+    'Dragon',
+    'A',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/mihawk.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de One Piece aparece en esta silueta?',
+    'Blackbeard',
+    'Shanks',
+    'Kaido',
+    'Whitebeard',
+    'C',
+    1,
+    2,
+    'imagen',
+    'public/img-siluetas/onepiece/kaido.png',
+    'dificil'
+);
+
+-- =======================
+-- DragonBall - SILUETAS
+-- =======================
+
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+-- =========================
+-- FÁCILES
+-- =========================
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Vegeta',
+    'Goku',
+    'Gohan',
+    'Trunks',
+    'B',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/goku.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Gohan',
+    'Piccolo',
+    'Vegeta',
+    'Goku',
+    'C',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/vegeta.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Piccolo',
+    'Krilin',
+    'Tenshinhan',
+    'Yamcha',
+    'A',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/piccolo.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Goku',
+    'Trunks',
+    'Gohan',
+    'Goten',
+    'C',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/gohan.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Goten',
+    'Trunks',
+    'Gohan',
+    'Vegeta',
+    'B',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/trunks.png',
+    'facil'
+),
+
+-- =========================
+-- MEDIAS
+-- =========================
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Cell',
+    'Freezer',
+    'Majin Buu',
+    'Broly',
+    'B',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/freezer.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Majin Buu',
+    'Cell',
+    'Freezer',
+    'Dabura',
+    'B',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/cell.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Broly',
+    'Nappa',
+    'Raditz',
+    'Bardock',
+    'C',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/raditz.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Krilin',
+    'Yamcha',
+    'Tenshinhan',
+    'Roshi',
+    'A',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/krilin.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Bills',
+    'Whis',
+    'Kaio-sama',
+    'Shin',
+    'A',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/bills.png',
+    'media'
+),
+
+-- =========================
+-- DIFÍCILES
+-- =========================
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Bardock',
+    'Raditz',
+    'Nappa',
+    'Turles',
+    'A',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/bardock.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Vegito',
+    'Gogeta',
+    'Gotenks',
+    'Broly',
+    'B',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/gogeta.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Gogeta',
+    'Gotenks',
+    'Vegito',
+    'Vegeta',
+    'C',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/vegito.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Hit',
+    'Jiren',
+    'Toppo',
+    'Dyspo',
+    'B',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/jiren.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de Dragon Ball aparece en esta silueta?',
+    'Broly',
+    'Kale',
+    'Caulifla',
+    'Cabba',
+    'A',
+    3,
+    2,
+    'imagen',
+    'public/img-siluetas/dragonball/broly.png',
+    'dificil'
+);
+
+-- =========================
+-- Naruto - Siluetas
+-- =========================
+
+
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+-- =========================
+-- FÁCILES
+-- =========================
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Sasuke',
+    'Naruto',
+    'Kakashi',
+    'Gaara',
+    'B',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/naruto.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Kakashi',
+    'Sasuke',
+    'Naruto',
+    'Neji',
+    'B',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/sasuke.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Sakura',
+    'Hinata',
+    'Ino',
+    'Tenten',
+    'A',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/sakura.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Iruka',
+    'Kakashi',
+    'Jiraiya',
+    'Minato',
+    'B',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/kakashi.png',
+    'facil'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Kankuro',
+    'Gaara',
+    'Shikamaru',
+    'Choji',
+    'B',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/gaara.png',
+    'facil'
+),
+
+-- =========================
+-- MEDIAS
+-- =========================
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Neji',
+    'Rock Lee',
+    'Might Guy',
+    'Shino',
+    'B',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/rocklee.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Hinata',
+    'Temari',
+    'Ino',
+    'Tenten',
+    'A',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/hinata.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Choji',
+    'Shikamaru',
+    'Kiba',
+    'Sai',
+    'B',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/shikamaru.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Orochimaru',
+    'Jiraiya',
+    'Kabuto',
+    'Hiruzen',
+    'B',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/jiraiya.png',
+    'media'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Itachi',
+    'Obito',
+    'Madara',
+    'Shisui',
+    'A',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/itachi.png',
+    'media'
+),
+
+-- =========================
+-- DIFÍCILES
+-- =========================
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Minato',
+    'Tobirama',
+    'Hashirama',
+    'Hiruzen',
+    'A',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/minato.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Pain',
+    'Obito',
+    'Madara',
+    'Nagato',
+    'C',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/madara.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Kisame',
+    'Zabuza',
+    'Suigetsu',
+    'Haku',
+    'A',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/kisame.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Sasori',
+    'Deidara',
+    'Kakuzu',
+    'Hidan',
+    'B',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/deidara.png',
+    'dificil'
+),
+
+(
+    '¿Qué personaje de Naruto aparece en esta silueta?',
+    'Pain',
+    'Obito',
+    'Madara',
+    'Kabuto',
+    'B',
+    2,
+    2,
+    'imagen',
+    'public/img-siluetas/naruto/obito.png',
+    'dificil'
+);
+
+-- =========================
+-- Risas - one piece
+-- =========================
+
+
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+-- =========================
+-- FÁCILES
+-- =========================
+
+(
+    '¿A qué personaje de One Piece pertenece esta risa?',
+    'Luffy',
+    'Brook',
+    'Usopp',
+    'Franky',
+    'B',
+    1,
+    3,
+    'audio',
+    'public/audio/onepiece/brook.mp3',
+    'facil'
+),
+
+
+
+(
+    '¿A qué personaje de One Piece pertenece esta risa?',
+    'Crocodile',
+    'Buggy',
+    'Doflamingo',
+    'Moria',
+    'C',
+    1,
+    3,
+    'audio',
+    'public/audio/onepiece/doflamingo.mp3',
+    'dificil'
+),
+
+
+(
+    '¿A qué personaje de One Piece pertenece esta risa?',
+    'Big Mom',
+    'Nami',
+    'Robin',
+    'Boa Hancock',
+    'A',
+    1,
+    3,
+    'audio',
+    'public/audio/onepiece/bigmom.mp3',
+    'facil'
+),
+
+-- =========================
+-- MEDIAS
+-- =========================
+
+(
+    '¿A qué personaje de One Piece pertenece esta risa?',
+    'Crocodile',
+    'Gecko Moria',
+    'Doflamingo',
+    'Caesar Clown',
+    'B',
+    1,
+    3,
+    'audio',
+    'public/audio/onepiece/geckomoria.mp3',
+    'media'
+),
+
+(
+    '¿A qué personaje de One Piece pertenece esta risa?',
+    'Caesar Clown',
+    'Crocodile',
+    'Enel',
+    'Magellan',
+    'A',
+    1,
+    3,
+    'audio',
+    'public/audio/onepiece/caesarclown.mp3',
+    'media'
+),
+
+(
+    '¿A qué personaje de One Piece pertenece este audio?',
+    'Franky',
+    'Tom',
+    'Sengoku',
+    'Chopper',
+    'A',
+    1,
+    3,
+    'audio',
+    'public/audio/onepiece/franky.mp3',
+    'facil'
+),
+
+-- =========================
+-- DIFÍCILES
+-- =========================
+
+(
+    '¿A qué personaje de One Piece pertenece este audio?',
+    'Mihawk',
+    'Sengoku',
+    'Barba blanca',
+    'Barba negra',
+    'D',
+    1,
+    3,
+    'audio',
+    'public/audio/onepiece/barbanegra.mp3',
+    'facil'
+),
+
+(
+    '¿A qué personaje de One Piece pertenece este audio?',
+    'Ace',
+    'Luffy',
+    'Sabo',
+    'Crocodile',
+    'B',
+    1,
+    3,
+    'audio',
+    'public/audio/onepiece/luffy.mp3',
+    'facil'
+);
+
+
+
+
+-- =========================
+-- VOCES . DRAGON BALL
+-- =========================
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+-- =========================
+-- FÁCILES
+-- =========================
+
+(
+    '¿A qué personaje de Dragon Ball pertenece esta voz?',
+    'Vegeta',
+    'Goku',
+    'Piccolo',
+    'Gohan',
+    'B',
+    3,
+    3,
+    'audio',
+    'public/audio/dragonball/goku.mp3',
+    'facil'
+),
+
+(
+    '¿A qué personaje de Dragon Ball pertenece esta voz?',
+    'Krilin',
+    'Piccolo',
+    'Vegeta',
+    'Yamcha',
+    'C',
+    3,
+    3,
+    'audio',
+    'public/audio/dragonball/vegeta.mp3',
+    'facil'
+),
+
+
+(
+    '¿A qué personaje de Dragon Ball pertenece esta voz?',
+    'Maestro Roshi',
+    'Yamcha',
+    'Krilin',
+    'Tenshinhan',
+    'C',
+    3,
+    3,
+    'audio',
+    'public/audio/dragonball/krilin.mp3',
+    'facil'
+),
+
+(
+    '¿A qué personaje de Dragon Ball pertenece esta voz?',
+    'Cell',
+    'Freezer',
+    'Majin Buu',
+    'Capitán Ginyu',
+    'B',
+    3,
+    3,
+    'audio',
+    'public/audio/dragonball/freezer.mp3',
+    'media'
+),
+
+(
+    '¿A qué personaje de Dragon Ball pertenece esta voz?',
+    'Freezer',
+    'Majin Buu',
+    'Cell',
+    'Broly',
+    'C',
+    3,
+    3,
+    'audio',
+    'public/audio/dragonball/cell.mp3',
+    'dificil'
+),
+
+
+
+);
+
+
+-- =========================
+-- Audios POKEMON
+-- =========================
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+
+
+    (
+        '¿Qué Pokémon produce este sonido?',
+        'Meowth',
+        'Pikachu',
+        'Eevee',
+        'Psyduck',
+        'B',
+        8,
+        3,
+        'audio',
+        'public/audio/pokemon/pikachu.mp3',
+        'facil'
+    ),
+    (
+        '¿Qué  produce este sonido?',
+        'Conseguir un shiny',
+        'Subir de nivel los pokemones',
+        'Curar tus pokemones',
+        'Abrir la PC',
+        'C',
+        8,
+        3,
+        'audio',
+        'public/audio/pokemon/curar.mp3',
+        'facil'
+    ),
+    (
+        '¿Qué  produce este sonido?',
+        'Atrapar un pokemon',
+        'Capturar un pokemon',
+        'Derrotar a un pokemon',
+        'Posee poca vida',
+        'D',
+        8,
+        3,
+        'audio',
+        'public/audio/pokemon/pocavida.mp3',
+        'media'
+    ),
+
+    (
+        '¿Qué  produce este sonido?',
+        'Atrapar un pokemon',
+        'Capturar un pokemon',
+        'Derrotar a un pokemon',
+        'Posee poca vida',
+        'D',
+        8,
+        3,
+        'audio',
+        'public/audio/pokemon/pocavida.mp3',
+        'media'
+    ),
+    (
+        '¿Qué  produce este sonido?',
+        'Gana a un entrenador',
+        'Recibe un item',
+        'Gana a un lider del gimnasio',
+        'Sube de nivel',
+        'B',
+        8,
+        3,
+        'audio',
+        'public/audio/pokemon/recibeitem.mp3',
+        'dificil'
+    ),
+
+    (
+        '¿Qué  produce este sonido?',
+        'Usar la pc',
+        'usar surf',
+        'usar fuerza',
+        'usar la pokedex',
+        'A',
+        8,
+        3,
+        'audio',
+        'public/audio/pokemon/pc.mp3',
+        'dificil'
+    );
+
+
+-- =========================
+-- Audios Naruto
+-- =========================
+
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+    (
+    '¿A qué personaje de Naruto pertenece esta voz?',
+    'Sasuke',
+    'Naruto',
+    'Kakashi',
+    'Gaara',
+    'B',
+    2,
+    3,
+    'audio',
+    'public/audio/naruto/naruto.mp3',
+    'facil'
+    ),
+
+
+
+    (
+    '¿A qué personaje de Naruto pertenece esta voz?',
+    'Sasuke',
+    'Neji',
+    'Itachi',
+    'Shisui',
+    'C',
+    2,
+    3,
+    'audio',
+    'public/audio/naruto/itachi.mp3',
+    'media'
+    ),
+
+    (
+    '¿¿Qué  produce este sonido?',
+    'Jutsu Sexy',
+    'Byakugan',
+    'Clones',
+    'Genjutsu',
+    'C',
+    2,
+    3,
+    'audio',
+    'public/audio/naruto/clon.mp3',
+    'dificil'
+    ),
+
+
+    (
+    '¿¿Qué  produce este sonido?',
+    'Jutsu',
+    'Invocacion',
+    'Sharingan',
+    'Genjutsu',
+    'A',
+    2,
+    3,
+    'audio',
+    'public/audio/naruto/jutsu.mp3',
+    'media'
+    );
+
+-- RECOMPENSAS
+
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad
+)
+VALUES
+
+    (
+        '¿A qué personaje de One Piece pertenece esta recompensa?',
+        'Zoro',
+        'Luffy',
+        'Sanji',
+        'Jinbe',
+        'B',
+        1,
+        5,
+        'imagen',
+        'public/img-recompensas/luffy.png',
+        'facil'
+    ),
+
+    (
+        '¿A qué personaje de One Piece pertenece esta recompensa?',
+        'Sanji',
+        'Robin',
+        'Zoro',
+        'Jinbe',
+        'C',
+        1,
+        5,
+        'imagen',
+        'public/img-recompensas/zoro.png',
+        'facil'
+    ),
+
+    (
+        '¿A qué personaje de One Piece pertenece esta recompensa?',
+        'Jinbe',
+        'Sanji',
+        'Zoro',
+        'Franky',
+        'A',
+        1,
+        5,
+        'imagen',
+        'public/img-recompensas/jinbe.png',
+        'media'
+    ),
+
+    (
+        '¿A qué personaje de One Piece pertenece esta recompensa?',
+        'Brook',
+        'Sanji',
+        'Usopp',
+        'Franky',
+        'B',
+        1,
+        5,
+        'imagen',
+        'public/img-recompensas/sanji.png',
+        'media'
+    ),
+
+    (
+        '¿A qué personaje de One Piece pertenece esta recompensa?',
+        'Nami',
+        'Robin',
+        'Boa Hancock',
+        'Vivi',
+        'B',
+        1,
+        5,
+        'imagen',
+        'public/img-recompensas/robin.png',
+        'dificil'
+    );
+
+
+
+
+
+
+
+
+
+

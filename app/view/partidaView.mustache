@@ -10,6 +10,47 @@
         box-sizing: border-box;
     }
 
+
+    /*Siluetas ! */
+
+    .pregunta-imagen-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin: 20px auto;
+        width: 100%;
+    }
+
+    .pregunta-imagen {
+        width: 300px;
+        height: 200px;
+
+        object-fit: contain;
+
+        background-color: white;
+
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    /* AUDIOS */
+
+
+    .pregunta-audio-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 25px auto;
+        width: 100%;
+    }
+
+    .pregunta-audio-container audio {
+        width: 350px;
+        max-width: 90%;
+    }
+
+
     .partida-container {
         max-width: 1180px;
         margin: 0 auto;
@@ -331,6 +372,24 @@
 
                 </div>
 
+                {{#esAudio}}
+                    <div class="pregunta-audio-container">
+                        <audio controls>
+                            <source src="{{pregunta.recurso}}" type="audio/mpeg">
+                            Tu navegador no soporta audio.
+                        </audio>
+                    </div>
+                {{/esAudio}}
+
+                    {{#esImagen}}
+                        <div class="pregunta-imagen-container">
+                            <img
+                                    src="{{pregunta.recurso}}"
+                                    alt="Imagen de la pregunta"
+                                    class="pregunta-imagen"
+                            >
+                        </div>
+                    {{/esImagen}}
 
                 <form
                         action="?controller=partida&method=responder"
