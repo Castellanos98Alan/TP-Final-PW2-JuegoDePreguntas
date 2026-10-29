@@ -297,6 +297,141 @@
         display: inline-block;
     }
 
+    .pf-cabecera-acciones {
+        margin-left: auto;
+        align-self: flex-start;
+    }
+
+    .pf-btn-editar {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        padding: 8px 18px;
+    }
+
+    .pf-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(2, 8, 25, 0.85);
+        backdrop-filter: blur(5px);
+        z-index: 999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .pf-modal-contenido {
+        background: linear-gradient(160deg, #071638, #0e2b66);
+        border: 2px solid #d4af55;
+        border-radius: 18px;
+        width: 100%;
+        max-width: 650px;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 24px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 85, 0.25);
+    }
+
+    .pf-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(245, 200, 75, 0.25);
+        padding-bottom: 12px;
+        margin-bottom: 18px;
+    }
+
+    .pf-modal-header h3 {
+        color: #f5c84b;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .pf-modal-cerrar {
+        background: none;
+        border: none;
+        color: #a9bfdf;
+        font-size: 28px;
+        cursor: pointer;
+        line-height: 1;
+    }
+
+    .pf-modal-cerrar:hover {
+        color: #f5c84b;
+    }
+
+    .pf-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+
+    .pf-form-full {
+        grid-column: span 2;
+    }
+
+    .pf-form-grupo {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .pf-form-grupo label {
+        font-size: 13px;
+        color: #c6d7f5;
+        font-weight: 500;
+    }
+
+    .pf-input {
+        background: rgba(3, 14, 38, 0.8);
+        border: 1px solid rgba(212, 175, 85, 0.5);
+        border-radius: 8px;
+        color: #fff;
+        padding: 9px 12px;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .pf-input:focus {
+        border-color: #f5c84b;
+        box-shadow: 0 0 8px rgba(245, 200, 75, 0.3);
+    }
+
+    .pf-input-file {
+        color: #c6d7f5;
+        font-size: 13px;
+    }
+
+    .pf-modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 15px;
+    }
+
+    .pf-btn-cancelar {
+        background: transparent;
+        border: 1px solid #7a8fa6;
+        color: #a9bfdf;
+        padding: 9px 18px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .pf-btn-cancelar:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
         .pf-grid {
@@ -327,6 +462,11 @@
     {{/no_encontrado}}
 
     {{^no_encontrado}}
+        {{#exito_edicion}}
+            <div style="background: rgba(38, 166, 91, 0.2); border: 1px solid #2ecc71; color: #2ecc71; padding: 12px 18px; border-radius: 12px; margin-bottom: 20px; font-weight: 600; text-align: center;">
+                ✓ {{mensaje_exito}}
+            </div>
+        {{/exito_edicion}}
 
         <div class="pf-grid">
 
@@ -344,6 +484,22 @@
                                 <span class="pf-badge">Tu perfil</span>
                             {{/es_propio}}
                         </div>
+                        {{#es_propio}}
+                            <div class="pf-cabecera-acciones" style="position: relative;">
+                                <button type="button" class="pf-btn" id="btnMenuOpciones" style="display: flex; align-items: center; gap: 6px;">
+                                    ⚙️ Opciones ▾
+                                </button>
+
+                                <div id="desplegableOpciones" style="display: none; position: absolute; right: 0; top: 110%; background: #071638; border: 1px solid #d4af55; border-radius: 10px; min-width: 180px; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                                    <button type="button" id="btnAbrirModalEditar" style="width: 100%; text-align: left; background: none; border: none; padding: 12px 16px; color: #F3F5FA; cursor: pointer; border-bottom: 1px solid rgba(212,175,85,0.2); font-size: 13.5px;">
+                                        ✏️ Editar perfil
+                                    </button>
+                                    <button type="button" id="btnAbrirModalPassword" style="width: 100%; text-align: left; background: none; border: none; padding: 12px 16px; color: #F3F5FA; cursor: pointer; font-size: 13.5px;">
+                                        🔒 Cambiar contraseña
+                                    </button>
+                                </div>
+                            </div>
+                        {{/es_propio}}
                     </div>
 
                     <div class="pf-stats">
@@ -431,6 +587,155 @@
             {{/partidas}}
         </div>
 
+        {{#es_propio}}
+            <div id="pf-modal-editar" class="pf-modal-overlay" style="display: {{#abrir_modal_editar}}flex{{/abrir_modal_editar}}{{^abrir_modal_editar}}none{{/abrir_modal_editar}};">
+                <div class="pf-modal-contenido">
+
+                    <div class="pf-modal-header">
+                        <h3>✏️ Editar Perfil</h3>
+                        <button type="button" class="pf-modal-cerrar" id="btnCerrarModalEditar">&times;</button>
+                    </div>
+
+                    {{#error_perfil}}
+                        <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; color: #ff7675; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
+                            ⚠️ {{error_perfil}}
+                        </div>
+                    {{/error_perfil}}
+
+                    <form action="?controller=perfil&method=actualizar" method="POST" enctype="multipart/form-data" class="pf-form-editar" novalidate>
+
+                        <div class="pf-form-grid">
+                            <div class="pf-form-grupo pf-form-full">
+                                <label>Foto de perfil actual:</label>
+                                <div style="display: flex; align-items: center; gap: 15px; margin-top: 6px;">
+                                    <img src="{{foto_perfil}}" alt="Foto actual" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #d4af55;">
+                                    <input type="file" name="foto_perfil" accept="image/png, image/jpeg, image/jpg" class="pf-input-file">
+                                </div>
+                                <small style="color: #a9bfdf; font-size: 11px;">Opcional. Dejá vacío para mantener tu foto actual.</small>
+                            </div>
+
+                            <div class="pf-form-grupo">
+                                <label for="edit_username">Nombre de usuario:</label>
+                                <input type="text" id="edit_username" name="username" value="{{username}}" minlength="3" maxlength="30" required class="pf-input">
+                            </div>
+
+                            <div class="pf-form-grupo">
+                                <label for="edit_nombre">Nombre completo:</label>
+                                <input type="text" id="edit_nombre" name="nombre_completo" value="{{nombre_completo}}" required class="pf-input">
+                            </div>
+
+                            <div class="pf-form-grupo">
+                                <label for="edit_anio">Año de nacimiento:</label>
+                                <input type="number" id="edit_anio" name="anio_nacimiento" value="{{anio_nacimiento}}" min="1920" max="2026" required class="pf-input">
+                            </div>
+
+                            <div class="pf-form-grupo">
+                                <label for="edit_sexo">Sexo:</label>
+                                <select id="edit_sexo" name="sexo" class="pf-input">
+                                    <option value="Masculino" {{#es_masculino}}selected{{/es_masculino}}>Masculino</option>
+                                    <option value="Femenino" {{#es_femenino}}selected{{/es_femenino}}>Femenino</option>
+                                    <option value="Prefiero no cargarlo" {{#es_otro_sexo}}selected{{/es_otro_sexo}}>Prefiero no cargarlo</option>
+                                </select>
+                            </div>
+
+                            <div class="pf-form-grupo">
+                                <label for="edit_pais">País:</label>
+                                <input type="text" id="edit_pais" name="pais" value="{{pais}}" readonly required class="pf-input" style="opacity: 0.85; cursor: not-allowed; background: rgba(3, 14, 38, 0.5);">
+                            </div>
+
+                            <div class="pf-form-grupo">
+                                <label for="edit_ciudad">Ciudad:</label>
+                                <input type="text" id="edit_ciudad" name="ciudad" value="{{ciudad}}" readonly required class="pf-input" style="opacity: 0.85; cursor: not-allowed; background: rgba(3, 14, 38, 0.5);">
+                            </div>
+                        </div>
+
+                        <div class="pf-form-grupo" style="margin-top: 15px;">
+                            <label>Ubicación en el mapa (hacé clic para mover el pin):</label>
+                            <small id="edit-ubicacion-alerta" style="color: #F1CD73; font-size: 12px; margin-top: 2px;">📍 Hacé clic en el mapa para actualizar ciudad y país automáticamente.</small>
+                            <div id="pf-mapa-editar" style="height: 220px; border-radius: 10px; margin-top: 8px; border: 1px solid #d4af55;"></div>
+                            <input type="hidden" id="edit_latitud" name="latitud" value="{{latitud}}">
+                            <input type="hidden" id="edit_longitud" name="longitud" value="{{longitud}}">
+                        </div>
+
+                        <div class="pf-modal-footer">
+                            <button type="button" class="pf-btn-cancelar" id="btnCancelarModalEditar">Cancelar</button>
+                            <button type="submit" class="pf-btn">Guardar cambios</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        {{/es_propio}}
+
+        {{#es_propio}}
+            <div id="pf-modal-password" class="pf-modal-overlay" style="display: {{#abrir_modal_password}}flex{{/abrir_modal_password}}{{^abrir_modal_password}}none{{/abrir_modal_password}};">
+                <div class="pf-modal-contenido" style="max-width: 450px;">
+
+                    <div class="pf-modal-header">
+                        <h3>🔒 Cambiar Contraseña</h3>
+                        <button type="button" class="pf-modal-cerrar" id="btnCerrarModalPassword">&times;</button>
+                    </div>
+
+                    {{^pass_verificada}}
+                    <form action="?controller=perfil&method=verificarPasswordActual" method="POST" novalidate>
+                        {{#error_password}}
+                            <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; color: #ff7675; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
+                                ⚠️ {{error_password}}
+                            </div>
+                        {{/error_password}}
+
+                        <p style="color: #a9bfdf; font-size: 13px; margin-bottom: 14px; line-height: 1.4;">
+                            Para cambiar tu contraseña, primero ingresá tu clave actual para confirmar tu identidad:
+                        </p>
+
+                        <div class="pf-form-grupo">
+                            <label for="pass_actual">Contraseña actual:</label>
+                            <input type="password" id="pass_actual" name="password_actual" required placeholder="Tu contraseña actual" class="pf-input" autofocus>
+                        </div>
+
+                        <div class="pf-modal-footer">
+                            <button type="button" class="pf-btn-cancelar" id="btnCancelarModalPassword">Cancelar</button>
+                            <button type="submit" class="pf-btn">Verificar y continuar ➔</button>
+                        </div>
+                    </form>
+                    {{/pass_verificada}}
+
+                    {{#pass_verificada}}
+                    <form action="?controller=perfil&method=cambiarPassword" method="POST" novalidate>
+                        <input type="hidden" name="token_pass" value="{{token_pass}}">
+
+                        <div style="background: rgba(38, 166, 91, 0.2); border: 1px solid #2ecc71; color: #2ecc71; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
+                            ✓ Contraseña actual validada con éxito.
+                        </div>
+
+                        {{#error_password}}
+                            <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; color: #ff7675; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
+                                ⚠️ {{error_password}}
+                            </div>
+                        {{/error_password}}
+
+                        <div style="display: flex; flex-direction: column; gap: 14px;">
+                            <div class="pf-form-grupo">
+                                <label for="pass_nueva">Nueva contraseña:</label>
+                                <input type="password" id="pass_nueva" name="nueva_password" required placeholder="Mínimo 4 caracteres" class="pf-input" autofocus>
+                            </div>
+
+                            <div class="pf-form-grupo">
+                                <label for="pass_repetir">Repetir nueva contraseña:</label>
+                                <input type="password" id="pass_repetir" name="repetir_password" required placeholder="Repetí la nueva contraseña" class="pf-input">
+                            </div>
+                        </div>
+
+                        <div class="pf-modal-footer">
+                            <button type="button" class="pf-btn-cancelar" id="btnCancelarModalPassword">Cancelar</button>
+                            <button type="submit" class="pf-btn">Guardar contraseña</button>
+                        </div>
+                    </form>
+                    {{/pass_verificada}}
+
+                </div>
+            </div>
+        {{/es_propio}}
     {{/no_encontrado}}
 
 </div>
@@ -462,5 +767,137 @@
                 }).addTo(mapa);
             }
         }
+    })();
+
+    (function () {
+        var btnMenu = document.getElementById('btnMenuOpciones');
+        var menu = document.getElementById('desplegableOpciones');
+
+        var modalEdit = document.getElementById('pf-modal-editar');
+        var btnAbrirEdit = document.getElementById('btnAbrirModalEditar');
+        var btnCerrarEdit = document.getElementById('btnCerrarModalEditar');
+        var btnCancelarEdit = document.getElementById('btnCancelarModalEditar');
+
+        var modalPass = document.getElementById('pf-modal-password');
+        var btnAbrirPass = document.getElementById('btnAbrirModalPassword');
+        var btnCerrarPass = document.getElementById('btnCerrarModalPassword');
+        var btnCancelarPass = document.getElementById('btnCancelarModalPassword');
+
+        var mapaEdit = null;
+        var markerEdit = null;
+
+        function limpiarUrlModal() {
+            if (window.history && window.history.replaceState) {
+                var url = new URL(window.location.href);
+                url.searchParams.delete('modal');
+                url.searchParams.delete('error_perfil');
+                url.searchParams.delete('error_password');
+                url.searchParams.delete('token_pass');
+                window.history.replaceState({}, document.title, url.toString());
+            }
+        }
+
+        function buscarPaisYCiudad(lat, lng) {
+            var inputPais = document.getElementById('edit_pais');
+            var inputCiudad = document.getElementById('edit_ciudad');
+            var alerta = document.getElementById('edit-ubicacion-alerta');
+
+            if (alerta) alerta.innerText = "⏳ Detectando ubicación...";
+
+            fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng)
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (data && data.address) {
+                        var pais = data.address.country || 'Desconocido';
+                        var ciudad = data.address.city || data.address.town || data.address.village || data.address.state || 'Desconocida';
+
+                        if (inputPais) inputPais.value = pais;
+                        if (inputCiudad) inputCiudad.value = ciudad;
+                        if (alerta) alerta.innerText = "✓ Ubicación seleccionada: " + ciudad + ", " + pais;
+                    }
+                })
+                .catch(function () {
+                    if (alerta) alerta.innerText = "⚠️ Error al detectar la ciudad. Volvé a hacer clic.";
+                });
+        }
+
+        function inicializarMapaEdit() {
+            var inputLat = document.getElementById('edit_latitud');
+            var inputLng = document.getElementById('edit_longitud');
+            if (!inputLat || !inputLng) return;
+
+            var lat = parseFloat(inputLat.value) || -34.6037;
+            var lng = parseFloat(inputLng.value) || -58.3816;
+
+            if (!mapaEdit && typeof L !== 'undefined') {
+                mapaEdit = L.map('pf-mapa-editar').setView([lat, lng], 11);
+
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '&copy; OpenStreetMap'
+                }).addTo(mapaEdit);
+
+                markerEdit = L.marker([lat, lng], { draggable: true }).addTo(mapaEdit);
+
+                markerEdit.on('dragend', function (e) {
+                    var pos = e.target.getLatLng();
+                    inputLat.value = pos.lat.toFixed(6);
+                    inputLng.value = pos.lng.toFixed(6);
+                    buscarPaisYCiudad(pos.lat, pos.lng);
+                });
+
+                mapaEdit.on('click', function (e) {
+                    markerEdit.setLatLng(e.latlng);
+                    inputLat.value = e.latlng.lat.toFixed(6);
+                    inputLng.value = e.latlng.lng.toFixed(6);
+                    buscarPaisYCiudad(e.latlng.lat, e.latlng.lng);
+                });
+            } else if (mapaEdit) {
+                mapaEdit.invalidateSize();
+            }
+        }
+
+        if (btnMenu) {
+            btnMenu.addEventListener('click', function (e) {
+                e.stopPropagation();
+                menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+            });
+        }
+
+        document.addEventListener('click', function () {
+            if (menu) menu.style.display = 'none';
+        });
+
+        if (btnAbrirEdit) {
+            btnAbrirEdit.addEventListener('click', function () {
+                if (menu) menu.style.display = 'none';
+                if (modalEdit) modalEdit.style.display = 'flex';
+                setTimeout(inicializarMapaEdit, 150);
+            });
+        }
+
+        if (modalEdit && window.getComputedStyle(modalEdit).display === 'flex') {
+            setTimeout(inicializarMapaEdit, 150);
+        }
+
+        function cerrarModalEdit() {
+            if (modalEdit) modalEdit.style.display = 'none';
+            limpiarUrlModal();
+        }
+        if (btnCerrarEdit) btnCerrarEdit.addEventListener('click', cerrarModalEdit);
+        if (btnCancelarEdit) btnCancelarEdit.addEventListener('click', cerrarModalEdit);
+
+        if (btnAbrirPass) {
+            btnAbrirPass.addEventListener('click', function () {
+                if (menu) menu.style.display = 'none';
+                if (modalPass) modalPass.style.display = 'flex';
+            });
+        }
+
+        function cerrarModalPass() {
+            window.location.href = '?controller=perfil&method=show';
+        }
+        if (btnCerrarPass) btnCerrarPass.addEventListener('click', cerrarModalPass);
+        if (btnCancelarPass) btnCancelarPass.addEventListener('click', cerrarModalPass);
     })();
 </script>
