@@ -1,0 +1,3121 @@
+[20:04:46] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[20:04:46] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:04:46] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:04:46] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:04:49] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:04:51] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:04:51] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:04:51] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:04:58] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:04:58] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:04:58] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:04:58] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:05:02] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:05:02] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:05:02] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:05:03] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:05:03] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:05:03] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:05:06] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:05:06] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:05:06] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:05:06] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:05:16] [INFO] SELECT id FROM usuario WHERE username = :username AND id != :id
+[20:05:16] [INFO] UPDATE usuario SET
+                        nombre_completo = :nombre_completo,
+                        username        = :username,
+                        anio_nacimiento = :anio_nacimiento,
+                        sexo            = :sexo,
+                        pais            = :pais,
+                        ciudad          = :ciudad,
+                        latitud         = :latitud,
+                        longitud        = :longitud
+                    WHERE id = :id
+[20:05:16] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:05:16] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:05:16] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:05:16] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:05:44] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:05:44] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:05:44] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:05:44] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:05:51] [INFO] SELECT id FROM usuario WHERE id = :id AND password = :password
+[20:05:51] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:05:51] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:05:51] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:05:51] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:05:56] [INFO] UPDATE usuario SET password = :password WHERE id = :id
+[20:05:56] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:05:56] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:05:56] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:05:56] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:06:31] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:06:31] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:06:31] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:06:31] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:07:43] [INFO] SELECT id FROM usuario WHERE id = :id AND password = :password
+[20:07:43] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:07:43] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:07:43] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:07:43] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:07:52] [INFO] UPDATE usuario SET password = :password WHERE id = :id
+[20:07:52] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:07:52] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:07:52] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:07:52] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:07:59] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[20:07:59] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:07:59] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:07:59] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:08:04] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:08:04] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:08:04] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:08:04] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:08:10] [INFO] SELECT id FROM usuario WHERE id = :id AND password = :password
+[20:08:10] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:08:10] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:08:10] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:08:10] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:08:20] [INFO] UPDATE usuario SET password = :password WHERE id = :id
+[20:08:20] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:08:20] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:08:20] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:08:20] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:08:40] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:08:40] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:08:40] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:08:40] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:18:24] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:18:24] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:18:24] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:18:24] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:18:26] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:18:26] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:18:26] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:18:27] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:18:29] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:18:29] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 AND p.id NOT IN (:preguntaExcluir0, :preguntaExcluir1, :preguntaExcluir2, :preguntaExcluir3) ORDER BY RAND()
+                  LIMIT 1
+[20:18:29] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:18:29] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:18:29] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:18:32] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:18:32] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:18:32] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :id
+[20:18:32] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[20:18:34] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:18:36] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:18:36] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1 AND p.id NOT IN (:preguntaExcluir0, :preguntaExcluir1, :preguntaExcluir2) ORDER BY RAND()
+                  LIMIT 2
+[20:18:36] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:18:36] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:18:36] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:18:43] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:18:43] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:18:43] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:18:48] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:18:49] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:27:19] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:27:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:27:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:27:21] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:27:21] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:27:22] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:27:22] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:27:22] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :id
+[20:27:22] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[20:27:24] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:27:25] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:27:25] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:27:25] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:27:25] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:27:37] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:27:37] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:27:37] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:27:41] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:27:41] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:27:41] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :id
+[20:27:41] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[20:27:43] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:27:43] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:27:43] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:27:48] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:27:48] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:27:48] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:28:03] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[20:28:08] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:28:08] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:28:08] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[20:28:08] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:28:22] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:28:22] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:28:22] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:28:28] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:28:28] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:28:28] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:28:32] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:28:32] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:28:32] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:28:35] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:28:35] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:28:35] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:28:38] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:28:38] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:28:38] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:28:48] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:28:48] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:28:48] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:28:53] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:28:53] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:28:53] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:28:58] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:28:58] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:28:58] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:29:01] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:29:01] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:29:02] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:29:06] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:29:06] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:29:06] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:29:09] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:29:09] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:29:09] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:29:20] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:29:20] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:29:20] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:29:52] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:29:52] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:29:52] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:29:59] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:29:59] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:29:59] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[20:30:01] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[20:30:01] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[20:30:01] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[20:30:05] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:30:05] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:30:05] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:40:00] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:40:00] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:40:00] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:40:02] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:40:02] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:40:02] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:40:03] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:40:03] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:40:03] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:40:04] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:40:04] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:40:04] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:42:42] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:42:42] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:42:42] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:42:48] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:42:48] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:42:48] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:46:56] [INFO] SELECT id,
+                       username,
+                       nombre_completo,
+                       foto_perfil,
+                       pais,
+                       ciudad,
+                       puntaje_acumulado
+                FROM usuario
+                WHERE id_rol = 1
+                  AND esta_activo = 1
+                ORDER BY puntaje_acumulado DESC, username ASC
+[20:47:00] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:47:00] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:47:00] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:47:02] [INFO] SELECT id,
+                       username,
+                       nombre_completo,
+                       foto_perfil,
+                       pais,
+                       ciudad,
+                       puntaje_acumulado
+                FROM usuario
+                WHERE id_rol = 1
+                  AND esta_activo = 1
+                ORDER BY puntaje_acumulado DESC, username ASC
+[20:47:11] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:47:11] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:47:11] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:47:15] [INFO] SELECT id,
+                       username,
+                       nombre_completo,
+                       foto_perfil,
+                       pais,
+                       ciudad,
+                       puntaje_acumulado
+                FROM usuario
+                WHERE id_rol = 1
+                  AND esta_activo = 1
+                ORDER BY puntaje_acumulado DESC, username ASC
+[20:47:18] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:47:18] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:47:18] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:47:21] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:47:21] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:47:21] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:47:23] [INFO] SELECT id,
+                       username,
+                       nombre_completo,
+                       foto_perfil,
+                       pais,
+                       ciudad,
+                       puntaje_acumulado
+                FROM usuario
+                WHERE id_rol = 1
+                  AND esta_activo = 1
+                ORDER BY puntaje_acumulado DESC, username ASC
+[20:57:55] [INFO] SELECT id,
+                       username,
+                       nombre_completo,
+                       foto_perfil,
+                       pais,
+                       ciudad,
+                       puntaje_acumulado
+                FROM usuario
+                WHERE id_rol = 1
+                  AND esta_activo = 1
+                ORDER BY puntaje_acumulado DESC, username ASC
+[20:57:57] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:57:57] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:57:57] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:57:58] [INFO] SELECT id,
+                       username,
+                       nombre_completo,
+                       foto_perfil,
+                       pais,
+                       ciudad,
+                       puntaje_acumulado
+                FROM usuario
+                WHERE id_rol = 1
+                  AND esta_activo = 1
+                ORDER BY puntaje_acumulado DESC, username ASC
+[20:58:00] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:58:00] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:58:00] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:58:02] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[20:58:02] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[20:58:02] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[20:58:02] [INFO] SELECT COUNT(*) + 1 AS posicion
+                FROM usuario
+                WHERE esta_activo = 1
+                AND id_rol = 1
+                AND puntaje_acumulado > :puntaje
+[20:58:07] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:58:07] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:58:07] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:58:09] [INFO] SELECT id,
+                       username,
+                       nombre_completo,
+                       foto_perfil,
+                       pais,
+                       ciudad,
+                       puntaje_acumulado
+                FROM usuario
+                WHERE id_rol = 1
+                  AND esta_activo = 1
+                ORDER BY puntaje_acumulado DESC, username ASC
+[20:58:13] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:58:13] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:58:13] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[20:58:16] [INFO] SELECT id,
+                       username,
+                       nombre_completo,
+                       foto_perfil,
+                       pais,
+                       ciudad,
+                       puntaje_acumulado
+                FROM usuario
+                WHERE id_rol = 1
+                  AND esta_activo = 1
+                ORDER BY puntaje_acumulado DESC, username ASC
+[20:58:18] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[20:58:18] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[20:58:18] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[21:11:39] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario AND p.resultado = 'Ganada'
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[21:11:43] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[21:11:43] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[21:11:43] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[21:11:44] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[21:11:46] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[21:11:46] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[21:11:46] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[21:11:46] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:11:52] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:11:52] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:11:52] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :id
+[21:11:52] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[21:11:54] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[21:11:54] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[21:11:54] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[21:11:56] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[21:11:58] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[21:11:58] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[21:11:58] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[21:11:58] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:03] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:03] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:03] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:06] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:06] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:06] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:10] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:10] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:10] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:13] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:13] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:13] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:16] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:16] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:16] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:20] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:20] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:20] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:22] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:22] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:22] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:26] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:26] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:26] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:28] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:28] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:28] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:31] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:31] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:31] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:34] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:34] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:34] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:37] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:37] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:38] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:40] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:40] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:40] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:43] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:43] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:43] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[21:12:52] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[21:12:52] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[21:12:52] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[21:12:52] [INFO] UPDATE usuario
+                          SET puntaje_acumulado = puntaje_acumulado + :puntaje
+                          WHERE id = :usuarioId
+[21:12:54] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[21:12:54] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[21:12:54] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[21:12:56] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario AND p.resultado = 'Ganada'
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[21:12:59] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[21:12:59] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[21:12:59] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[21:14:13] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[21:14:22] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[21:14:27] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[21:14:27] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[21:14:27] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[21:14:31] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[21:14:31] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[21:14:31] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[21:14:32] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[21:14:32] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[21:14:32] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[21:14:33] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario AND p.resultado = 'Ganada'
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[21:14:39] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[21:14:39] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[21:14:39] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje

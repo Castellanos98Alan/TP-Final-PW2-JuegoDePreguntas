@@ -10,6 +10,7 @@ use app\controller\PartidaController;
 use app\controller\GrupoController;
 use app\controller\AdminController;
 use app\controller\EditorController;
+use app\controller\RankingController;
 
 use app\model\LoginModel;
 use app\model\LobbyModel;
@@ -21,6 +22,7 @@ use app\model\EditorModel;
 use MustacheRender;
 use MyDatabase;
 use Router;
+use app\model\RankingModel;
 
 require_once("helper/Autoloader.php");
 
@@ -167,5 +169,18 @@ class Configuration
             $this->getRender()
         );
     }
+    public function getRankingController()
+    {
+        return new RankingController(
+            $this->getRankingModel(),
+            $this->getRender()
+        );
+    }
 
+    private function getRankingModel()
+    {
+        return new RankingModel(
+            $this->getDatabase()
+        );
+    }
 }

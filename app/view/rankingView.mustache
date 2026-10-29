@@ -1,0 +1,200 @@
+<style>
+    .ranking-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 20px auto 40px;
+    }
+
+    .ranking-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .ranking-header h1 {
+        font-family: 'Permanent Marker', cursive;
+        color: #f5c84b;
+        font-size: 32px;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+    }
+
+    .ranking-header p {
+        color: #a9bfdf;
+        font-size: 15px;
+    }
+
+    .ranking-card {
+        background: linear-gradient(160deg, rgba(3, 14, 38, .92), rgba(8, 31, 77, .92));
+        border: 1px solid #d4a72c;
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(245, 200, 75, 0.15);
+        overflow-x: auto;
+    }
+
+    .ranking-tabla {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .ranking-tabla th {
+        color: #f5c84b;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 12px 14px;
+        border-bottom: 1px solid rgba(245, 200, 75, 0.25);
+    }
+
+    .ranking-tabla td {
+        padding: 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        color: #e0e8f5;
+        vertical-align: middle;
+    }
+
+    .ranking-fila:hover {
+        background: rgba(245, 200, 75, 0.05);
+    }
+
+    .ranking-fila.es-propio {
+        background: rgba(212, 175, 85, 0.15);
+        border: 1px solid #f5c84b;
+    }
+
+    .posicion-badge {
+        font-weight: 700;
+        font-size: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+    }
+
+    .pos-1 { color: #ffd700; font-size: 22px; }
+    .pos-2 { color: #c0c0c0; font-size: 20px; }
+    .pos-3 { color: #cd7f32; font-size: 20px; }
+
+    .jugador-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .avatar-mini {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #d4a72c;
+    }
+
+    .jugador-link {
+        color: #f5c84b;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .jugador-link:hover {
+        text-decoration: underline;
+    }
+
+    .jugador-nombre {
+        font-size: 12px;
+        color: #8da6cb;
+    }
+
+    .puntaje-col {
+        font-size: 18px;
+        font-weight: 900;
+        color: #f5c84b;
+        text-align: right;
+    }
+
+    .acciones-ranking {
+        margin-top: 25px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-volver {
+        padding: 10px 24px;
+        background: rgba(16, 39, 73, 0.6);
+        border: 1px solid #d4a72c;
+        border-radius: 20px;
+        color: #f5c84b;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .btn-volver:hover {
+        background: #d4a72c;
+        color: #06132d;
+    }
+</style>
+
+<div class="ranking-container">
+    <div class="ranking-header">
+        <h1>🏆 SALÓN DE LA FAMA</h1>
+        <p>Ranking general de jugadores por puntaje acumulado total</p>
+    </div>
+
+    <div class="ranking-card">
+        {{#hay_jugadores}}
+            <table class="ranking-tabla">
+                <thead>
+                <tr>
+                    <th style="width: 70px;">Puesto</th>
+                    <th>Jugador</th>
+                    <th>Ubicación</th>
+                    <th style="text-align: right;">Puntos Totales</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#jugadores}}
+                    <tr class="ranking-fila {{#es_usuario_actual}}es-propio{{/es_usuario_actual}}">
+                        <td>
+                        <span class="posicion-badge {{#es_primero}}pos-1{{/es_primero}}{{#es_segundo}}pos-2{{/es_segundo}}{{#es_tercero}}pos-3{{/es_tercero}}">
+                            {{#es_primero}}🥇{{/es_primero}}
+                            {{#es_segundo}}🥈{{/es_segundo}}
+                            {{#es_tercero}}🥉{{/es_tercero}}
+                            {{^es_podio}}#{{posicion}}{{/es_podio}}
+                        </span>
+                        </td>
+                        <td>
+                            <div class="jugador-info">
+                                <img src="public/{{foto_perfil}}" alt="{{username}}" class="avatar-mini">
+                                <div>
+                                    <a href="?controller=perfil&method=show&id={{id}}" class="jugador-link">
+                                    {{username}} {{#es_usuario_actual}}(Tú){{/es_usuario_actual}}
+                                    </a>
+                                    <div class="jugador-nombre">{{nombre_completo}}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="color: #a9bfdf; font-size: 13px;">
+                            {{ciudad}}, {{pais}}
+                        </td>
+                        <td class="puntaje-col">
+                            {{puntaje_acumulado}} pts
+                        </td>
+                    </tr>
+                {{/jugadores}}
+                </tbody>
+            </table>
+        {{/hay_jugadores}}
+
+        {{^hay_jugadores}}
+            <div style="text-align:center; color:#a9bfdf; padding: 40px;">
+                Aún no hay jugadores registrados en el ranking.
+            </div>
+        {{/hay_jugadores}}
+    </div>
+
+    <div class="acciones-ranking">
+        <a href="?controller=lobby&method=show" class="btn-volver">‹ Volver al Lobby</a>
+    </div>
+</div>

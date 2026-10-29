@@ -451,15 +451,26 @@ class PartidaModel
                     :puntaje,
                     :resultado
                 )";
-
         $this->database->execute(
             $sql,
             [
                 'usuarioId' => $usuarioId,
-                'puntaje' => $puntaje,
+                'puntaje'   => $puntaje,
                 'resultado' => $resultado
             ]
         );
+        if ($puntaje > 0) {
+            $sqlUpdate = "UPDATE usuario
+                          SET puntaje_acumulado = puntaje_acumulado + :puntaje
+                          WHERE id = :usuarioId";
+            $this->database->execute(
+                $sqlUpdate,
+                [
+                    'usuarioId' => $usuarioId,
+                    'puntaje'   => $puntaje
+                ]
+            );
+        }
     }
 
 
