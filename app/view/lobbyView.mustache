@@ -1,12 +1,11 @@
 <style>
 
     body {
-        background:
-                linear-gradient(
-                        rgba(2, 8, 25, 0.45),
-                        rgba(2, 8, 25, 0.55)
-                ),
-                url("public/Fondo-Home2.png") !important;
+        background: linear-gradient(
+                rgba(2, 8, 25, 0.45),
+                rgba(2, 8, 25, 0.55)
+        ),
+        url("public/Fondo-Home2.png") !important;
         background-size: cover !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
@@ -23,9 +22,8 @@
         top: -350px;
         left: 50%;
         transform: translateX(-50%);
-        box-shadow:
-                0 0 80px rgba(0, 89, 255, 0.20),
-                inset 0 0 80px rgba(0, 89, 255, 0.08);
+        box-shadow: 0 0 80px rgba(0, 89, 255, 0.20),
+        inset 0 0 80px rgba(0, 89, 255, 0.08);
         pointer-events: none;
     }
 
@@ -64,9 +62,8 @@
         border-radius: 16px;
         padding: 20px;
         text-align: center;
-        box-shadow:
-                inset 0 0 20px rgba(0,0,0,.35),
-                0 0 10px rgba(35, 96, 255, 0.10);
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, .35),
+        0 0 10px rgba(35, 96, 255, 0.10);
         transition: 0.3s ease;
     }
 
@@ -112,9 +109,8 @@
         border: 1px solid #d4a72c;
         border-radius: 18px;
         padding: 22px;
-        box-shadow:
-                inset 0 0 25px rgba(0,0,0,.25),
-                0 0 15px rgba(41, 89, 255, .08);
+        box-shadow: inset 0 0 25px rgba(0, 0, 0, .25),
+        0 0 15px rgba(41, 89, 255, .08);
     }
 
     /* HISTORIAL */
@@ -132,7 +128,7 @@
         gap: 10px;
         align-items: center;
         padding: 14px 4px;
-        border-bottom: 1px solid rgba(255,255,255,.10);
+        border-bottom: 1px solid rgba(255, 255, 255, .10);
     }
 
     .partida:last-child {
@@ -182,9 +178,8 @@
         height: 265px;
         border-radius: 50%;
         border: 2px solid rgba(245, 200, 75, 0.7);
-        box-shadow:
-                0 0 20px rgba(245, 200, 75, 0.7),
-                0 0 50px rgba(0, 102, 255, 0.45);
+        box-shadow: 0 0 20px rgba(245, 200, 75, 0.7),
+        0 0 50px rgba(0, 102, 255, 0.45);
         animation: pulso 2.5s infinite;
     }
 
@@ -213,10 +208,9 @@
         font-size: 26px;
         background: radial-gradient(circle at 35% 30%, #fff2ad, #f5c84b 40%, #b98211 100%);
         border: 6px double #fff0a4;
-        box-shadow:
-                0 0 15px #f5c84b,
-                0 0 40px rgba(245, 200, 75, .45),
-                inset 0 0 25px rgba(255,255,255,.5);
+        box-shadow: 0 0 15px #f5c84b,
+        0 0 40px rgba(245, 200, 75, .45),
+        inset 0 0 25px rgba(255, 255, 255, .5);
         transition: .3s;
         position: relative;
         z-index: 3;
@@ -229,9 +223,8 @@
 
     .btn-jugar:hover {
         transform: scale(1.07);
-        box-shadow:
-                0 0 25px #f5c84b,
-                0 0 65px rgba(245, 200, 75, .65);
+        box-shadow: 0 0 25px #f5c84b,
+        0 0 65px rgba(245, 200, 75, .65);
     }
 
     /* RANKING */
@@ -243,15 +236,13 @@
         min-height: 315px;
         text-align: center;
         transition: .3s;
-        background:
-                linear-gradient(rgba(3, 15, 41, 0.55), rgba(3, 15, 41, 0.55)),
-                url("public/ranking-fondo.jpg");
+        background: linear-gradient(rgba(3, 15, 41, 0.55), rgba(3, 15, 41, 0.55)),
+        url("public/ranking-fondo.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        box-shadow:
-                inset 0 0 20px rgba(0,0,0,0.15),
-                0 0 15px rgba(41, 89, 255, .10);
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.15),
+        0 0 15px rgba(41, 89, 255, .10);
     }
 
     .ranking:hover {
@@ -419,6 +410,11 @@
         </div>
 
     </section>
+    <div class="crear-pregunta">
+        <a href="?controller=buscador&method=show" class="btn-pregunta">
+            🔍 Buscar jugadores &nbsp;&nbsp; ›
+        </a>
+    </div>
 
     <div class="crear-pregunta">
         <a href="?controller=pregunta&method=crear" class="btn-pregunta">

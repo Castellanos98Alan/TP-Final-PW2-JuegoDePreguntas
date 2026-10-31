@@ -1,0 +1,328 @@
+<style>
+    body {
+        background: linear-gradient(
+                rgba(2, 8, 25, 0.45),
+                rgba(2, 8, 25, 0.55)
+        ),
+        url("public/Fondo-Home2.png") !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
+    }
+
+    .bs-container {
+        width: 100%;
+        max-width: 1150px;
+        margin: 10px auto 40px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .bs-panel {
+        background: linear-gradient(160deg, rgba(3, 14, 38, .88), rgba(8, 31, 77, .88));
+        border: 1px solid #d4a72c;
+        border-radius: 18px;
+        padding: 22px;
+        box-shadow: inset 0 0 25px rgba(0, 0, 0, .25),
+        0 0 15px rgba(41, 89, 255, .08);
+    }
+
+    .bs-panel h2 {
+        color: #f5c84b;
+        font-size: 21px;
+        margin-bottom: 18px;
+        border-bottom: 1px solid rgba(245, 200, 75, .25);
+        padding-bottom: 12px;
+    }
+
+    /* ===== BUSCADOR ===== */
+    .bs-barra {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .bs-input {
+        flex: 1;
+        min-width: 220px;
+        padding: 13px 18px;
+        border-radius: 25px;
+        border: 1px solid #d4a72c;
+        background: rgba(3, 14, 38, .75);
+        color: #fff;
+        font-family: inherit;
+        font-size: 15px;
+    }
+
+    .bs-input::placeholder {
+        color: #8ea6cc;
+    }
+
+    .bs-input:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(245, 200, 75, .35);
+    }
+
+    .bs-contador {
+        font-size: 14px;
+        color: #a9bfdf;
+        white-space: nowrap;
+    }
+
+    /* ===== LISTA ===== */
+    .bs-lista {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 14px;
+        margin-top: 20px;
+    }
+
+    .bs-jugador {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px;
+        text-decoration: none;
+        background: linear-gradient(145deg, #06132e, #0b285f);
+        border: 1px solid rgba(212, 167, 44, .6);
+        border-radius: 14px;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, .35);
+        transition: .25s ease;
+    }
+
+    .bs-jugador:hover,
+    .bs-jugador:focus-visible {
+        outline: none;
+        transform: translateY(-3px);
+        border-color: #f5c84b;
+        box-shadow: 0 0 18px rgba(245, 200, 75, .28);
+    }
+
+    /* Necesario: display:flex pisaría el atributo hidden */
+    .bs-jugador[hidden] {
+        display: none;
+    }
+
+    .bs-avatar {
+        width: 62px;
+        height: 62px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+        border: 2px solid #d4af55;
+    }
+
+    .bs-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .bs-username {
+        color: #f5c84b;
+        font-weight: bold;
+        font-size: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .bs-vos {
+        margin-left: 6px;
+        padding: 2px 8px;
+        border: 1px solid #d4a72c;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #f5c84b;
+        background: rgba(212, 175, 85, .12);
+    }
+
+    .bs-nombre {
+        color: #F3F5FA;
+        font-size: 14px;
+        margin-top: 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .bs-ubicacion {
+        color: #a9bfdf;
+        font-size: 13px;
+        margin-top: 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .bs-puntos {
+        text-align: right;
+        flex-shrink: 0;
+    }
+
+    .bs-puntos strong {
+        display: block;
+        color: #f5c84b;
+        font-size: 18px;
+    }
+
+    .bs-puntos span {
+        color: #c6d7f5;
+        font-size: 12px;
+    }
+
+    .bs-vacio {
+        text-align: center;
+        color: #a9bfdf;
+        padding: 40px 10px;
+    }
+
+    .bs-vacio[hidden] {
+        display: none;
+    }
+
+    .bs-volver {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+    }
+
+    .bs-btn {
+        padding: 12px 26px;
+        border-radius: 25px;
+        border: 1px solid #d4a72c;
+        background: linear-gradient(90deg, #06132e, #0d347c, #06132e);
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: .3s;
+    }
+
+    .bs-btn:hover,
+    .bs-btn:focus-visible {
+        color: #06132d;
+        background: linear-gradient(90deg, #b98211, #f5c84b, #b98211);
+        box-shadow: 0 0 20px rgba(245, 200, 75, .45);
+    }
+
+    @media (max-width: 600px) {
+        .bs-lista {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="bs-container">
+
+    <section class="bs-panel">
+        <h2>🔍 Buscar jugadores</h2>
+
+        <div class="bs-barra">
+            <input
+                    type="search"
+                    id="bs-input"
+                    class="bs-input"
+                    placeholder="Buscá por usuario, nombre, ciudad o país"
+                    autocomplete="off"
+                    aria-label="Buscar jugadores">
+            <div class="bs-contador" id="bs-contador" aria-live="polite">
+                {{total}} jugadores
+            </div>
+        </div>
+
+        <div class="bs-lista" id="bs-lista">
+            {{#jugadores}}
+                <a class="bs-jugador"
+                   href="?controller=perfil&method=show&id={{id}}">
+                <img class="bs-avatar" src="{{foto_perfil}}" alt="Foto de {{username}}">
+
+                <div class="bs-info">
+                    <div class="bs-username">
+                        {{username}}{{#es_propio}}<span class="bs-vos">Vos</span>{{/es_propio}}
+                    </div>
+                    <div class="bs-nombre">{{nombre_completo}}</div>
+                    <div class="bs-ubicacion">{{ubicacion}}</div>
+                </div>
+
+                <div class="bs-puntos">
+                    <strong>{{puntaje_acumulado}}</strong>
+                    <span>pts · #{{posicion}}</span>
+                </div>
+                </a>
+            {{/jugadores}}
+        </div>
+
+        <div class="bs-vacio" id="bs-vacio" {{#total}}hidden{{/total}}>
+            No hay jugadores registrados todavía.
+        </div>
+    </section>
+
+    <div class="bs-volver">
+        <a href="?controller=lobby&method=show" class="bs-btn">Volver al lobby</a>
+    </div>
+
+</div>
+
+<script>
+    (function () {
+        var input = document.getElementById('bs-input');
+        var contador = document.getElementById('bs-contador');
+        var vacio = document.getElementById('bs-vacio');
+        var tarjetas = Array.prototype.slice.call(document.querySelectorAll('#bs-lista .bs-jugador'));
+        var total = tarjetas.length;
+
+        // Minúsculas y sin tildes: "jose" encuentra "José"
+        function normalizar(texto) {
+            return texto
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .trim();
+        }
+
+        // Se arma una sola vez el texto buscable de cada tarjeta
+        var indice = tarjetas.map(function (tarjeta) {
+            return normalizar(
+                    tarjeta.querySelector('.bs-username').textContent + ' ' +
+                    tarjeta.querySelector('.bs-nombre').textContent + ' ' +
+                    tarjeta.querySelector('.bs-ubicacion').textContent
+            );
+        });
+
+        function filtrar() {
+            var consulta = normalizar(input.value);
+            var palabras = consulta === '' ? [] : consulta.split(/\s+/);
+            var visibles = 0;
+
+            tarjetas.forEach(function (tarjeta, i) {
+                // Deben aparecer todas las palabras escritas (en cualquier orden)
+                var coincide = palabras.every(function (p) {
+                    return indice[i].indexOf(p) !== -1;
+                });
+
+                tarjeta.hidden = !coincide;
+                if (coincide) {
+                    visibles++;
+                }
+            });
+
+            contador.textContent = (consulta === '')
+                    ? total + ' jugadores'
+                    : visibles + ' de ' + total + ' jugadores';
+
+            if (total > 0 && visibles === 0) {
+                vacio.textContent = 'Ningún jugador coincide con "' + input.value.trim() + '".';
+                vacio.hidden = false;
+            } else if (total === 0) {
+                vacio.hidden = false;
+            } else {
+                vacio.hidden = true;
+            }
+        }
+
+        input.addEventListener('input', filtrar);
+    })();
+</script>
