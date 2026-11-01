@@ -1,42 +1,17 @@
+
 <style>
     .partida-page {
         min-height: calc(100vh - 140px);
         background:
-                radial-gradient(circle at top left, rgba(255, 191, 0, 0.08), transparent 30%),
-                radial-gradient(circle at bottom right, rgba(54, 113, 255, 0.10), transparent 35%),
-                linear-gradient(180deg, #0c2242 0%, #07152a 100%);
+            radial-gradient(circle at top left, rgba(255, 191, 0, 0.08), transparent 30%),
+            radial-gradient(circle at bottom right, rgba(54, 113, 255, 0.10), transparent 35%),
+            linear-gradient(180deg, #0c2242 0%, #07152a 100%);
         color: white;
         padding: 40px 20px;
         box-sizing: border-box;
     }
 
-
-    /*Siluetas ! */
-
-    .pregunta-imagen-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        margin: 20px auto;
-        width: 100%;
-    }
-
-    .pregunta-imagen {
-        width: 300px;
-        height: 200px;
-
-        object-fit: contain;
-
-        background-color: white;
-
-        padding: 10px;
-        border-radius: 15px;
-    }
-
-    /* AUDIOS */
-
-
+    .pregunta-imagen-container,
     .pregunta-audio-container {
         display: flex;
         justify-content: center;
@@ -45,11 +20,21 @@
         width: 100%;
     }
 
+    .pregunta-imagen {
+        width: 300px;
+        height: 200px;
+        max-width: 100%;
+        object-fit: contain;
+        background-color: white;
+        padding: 10px;
+        border-radius: 15px;
+        box-sizing: border-box;
+    }
+
     .pregunta-audio-container audio {
         width: 350px;
         max-width: 90%;
     }
-
 
     .partida-container {
         max-width: 1180px;
@@ -117,8 +102,11 @@
 
     .pregunta-card {
         position: relative;
-        background:
-                linear-gradient(180deg, rgba(21, 58, 104, 0.98), rgba(7, 22, 45, 0.98));
+        background: linear-gradient(
+            180deg,
+            rgba(21, 58, 104, 0.98),
+            rgba(7, 22, 45, 0.98)
+        );
         border: 2px solid #d8aa32;
         border-radius: 24px;
         padding: 36px 30px;
@@ -139,13 +127,8 @@
         opacity: 0.55;
     }
 
-    .pregunta-card::before {
-        left: 0;
-    }
-
-    .pregunta-card::after {
-        right: 0;
-    }
+    .pregunta-card::before { left: 0; }
+    .pregunta-card::after { right: 0; }
 
     .pregunta-texto {
         position: relative;
@@ -167,33 +150,33 @@
         min-height: 76px;
         border: 2px solid #d8aa32;
         border-radius: 999px;
-        background:
-                linear-gradient(180deg, #12345f 0%, #081c38 100%);
+        background: linear-gradient(180deg, #12345f 0%, #081c38 100%);
         color: white;
         padding: 14px 22px;
         display: flex;
         align-items: center;
         gap: 16px;
         cursor: pointer;
-        transition:
-                transform 0.2s ease,
-                background 0.2s ease,
-                border-color 0.2s ease,
-                box-shadow 0.2s ease;
+        transition: transform 0.2s ease, background 0.2s ease,
+                    border-color 0.2s ease, box-shadow 0.2s ease;
         text-align: left;
         box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
     }
 
-    .respuesta-btn:hover {
+    .respuesta-btn:hover:not(:disabled) {
         transform: translateY(-2px);
-        background:
-                linear-gradient(180deg, #194d87 0%, #0b2b54 100%);
+        background: linear-gradient(180deg, #194d87 0%, #0b2b54 100%);
         border-color: #f3d173;
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
     }
 
-    .respuesta-btn:active {
+    .respuesta-btn:active:not(:disabled) {
         transform: scale(0.99);
+    }
+
+    .respuesta-btn:disabled {
+        opacity: 0.65;
+        cursor: wait;
     }
 
     .respuesta-letra {
@@ -207,7 +190,6 @@
         color: #06142a;
         font-weight: 900;
         font-size: 18px;
-        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.18);
     }
 
     .respuesta-texto {
@@ -217,8 +199,7 @@
     }
 
     .escalera {
-        background:
-                linear-gradient(180deg, rgba(8, 26, 52, 0.98), rgba(4, 15, 30, 0.98));
+        background: linear-gradient(180deg, rgba(8, 26, 52, 0.98), rgba(4, 15, 30, 0.98));
         border: 1px solid #d8aa32;
         border-radius: 20px;
         padding: 18px 14px;
@@ -247,9 +228,7 @@
         border-radius: 8px;
     }
 
-    .nivel:last-child {
-        border-bottom: none;
-    }
+    .nivel:last-child { border-bottom: none; }
 
     .nivel-premio {
         color: #f4c34a;
@@ -270,17 +249,12 @@
 
         .escalera {
             order: -1;
-        }
-
-        .escalera {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 6px;
         }
 
-        .escalera-titulo {
-            grid-column: 1 / -1;
-        }
+        .escalera-titulo { grid-column: 1 / -1; }
 
         .nivel {
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -289,222 +263,201 @@
     }
 
     @media (max-width: 700px) {
-        .partida-page {
-            padding: 25px 12px;
-        }
+        .partida-page { padding: 25px 12px; }
+        .respuestas-grid { grid-template-columns: 1fr; }
+        .pregunta-card { padding: 28px 20px; }
+        .respuesta-btn { min-height: 68px; }
 
-        .respuestas-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .pregunta-card {
-            padding: 28px 20px;
-        }
-
-        .respuesta-btn {
-            min-height: 68px;
-        }
-
-        .partida-header {
-            align-items: stretch;
-        }
+        .partida-header { align-items: stretch; }
 
         .puntaje-box {
             width: 100%;
             text-align: center;
+            box-sizing: border-box;
         }
 
-        .escalera {
-            grid-template-columns: repeat(3, 1fr);
-        }
+        .escalera { grid-template-columns: repeat(3, 1fr); }
     }
 </style>
 
-
 <div class="partida-page">
-
     <div class="partida-container">
 
         <div class="partida-header">
-
             <div class="partida-info">
-
                 <div class="partida-chip">
-                    Anime:
-                    <strong>{{pregunta.anime}}</strong>
+                    Anime: <strong>{{pregunta.anime}}</strong>
                 </div>
 
                 <div class="partida-chip">
-                    Categoría:
-                    <strong>
-                        {{pregunta.categoria}}
-                    </strong>
+                    Categoría: <strong>{{pregunta.categoria}}</strong>
                 </div>
 
                 <div class="partida-chip">
-                    Dificultad:
-                    <strong>{{pregunta.dificultad}}</strong>
+                    Dificultad: <strong>{{pregunta.dificultad}}</strong>
                 </div>
-
             </div>
 
             <div class="puntaje-box">
                 Puntaje: {{puntaje}}
             </div>
-
         </div>
 
-
         <div class="partida-layout">
-
             <main class="zona-juego">
 
                 <div class="numero-pregunta">
                     Pregunta {{numeroPregunta}} de 15
                 </div>
 
+                <div id="temporizador" role="timer" aria-live="polite"
+                     style="text-align:center;font-size:28px;font-weight:900;color:#f4c34a;margin:0 0 18px;">
+                    Tiempo: <span id="segundos">{{segundosRestantes}}</span> s
+                </div>
 
                 <div class="pregunta-card">
-
-                    <h1 class="pregunta-texto">
-                        {{pregunta.enunciado}}
-                    </h1>
-
+                    <h1 class="pregunta-texto">{{pregunta.enunciado}}</h1>
                 </div>
 
                 {{#esAudio}}
-                    <div class="pregunta-audio-container">
-                        <audio controls>
-                            <source src="{{pregunta.recurso}}" type="audio/mpeg">
-                            Tu navegador no soporta audio.
-                        </audio>
-                    </div>
+                <div class="pregunta-audio-container">
+                    <audio controls>
+                        <source src="{{pregunta.recurso}}" type="audio/mpeg">
+                        Tu navegador no soporta audio.
+                    </audio>
+                </div>
                 {{/esAudio}}
 
-                    {{#esImagen}}
-                        <div class="pregunta-imagen-container">
-                            <img
-                                    src="{{pregunta.recurso}}"
-                                    alt="Imagen de la pregunta"
-                                    class="pregunta-imagen"
-                            >
-                        </div>
-                    {{/esImagen}}
+                {{#esImagen}}
+                <div class="pregunta-imagen-container">
+                    <img src="{{pregunta.recurso}}"
+                         alt="Imagen de la pregunta"
+                         class="pregunta-imagen">
+                </div>
+                {{/esImagen}}
 
-                <form
-                        action="?controller=partida&method=responder"
-                        method="POST"
-                        class="respuestas-grid"
-                >
+                <form id="formularioRespuesta"
+                      action="?controller=partida&method=responder"
+                      method="POST"
+                      class="respuestas-grid">
 
-                    <input
-                            type="hidden"
-                            name="idPregunta"
-                            value="{{pregunta.id}}"
-                    >
+                    <input type="hidden" name="idPregunta" value="{{pregunta.id}}">
+                    <input type="hidden" name="inicioPregunta" value="{{inicioPregunta}}">
 
+                    <!-- Este campo garantiza que siempre se envíe la opción elegida. -->
+                    <input type="hidden" id="respuestaElegida" name="respuesta" value="">
 
-                    <button
-                            type="submit"
-                            name="respuesta"
-                            value="A"
-                            class="respuesta-btn"
-                    >
-                        <span class="respuesta-letra">
-                            A
-                        </span>
-
-                        <span class="respuesta-texto">
-                            {{pregunta.respuesta_a}}
-                        </span>
+                    <button type="submit" class="respuesta-btn" data-respuesta="A">
+                        <span class="respuesta-letra">A</span>
+                        <span class="respuesta-texto">{{pregunta.respuesta_a}}</span>
                     </button>
 
-
-                    <button
-                            type="submit"
-                            name="respuesta"
-                            value="B"
-                            class="respuesta-btn"
-                    >
-                        <span class="respuesta-letra">
-                            B
-                        </span>
-
-                        <span class="respuesta-texto">
-                            {{pregunta.respuesta_b}}
-                        </span>
+                    <button type="submit" class="respuesta-btn" data-respuesta="B">
+                        <span class="respuesta-letra">B</span>
+                        <span class="respuesta-texto">{{pregunta.respuesta_b}}</span>
                     </button>
 
-
-                    <button
-                            type="submit"
-                            name="respuesta"
-                            value="C"
-                            class="respuesta-btn"
-                    >
-                        <span class="respuesta-letra">
-                            C
-                        </span>
-
-                        <span class="respuesta-texto">
-                            {{pregunta.respuesta_c}}
-                        </span>
+                    <button type="submit" class="respuesta-btn" data-respuesta="C">
+                        <span class="respuesta-letra">C</span>
+                        <span class="respuesta-texto">{{pregunta.respuesta_c}}</span>
                     </button>
 
-
-                    <button
-                            type="submit"
-                            name="respuesta"
-                            value="D"
-                            class="respuesta-btn"
-                    >
-                        <span class="respuesta-letra">
-                            D
-                        </span>
-
-                        <span class="respuesta-texto">
-                            {{pregunta.respuesta_d}}
-                        </span>
+                    <button type="submit" class="respuesta-btn" data-respuesta="D">
+                        <span class="respuesta-letra">D</span>
+                        <span class="respuesta-texto">{{pregunta.respuesta_d}}</span>
                     </button>
-
                 </form>
-
 
                 <div class="pie-juego">
                     Elegí una respuesta para continuar.
                 </div>
-
             </main>
 
-
             <aside class="escalera">
-
-                <div class="escalera-titulo">
-                    Camino a la victoria
-                </div>
-
+                <div class="escalera-titulo">Camino a la victoria</div>
                 <div class="nivel nivel-premio">15</div>
                 <div class="nivel">14</div>
                 <div class="nivel">13</div>
                 <div class="nivel">12</div>
                 <div class="nivel nivel-premio">11</div>
-
                 <div class="nivel">10</div>
                 <div class="nivel">9</div>
                 <div class="nivel">8</div>
                 <div class="nivel">7</div>
                 <div class="nivel nivel-premio">6</div>
-
                 <div class="nivel">5</div>
                 <div class="nivel">4</div>
                 <div class="nivel">3</div>
                 <div class="nivel">2</div>
                 <div class="nivel">1</div>
-
             </aside>
-
         </div>
-
     </div>
-
 </div>
+
+<script>
+(function () {
+    var contador = document.getElementById('segundos');
+    var formulario = document.getElementById('formularioRespuesta');
+
+    if (!contador || !formulario) return;
+
+    var campoRespuesta = document.getElementById('respuestaElegida');
+    var botones = formulario.querySelectorAll('button[data-respuesta]');
+    var restante = parseInt(contador.textContent, 10);
+    var enviado = false;
+
+    if (isNaN(restante)) restante = 8;
+
+    botones.forEach(function (boton) {
+        boton.addEventListener('click', function () {
+            campoRespuesta.value = boton.getAttribute('data-respuesta');
+        });
+    });
+
+    formulario.addEventListener('submit', function (evento) {
+        if (enviado) {
+            evento.preventDefault();
+            return;
+        }
+
+        if (!campoRespuesta.value) {
+            evento.preventDefault();
+            alert('Seleccioná una respuesta antes de continuar.');
+            return;
+        }
+
+        enviado = true;
+
+        // Evita dobles envíos sin deshabilitar el botón antes de enviar el formulario.
+        window.setTimeout(function () {
+            botones.forEach(function (boton) {
+                boton.disabled = true;
+            });
+        }, 0);
+    });
+
+    function actualizar() {
+        contador.textContent = restante;
+
+        var temporizador = document.getElementById('temporizador');
+
+        if (restante <= 5) {
+            temporizador.style.color = '#ff7777';
+        }
+
+        if (restante <= 0) {
+            if (enviado) return;
+
+            enviado = true;
+            window.location.href = '?controller=partida&method=tiempoAgotado';
+            return;
+        }
+
+        restante--;
+        window.setTimeout(actualizar, 1000);
+    }
+
+    actualizar();
+})();
+</script>

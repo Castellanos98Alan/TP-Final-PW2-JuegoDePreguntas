@@ -339,6 +339,56 @@
 
         </div>
 
+        {{#mensajeReporte}}<p>{{mensajeReporte}}</p>{{/mensajeReporte}}
+        {{^mensajeReporte}}
+
+<section style="margin: 25px 0; padding: 22px; border: 1px solid #d8aa32; border-radius: 16px; background: #07162d; color: white;">
+    <h2>¿Encontraste un error?</h2>
+    <p>Seleccioná la pregunta que querés reportar y contanos qué está mal.</p>
+
+    {{#mensajeReporte}}
+        <p role="status">{{mensajeReporte}}</p>
+    {{/mensajeReporte}}
+
+    <form action="?controller=partida&method=reportar" method="POST"
+          style="display: grid; gap: 14px;">
+
+        <label for="preguntaReporte">Pregunta a reportar</label>
+        <select id="preguntaReporte" name="idPregunta" required
+                style="padding: 12px; border-radius: 8px;">
+            <option value="">Seleccioná una pregunta</option>
+
+            {{#preguntasReporte}}
+                <option value="{{id}}">{{enunciado}}</option>
+            {{/preguntasReporte}}
+        </select>
+
+        <label for="motivoReporte">Motivo</label>
+        <select id="motivoReporte" name="motivo" required
+                style="padding: 12px; border-radius: 8px;">
+            <option value="">Seleccioná un motivo</option>
+            <option value="Respuesta incorrecta">Respuesta incorrecta</option>
+            <option value="Ninguna opción es correcta">Ninguna opción es correcta</option>
+            <option value="Enunciado confuso">Enunciado confuso</option>
+            <option value="Imagen o audio con problemas">Imagen o audio con problemas</option>
+            <option value="Otro">Otro</option>
+        </select>
+
+        <label for="descripcionReporte">Descripción del error</label>
+        <textarea id="descripcionReporte" name="descripcion"
+                  required maxlength="2000" rows="4"
+                  placeholder="Contanos qué encontraste..."
+                  style="padding: 12px; border-radius: 8px;"></textarea>
+
+        <button type="submit"
+                style="padding: 12px; border: 0; border-radius: 8px; cursor: pointer;">
+            Enviar reporte
+        </button>
+    </form>
+</section>
+
+        {{/mensajeReporte}}
+
         <p class="mensaje-final">
             Llegaste a responder correctamente
             <strong>{{respuestasCorrectas}}</strong>

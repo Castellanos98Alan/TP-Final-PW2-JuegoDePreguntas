@@ -434,6 +434,22 @@ class PartidaModel
     }
 
 
+    /** Guarda un reporte enviado por un jugador. */
+    public function guardarReporte($usuarioId, $preguntaId, $motivo, $descripcion)
+    {
+        $sql = "INSERT INTO reporte_pregunta
+                    (usuario_id, pregunta_id, motivo, descripcion)
+                VALUES
+                    (:usuarioId, :preguntaId, :motivo, :descripcion)";
+
+        return $this->database->execute($sql, [
+            'usuarioId' => $usuarioId,
+            'preguntaId' => $preguntaId,
+            'motivo' => $motivo,
+            'descripcion' => $descripcion
+        ]);
+    }
+
     public function guardarPartida(
         $usuarioId,
         $puntaje,
@@ -451,26 +467,15 @@ class PartidaModel
                     :puntaje,
                     :resultado
                 )";
+
         $this->database->execute(
             $sql,
             [
                 'usuarioId' => $usuarioId,
-                'puntaje'   => $puntaje,
+                'puntaje' => $puntaje,
                 'resultado' => $resultado
             ]
         );
-        if ($puntaje > 0) {
-            $sqlUpdate = "UPDATE usuario
-                          SET puntaje_acumulado = puntaje_acumulado + :puntaje
-                          WHERE id = :usuarioId";
-            $this->database->execute(
-                $sqlUpdate,
-                [
-                    'usuarioId' => $usuarioId,
-                    'puntaje'   => $puntaje
-                ]
-            );
-        }
     }
 
 
