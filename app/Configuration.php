@@ -10,8 +10,6 @@ use app\controller\PartidaController;
 use app\controller\GrupoController;
 use app\controller\AdminController;
 use app\controller\EditorController;
-use app\controller\RankingController;
-use app\controller\BuscadorController;
 
 use app\model\LoginModel;
 use app\model\LobbyModel;
@@ -23,8 +21,6 @@ use app\model\EditorModel;
 use MustacheRender;
 use MyDatabase;
 use Router;
-use app\model\RankingModel;
-use app\model\BuscadorModel;
 
 require_once("helper/Autoloader.php");
 
@@ -145,13 +141,10 @@ class Configuration
             $this->getRender()
         );
     }
-
-    private function getRegistroModel()
-    {
+    private function getRegistroModel(){
         return new RegistroModel(
             $this->getDatabase());
     }
-
     public function getRegistroController()
     {
         return new RegistroController(
@@ -175,33 +168,4 @@ class Configuration
         );
     }
 
-    public function getRankingController()
-    {
-        return new RankingController(
-            $this->getRankingModel(),
-            $this->getRender()
-        );
-    }
-
-    private function getRankingModel()
-    {
-        return new RankingModel(
-            $this->getDatabase()
-        );
-    }
-
-    private function getBuscadorModel()
-    {
-        return new BuscadorModel(
-            $this->getDatabase()
-        );
-    }
-
-    public function getBuscadorController()
-    {
-        return new BuscadorController(
-            $this->getBuscadorModel(),
-            $this->getRender()
-        );
-    }
 }

@@ -102,14 +102,16 @@ class PartidaController
 
         /*
          * Guardamos el estado de la partida
-         * dentro de la sesión.
+         * dentro de la sesión. para que cuando el usuario recargue la pgina, el contador no se reinicie
          */
         $_SESSION['partida'] = [
             'preguntas' => $preguntas,
             'actual' => 0,
             'puntaje' => 0,
             'animes' => $animesSeleccionados,
-            'perdio' => false
+            'perdio' => false,
+            'inicio_pregunta' => time(),
+            'ultimo_reporte' => null
         ];
 
         header(
@@ -149,6 +151,12 @@ class PartidaController
 
         $partida =
             $_SESSION['partida'];
+
+        // El reloj se inicia una sola vez por pregunta.
+// Recargar la página no reinicia los 8 segundos.
+        if (!isset($_SESSION['partida']['inicio_pregunta'])) {
+            $_SESSION['partida']['inicio_pregunta'] = time();
+        }
 
         $indiceActual =
             $partida['actual'];
@@ -196,6 +204,13 @@ class PartidaController
 
             'puntaje' =>
                 $partida['puntaje'],
+
+
+            //se calcula cuánto tiempo pasó desde el inicio y se resta de 8. max(0, ...) evita que el resultado sea negativo.
+            'segundosRestantes' => max(0, 8 - (time() - $_SESSION['partida']['inicio_pregunta'])),
+            'ultimaPreguntaRespondida' => $_SESSION['partida']['ultimaPreguntaRespondida'] ?? null,
+            'reporteEnviado' => !empty($_SESSION['partida']['ultimo_reporte']) && (int)$_SESSION['partida']['ultimo_reporte'] === (int)(($_SESSION['partida']['ultimaPreguntaRespondida']['id'] ?? 0)),
+            'mensajeReporte' => $_SESSION['partida']['mensajeReporte'] ?? null,
 
              'esImagen' =>
                 $pregunta['tipo_pregunta']  === 'imagen',
@@ -286,6 +301,18 @@ class PartidaController
             ['preguntas']
             [$indiceActual];
 
+        // Validación del servidor: una respuesta después de 8 segundos no vale.
+        $inicioPregunta = $_SESSION['partida']['inicio_pregunta'] ?? time();
+
+
+        //Si pasaron 8 segundos o más, se prepara la
+        //derrota, se redirige y exit() detiene la ejecución para que no se procese la respuesta.
+        if (time() - $inicioPregunta >= 8) {
+            $this->prepararDerrotaPorTiempo($preguntaActual);
+            header('Location: ?controller=partida&method=perder');
+            exit();
+        }
+
         /*
          * Evitamos que alguien cambie
          * manualmente el idPregunta
@@ -360,6 +387,11 @@ class PartidaController
 
             $_SESSION['partida']['preguntaPerdida'] =
                 $preguntaActual;
+            $_SESSION['partida']['motivoDerrota'] = 'respuesta';
+            $_SESSION['partida']['ultimaPreguntaRespondida'] = [
+                'id' => $preguntaActual['id'],
+                'enunciado' => $preguntaActual['enunciado']
+            ];
 
             header(
                 'Location: ?controller=partida&method=perder'
@@ -374,11 +406,16 @@ class PartidaController
          * Sumamos un punto.
          */
         $_SESSION['partida']['puntaje']++;
+        $_SESSION['partida']['ultimaPreguntaRespondida'] = [
+            'id' => $preguntaActual['id'],
+            'enunciado' => $preguntaActual['enunciado']
+        ];
 
         /*
          * Avanzamos a la siguiente pregunta.
          */
         $_SESSION['partida']['actual']++;
+        $_SESSION['partida']['inicio_pregunta'] = time();
 
         /*
          * Si respondió correctamente
@@ -407,6 +444,110 @@ class PartidaController
     }
 
 
+    /**
+     * Endpoint llamado cuando el contador llega a cero.
+     */
+    public function tiempoAgotado()
+    {
+        if (!isset($_SESSION['partida'], $_SESSION['usuario_id'])) {
+            header('Location: ?controller=partida&method=seleccionar');
+            exit();
+        }
+
+        $indice = $_SESSION['partida']['actual'];
+        $pregunta = $_SESSION['partida']['preguntas'][$indice] ?? null;
+        $inicio = $_SESSION['partida']['inicio_pregunta'] ?? time();
+
+        // No aceptar una llamada anticipada al endpoint.
+        // Esta condición evita aceptar una llamada anticipada al método. También comprueba que exista una pregunta válida.
+        if (!$pregunta || time() - $inicio < 8) {
+            header('Location: ?controller=partida&method=jugar');
+            exit();
+        }
+
+        $this->prepararDerrotaPorTiempo($pregunta);
+        header('Location: ?controller=partida&method=perder');
+        exit();
+    }
+
+    private function prepararDerrotaPorTiempo($pregunta)
+    {
+        $_SESSION['partida']['perdio'] = true;
+        $_SESSION['partida']['motivoDerrota'] = 'tiempo';
+        $_SESSION['partida']['respuestaIncorrecta'] = null;
+        $_SESSION['partida']['respuestaCorrecta'] = $this->model->obtenerRespuestaCorrecta($pregunta['id']);
+        $_SESSION['partida']['preguntaPerdida'] = $pregunta;
+        $_SESSION['partida']['ultimaPreguntaRespondida'] = [
+            'id' => $pregunta['id'],
+            'enunciado' => $pregunta['enunciado']
+        ];
+    }
+
+    /**
+     * Guarda el reporte de la última pregunta contestada.
+     */
+
+    public function reportar()
+    {
+        if (!isset($_SESSION['usuario_id'], $_SESSION['partida'])) {
+            header('Location: ?controller=login&method=index');
+            exit();
+        }
+
+        // Solo se puede reportar cuando el jugador perdió.
+        if (empty($_SESSION['partida']['perdio'])) {
+            header('Location: ?controller=partida&method=jugar');
+            exit();
+        }
+
+        $idPregunta = filter_input(INPUT_POST, 'idPregunta', FILTER_VALIDATE_INT);
+        $motivo = trim($_POST['motivo'] ?? '');
+        $descripcion = trim($_POST['descripcion'] ?? '');
+
+        $motivosValidos = [
+            'Respuesta incorrecta',
+            'Ninguna opción es correcta',
+            'Enunciado confuso',
+            'Imagen o audio con problemas',
+            'Otro'
+        ];
+
+        // Comprobamos que la pregunta pertenezca a esta partida.
+        $preguntaValida = false;
+
+        foreach ($_SESSION['partida']['preguntas'] as $pregunta) {
+            if ((int)$pregunta['id'] === (int)$idPregunta) {
+                $preguntaValida = true;
+                break;
+            }
+        }
+
+        if (
+            !$idPregunta ||
+            !$preguntaValida ||
+            !in_array($motivo, $motivosValidos, true) ||
+            $descripcion === '' ||
+            mb_strlen($descripcion) > 2000
+        ) {
+            $_SESSION['partida']['mensajeReporte'] =
+                'No se pudo enviar el reporte. Revisá los datos e intentá nuevamente.';
+        } else {
+            $this->model->guardarReporte(
+                $_SESSION['usuario_id'],
+                $idPregunta,
+                $motivo,
+                $descripcion
+            );
+
+            $_SESSION['partida']['mensajeReporte'] =
+                'Gracias. El reporte se guardó correctamente.';
+        }
+
+        header('Location: ?controller=partida&method=perder');
+        exit();
+    }
+
+
     /*
      * Finaliza una partida perdida.
      */
@@ -429,11 +570,7 @@ class PartidaController
             exit();
         }
 
-        /*
-         * Si por algún motivo no quedó guardada
-         * la pregunta donde perdió, evitamos
-         * generar warnings.
-         */
+
         if (!isset($_SESSION['partida']['preguntaPerdida'])) {
             unset($_SESSION['partida']);
 
@@ -451,11 +588,16 @@ class PartidaController
 
         $puntajeFinal = 0;
 
-        $this->model->guardarPartida(
-            $usuarioId,
-            $puntajeFinal,
-            'Perdida'
-        );
+        // Evitamos registrar varias veces la misma derrota si se recarga
+        // la pantalla o el usuario envía un reporte.
+        if (empty($_SESSION['partida']['partidaGuardada'])) {
+            $this->model->guardarPartida(
+                $usuarioId,
+                $puntajeFinal,
+                'Perdida'
+            );
+            $_SESSION['partida']['partidaGuardada'] = true;
+        }
 
         $preguntaPerdida =
             $_SESSION['partida']['preguntaPerdida'];
@@ -498,12 +640,24 @@ class PartidaController
         $data = [
             'respuestasCorrectas' => $respuestasCorrectas,
             'puntajeFinal' => $puntajeFinal,
-            'enunciadoPregunta' =>
-                $preguntaPerdida['enunciado'],
-            'respuestas' => $respuestas
-        ];
+            'enunciadoPregunta' => $preguntaPerdida['enunciado'],
+            'respuestas' => $respuestas,
+            'preguntaPerdidaId' => $preguntaPerdida['id'],
+            'motivoDerrotaTiempo' =>
+                ($_SESSION['partida']['motivoDerrota'] ?? '') === 'tiempo',
+            'mensajeReporte' => $_SESSION['partida']['mensajeReporte'] ?? null,
 
-        unset($_SESSION['partida']);
+            // Preguntas de esta partida que se pueden reportar.
+            'preguntasReporte' => array_map(
+                function ($pregunta) {
+                    return [
+                        'id' => $pregunta['id'],
+                        'enunciado' => $pregunta['enunciado']
+                    ];
+                },
+                $_SESSION['partida']['preguntas']
+            )
+        ];
 
         $this->render->renderiza(
             'derrota',
