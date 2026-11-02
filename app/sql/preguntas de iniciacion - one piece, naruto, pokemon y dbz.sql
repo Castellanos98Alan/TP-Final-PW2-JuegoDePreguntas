@@ -3671,6 +3671,13 @@ VALUES
         'public/img-objetos/naruto/anillo_akatsuki.png',
         'media'
     );
+INSERT INTO partida (id_usuario, puntaje, resultado)
+VALUES
+    ((SELECT id FROM usuario WHERE username = 'facu2'), 180, 'Ganada'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'), 150, 'Ganada'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'), 90,  'Ganada'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'), 60,  'Ganada'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'), 30,  'Ganada');
 
 
 

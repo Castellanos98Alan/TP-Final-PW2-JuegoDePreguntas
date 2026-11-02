@@ -117,6 +117,14 @@ VALUES (
     1,
     0
 );
+INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, username, password, foto_perfil, esta_activo, id_rol, puntaje_acumulado)
+VALUES
+    ('Facundo Dos', 1996, 'Masculino', 'Argentina', 'Buenos Aires', 'facu2@unlam.edu.ar', 'facu2', MD5('12345'), 'default.png', 1, 1, 0),
+    ('Facundo Tres', 1997, 'Masculino', 'Argentina', 'Buenos Aires', 'facu3@unlam.edu.ar', 'facu3', MD5('12345'), 'default.png', 1, 1, 0),
+    ('Facundo Cuatro', 1998, 'Masculino', 'Argentina', 'Buenos Aires', 'facu4@unlam.edu.ar', 'facu4', MD5('12345'), 'default.png', 1, 1, 0),
+    ('Facundo Cinco', 1999, 'Masculino', 'Argentina', 'Buenos Aires', 'facu5@unlam.edu.ar', 'facu5', MD5('12345'), 'default.png', 1, 1, 0),
+    ('Facundo Seis', 2000, 'Masculino', 'Argentina', 'Buenos Aires', 'facu6@unlam.edu.ar', 'facu6', MD5('12345'), 'default.png', 1, 1, 0)
+    ON DUPLICATE KEY UPDATE esta_activo = 1;
 
 INSERT INTO usuario (
     nombre_completo,

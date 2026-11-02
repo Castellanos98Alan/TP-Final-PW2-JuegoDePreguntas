@@ -10,6 +10,7 @@ use app\controller\PartidaController;
 use app\controller\GrupoController;
 use app\controller\AdminController;
 use app\controller\EditorController;
+use app\controller\RankingController;
 
 use app\model\LoginModel;
 use app\model\LobbyModel;
@@ -18,6 +19,7 @@ use app\model\PerfilModel;
 use app\model\RegistroModel;
 use app\model\AdminModel;
 use app\model\EditorModel;
+use app\model\RankingModel;
 use MustacheRender;
 use MyDatabase;
 use Router;
@@ -156,6 +158,21 @@ class Configuration
     private function getPerfilModel()
     {
         return new PerfilModel(
+            $this->getDatabase()
+        );
+    }
+
+    public function getRankingController()
+    {
+        return new RankingController(
+            $this->getRankingModel(),
+            $this->getRender()
+        );
+    }
+
+    private function getRankingModel()
+    {
+        return new RankingModel(
             $this->getDatabase()
         );
     }
