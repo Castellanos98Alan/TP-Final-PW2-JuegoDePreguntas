@@ -586,7 +586,7 @@ class PartidaController
         $respuestasCorrectas =
             $_SESSION['partida']['puntaje'];
 
-        $puntajeFinal = 0;
+        $puntajeFinal = $respuestasCorrectas;
 
         // Evitamos registrar varias veces la misma derrota si se recarga
         // la pantalla o el usuario envía un reporte.
