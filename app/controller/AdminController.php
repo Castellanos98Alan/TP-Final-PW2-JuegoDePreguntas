@@ -15,19 +15,26 @@ class AdminController
         $this->render = $render;
     }
 
+    private function verificarPermisos()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['usuario_id'])) {
+            Redirect::toLogin();
+        }
+
+        $rol = (int)($_SESSION['rol'] ?? $_SESSION['id_rol'] ?? 0);
+        if ($rol !== 3) {
+            Redirect::toLobby();
+        }
+    }
+
     public function show()
     {
-        if (!isset($_SESSION['usuario_id'])) {
-            Redirect::toIndex();
-            return;
-        }
+        $this->verificarPermisos();
 
-        if ($_SESSION['rol'] != 3) {
-            Redirect::toLobby();
-            return;
-        }
-
-        ////
         $datos = [
             'total_jugadores'     => $this->model->getTotalJugadores(),
             'total_partidas'      => $this->model->getTotalPartidas(),

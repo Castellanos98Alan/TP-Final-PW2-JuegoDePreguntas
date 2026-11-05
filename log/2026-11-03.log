@@ -1,0 +1,2024 @@
+[17:11:13] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:11:13] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[17:11:13] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[17:11:13] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[17:11:19] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:11:23] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:13:18] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:13:36] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:14:11] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:17:50] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:17:50] [INFO] SELECT COUNT(*) AS total FROM usuario WHERE id_rol = 1
+[17:17:50] [INFO] SELECT COUNT(*) AS total FROM partida
+[17:17:50] [INFO] SELECT COUNT(*) AS total FROM pregunta WHERE esta_activa = 1
+[17:17:50] [INFO] SELECT COUNT(*) AS total FROM reporte_pregunta WHERE estado = 'pendiente'
+[17:17:50] [INFO] SELECT 
+                    id, 
+                    descripcion, 
+                    categoria, 
+                    veces_mostrada, 
+                    veces_acertada,
+                    CASE 
+                        WHEN veces_mostrada = 0 THEN 'Sin datos'
+                        WHEN (veces_acertada / veces_mostrada) >= 0.70 THEN 'Fácil'
+                        WHEN (veces_acertada / veces_mostrada) >= 0.35 THEN 'Media'
+                        ELSE 'Difícil'
+                    END AS dificultad,
+                    CASE 
+                        WHEN veces_mostrada = 0 THEN 0
+                        ELSE ROUND((veces_acertada / veces_mostrada) * 100, 1)
+                    END AS porcentaje_aciertos
+                FROM pregunta
+                WHERE esta_activa = 1
+                ORDER BY veces_mostrada DESC
+[17:19:46] [INFO] SELECT COUNT(*) AS total FROM usuario WHERE id_rol = 1
+[17:19:46] [INFO] SELECT COUNT(*) AS total FROM partida
+[17:19:46] [INFO] SELECT COUNT(*) AS total FROM pregunta WHERE esta_activa = 1
+[17:19:46] [INFO] SELECT COUNT(*) AS total FROM reporte_pregunta WHERE estado = 'pendiente'
+[17:19:46] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.dificultad,
+                0 AS veces_mostrada,
+                0 AS veces_acertada,
+                'Sin datos' AS dificultad_estadistica,
+                0 AS porcentaje_aciertos
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:20:15] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[17:20:15] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[17:20:15] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[17:20:16] [INFO] SELECT COUNT(*) AS total FROM usuario WHERE id_rol = 1
+[17:20:16] [INFO] SELECT COUNT(*) AS total FROM partida
+[17:20:16] [INFO] SELECT COUNT(*) AS total FROM pregunta WHERE esta_activa = 1
+[17:20:16] [INFO] SELECT COUNT(*) AS total FROM reporte_pregunta WHERE estado = 'pendiente'
+[17:20:16] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.dificultad,
+                0 AS veces_mostrada,
+                0 AS veces_acertada,
+                'Sin datos' AS dificultad_estadistica,
+                0 AS porcentaje_aciertos
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:20:21] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[17:20:21] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[17:20:21] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[17:20:22] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[17:20:22] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[17:20:22] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[17:20:24] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[17:20:24] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[17:20:24] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[17:20:25] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[17:20:25] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[17:20:25] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[17:20:30] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:20:33] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:20:33] [INFO] SELECT id, descripcion, categoria, 'Sugerida' AS creador
+                FROM pregunta
+                WHERE esta_activa = 0
+                ORDER BY id DESC
+[17:21:55] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:21:55] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:21:55] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:21:55] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[17:21:56] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:21:56] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:21:56] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:21:56] [INFO] SELECT r.id AS reporte_id, r.motivo, r.comentario, r.pregunta_id,
+                       p.descripcion AS pregunta_descripcion, p.categoria
+                FROM reporte_pregunta r
+                INNER JOIN pregunta p ON r.pregunta_id = p.id
+                WHERE r.estado = 'pendiente'
+                ORDER BY r.id DESC
+[17:25:26] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:25:26] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:25:26] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:25:26] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:31:51] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:31:51] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:31:51] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:31:51] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:31:51] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:31:51] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:32:05] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:32:05] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:32:05] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:32:05] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:32:05] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:32:05] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:32:07] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[17:32:07] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[17:32:07] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[17:32:08] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:32:08] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:32:08] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:32:08] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:32:08] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:32:08] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:32:46] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[17:32:46] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:32:46] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:32:57] [INFO] UPDATE pregunta SET
+                enunciado = :enunciado,
+                respuesta_a = :respuesta_a,
+                respuesta_b = :respuesta_b,
+                respuesta_c = :respuesta_c,
+                respuesta_d = :respuesta_d,
+                respuesta_correcta = :respuesta_correcta,
+                anime_id = :anime_id,
+                categoria_id = :categoria_id,
+                dificultad = :dificultad
+            WHERE id = :id
+[17:32:57] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:32:57] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:32:57] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:32:57] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:32:57] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:32:57] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:33:01] [INFO] UPDATE reporte_pregunta
+            SET estado = :estado
+            WHERE id = :id
+[17:33:01] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:33:01] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:33:01] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:33:01] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:33:01] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:33:01] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:33:04] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[17:33:04] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:33:04] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:33:06] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:33:06] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 0
+            ORDER BY p.id DESC
+[17:33:06] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:33:06] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:33:06] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:33:06] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:43:07] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:43:07] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:43:07] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:43:07] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:43:07] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:43:07] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:43:12] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[17:43:12] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:43:12] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:43:14] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:43:14] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:43:14] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:43:14] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:43:14] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:43:14] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:46:11] [INFO] INSERT INTO pregunta (
+            enunciado,
+            respuesta_a,
+            respuesta_b,
+            respuesta_c,
+            respuesta_d,
+            respuesta_correcta,
+            anime_id,
+            categoria_id,
+            tipo_pregunta,
+            dificultad,
+            esta_activa,
+            estado_revision
+        ) VALUES (
+            :enunciado,
+            :respuesta_a,
+            :respuesta_b,
+            :respuesta_c,
+            :respuesta_d,
+            :respuesta_correcta,
+            :anime_id,
+            :categoria_id,
+            'texto',
+            :dificultad,
+            0,
+            'Pendiente'
+        )
+[17:46:11] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:46:11] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:46:11] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:46:11] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:46:11] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:46:11] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:46:52] [INFO] UPDATE pregunta
+            SET esta_activa = 1,
+                estado_revision = 'Aprobada'
+            WHERE id = :id
+[17:46:52] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:46:52] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:46:52] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:46:52] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:46:52] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:46:52] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:47:44] [INFO] INSERT INTO pregunta (
+            enunciado,
+            respuesta_a,
+            respuesta_b,
+            respuesta_c,
+            respuesta_d,
+            respuesta_correcta,
+            anime_id,
+            categoria_id,
+            tipo_pregunta,
+            dificultad,
+            esta_activa,
+            estado_revision
+        ) VALUES (
+            :enunciado,
+            :respuesta_a,
+            :respuesta_b,
+            :respuesta_c,
+            :respuesta_d,
+            :respuesta_correcta,
+            :anime_id,
+            :categoria_id,
+            'texto',
+            :dificultad,
+            0,
+            'Pendiente'
+        )
+[17:47:44] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:47:44] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:47:44] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:47:44] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:47:44] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:47:44] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:48:28] [INFO] UPDATE pregunta
+            SET esta_activa = 0,
+                estado_revision = 'Rechazada'
+            WHERE id = :id
+[17:48:28] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:48:28] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:48:28] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:48:28] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:48:28] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:48:28] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:49:03] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[17:49:03] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:49:03] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:49:17] [INFO] UPDATE pregunta SET
+                enunciado = :enunciado,
+                respuesta_a = :respuesta_a,
+                respuesta_b = :respuesta_b,
+                respuesta_c = :respuesta_c,
+                respuesta_d = :respuesta_d,
+                respuesta_correcta = :respuesta_correcta,
+                anime_id = :anime_id,
+                categoria_id = :categoria_id,
+                dificultad = :dificultad
+            WHERE id = :id
+[17:49:17] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:49:17] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:49:17] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:49:17] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:49:17] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:49:17] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:50:15] [INFO] UPDATE reporte_pregunta
+            SET estado = :estado
+            WHERE id = :id
+[17:50:15] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:50:15] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:50:15] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:50:15] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:50:15] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:50:15] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:50:45] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[17:50:45] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:50:45] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:50:48] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:50:48] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:50:48] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:50:48] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:50:48] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:50:48] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:51:12] [INFO] SELECT id,
+                nombre_completo,
+                username,
+                foto_perfil,
+                anio_nacimiento,
+                sexo,
+                pais,
+                ciudad,
+                latitud,
+                longitud,
+                puntaje_acumulado,
+                id_rol,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
+                FROM usuario
+                WHERE id = :id
+                AND esta_activo = 1
+[17:51:12] [INFO] SELECT COUNT(*) AS total,
+                COALESCE(MAX(puntaje), 0) AS mejor_puntaje,
+                COALESCE(ROUND(AVG(puntaje), 1), 0) AS promedio
+                FROM partida
+                WHERE id_usuario = :idUsuario
+[17:51:12] [INFO] SELECT id,
+                puntaje,
+                resultado,
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+                FROM partida
+                WHERE id_usuario = :idUsuario
+                ORDER BY created_at DESC
+[17:54:34] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:54:34] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:54:34] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:54:34] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:54:34] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:54:34] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:54:34] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:54:48] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:54:48] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[17:54:48] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[17:54:48] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[17:54:51] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[17:54:55] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[17:54:55] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[17:54:55] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[17:54:55] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[17:55:04] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :id
+[17:55:04] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[17:56:25] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[17:56:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[17:56:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[17:56:28] [INFO] SELECT
+                    p.id,
+                    p.enunciado,
+                    p.respuesta_a,
+                    p.respuesta_b,
+                    p.respuesta_c,
+                    p.respuesta_d,
+                    p.tipo_pregunta,
+                    p.recurso,
+                    p.dificultad,
+                    a.nombre AS anime,
+                    c.nombre AS categoria
+
+                FROM pregunta p
+
+                JOIN anime a
+                    ON p.anime_id = a.id
+                JOIN categoria c
+                    ON p.categoria_id = c.id
+
+                LEFT JOIN usuario_pregunta up
+                    ON p.id = up.pregunta_id
+                    AND up.usuario_id = :usuarioId
+
+                WHERE p.dificultad = :dificultad
+
+                AND p.anime_id = :animeId
+
+                AND p.esta_activa = 1
+
+                AND up.pregunta_id IS NULL
+
+                ORDER BY RAND()
+
+                LIMIT 5
+[17:56:28] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[17:56:30] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[17:56:30] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[17:56:30] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[17:56:32] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[17:56:32] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[17:56:32] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[17:56:35] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[17:56:35] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[17:56:35] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[17:56:36] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[17:56:36] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[17:56:36] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[17:56:38] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :idPregunta
+                AND esta_activa = 1
+[17:56:38] [INFO] UPDATE usuario_pregunta
+            SET respondida_correctamente = :fueCorrecta,
+                fecha_respuesta = CURRENT_TIMESTAMP
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId
+[17:56:38] [INFO] SELECT respuesta_correcta
+                FROM pregunta
+                WHERE id = :id
+[17:56:38] [INFO] INSERT INTO partida
+                (
+                    id_usuario,
+                    puntaje,
+                    resultado
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :puntaje,
+                    :resultado
+                )
+[17:56:53] [INFO] INSERT INTO reporte_pregunta
+                    (usuario_id, pregunta_id, motivo, descripcion)
+                VALUES
+                    (:usuarioId, :preguntaId, :motivo, :descripcion)
+[17:56:56] [INFO] SELECT nombre_completo, 
+                username, 
+                foto_perfil, 
+                pais, ciudad,
+                puntaje_acumulado, 
+                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde 
+                FROM usuario 
+                WHERE id = :id 
+                AND esta_activo = 1
+[17:56:56] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC
+[17:56:56] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM usuario
+            WHERE esta_activo = 1
+            AND id_rol = 1
+            AND puntaje_acumulado > :puntaje
+[17:57:01] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:57:01] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:57:01] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:57:01] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:57:01] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:57:01] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:57:01] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:57:05] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[17:57:05] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:57:05] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:57:08] [INFO] UPDATE pregunta SET
+                enunciado = :enunciado,
+                respuesta_a = :respuesta_a,
+                respuesta_b = :respuesta_b,
+                respuesta_c = :respuesta_c,
+                respuesta_d = :respuesta_d,
+                respuesta_correcta = :respuesta_correcta,
+                anime_id = :anime_id,
+                categoria_id = :categoria_id,
+                dificultad = :dificultad
+            WHERE id = :id
+[17:57:08] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:57:08] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:57:08] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:57:08] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:57:08] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:57:08] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:57:09] [INFO] UPDATE reporte_pregunta
+            SET estado = :estado
+            WHERE id = :id
+[17:57:09] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:57:09] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:57:09] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:57:09] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:57:09] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:57:09] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:57:11] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[17:57:11] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:57:11] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:57:12] [INFO] UPDATE pregunta SET
+                enunciado = :enunciado,
+                respuesta_a = :respuesta_a,
+                respuesta_b = :respuesta_b,
+                respuesta_c = :respuesta_c,
+                respuesta_d = :respuesta_d,
+                respuesta_correcta = :respuesta_correcta,
+                anime_id = :anime_id,
+                categoria_id = :categoria_id,
+                dificultad = :dificultad
+            WHERE id = :id
+[17:57:12] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:57:12] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:57:12] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.esta_activa = 1
+            ORDER BY p.id DESC
+[17:57:12] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:57:12] [INFO] SELECT id, nombre
+            FROM anime
+            WHERE esta_activo = 1
+            ORDER BY nombre ASC
+[17:57:12] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC

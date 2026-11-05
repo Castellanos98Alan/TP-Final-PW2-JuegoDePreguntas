@@ -123,7 +123,7 @@
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         /* BOTÓN DE PERFIL CON FOTO REAL Y USERNAME */
@@ -176,6 +176,17 @@
             display: inline-flex;
             align-items: center;
             white-space: nowrap;
+        }
+
+        .btn-panel {
+            border: 1px solid #D4AF55;
+            color: #F1CD73;
+            background: rgba(212, 175, 85, 0.12);
+        }
+
+        .btn-panel:hover {
+            background: #D4AF55;
+            color: #0A1A33;
         }
 
         .btn-outline {
@@ -250,23 +261,32 @@
         <nav class="nav-actions">
             <?php if (isset($_SESSION['usuario'])): ?>
                 <?php
-                $nombreFoto = !empty($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'default.png';
-                $rutaFoto = 'public/' . $nombreFoto;
-
-                if (!file_exists($rutaFoto)) {
-                    $rutaFoto = 'public/FondoPerfilLuffy.png';
-                }
+                $rol = (int)($_SESSION['rol'] ?? $_SESSION['id_rol'] ?? 0);
+                $foto = !empty($_SESSION['foto_perfil']) ? ltrim($_SESSION['foto_perfil'], '/') : 'FondoPerfilLuffy.png';
+                $rutaFoto = 'public/' . $foto;
                 ?>
-                <a href="/Preguntados/perfil" class="header-user-btn" title="Ver mi perfil">
+
+                <!-- Solo visible para rol 2 (Editor) -->
+                <?php if ($rol === 2): ?>
+                    <a href="editor" class="btn-link btn-panel">Editor</a>
+                <?php endif; ?>
+
+                <!-- Solo visible para rol 3 (Administrador) -->
+                <?php if ($rol === 3): ?>
+                    <a href="admin" class="btn-link btn-panel">Admin</a>
+                <?php endif; ?>
+
+                <a href="perfil" class="header-user-btn" title="Ver mi perfil">
                     <img src="<?= htmlspecialchars($rutaFoto) ?>"
                          alt="Foto de <?= htmlspecialchars($_SESSION['usuario']) ?>"
-                         class="header-user-avatar">
+                         class="header-user-avatar"
+                         onerror="this.onerror=null; this.src='public/FondoPerfilLuffy.png';">
                     <span class="header-user-name"><?= htmlspecialchars($_SESSION['usuario']) ?></span>
                 </a>
-                <a href="/Preguntados/login/logout" class="btn-link btn-outline">Cerrar Sesión</a>
+                <a href="login/logout" class="btn-link btn-outline">Cerrar Sesión</a>
             <?php else: ?>
-                <a href="/Preguntados/login" class="btn-link btn-outline">Ingresar</a>
-                <a href="/Preguntados/registro" class="btn-link btn-gold">Registrarse</a>
+                <a href="login" class="btn-link btn-outline">Ingresar</a>
+                <a href="registro" class="btn-link btn-gold">Registrarse</a>
             <?php endif; ?>
         </nav>
     </div>

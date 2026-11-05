@@ -30,6 +30,11 @@ class Redirect
 
     public static function toEditor()
     {
-        self::to('/editor/show');
+        self::to('/editor');
+    }
+
+    public static function toAdmin()
+    {
+        self::to('/admin');
     }
 }

@@ -1,4 +1,3 @@
-
 <style>
     * {
         box-sizing: border-box;
@@ -42,6 +41,12 @@
         font-size: 12px;
         font-weight: 700;
         text-decoration: none;
+        transition: 0.2s ease;
+    }
+
+    .btn-gold:hover {
+        filter: brightness(1.1);
+        transform: translateY(-1px);
     }
 
     .section-card {
@@ -90,6 +95,7 @@
         cursor: pointer;
         text-decoration: none;
         display: inline-block;
+        transition: 0.2s ease;
     }
 
     .btn-approve {
@@ -97,14 +103,26 @@
         color: white;
     }
 
+    .btn-approve:hover {
+        background: #15803d;
+    }
+
     .btn-reject {
         background: #DC2626;
         color: white;
     }
 
+    .btn-reject:hover {
+        background: #b91c1c;
+    }
+
     .btn-edit {
         background: #2563EB;
         color: white;
+    }
+
+    .btn-edit:hover {
+        background: #1d4ed8;
     }
 
     .form-group {
@@ -192,7 +210,7 @@
             </span>
         </div>
 
-        <a href="?controller=lobby&method=show" class="btn-gold">
+        <a href="/Preguntados/lobby" class="btn-gold">
             ← VOLVER AL LOBBY
         </a>
     </div>
@@ -226,12 +244,12 @@
                     <td>{{comentario}}</td>
 
                     <td style="text-align: center; white-space: nowrap;">
-                        <a href="?controller=editor&method=editar&id={{pregunta_id}}"
+                        <a href="/Preguntados/editor/editar?id={{pregunta_id}}"
                            class="btn-action btn-edit">
                             Corregir
                         </a>
 
-                        <form action="?controller=editor&method=resolverReporte"
+                        <form action="/Preguntados/editor/resolverReporte"
                               method="POST"
                               style="display:inline; margin-left: 5px;">
 
@@ -281,7 +299,7 @@
                     <td>{{creador}}</td>
 
                     <td style="text-align: center;">
-                        <form action="?controller=editor&method=aprobar"
+                        <form action="/Preguntados/editor/aprobar"
                               method="POST"
                               style="display:inline;">
 
@@ -292,7 +310,7 @@
                             </button>
                         </form>
 
-                        <form action="?controller=editor&method=rechazar"
+                        <form action="/Preguntados/editor/rechazar"
                               method="POST"
                               style="display:inline; margin-left: 5px;">
 
@@ -321,7 +339,7 @@
     <div class="section-card">
         <div class="section-title">AGREGAR NUEVA PREGUNTA</div>
 
-        <form action="?controller=editor&method=guardar" method="POST">
+        <form action="/Preguntados/editor/guardar" method="POST">
 
             <div class="form-group">
                 <label for="descripcion">Enunciado de la pregunta:</label>
@@ -428,7 +446,7 @@
                     <td>{{categoria}}</td>
 
                     <td style="text-align: center;">
-                        <a href="?controller=editor&method=editar&id={{id}}"
+                        <a href="/Preguntados/editor/editar?id={{id}}"
                            class="btn-action btn-edit">
                             Editar
                         </a>
@@ -448,4 +466,3 @@
     </div>
 
 </div>
-```
