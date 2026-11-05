@@ -17,14 +17,17 @@ class EditorController
 
     private function verificarPermisos()
     {
-        if (!isset($_SESSION['usuario_id'])) {
-            Redirect::toIndex();
-            exit();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
 
-        if ($_SESSION['rol'] != 2 && $_SESSION['rol'] != 3) {
+        if (!isset($_SESSION['usuario_id'])) {
+            Redirect::toLogin();
+        }
+
+        $rol = (int)($_SESSION['rol'] ?? $_SESSION['id_rol'] ?? 0);
+        if ($rol !== 2 && $rol !== 3) {
             Redirect::toLobby();
-            exit();
         }
     }
 
@@ -32,12 +35,12 @@ class EditorController
     {
         $this->verificarPermisos();
 
-       // $pendientes = $this->model->getPreguntasPendientes();
+        $pendientes = $this->model->getPreguntasPendientes();
 
         $datos = [
             'username'             => $_SESSION['username'] ?? 'Editor',
-            'pendientes'           => $this->model->getPreguntasPendientes(),
-            'preguntas_pendientes' => $this->model->getPreguntasPendientes(),
+            'pendientes'           => $pendientes,
+            'preguntas_pendientes' => $pendientes,
             'activas'              => $this->model->getPreguntasActivas(),
             'reportes_pendientes'  => $this->model->getReportesPendientes(),
             'animes'               => $this->model->getAnimesActivos(),
@@ -46,6 +49,7 @@ class EditorController
 
         $this->render->renderiza("editor", $datos);
     }
+
     public function aprobar()
     {
         $this->verificarPermisos();
@@ -53,11 +57,10 @@ class EditorController
         $idPregunta = $_POST['id_pregunta'] ?? $_POST['id'] ?? null;
 
         if ($idPregunta) {
-            $this->model->aprobarPregunta($idPregunta);
+            $this->model->aprobarPregunta((int)$idPregunta);
         }
 
-        header("Location: ?controller=editor&method=show");
-        exit();
+        Redirect::toEditor();
     }
 
     public function rechazar()
@@ -67,12 +70,12 @@ class EditorController
         $idPregunta = $_POST['id_pregunta'] ?? $_POST['id'] ?? null;
 
         if ($idPregunta) {
-            $this->model->rechazarPregunta($idPregunta);
+            $this->model->rechazarPregunta((int)$idPregunta);
         }
 
-        header("Location: ?controller=editor&method=show");
-        exit();
+        Redirect::toEditor();
     }
+
     public function resolverReporte()
     {
         $this->verificarPermisos();
@@ -81,12 +84,12 @@ class EditorController
         $accion = $_POST['accion'] ?? 'resuelto';
 
         if ($idReporte) {
-            $this->model->resolverReporte($idReporte, $accion);
+            $this->model->resolverReporte((int)$idReporte, $accion);
         }
 
-        header("Location: ?controller=editor&method=show");
-        exit();
+        Redirect::toEditor();
     }
+
     public function crearPregunta()
     {
         $this->guardar();
@@ -97,11 +100,11 @@ class EditorController
         $this->verificarPermisos();
 
         $descripcion = trim($_POST['descripcion'] ?? '');
-        $animeId = (int)($_POST['anime_id'] ?? 0);
+        $animeId     = (int)($_POST['anime_id'] ?? 0);
         $categoriaId = (int)($_POST['categoria_id'] ?? 0);
-        $dificultad = $_POST['dificultad'] ?? '';
-        $opciones = $_POST['opciones'] ?? [];
-        $correcta = (int)($_POST['correcta'] ?? -1);
+        $dificultad  = $_POST['dificultad'] ?? '';
+        $opciones    = $_POST['opciones'] ?? [];
+        $correcta    = isset($_POST['correcta']) ? (int)$_POST['correcta'] : -1;
 
         $dificultadesValidas = ['facil', 'media', 'dificil'];
 
@@ -125,38 +128,41 @@ class EditorController
             );
         }
 
-        header("Location: ?controller=editor&method=show");
-        exit();
+        Redirect::toEditor();
     }
 
     public function editar()
     {
         $this->verificarPermisos();
 
-        $idPregunta = $_GET['id'] ?? null;
+        $idPregunta = (int)($_GET['id'] ?? 0);
+        if ($idPregunta <= 0) {
+            Redirect::toEditor();
+            return;
+        }
+
         $pregunta = $this->model->getPreguntaPorId($idPregunta);
 
         if (!$pregunta) {
-            header("Location: ?controller=editor&method=show");
-            exit();
+            Redirect::toEditor();
+            return;
         }
 
         $opcionesFormateadas = [];
-
-        foreach ($pregunta['opciones'] as $opcion) {
-            $opcion['checked'] = $opcion['es_correcta'] ? 'checked' : '';
-            $opcionesFormateadas[] = $opcion;
+        if (!empty($pregunta['opciones']) && is_array($pregunta['opciones'])) {
+            foreach ($pregunta['opciones'] as $opcion) {
+                $opcion['checked'] = !empty($opcion['es_correcta']) ? 'checked' : '';
+                $opcionesFormateadas[] = $opcion;
+            }
         }
 
         $animes = $this->model->getAnimesActivos();
-
         foreach ($animes as &$anime) {
             $anime['selected'] = ($anime['id'] == $pregunta['anime_id']);
         }
         unset($anime);
 
         $categorias = $this->model->getCategoriasActivas();
-
         foreach ($categorias as &$categoria) {
             $categoria['selected'] = ($categoria['id'] == $pregunta['categoria_id']);
         }
@@ -174,14 +180,14 @@ class EditorController
         unset($dificultad);
 
         $this->render->renderiza("editarPregunta", [
-            'id' => $pregunta['id'],
-            'descripcion' => $pregunta['descripcion'],
-            'opciones' => $opcionesFormateadas,
+            'id'             => $pregunta['id'],
+            'descripcion'    => $pregunta['descripcion'],
+            'opciones'       => $opcionesFormateadas,
             'tiene_opciones' => !empty($opcionesFormateadas),
-            'animes' => $animes,
-            'categorias' => $categorias,
-            'dificultades' => $dificultades,
-            'username' => $_SESSION['username'] ?? 'Editor'
+            'animes'         => $animes,
+            'categorias'     => $categorias,
+            'dificultades'   => $dificultades,
+            'username'       => $_SESSION['username'] ?? 'Editor'
         ]);
     }
 
@@ -189,23 +195,24 @@ class EditorController
     {
         $this->verificarPermisos();
 
-        $idPregunta = $_POST['id'] ?? null;
+        $idPregunta  = (int)($_POST['id'] ?? 0);
         $descripcion = trim($_POST['descripcion'] ?? '');
-        $animeId = (int)($_POST['anime_id'] ?? 0);
+        $animeId     = (int)($_POST['anime_id'] ?? 0);
         $categoriaId = (int)($_POST['categoria_id'] ?? 0);
-        $dificultad = $_POST['dificultad'] ?? '';
-        $opciones = $_POST['opciones'] ?? [];
-        $correcta = $_POST['correcta'] ?? '';
+        $dificultad  = $_POST['dificultad'] ?? '';
+        $opciones    = $_POST['opciones'] ?? [];
+        $correcta    = $_POST['correcta'] ?? null;
 
         $dificultadesValidas = ['facil', 'media', 'dificil'];
 
         if (
-            $idPregunta &&
+            $idPregunta > 0 &&
             $descripcion !== '' &&
             $animeId > 0 &&
             $categoriaId > 0 &&
             in_array($dificultad, $dificultadesValidas, true) &&
-            is_array($opciones)
+            is_array($opciones) &&
+            $correcta !== null
         ) {
             $this->model->actualizarPregunta(
                 $idPregunta,
@@ -218,7 +225,6 @@ class EditorController
             );
         }
 
-        header("Location: ?controller=editor&method=show");
-        exit();
+        Redirect::toEditor();
     }
 }

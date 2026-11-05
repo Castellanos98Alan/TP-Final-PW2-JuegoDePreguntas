@@ -18,8 +18,18 @@ class Redirect
         self::to('/');
     }
 
+    public static function toLogin()
+    {
+        self::to('/login');
+    }
+
     public static function toLobby()
     {
         self::to('/lobby');
+    }
+
+    public static function toEditor()
+    {
+        self::to('/editor/show');
     }
 }
