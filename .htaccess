@@ -45,13 +45,18 @@ Options -Indexes
     # ── CONDICIONES ──
     # Solo reescribir si la URL NO es un archivo ni un directorio real en disco.
 
+# ── REGLA PERFIL CON ID: /perfil/123 ─────────────────
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^perfil/([0-9]+)/?$ index.php?controller=perfil&method=show&id=$1 [L,QSA]
+
     # ── REGLA 1: /controller/method ──────────────────────
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^([^/]+)/([^/]+)$ index.php?controller=$1&method=$2 [L,QSA]
+    RewriteRule ^([^/]+)/([^/]+)/?$ index.php?controller=$1&method=$2 [L,QSA]
 
     # ── REGLA 2: /controller (sin method) ────────────────
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^([^/]+)$         index.php?controller=$1           [L,QSA]
+    RewriteRule ^([^/]+)/?$         index.php?controller=$1           [L,QSA]
 </IfModule>

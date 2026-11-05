@@ -20,6 +20,6 @@ class Redirect
 
     public static function toLobby()
     {
-        self::to('/?controller=lobby&method=show');
+        self::to('/lobby');
     }
 }

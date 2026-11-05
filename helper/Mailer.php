@@ -29,7 +29,7 @@ class Mailer
             $protocolo = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
             $host = $_SERVER['HTTP_HOST'];
             $baseDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
-            $link = "$protocolo://$host$baseDir/?controller=registro&method=activar&token=" . $token;
+            $link = "$protocolo://$host$baseDir/registro/activar?token=" . $token;
 
             $mail->isHTML(true);
             $mail->Subject = 'Activa tu cuenta en Animequiz';

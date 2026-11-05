@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <base href="/Preguntados/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preguntados Anime</title>
 
@@ -238,7 +239,7 @@
 
 <header class="site-header">
     <div class="header-container">
-        <a href="?controller=lobby&method=show" class="brand-link">
+        <a href="/Preguntados/lobby" class="brand-link">
             <div class="brand-emblem" aria-hidden="true">✦</div>
             <div class="brand-text">
                 <h1>PREGUNTADOS</h1>
@@ -256,16 +257,16 @@
                     $rutaFoto = 'public/FondoPerfilLuffy.png';
                 }
                 ?>
-                <a href="?controller=perfil&method=show" class="header-user-btn" title="Ver mi perfil">
+                <a href="/Preguntados/perfil" class="header-user-btn" title="Ver mi perfil">
                     <img src="<?= htmlspecialchars($rutaFoto) ?>"
                          alt="Foto de <?= htmlspecialchars($_SESSION['usuario']) ?>"
                          class="header-user-avatar">
                     <span class="header-user-name"><?= htmlspecialchars($_SESSION['usuario']) ?></span>
                 </a>
-                <a href="?controller=login&method=logout" class="btn-link btn-outline">Cerrar Sesión</a>
+                <a href="/Preguntados/login/logout" class="btn-link btn-outline">Cerrar Sesión</a>
             <?php else: ?>
-                <a href="?controller=login&method=show" class="btn-link btn-outline">Ingresar</a>
-                <a href="?controller=registro&method=show" class="btn-link btn-gold">Registrarse</a>
+                <a href="/Preguntados/login" class="btn-link btn-outline">Ingresar</a>
+                <a href="/Preguntados/registro" class="btn-link btn-gold">Registrarse</a>
             <?php endif; ?>
         </nav>
     </div>

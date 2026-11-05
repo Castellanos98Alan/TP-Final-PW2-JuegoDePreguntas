@@ -457,7 +457,7 @@
         <div class="pf-panel pf-vacio">
             <h2>Perfil no encontrado</h2>
             <p>Este jugador no existe o su cuenta todavía no fue activada.</p>
-            <a href="?controller=lobby&method=show" class="pf-btn">Volver al lobby</a>
+            <a href="/Preguntados/lobby" class="pf-btn">Volver al lobby</a>
         </div>
     {{/no_encontrado}}
 
@@ -602,7 +602,7 @@
                         </div>
                     {{/error_perfil}}
 
-                    <form action="?controller=perfil&method=actualizar" method="POST" enctype="multipart/form-data" class="pf-form-editar" novalidate>
+                    <form action="/Preguntados/perfil/actualizar" method="POST" enctype="multipart/form-data" class="pf-form-editar" novalidate>
 
                         <div class="pf-form-grid">
                             <div class="pf-form-grupo pf-form-full">
@@ -677,7 +677,7 @@
                     </div>
 
                     {{^pass_verificada}}
-                    <form action="?controller=perfil&method=verificarPasswordActual" method="POST" novalidate>
+                    <form action="/Preguntados/perfil/verificarPasswordActual" method="POST" novalidate>
                         {{#error_password}}
                             <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; color: #ff7675; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
                                 ⚠️ {{error_password}}
@@ -701,7 +701,7 @@
                     {{/pass_verificada}}
 
                     {{#pass_verificada}}
-                    <form action="?controller=perfil&method=cambiarPassword" method="POST" novalidate>
+                    <form action="/Preguntados/perfil/cambiarPassword" method="POST" novalidate>
                         <input type="hidden" name="token_pass" value="{{token_pass}}">
 
                         <div style="background: rgba(38, 166, 91, 0.2); border: 1px solid #2ecc71; color: #2ecc71; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
@@ -895,7 +895,7 @@
         }
 
         function cerrarModalPass() {
-            window.location.href = '?controller=perfil&method=show';
+            window.location.href = window.location.pathname;
         }
         if (btnCerrarPass) btnCerrarPass.addEventListener('click', cerrarModalPass);
         if (btnCancelarPass) btnCancelarPass.addEventListener('click', cerrarModalPass);

@@ -82,7 +82,8 @@ class RegistroController
         }
 
         Mailer::enviarCorreoValidacion($datos['email'], $resultado['token']);
-        Redirect::to('/?controller=login&method=show&registro_pendiente=1');
+        $_SESSION['registro_pendiente'] = true;
+        Redirect::to('/login');
     }
 
     public function activar()
@@ -90,7 +91,8 @@ class RegistroController
         $token = $_GET['token'] ?? '';
 
         if (!empty($token) && $this->model->activarCuenta($token)) {
-            Redirect::to('/?controller=login&method=show&cuenta_activada=1');
+            $_SESSION['cuenta_activada'] = true;
+            Redirect::to('/login');
         } else {
             $this->mostrarError("El enlace de activación es inválido o ya expiró.", []);
         }

@@ -21,7 +21,8 @@ class LoginController
         $usuario = $this->model->autenticar(Request::post('usuario'), Request::post('password'));
 
         if ($usuario === null) {
-            Redirect::to('/?login_error=1');
+            $_SESSION['login_error'] = true;
+            Redirect::to('/login');
         }
 
         $_SESSION['usuario_id'] = $usuario['id'];
@@ -32,15 +33,15 @@ class LoginController
         switch ($usuario['id_rol']) {
 
             case 1:
-                Redirect::to('/?controller=lobby&method=show');
+                Redirect::to('/lobby');
                 break;
 
             case 2:
-                Redirect::to('/?controller=editor&method=show');
+                Redirect::to('/editor');
                 break;
 
             case 3:
-                Redirect::to('/?controller=admin&method=show');
+                Redirect::to('/admin');
                 break;
 
             default:
@@ -55,10 +56,16 @@ class LoginController
             Redirect::toLobby();
         }
 
+        $registroPendiente = !empty($_SESSION['registro_pendiente']);
+        $cuentaActivada    = !empty($_SESSION['cuenta_activada']);
+        $loginError        = !empty($_SESSION['login_error']);
+
+        unset($_SESSION['registro_pendiente'], $_SESSION['cuenta_activada'], $_SESSION['login_error']);
+
         $data = [
-            'login_error'        => Request::get('login_error') === '1',
-            'registro_pendiente' => Request::get('registro_pendiente') === '1',
-            'cuenta_activada'    => Request::get('cuenta_activada') === '1'
+            'login_error'        => $loginError,
+            'registro_pendiente' => $registroPendiente,
+            'cuenta_activada'    => $cuentaActivada
         ];
 
         $this->render->renderiza("login", $data);

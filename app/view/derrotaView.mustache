@@ -350,7 +350,7 @@
         <p role="status">{{mensajeReporte}}</p>
     {{/mensajeReporte}}
 
-    <form action="?controller=partida&method=reportar" method="POST"
+    <form action="/Preguntados/partida/reportar" method="POST"
           style="display: grid; gap: 14px;">
 
         <label for="preguntaReporte">Pregunta a reportar</label>
@@ -399,14 +399,14 @@
         <div class="acciones-derrota">
 
             <a
-                    href="?controller=partida&method=seleccionar"
+                    href="/Preguntados/partida/seleccionar"
                     class="btn-derrota btn-jugar"
             >
                 Jugar otra vez
             </a>
 
             <a
-                    href="?controller=lobby&method=index"
+                    href="/Preguntados/lobby"
                     class="btn-derrota btn-lobby"
             >
                 Volver al lobby

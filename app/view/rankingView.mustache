@@ -168,7 +168,7 @@
                             <div class="jugador-info">
                                 <img src="public/{{foto_perfil}}" alt="{{username}}" class="avatar-mini">
                                 <div>
-                                    <a href="?controller=perfil&method=show&id={{id}}" class="jugador-link">
+                                    <a href="perfil/{{id}}" class="jugador-link">
                                     {{username}} {{#es_usuario_actual}}(Tú){{/es_usuario_actual}}
                                     </a>
                                     <div class="jugador-nombre">{{nombre_completo}}</div>
@@ -195,6 +195,6 @@
     </div>
 
     <div class="acciones-ranking">
-        <a href="?controller=lobby&method=show" class="btn-volver">‹ Volver al Lobby</a>
+        <a href="/Preguntados/lobby" class="btn-volver">‹ Volver al Lobby</a>
     </div>
 </div>

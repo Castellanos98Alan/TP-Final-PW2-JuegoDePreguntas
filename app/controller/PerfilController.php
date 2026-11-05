@@ -47,13 +47,25 @@ class PerfilController
         $urlPerfil = $this->construirUrlPerfil($idUsuario);
         $qrImagen  = $this->generarQr($urlPerfil);
 
-        $modal = $_GET['modal'] ?? '';
+        $modal = $_SESSION['modal'] ?? ($_GET['modal'] ?? '');
+        unset($_SESSION['modal']);
         $abrirModalEditar   = ($modal === 'editar');
         $abrirModalPassword = ($modal === 'password');
 
-        $tokenUrl     = $_GET['token_pass'] ?? '';
+        $tokenUrl     = $_SESSION['token_pass'] ?? ($_GET['token_pass'] ?? '');
+        unset($_SESSION['token_pass']);
         $tokenSession = $_SESSION['token_pass_verificado'] ?? '';
         $passVerificada = (!empty($tokenUrl) && !empty($tokenSession) && hash_equals($tokenSession, $tokenUrl));
+
+        $errorPerfil = $_SESSION['error_perfil'] ?? ($_GET['error_perfil'] ?? null);
+        unset($_SESSION['error_perfil']);
+
+        $errorPassword = $_SESSION['error_password'] ?? ($_GET['error_password'] ?? null);
+        unset($_SESSION['error_password']);
+
+        $mensajeExito = $_SESSION['mensaje_exito'] ?? ($_GET['mensaje_exito'] ?? '¡Operación realizada con éxito!');
+        $exitoEdicion = isset($_SESSION['exito']) || isset($_GET['exito']);
+        unset($_SESSION['mensaje_exito'], $_SESSION['exito']);
 
         $data = [
             'no_encontrado'        => false,
@@ -88,10 +100,10 @@ class PerfilController
             'abrir_modal_password' => $abrirModalPassword,
             'pass_verificada'      => $passVerificada,
             'token_pass'           => $tokenUrl,
-            'error_perfil'         => $_GET['error_perfil'] ?? null,
-            'error_password'       => $_GET['error_password'] ?? null,
-            'mensaje_exito'        => $_GET['mensaje_exito'] ?? '¡Operación realizada con éxito!',
-            'exito_edicion'        => isset($_GET['exito'])
+            'error_perfil'         => $errorPerfil,
+            'error_password'       => $errorPassword,
+            'mensaje_exito'        => $mensajeExito,
+            'exito_edicion'        => $exitoEdicion
         ];
 
         $this->render->renderiza("perfil", $data);
@@ -111,7 +123,9 @@ class PerfilController
         $camposObligatorios = ['nombre_completo', 'username', 'anio_nacimiento', 'sexo', 'pais', 'ciudad'];
         foreach ($camposObligatorios as $campo) {
             if (empty(trim($datos[$campo] ?? ''))) {
-                Redirect::to('/?controller=perfil&method=show&modal=editar&error_perfil=Todos+los+campos+son+obligatorios');
+                $_SESSION['modal'] = 'editar';
+                $_SESSION['error_perfil'] = 'Todos los campos son obligatorios';
+                Redirect::to('/perfil');
                 return;
             }
         }
@@ -119,24 +133,32 @@ class PerfilController
         $anio = (int)$datos['anio_nacimiento'];
         $anioActual = (int)date('Y');
         if ($anio < 1920 || $anio > $anioActual) {
-            Redirect::to('/?controller=perfil&method=show&modal=editar&error_perfil=Año+de+nacimiento+inválido');
+            $_SESSION['modal'] = 'editar';
+            $_SESSION['error_perfil'] = 'Año de nacimiento inválido';
+            Redirect::to('/perfil');
             return;
         }
 
         $sexosValidos = ['Masculino', 'Femenino', 'Prefiero no cargarlo'];
         if (!in_array($datos['sexo'], $sexosValidos)) {
-            Redirect::to('/?controller=perfil&method=show&modal=editar&error_perfil=El+sexo+seleccionado+no+es+válido');
+            $_SESSION['modal'] = 'editar';
+            $_SESSION['error_perfil'] = 'El sexo seleccionado no es válido';
+            Redirect::to('/perfil');
             return;
         }
 
         $username = trim($datos['username']);
         if (strlen($username) < 3 || strlen($username) > 30) {
-            Redirect::to('/?controller=perfil&method=show&modal=editar&error_perfil=El+nombre+de+usuario+debe+tener+entre+3+y+30+caracteres');
+            $_SESSION['modal'] = 'editar';
+            $_SESSION['error_perfil'] = 'El nombre de usuario debe tener entre 3 y 30 caracteres';
+            Redirect::to('/perfil');
             return;
         }
 
         if ($this->model->existeUsernameEnOtroUsuario($username, $idUsuario)) {
-            Redirect::to('/?controller=perfil&method=show&modal=editar&error_perfil=El+nombre+de+usuario+ya+está+en+uso');
+            $_SESSION['modal'] = 'editar';
+            $_SESSION['error_perfil'] = 'El nombre de usuario ya está en uso';
+            Redirect::to('/perfil');
             return;
         }
 
@@ -146,7 +168,9 @@ class PerfilController
             $extension = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
 
             if (!in_array($extension, $extensionesPermitidas)) {
-                Redirect::to('/?controller=perfil&method=show&modal=editar&error_perfil=Formato+de+foto+no+válido+(JPG+o+PNG)');
+                $_SESSION['modal'] = 'editar';
+                $_SESSION['error_perfil'] = 'Formato de foto no válido (JPG o PNG)';
+                Redirect::to('/perfil');
                 return;
             }
 
@@ -154,7 +178,9 @@ class PerfilController
             $destino = "public/" . $nombreFoto;
 
             if (!move_uploaded_file($foto['tmp_name'], $destino)) {
-                Redirect::to('/?controller=perfil&method=show&modal=editar&error_perfil=Error+al+guardar+la+foto');
+                $_SESSION['modal'] = 'editar';
+                $_SESSION['error_perfil'] = 'Error al guardar la foto';
+                Redirect::to('/perfil');
                 return;
             }
         }
@@ -166,7 +192,9 @@ class PerfilController
             $_SESSION['foto_perfil'] = $nombreFoto;
         }
 
-        Redirect::to('/?controller=perfil&method=show&exito=1&mensaje_exito=' . urlencode('¡Perfil actualizado con éxito!'));
+        $_SESSION['exito'] = 1;
+        $_SESSION['mensaje_exito'] = '¡Perfil actualizado con éxito!';
+        Redirect::to('/perfil');
     }
 
     public function verificarPasswordActual()
@@ -180,19 +208,25 @@ class PerfilController
         $passActual  = trim($_POST['password_actual'] ?? '');
 
         if (empty($passActual)) {
-            Redirect::to('/?controller=perfil&method=show&modal=password&error_password=' . urlencode('Debés ingresar tu contraseña actual'));
+            $_SESSION['modal'] = 'password';
+            $_SESSION['error_password'] = 'Debés ingresar tu contraseña actual';
+            Redirect::to('/perfil');
             return;
         }
 
         if (!$this->model->verificarPassword($idUsuario, $passActual)) {
-            Redirect::to('/?controller=perfil&method=show&modal=password&error_password=' . urlencode('La contraseña actual es incorrecta'));
+            $_SESSION['modal'] = 'password';
+            $_SESSION['error_password'] = 'La contraseña actual es incorrecta';
+            Redirect::to('/perfil');
             return;
         }
 
         $token = bin2hex(random_bytes(16));
         $_SESSION['token_pass_verificado'] = $token;
 
-        Redirect::to('/?controller=perfil&method=show&modal=password&token_pass=' . $token);
+        $_SESSION['modal'] = 'password';
+        $_SESSION['token_pass'] = $token;
+        Redirect::to('/perfil');
     }
 
     public function cambiarPassword()
@@ -208,7 +242,9 @@ class PerfilController
         $tokenSession = $_SESSION['token_pass_verificado'] ?? '';
 
         if (empty($tokenPost) || empty($tokenSession) || !hash_equals($tokenSession, $tokenPost)) {
-            Redirect::to('/?controller=perfil&method=show&modal=password&error_password=' . urlencode('Debés validar tu contraseña actual primero'));
+            $_SESSION['modal'] = 'password';
+            $_SESSION['error_password'] = 'Debés validar tu contraseña actual primero';
+            Redirect::to('/perfil');
             return;
         }
 
@@ -216,17 +252,26 @@ class PerfilController
         $repetirPass = trim($_POST['repetir_password'] ?? '');
 
         if (empty($nuevaPass) || empty($repetirPass)) {
-            Redirect::to('/?controller=perfil&method=show&modal=password&token_pass=' . $tokenPost . '&error_password=' . urlencode('Tenés que completar ambos campos'));
+            $_SESSION['modal'] = 'password';
+            $_SESSION['token_pass'] = $tokenPost;
+            $_SESSION['error_password'] = 'Tenés que completar ambos campos';
+            Redirect::to('/perfil');
             return;
         }
 
         if ($nuevaPass !== $repetirPass) {
-            Redirect::to('/?controller=perfil&method=show&modal=password&token_pass=' . $tokenPost . '&error_password=' . urlencode('Las nuevas contraseñas no coinciden'));
+            $_SESSION['modal'] = 'password';
+            $_SESSION['token_pass'] = $tokenPost;
+            $_SESSION['error_password'] = 'Las nuevas contraseñas no coinciden';
+            Redirect::to('/perfil');
             return;
         }
 
         if (strlen($nuevaPass) < 4) {
-            Redirect::to('/?controller=perfil&method=show&modal=password&token_pass=' . $tokenPost . '&error_password=' . urlencode('La nueva contraseña debe tener al menos 4 caracteres'));
+            $_SESSION['modal'] = 'password';
+            $_SESSION['token_pass'] = $tokenPost;
+            $_SESSION['error_password'] = 'La nueva contraseña debe tener al menos 4 caracteres';
+            Redirect::to('/perfil');
             return;
         }
 
@@ -234,7 +279,9 @@ class PerfilController
 
         unset($_SESSION['token_pass_verificado']);
 
-        Redirect::to('/?controller=perfil&method=show&exito=1&mensaje_exito=' . urlencode('¡Contraseña actualizada con éxito!'));
+        $_SESSION['exito'] = 1;
+        $_SESSION['mensaje_exito'] = '¡Contraseña actualizada con éxito!';
+        Redirect::to('/perfil');
     }
 
     private function resolverFoto($nombreFoto)
@@ -255,7 +302,7 @@ class PerfilController
         $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
         $carpeta = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
 
-        return $esquema . '://' . $host . $carpeta . '/?controller=perfil&method=show&id=' . $idUsuario;
+        return $esquema . '://' . $host . $carpeta . '/perfil/' . $idUsuario;
     }
 
     private function generarQr($url)

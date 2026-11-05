@@ -337,7 +337,7 @@
                 {{/esImagen}}
 
                 <form id="formularioRespuesta"
-                      action="?controller=partida&method=responder"
+                      action="/Preguntados/partida/responder"
                       method="POST"
                       class="respuestas-grid">
 
@@ -450,7 +450,7 @@
             if (enviado) return;
 
             enviado = true;
-            window.location.href = '?controller=partida&method=tiempoAgotado';
+            window.location.href = '/Preguntados/partida/tiempoAgotado';
             return;
         }
 

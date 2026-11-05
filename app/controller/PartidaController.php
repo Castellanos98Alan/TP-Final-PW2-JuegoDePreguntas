@@ -2,6 +2,8 @@
 
 namespace app\controller;
 
+use Redirect;
+
 class PartidaController
 {
     private $model;
@@ -21,13 +23,13 @@ class PartidaController
     public function seleccionar()
     {
         $animes = $this->model->obtenerAnimes();
-
-        $error = $_GET['error'] ?? null;
-
+        $errorSeleccion = !empty($_SESSION['error_seleccion']) || ($_GET['error'] ?? null) == 1;
+        $errorPreguntas = !empty($_SESSION['error_preguntas']) || ($_GET['error'] ?? null) == 2;
+        unset($_SESSION['error_seleccion'], $_SESSION['error_preguntas']);
         $data = [
             'animes' => $animes,
-            'errorSeleccion' => $error == 1,
-            'errorPreguntas' => $error == 2
+            'errorSeleccion' => $errorSeleccion,
+            'errorPreguntas' => $errorPreguntas
         ];
 
         $this->render->renderiza(
@@ -54,7 +56,7 @@ class PartidaController
          */
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: ?controller=login&method=index'
+                'Location: /Preguntados/login'
             );
             exit();
         }
@@ -70,10 +72,8 @@ class PartidaController
          * Debe seleccionar al menos un anime.
          */
         if (empty($animesSeleccionados)) {
-            header(
-                'Location: ?controller=partida&method=seleccionar&error=1'
-            );
-            exit();
+            $_SESSION['error_seleccion'] = true;
+            Redirect::to('/partida/seleccionar');
         }
 
         $usuarioId =
@@ -94,10 +94,8 @@ class PartidaController
          * volvemos a selección.
          */
         if (count($preguntas) < 15) {
-            header(
-                'Location: ?controller=partida&method=seleccionar&error=2'
-            );
-            exit();
+            $_SESSION['error_preguntas'] = true;
+            Redirect::to('/partida/seleccionar');
         }
 
         /*
@@ -115,7 +113,7 @@ class PartidaController
         ];
 
         header(
-            'Location: ?controller=partida&method=jugar'
+            'Location: /Preguntados/partida/jugar'
         );
 
         exit();
@@ -133,7 +131,7 @@ class PartidaController
          */
         if (!isset($_SESSION['partida'])) {
             header(
-                'Location: ?controller=partida&method=seleccionar'
+                'Location: /Preguntados/partida/seleccionar'
             );
             exit();
         }
@@ -144,7 +142,7 @@ class PartidaController
          */
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: ?controller=login&method=index'
+                'Location: /Preguntados/login'
             );
             exit();
         }
@@ -170,7 +168,7 @@ class PartidaController
             $partida['preguntas'][$indiceActual]
         )) {
             header(
-                'Location: ?controller=partida&method=ganar'
+                'Location: /Preguntados/partida/ganar'
             );
             exit();
         }
@@ -237,7 +235,7 @@ class PartidaController
          */
         if (!isset($_SESSION['partida'])) {
             header(
-                'Location: ?controller=partida&method=seleccionar'
+                'Location: /Preguntados/partida/seleccionar'
             );
             exit();
         }
@@ -247,7 +245,7 @@ class PartidaController
          */
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: ?controller=login&method=index'
+                'Location: /Preguntados/login'
             );
             exit();
         }
@@ -261,7 +259,7 @@ class PartidaController
             !isset($_POST['respuesta'])
         ) {
             header(
-                'Location: ?controller=partida&method=jugar'
+                'Location: /Preguntados/partida/jugar'
             );
             exit();
         }
@@ -291,7 +289,7 @@ class PartidaController
             [$indiceActual]
         )) {
             header(
-                'Location: ?controller=partida&method=jugar'
+                'Location: /Preguntados/partida/jugar'
             );
             exit();
         }
@@ -309,7 +307,7 @@ class PartidaController
         //derrota, se redirige y exit() detiene la ejecución para que no se procese la respuesta.
         if (time() - $inicioPregunta >= 8) {
             $this->prepararDerrotaPorTiempo($preguntaActual);
-            header('Location: ?controller=partida&method=perder');
+            Redirect::to('/partida/perder');
             exit();
         }
 
@@ -324,7 +322,7 @@ class PartidaController
             $idPregunta
         ) {
             header(
-                'Location: ?controller=partida&method=jugar'
+                'Location: /Preguntados/partida/jugar'
             );
             exit();
         }
@@ -342,7 +340,7 @@ class PartidaController
             )
         ) {
             header(
-                'Location: ?controller=partida&method=jugar'
+                'Location: /Preguntados/partida/jugar'
             );
             exit();
         }
@@ -394,7 +392,7 @@ class PartidaController
             ];
 
             header(
-                'Location: ?controller=partida&method=perder'
+                'Location: /Preguntados/partida/perder'
             );
 
             exit();
@@ -426,7 +424,7 @@ class PartidaController
             >= 15
         ) {
             header(
-                'Location: ?controller=partida&method=ganar'
+                'Location: /Preguntados/partida/ganar'
             );
 
             exit();
@@ -437,7 +435,7 @@ class PartidaController
          * mostramos la siguiente.
          */
         header(
-            'Location: ?controller=partida&method=jugar'
+            'Location: /Preguntados/partida/jugar'
         );
 
         exit();
@@ -450,7 +448,7 @@ class PartidaController
     public function tiempoAgotado()
     {
         if (!isset($_SESSION['partida'], $_SESSION['usuario_id'])) {
-            header('Location: ?controller=partida&method=seleccionar');
+            Redirect::to('/partida/seleccionar');
             exit();
         }
 
@@ -461,12 +459,12 @@ class PartidaController
         // No aceptar una llamada anticipada al endpoint.
         // Esta condición evita aceptar una llamada anticipada al método. También comprueba que exista una pregunta válida.
         if (!$pregunta || time() - $inicio < 8) {
-            header('Location: ?controller=partida&method=jugar');
+            Redirect::to('/partida/jugar');
             exit();
         }
 
         $this->prepararDerrotaPorTiempo($pregunta);
-        header('Location: ?controller=partida&method=perder');
+        Redirect::to('/partida/perder');
         exit();
     }
 
@@ -490,13 +488,13 @@ class PartidaController
     public function reportar()
     {
         if (!isset($_SESSION['usuario_id'], $_SESSION['partida'])) {
-            header('Location: ?controller=login&method=index');
+            Redirect::to('/login');
             exit();
         }
 
         // Solo se puede reportar cuando el jugador perdió.
         if (empty($_SESSION['partida']['perdio'])) {
-            header('Location: ?controller=partida&method=jugar');
+            Redirect::to('/partida/jugar');
             exit();
         }
 
@@ -543,7 +541,7 @@ class PartidaController
                 'Gracias. El reporte se guardó correctamente.';
         }
 
-        header('Location: ?controller=partida&method=perder');
+        Redirect::to('/partida/perder');
         exit();
     }
 
@@ -558,14 +556,14 @@ class PartidaController
             empty($_SESSION['partida']['perdio'])
         ) {
             header(
-                'Location: ?controller=partida&method=seleccionar'
+                'Location: /Preguntados/partida/seleccionar'
             );
             exit();
         }
 
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: ?controller=login&method=index'
+                'Location: /Preguntados/login'
             );
             exit();
         }
@@ -575,7 +573,7 @@ class PartidaController
             unset($_SESSION['partida']);
 
             header(
-                'Location: ?controller=partida&method=seleccionar'
+                'Location: /Preguntados/partida/seleccionar'
             );
             exit();
         }
@@ -677,14 +675,14 @@ class PartidaController
          */
         if (!isset($_SESSION['partida'])) {
             header(
-                'Location: ?controller=lobby&method=index'
+                'Location: /Preguntados/lobby'
             );
             exit();
         }
 
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: ?controller=login&method=index'
+                'Location: /Preguntados/login'
             );
             exit();
         }
@@ -699,7 +697,7 @@ class PartidaController
             < 15
         ) {
             header(
-                'Location: ?controller=partida&method=jugar'
+                'Location: /Preguntados/partida/jugar'
             );
             exit();
         }
