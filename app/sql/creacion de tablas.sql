@@ -439,3 +439,4 @@ CREATE TABLE reporte_pregunta (
     CONSTRAINT fk_reporte_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id),
     CONSTRAINT fk_reporte_pregunta FOREIGN KEY (pregunta_id) REFERENCES pregunta(id)
 );
+
