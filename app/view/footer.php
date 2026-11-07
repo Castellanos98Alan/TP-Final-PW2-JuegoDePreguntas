@@ -62,8 +62,8 @@
             <span>EL CONOCIMIENTO TAMBIÉN ES PODER</span>
         </div>
         <ul class="footer-links">
-            <li><a href="/Preguntados/lobby">Lobby</a></li>
-            <li><a href="/Preguntados/ranking">Ranking</a></li>
+            <li><a href="lobby">Lobby</a></li>
+            <li><a href="ranking">Ranking</a></li>
         </ul>
         <div>
             <p>&copy; 2026 Preguntados Anime</p>

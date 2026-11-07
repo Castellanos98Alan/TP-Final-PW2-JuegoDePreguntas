@@ -56,7 +56,7 @@ class PartidaController
          */
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: /Preguntados/login'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/login'
             );
             exit();
         }
@@ -119,7 +119,7 @@ class PartidaController
         ];
 
         header(
-            'Location: /Preguntados/partida/jugar'
+            'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
         );
 
         exit();
@@ -137,7 +137,7 @@ class PartidaController
          */
         if (!isset($_SESSION['partida'])) {
             header(
-                'Location: /Preguntados/partida/seleccionar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/seleccionar'
             );
             exit();
         }
@@ -148,7 +148,7 @@ class PartidaController
          */
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: /Preguntados/login'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/login'
             );
             exit();
         }
@@ -276,7 +276,7 @@ class PartidaController
          */
         if (!isset($_SESSION['partida'])) {
             header(
-                'Location: /Preguntados/partida/seleccionar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/seleccionar'
             );
             exit();
         }
@@ -286,7 +286,7 @@ class PartidaController
          */
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: /Preguntados/login'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/login'
             );
             exit();
         }
@@ -313,7 +313,7 @@ class PartidaController
             !isset($_POST['respuesta'])
         ) {
             header(
-                'Location: /Preguntados/partida/jugar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }
@@ -343,7 +343,7 @@ class PartidaController
             [$indiceActual]
         )) {
             header(
-                'Location: /Preguntados/partida/jugar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }
@@ -376,7 +376,7 @@ class PartidaController
             $idPregunta
         ) {
             header(
-                'Location: /Preguntados/partida/jugar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }
@@ -394,7 +394,7 @@ class PartidaController
             )
         ) {
             header(
-                'Location: /Preguntados/partida/jugar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }
@@ -446,7 +446,7 @@ class PartidaController
             ];
 
             header(
-                'Location: /Preguntados/partida/perder'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/perder'
             );
 
             exit();
@@ -478,7 +478,7 @@ class PartidaController
             >= 15
         ) {
             header(
-                'Location: /Preguntados/partida/ganar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/ganar'
             );
 
             exit();
@@ -506,7 +506,7 @@ class PartidaController
         if (!$siguientePregunta) {
             $_SESSION['error_preguntas'] = true;
 
-            header('Location: /Preguntados/partida/seleccionar');
+            header('Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/seleccionar');
             exit();
         }
 
@@ -521,7 +521,7 @@ class PartidaController
          * mostramos la siguiente.
          */
         header(
-            'Location: /Preguntados/partida/jugar'
+            'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
         );
 
         exit();
@@ -677,14 +677,14 @@ class PartidaController
             empty($_SESSION['partida']['perdio'])
         ) {
             header(
-                'Location: /Preguntados/partida/seleccionar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/seleccionar'
             );
             exit();
         }
 
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: /Preguntados/login'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/login'
             );
             exit();
         }
@@ -694,7 +694,7 @@ class PartidaController
             unset($_SESSION['partida']);
 
             header(
-                'Location: /Preguntados/partida/seleccionar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/seleccionar'
             );
             exit();
         }
@@ -796,14 +796,14 @@ class PartidaController
          */
         if (!isset($_SESSION['partida'])) {
             header(
-                'Location: /Preguntados/lobby'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/lobby'
             );
             exit();
         }
 
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: /Preguntados/login'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/login'
             );
             exit();
         }
@@ -818,7 +818,7 @@ class PartidaController
             < 15
         ) {
             header(
-                'Location: /Preguntados/partida/jugar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }
