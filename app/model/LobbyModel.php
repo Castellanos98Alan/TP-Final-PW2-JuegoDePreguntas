@@ -45,7 +45,7 @@ class LobbyModel {
                    DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
             FROM partida
             WHERE id_usuario = :idUsuario
-            ORDER BY created_at DESC";
+            ORDER BY created_at DESC LIMIT 5";
 
         return $this->database->queryAll(
             $sql,
