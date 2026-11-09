@@ -38,21 +38,21 @@ class PerfilController
             return;
         }
 
-        $resumen   = $this->model->obtenerResumenPartidas($idUsuario);
-        $partidas  = $this->model->obtenerPartidas($idUsuario);
+        $resumen = $this->model->obtenerResumenPartidas($idUsuario);
+        $partidas = $this->model->obtenerPartidas($idUsuario);
         $esJugador = ((int)$jugador['id_rol'] === 1);
 
         $tieneUbicacion = is_numeric($jugador['latitud']) && is_numeric($jugador['longitud']);
 
         $urlPerfil = $this->construirUrlPerfil($idUsuario);
-        $qrImagen  = $this->generarQr($urlPerfil);
+        $qrImagen = $this->generarQr($urlPerfil);
 
         $modal = $_SESSION['modal'] ?? ($_GET['modal'] ?? '');
         unset($_SESSION['modal']);
-        $abrirModalEditar   = ($modal === 'editar');
+        $abrirModalEditar = ($modal === 'editar');
         $abrirModalPassword = ($modal === 'password');
 
-        $tokenUrl     = $_SESSION['token_pass'] ?? ($_GET['token_pass'] ?? '');
+        $tokenUrl = $_SESSION['token_pass'] ?? ($_GET['token_pass'] ?? '');
         unset($_SESSION['token_pass']);
         $tokenSession = $_SESSION['token_pass_verificado'] ?? '';
         $passVerificada = (!empty($tokenUrl) && !empty($tokenSession) && hash_equals($tokenSession, $tokenUrl));
@@ -68,42 +68,42 @@ class PerfilController
         unset($_SESSION['mensaje_exito'], $_SESSION['exito']);
 
         $data = [
-            'no_encontrado'        => false,
-            'id'                   => $jugador['id'],
-            'username'             => $jugador['username'],
-            'nombre_completo'      => $jugador['nombre_completo'],
-            'foto_perfil'          => $this->resolverFoto($jugador['foto_perfil']),
-            'anio_nacimiento'      => $jugador['anio_nacimiento'],
-            'sexo'                 => $jugador['sexo'],
-            'es_masculino'         => $jugador['sexo'] === 'Masculino',
-            'es_femenino'          => $jugador['sexo'] === 'Femenino',
-            'es_otro_sexo'         => $jugador['sexo'] === 'Prefiero no cargarlo',
-            'pais'                 => $jugador['pais'],
-            'ciudad'               => $jugador['ciudad'],
-            'ubicacion'            => $jugador['ciudad'] . ', ' . $jugador['pais'],
-            'puntaje_acumulado'    => $jugador['puntaje_acumulado'],
-            'miembro_desde'        => $jugador['miembro_desde'],
-            'es_propio'            => isset($_SESSION['usuario_id']) && (int)$_SESSION['usuario_id'] === $idUsuario,
-            'es_jugador'           => $esJugador,
-            'posicion'             => $esJugador ? $this->model->obtenerPosicionRanking($jugador['puntaje_acumulado']) : null,
-            'tiene_ubicacion'      => $tieneUbicacion,
-            'latitud'              => $tieneUbicacion ? $jugador['latitud'] : '',
-            'longitud'             => $tieneUbicacion ? $jugador['longitud'] : '',
-            'cantidad_partidas'    => $resumen['total'],
-            'mejor_puntaje'        => $resumen['mejor_puntaje'],
-            'promedio'             => $resumen['promedio'],
-            'partidas'             => $partidas,
-            'url_perfil'           => $urlPerfil,
-            'tiene_qr'             => $qrImagen !== null,
-            'qr_imagen'            => $qrImagen,
-            'abrir_modal_editar'   => $abrirModalEditar,
+            'no_encontrado' => false,
+            'id' => $jugador['id'],
+            'username' => $jugador['username'],
+            'nombre_completo' => $jugador['nombre_completo'],
+            'foto_perfil' => $this->resolverFoto($jugador['foto_perfil']),
+            'anio_nacimiento' => $jugador['anio_nacimiento'],
+            'sexo' => $jugador['sexo'],
+            'es_masculino' => $jugador['sexo'] === 'Masculino',
+            'es_femenino' => $jugador['sexo'] === 'Femenino',
+            'es_otro_sexo' => $jugador['sexo'] === 'Prefiero no cargarlo',
+            'pais' => $jugador['pais'],
+            'ciudad' => $jugador['ciudad'],
+            'ubicacion' => $jugador['ciudad'] . ', ' . $jugador['pais'],
+            'puntaje_acumulado' => $jugador['puntaje_acumulado'],
+            'miembro_desde' => $jugador['miembro_desde'],
+            'es_propio' => isset($_SESSION['usuario_id']) && (int)$_SESSION['usuario_id'] === $idUsuario,
+            'es_jugador' => $esJugador,
+            'posicion' => $esJugador ? $this->model->obtenerPosicionRanking($idUsuario) : null,
+            'tiene_ubicacion' => $tieneUbicacion,
+            'latitud' => $tieneUbicacion ? $jugador['latitud'] : '',
+            'longitud' => $tieneUbicacion ? $jugador['longitud'] : '',
+            'cantidad_partidas' => $resumen['total'],
+            'mejor_puntaje' => $resumen['mejor_puntaje'],
+            'promedio' => $resumen['promedio'],
+            'partidas' => $partidas,
+            'url_perfil' => $urlPerfil,
+            'tiene_qr' => $qrImagen !== null,
+            'qr_imagen' => $qrImagen,
+            'abrir_modal_editar' => $abrirModalEditar,
             'abrir_modal_password' => $abrirModalPassword,
-            'pass_verificada'      => $passVerificada,
-            'token_pass'           => $tokenUrl,
-            'error_perfil'         => $errorPerfil,
-            'error_password'       => $errorPassword,
-            'mensaje_exito'        => $mensajeExito,
-            'exito_edicion'        => $exitoEdicion
+            'pass_verificada' => $passVerificada,
+            'token_pass' => $tokenUrl,
+            'error_perfil' => $errorPerfil,
+            'error_password' => $errorPassword,
+            'mensaje_exito' => $mensajeExito,
+            'exito_edicion' => $exitoEdicion
         ];
 
         $this->render->renderiza("perfil", $data);
@@ -118,7 +118,7 @@ class PerfilController
 
         $idUsuario = (int)$_SESSION['usuario_id'];
         $datos = $_POST;
-        $foto  = $_FILES['foto_perfil'] ?? null;
+        $foto = $_FILES['foto_perfil'] ?? null;
 
         $camposObligatorios = ['nombre_completo', 'username', 'anio_nacimiento', 'sexo', 'pais', 'ciudad'];
         foreach ($camposObligatorios as $campo) {
@@ -204,8 +204,8 @@ class PerfilController
             return;
         }
 
-        $idUsuario   = (int)$_SESSION['usuario_id'];
-        $passActual  = trim($_POST['password_actual'] ?? '');
+        $idUsuario = (int)$_SESSION['usuario_id'];
+        $passActual = trim($_POST['password_actual'] ?? '');
 
         if (empty($passActual)) {
             $_SESSION['modal'] = 'password';
@@ -238,7 +238,7 @@ class PerfilController
 
         $idUsuario = (int)$_SESSION['usuario_id'];
 
-        $tokenPost    = $_POST['token_pass'] ?? '';
+        $tokenPost = $_POST['token_pass'] ?? '';
         $tokenSession = $_SESSION['token_pass_verificado'] ?? '';
 
         if (empty($tokenPost) || empty($tokenSession) || !hash_equals($tokenSession, $tokenPost)) {
@@ -248,7 +248,7 @@ class PerfilController
             return;
         }
 
-        $nuevaPass   = trim($_POST['nueva_password'] ?? '');
+        $nuevaPass = trim($_POST['nueva_password'] ?? '');
         $repetirPass = trim($_POST['repetir_password'] ?? '');
 
         if (empty($nuevaPass) || empty($repetirPass)) {
@@ -297,7 +297,7 @@ class PerfilController
 
     private function construirUrlPerfil($idUsuario)
     {
-        $https   = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+        $https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
         $esquema = $https ? 'https' : 'http';
         $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
         $carpeta = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');

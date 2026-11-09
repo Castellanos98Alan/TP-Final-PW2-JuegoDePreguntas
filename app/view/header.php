@@ -2,7 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <base href="/Preguntados/">
+    <?php
+    $baseDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+    $baseUrl = ($baseDir === '' || $baseDir === '/' || $baseDir === '\\') ? '/' : $baseDir . '/';
+    ?>
+    <base href="<?= htmlspecialchars($baseUrl) ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preguntados Anime</title>
 
@@ -250,7 +254,7 @@
 
 <header class="site-header">
     <div class="header-container">
-        <a href="/Preguntados/lobby" class="brand-link">
+        <a href="lobby" class="brand-link">
             <div class="brand-emblem" aria-hidden="true">✦</div>
             <div class="brand-text">
                 <h1>PREGUNTADOS</h1>

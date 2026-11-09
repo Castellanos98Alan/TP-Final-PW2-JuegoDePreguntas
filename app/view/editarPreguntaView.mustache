@@ -143,7 +143,7 @@
 
     <h1 class="edit-title">EDITAR PREGUNTA #{{id}}</h1>
 
-    <form action="?controller=editor&method=guardarEdicion" method="POST">
+    <form action="editor/guardarEdicion" method="POST">
 
         <input type="hidden" name="id" value="{{id}}">
 
@@ -248,7 +248,7 @@
                 </button>
             {{/tiene_opciones}}
 
-            <a href="?controller=editor&method=show" class="btn-cancel">
+            <a href="editor" class="btn-cancel">
                 Cancelar y volver
             </a>
 
@@ -256,4 +256,3 @@
 
     </form>
 </div>
-```

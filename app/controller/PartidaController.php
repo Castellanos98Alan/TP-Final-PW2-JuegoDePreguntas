@@ -56,7 +56,7 @@ class PartidaController
          */
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: /Preguntados/login'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/login'
             );
             exit();
         }
@@ -82,28 +82,34 @@ class PartidaController
         /*
          * Pedimos las 15 preguntas al Model.
          */
-        $preguntas =
-            $this->model->obtenerPreguntasDePartida(
-                $animesSeleccionados,
-                $usuarioId
-            );
+
+        $primeraPregunta = $this->model->obtenerSiguientePregunta(
+            $animesSeleccionados,
+            $usuarioId,
+            [],
+            0
+        );
+
 
         /*
          * Si por algún motivo no se pudieron
          * conseguir las 15 preguntas,
          * volvemos a selección.
          */
-        if (count($preguntas) < 15) {
+
+        if (!$primeraPregunta) {
             $_SESSION['error_preguntas'] = true;
             Redirect::to('/partida/seleccionar');
+            exit();
         }
+
 
         /*
          * Guardamos el estado de la partida
          * dentro de la sesión. para que cuando el usuario recargue la pgina, el contador no se reinicie
          */
         $_SESSION['partida'] = [
-            'preguntas' => $preguntas,
+            'preguntas' => [$primeraPregunta],
             'actual' => 0,
             'puntaje' => 0,
             'animes' => $animesSeleccionados,
@@ -113,7 +119,7 @@ class PartidaController
         ];
 
         header(
-            'Location: /Preguntados/partida/jugar'
+            'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
         );
 
         exit();
@@ -131,7 +137,7 @@ class PartidaController
          */
         if (!isset($_SESSION['partida'])) {
             header(
-                'Location: /Preguntados/partida/seleccionar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/seleccionar'
             );
             exit();
         }
@@ -142,7 +148,7 @@ class PartidaController
          */
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: /Preguntados/login'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/login'
             );
             exit();
         }
@@ -159,19 +165,47 @@ class PartidaController
         $indiceActual =
             $partida['actual'];
 
-        /*
-         * Si no existe una pregunta en
-         * esa posición, debería haber
-         * terminado la partida.
-         */
-        if (!isset(
-            $partida['preguntas'][$indiceActual]
-        )) {
-            header(
-                'Location: /Preguntados/partida/ganar'
-            );
+
+        if (!empty($partida['perdio'])) {
+            Redirect::to('/partida/perder');
             exit();
         }
+
+// Ganar requiere 15 respuestas correctas.
+        if ($partida['puntaje'] >= 15) {
+            Redirect::to('/partida/ganar');
+            exit();
+        }
+
+// Si falta una pregunta por un problema de estado,
+// intentamos recuperarla.
+        if (!isset($partida['preguntas'][$indiceActual])) {
+
+            $preguntasUsadas = [];
+
+            foreach ($partida['preguntas'] as $pregunta) {
+                $preguntasUsadas[] = $pregunta['id'];
+            }
+
+            $siguientePregunta = $this->model->obtenerSiguientePregunta(
+                $partida['animes'],
+                $_SESSION['usuario_id'],
+                $preguntasUsadas,
+                $indiceActual
+            );
+
+            if (!$siguientePregunta) {
+                $_SESSION['error_preguntas'] = true;
+                Redirect::to('/partida/seleccionar');
+                exit();
+            }
+
+            $_SESSION['partida']['preguntas'][] = $siguientePregunta;
+            $_SESSION['partida']['inicio_pregunta'] = time();
+
+            $partida = $_SESSION['partida'];
+        }
+
 
         $pregunta =
             $partida['preguntas'][$indiceActual];
@@ -210,7 +244,14 @@ class PartidaController
             'reporteEnviado' => !empty($_SESSION['partida']['ultimo_reporte']) && (int)$_SESSION['partida']['ultimo_reporte'] === (int)(($_SESSION['partida']['ultimaPreguntaRespondida']['id'] ?? 0)),
             'mensajeReporte' => $_SESSION['partida']['mensajeReporte'] ?? null,
 
-             'esImagen' =>
+
+            // en caso de que querramos ver el nivel del jugador ..
+            'nivelJugador' => $this->model->obtenerNivelJugador(
+                $usuarioId
+            ),
+
+
+            'esImagen' =>
                 $pregunta['tipo_pregunta']  === 'imagen',
 
             'esAudio' =>
@@ -235,7 +276,7 @@ class PartidaController
          */
         if (!isset($_SESSION['partida'])) {
             header(
-                'Location: /Preguntados/partida/seleccionar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/seleccionar'
             );
             exit();
         }
@@ -245,10 +286,23 @@ class PartidaController
          */
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: /Preguntados/login'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/login'
             );
             exit();
         }
+
+        // Esto es importante porque, si el usuario ya perdió por tiempo, no queremos que una respuesta enviada posteriormente genere otro registro.
+
+        if (!empty($_SESSION['partida']['perdio'])) {
+            Redirect::to('/partida/perder');
+            exit();
+        }
+
+        if ($_SESSION['partida']['actual'] >= 15) {
+            Redirect::to('/partida/ganar');
+            exit();
+        }
+
 
         /*
          * Comprobamos que lleguen los
@@ -259,7 +313,7 @@ class PartidaController
             !isset($_POST['respuesta'])
         ) {
             header(
-                'Location: /Preguntados/partida/jugar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }
@@ -289,7 +343,7 @@ class PartidaController
             [$indiceActual]
         )) {
             header(
-                'Location: /Preguntados/partida/jugar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }
@@ -322,7 +376,7 @@ class PartidaController
             $idPregunta
         ) {
             header(
-                'Location: /Preguntados/partida/jugar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }
@@ -340,7 +394,7 @@ class PartidaController
             )
         ) {
             header(
-                'Location: /Preguntados/partida/jugar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }
@@ -392,7 +446,7 @@ class PartidaController
             ];
 
             header(
-                'Location: /Preguntados/partida/perder'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/perder'
             );
 
             exit();
@@ -424,18 +478,50 @@ class PartidaController
             >= 15
         ) {
             header(
-                'Location: /Preguntados/partida/ganar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/ganar'
             );
 
             exit();
         }
+
+
+            // Guardamos los ID de las preguntas utilizadas.
+
+        $preguntasUsadas = [];
+
+        foreach ($_SESSION['partida']['preguntas'] as $pregunta) {
+            $preguntasUsadas[] = $pregunta['id'];
+        }
+
+            // Obtenemos la próxima pregunta con el nivel actual.
+
+        $siguientePregunta = $this->model->obtenerSiguientePregunta(
+            $_SESSION['partida']['animes'],
+            $usuarioId,
+            $preguntasUsadas,
+            $_SESSION['partida']['actual']
+        );
+
+
+        if (!$siguientePregunta) {
+            $_SESSION['error_preguntas'] = true;
+
+            header('Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/seleccionar');
+            exit();
+        }
+
+
+        // Agregamos la pregunta a la partida actual.
+
+        $_SESSION['partida']['preguntas'][] = $siguientePregunta;
+
 
         /*
          * Si todavía quedan preguntas,
          * mostramos la siguiente.
          */
         header(
-            'Location: /Preguntados/partida/jugar'
+            'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
         );
 
         exit();
@@ -451,6 +537,18 @@ class PartidaController
             Redirect::to('/partida/seleccionar');
             exit();
         }
+
+
+        if (!empty($_SESSION['partida']['perdio'])) {
+            Redirect::to('/partida/perder');
+            exit();
+        }
+
+        if ($_SESSION['partida']['actual'] >= 15) {
+            Redirect::to('/partida/ganar');
+            exit();
+        }
+
 
         $indice = $_SESSION['partida']['actual'];
         $pregunta = $_SESSION['partida']['preguntas'][$indice] ?? null;
@@ -468,18 +566,41 @@ class PartidaController
         exit();
     }
 
+
     private function prepararDerrotaPorTiempo($pregunta)
     {
+        // Evitamos registrar dos veces el mismo fallo.
+        if (!empty($_SESSION['partida']['perdio'])) {
+            return;
+        }
+
+        $usuarioId = $_SESSION['usuario_id'];
+        $preguntaId = $pregunta['id'];
+
+        // Guardamos el fallo por tiempo agotado.
+        $this->model->registrarResultadoPregunta(
+            $usuarioId,
+            $preguntaId,
+            false
+        );
+
+        // Marcamos la partida como perdida.
         $_SESSION['partida']['perdio'] = true;
         $_SESSION['partida']['motivoDerrota'] = 'tiempo';
+
         $_SESSION['partida']['respuestaIncorrecta'] = null;
-        $_SESSION['partida']['respuestaCorrecta'] = $this->model->obtenerRespuestaCorrecta($pregunta['id']);
+
+        $_SESSION['partida']['respuestaCorrecta'] =
+            $this->model->obtenerRespuestaCorrecta($preguntaId);
+
         $_SESSION['partida']['preguntaPerdida'] = $pregunta;
+
         $_SESSION['partida']['ultimaPreguntaRespondida'] = [
-            'id' => $pregunta['id'],
+            'id' => $preguntaId,
             'enunciado' => $pregunta['enunciado']
         ];
     }
+
 
     /**
      * Guarda el reporte de la última pregunta contestada.
@@ -556,14 +677,14 @@ class PartidaController
             empty($_SESSION['partida']['perdio'])
         ) {
             header(
-                'Location: /Preguntados/partida/seleccionar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/seleccionar'
             );
             exit();
         }
 
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: /Preguntados/login'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/login'
             );
             exit();
         }
@@ -573,7 +694,7 @@ class PartidaController
             unset($_SESSION['partida']);
 
             header(
-                'Location: /Preguntados/partida/seleccionar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/seleccionar'
             );
             exit();
         }
@@ -675,14 +796,14 @@ class PartidaController
          */
         if (!isset($_SESSION['partida'])) {
             header(
-                'Location: /Preguntados/lobby'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/lobby'
             );
             exit();
         }
 
         if (!isset($_SESSION['usuario_id'])) {
             header(
-                'Location: /Preguntados/login'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/login'
             );
             exit();
         }
@@ -697,7 +818,7 @@ class PartidaController
             < 15
         ) {
             header(
-                'Location: /Preguntados/partida/jugar'
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }

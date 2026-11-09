@@ -440,3 +440,26 @@ CREATE TABLE reporte_pregunta (
     CONSTRAINT fk_reporte_pregunta FOREIGN KEY (pregunta_id) REFERENCES pregunta(id)
 );
 
+-- =========================================================
+-- TABLA HISTORIAL_RESPUESTA
+-- =========================================================
+
+
+CREATE TABLE historial_respuesta (
+                                     id INT AUTO_INCREMENT PRIMARY KEY,
+                                     usuario_id INT NOT NULL,
+                                     pregunta_id INT NOT NULL,
+                                     fue_correcta TINYINT(1) NOT NULL,
+                                     fecha_respuesta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+                                     FOREIGN KEY (usuario_id) REFERENCES usuario(id),
+                                     FOREIGN KEY (pregunta_id) REFERENCES pregunta(id)
+);
+
+
+
+
+ALTER TABLE pregunta
+    MODIFY dificultad ENUM('facil', 'media', 'dificil')
+    NOT NULL DEFAULT 'media';
+
