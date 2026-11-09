@@ -2,6 +2,7 @@
 
 namespace app;
 
+use app\controller\BuscadorController;
 use app\controller\PerfilController;
 use app\controller\RegistroController;
 use app\controller\LoginController;
@@ -12,6 +13,7 @@ use app\controller\AdminController;
 use app\controller\EditorController;
 use app\controller\RankingController;
 
+use app\model\BuscadorModel;
 use app\model\LoginModel;
 use app\model\LobbyModel;
 use app\model\PartidaModel;
@@ -143,10 +145,13 @@ class Configuration
             $this->getRender()
         );
     }
-    private function getRegistroModel(){
+
+    private function getRegistroModel()
+    {
         return new RegistroModel(
             $this->getDatabase());
     }
+
     public function getRegistroController()
     {
         return new RegistroController(
@@ -185,4 +190,18 @@ class Configuration
         );
     }
 
+    private function getBuscadorModel()
+    {
+        return new BuscadorModel(
+            $this->getDatabase()
+        );
+    }
+
+    public function getBuscadorController()
+    {
+        return new BuscadorController(
+            $this->getBuscadorModel(),
+            $this->getRender()
+        );
+    }
 }

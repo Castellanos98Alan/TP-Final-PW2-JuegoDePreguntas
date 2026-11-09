@@ -2,12 +2,11 @@
 
 <style>
     body {
-        background:
-                linear-gradient(
-                        rgba(2, 8, 25, 0.45),
-                        rgba(2, 8, 25, 0.55)
-                ),
-                url("public/Fondo-Home2.png") !important;
+        background: linear-gradient(
+                rgba(2, 8, 25, 0.45),
+                rgba(2, 8, 25, 0.55)
+        ),
+        url("public/Fondo-Home2.png") !important;
         background-size: cover !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
@@ -41,9 +40,8 @@
         border: 1px solid #d4a72c;
         border-radius: 18px;
         padding: 22px;
-        box-shadow:
-                inset 0 0 25px rgba(0,0,0,.25),
-                0 0 15px rgba(41, 89, 255, .08);
+        box-shadow: inset 0 0 25px rgba(0, 0, 0, .25),
+        0 0 15px rgba(41, 89, 255, .08);
     }
 
     .pf-panel h2 {
@@ -118,7 +116,7 @@
         border-radius: 14px;
         padding: 16px 10px;
         text-align: center;
-        box-shadow: inset 0 0 20px rgba(0,0,0,.35);
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, .35);
     }
 
     .pf-stat strong {
@@ -140,7 +138,7 @@
         align-items: center;
         gap: 12px;
         padding: 13px 2px;
-        border-bottom: 1px solid rgba(255,255,255,.10);
+        border-bottom: 1px solid rgba(255, 255, 255, .10);
         font-size: 14px;
     }
 
@@ -179,7 +177,7 @@
         border: 3px solid #06132d;
         border-radius: 50% 50% 50% 0;
         transform: rotate(-45deg);
-        box-shadow: 0 2px 8px rgba(0,0,0,.5);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
     }
 
     .pf-pin::after {
@@ -257,7 +255,7 @@
         gap: 10px;
         align-items: center;
         padding: 14px 4px;
-        border-bottom: 1px solid rgba(255,255,255,.10);
+        border-bottom: 1px solid rgba(255, 255, 255, .10);
     }
 
     .pf-partida:last-child {
@@ -486,15 +484,19 @@
                         </div>
                         {{#es_propio}}
                             <div class="pf-cabecera-acciones" style="position: relative;">
-                                <button type="button" class="pf-btn" id="btnMenuOpciones" style="display: flex; align-items: center; gap: 6px;">
+                                <button type="button" class="pf-btn" id="btnMenuOpciones"
+                                        style="display: flex; align-items: center; gap: 6px;">
                                     ⚙️ Opciones ▾
                                 </button>
 
-                                <div id="desplegableOpciones" style="display: none; position: absolute; right: 0; top: 110%; background: #071638; border: 1px solid #d4af55; border-radius: 10px; min-width: 180px; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-                                    <button type="button" id="btnAbrirModalEditar" style="width: 100%; text-align: left; background: none; border: none; padding: 12px 16px; color: #F3F5FA; cursor: pointer; border-bottom: 1px solid rgba(212,175,85,0.2); font-size: 13.5px;">
+                                <div id="desplegableOpciones"
+                                     style="display: none; position: absolute; right: 0; top: 110%; background: #071638; border: 1px solid #d4af55; border-radius: 10px; min-width: 180px; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                                    <button type="button" id="btnAbrirModalEditar"
+                                            style="width: 100%; text-align: left; background: none; border: none; padding: 12px 16px; color: #F3F5FA; cursor: pointer; border-bottom: 1px solid rgba(212,175,85,0.2); font-size: 13.5px;">
                                         ✏️ Editar perfil
                                     </button>
-                                    <button type="button" id="btnAbrirModalPassword" style="width: 100%; text-align: left; background: none; border: none; padding: 12px 16px; color: #F3F5FA; cursor: pointer; font-size: 13.5px;">
+                                    <button type="button" id="btnAbrirModalPassword"
+                                            style="width: 100%; text-align: left; background: none; border: none; padding: 12px 16px; color: #F3F5FA; cursor: pointer; font-size: 13.5px;">
                                         🔒 Cambiar contraseña
                                     </button>
                                 </div>
@@ -554,7 +556,7 @@
                                 Escaneá el código para abrir este perfil desde otro dispositivo.
                                 <a class="pf-qr-url" href="{{url_perfil}}">{{url_perfil}}</a>
                             </p>
-                            <a class="pf-btn" href="{{qr_imagen}}" download="qr-{{username}}.png">Descargar QR</a>
+                            <!--<a class="pf-btn" href="{{qr_imagen}}" download="qr-{{username}}.png">Descargar QR</a>-->
                         {{/tiene_qr}}
                         {{^tiene_qr}}
                             <p class="pf-qr-texto">
@@ -588,7 +590,8 @@
         </div>
 
         {{#es_propio}}
-            <div id="pf-modal-editar" class="pf-modal-overlay" style="display: {{#abrir_modal_editar}}flex{{/abrir_modal_editar}}{{^abrir_modal_editar}}none{{/abrir_modal_editar}};">
+            <div id="pf-modal-editar" class="pf-modal-overlay"
+                 style="display: {{#abrir_modal_editar}}flex{{/abrir_modal_editar}}{{^abrir_modal_editar}}none{{/abrir_modal_editar}};">
                 <div class="pf-modal-contenido">
 
                     <div class="pf-modal-header">
@@ -602,57 +605,73 @@
                         </div>
                     {{/error_perfil}}
 
-                    <form action="perfil/actualizar" method="POST" enctype="multipart/form-data" class="pf-form-editar" novalidate>
+                    <form action="perfil/actualizar" method="POST" enctype="multipart/form-data" class="pf-form-editar"
+                          novalidate>
 
                         <div class="pf-form-grid">
                             <div class="pf-form-grupo pf-form-full">
                                 <label>Foto de perfil actual:</label>
                                 <div style="display: flex; align-items: center; gap: 15px; margin-top: 6px;">
-                                    <img src="{{foto_perfil}}" alt="Foto actual" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #d4af55;">
-                                    <input type="file" name="foto_perfil" accept="image/png, image/jpeg, image/jpg" class="pf-input-file">
+                                    <img src="{{foto_perfil}}" alt="Foto actual"
+                                         style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #d4af55;">
+                                    <input type="file" name="foto_perfil" accept="image/png, image/jpeg, image/jpg"
+                                           class="pf-input-file">
                                 </div>
-                                <small style="color: #a9bfdf; font-size: 11px;">Opcional. Dejá vacío para mantener tu foto actual.</small>
+                                <small style="color: #a9bfdf; font-size: 11px;">Opcional. Dejá vacío para mantener tu
+                                    foto actual.</small>
                             </div>
 
                             <div class="pf-form-grupo">
                                 <label for="edit_username">Nombre de usuario:</label>
-                                <input type="text" id="edit_username" name="username" value="{{username}}" minlength="3" maxlength="30" required class="pf-input">
+                                <input type="text" id="edit_username" name="username" value="{{username}}" minlength="3"
+                                       maxlength="30" required class="pf-input">
                             </div>
 
                             <div class="pf-form-grupo">
                                 <label for="edit_nombre">Nombre completo:</label>
-                                <input type="text" id="edit_nombre" name="nombre_completo" value="{{nombre_completo}}" required class="pf-input">
+                                <input type="text" id="edit_nombre" name="nombre_completo" value="{{nombre_completo}}"
+                                       required class="pf-input">
                             </div>
 
                             <div class="pf-form-grupo">
                                 <label for="edit_anio">Año de nacimiento:</label>
-                                <input type="number" id="edit_anio" name="anio_nacimiento" value="{{anio_nacimiento}}" min="1920" max="2026" required class="pf-input">
+                                <input type="number" id="edit_anio" name="anio_nacimiento" value="{{anio_nacimiento}}"
+                                       min="1920" max="2026" required class="pf-input">
                             </div>
 
                             <div class="pf-form-grupo">
                                 <label for="edit_sexo">Sexo:</label>
                                 <select id="edit_sexo" name="sexo" class="pf-input">
-                                    <option value="Masculino" {{#es_masculino}}selected{{/es_masculino}}>Masculino</option>
+                                    <option value="Masculino" {{#es_masculino}}selected{{/es_masculino}}>Masculino
+                                    </option>
                                     <option value="Femenino" {{#es_femenino}}selected{{/es_femenino}}>Femenino</option>
-                                    <option value="Prefiero no cargarlo" {{#es_otro_sexo}}selected{{/es_otro_sexo}}>Prefiero no cargarlo</option>
+                                    <option value="Prefiero no cargarlo" {{#es_otro_sexo}}selected{{/es_otro_sexo}}>
+                                        Prefiero no cargarlo
+                                    </option>
                                 </select>
                             </div>
 
                             <div class="pf-form-grupo">
                                 <label for="edit_pais">País:</label>
-                                <input type="text" id="edit_pais" name="pais" value="{{pais}}" readonly required class="pf-input" style="opacity: 0.85; cursor: not-allowed; background: rgba(3, 14, 38, 0.5);">
+                                <input type="text" id="edit_pais" name="pais" value="{{pais}}" readonly required
+                                       class="pf-input"
+                                       style="opacity: 0.85; cursor: not-allowed; background: rgba(3, 14, 38, 0.5);">
                             </div>
 
                             <div class="pf-form-grupo">
                                 <label for="edit_ciudad">Ciudad:</label>
-                                <input type="text" id="edit_ciudad" name="ciudad" value="{{ciudad}}" readonly required class="pf-input" style="opacity: 0.85; cursor: not-allowed; background: rgba(3, 14, 38, 0.5);">
+                                <input type="text" id="edit_ciudad" name="ciudad" value="{{ciudad}}" readonly required
+                                       class="pf-input"
+                                       style="opacity: 0.85; cursor: not-allowed; background: rgba(3, 14, 38, 0.5);">
                             </div>
                         </div>
 
                         <div class="pf-form-grupo" style="margin-top: 15px;">
                             <label>Ubicación en el mapa (hacé clic para mover el pin):</label>
-                            <small id="edit-ubicacion-alerta" style="color: #F1CD73; font-size: 12px; margin-top: 2px;">📍 Hacé clic en el mapa para actualizar ciudad y país automáticamente.</small>
-                            <div id="pf-mapa-editar" style="height: 220px; border-radius: 10px; margin-top: 8px; border: 1px solid #d4af55;"></div>
+                            <small id="edit-ubicacion-alerta" style="color: #F1CD73; font-size: 12px; margin-top: 2px;">📍
+                                Hacé clic en el mapa para actualizar ciudad y país automáticamente.</small>
+                            <div id="pf-mapa-editar"
+                                 style="height: 220px; border-radius: 10px; margin-top: 8px; border: 1px solid #d4af55;"></div>
                             <input type="hidden" id="edit_latitud" name="latitud" value="{{latitud}}">
                             <input type="hidden" id="edit_longitud" name="longitud" value="{{longitud}}">
                         </div>
@@ -668,7 +687,8 @@
         {{/es_propio}}
 
         {{#es_propio}}
-            <div id="pf-modal-password" class="pf-modal-overlay" style="display: {{#abrir_modal_password}}flex{{/abrir_modal_password}}{{^abrir_modal_password}}none{{/abrir_modal_password}};">
+            <div id="pf-modal-password" class="pf-modal-overlay"
+                 style="display: {{#abrir_modal_password}}flex{{/abrir_modal_password}}{{^abrir_modal_password}}none{{/abrir_modal_password}};">
                 <div class="pf-modal-contenido" style="max-width: 450px;">
 
                     <div class="pf-modal-header">
@@ -677,60 +697,65 @@
                     </div>
 
                     {{^pass_verificada}}
-                    <form action="perfil/verificarPasswordActual" method="POST" novalidate>
-                        {{#error_password}}
-                            <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; color: #ff7675; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
-                                ⚠️ {{error_password}}
+                        <form action="perfil/verificarPasswordActual" method="POST" novalidate>
+                            {{#error_password}}
+                                <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; color: #ff7675; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
+                                    ⚠️ {{error_password}}
+                                </div>
+                            {{/error_password}}
+
+                            <p style="color: #a9bfdf; font-size: 13px; margin-bottom: 14px; line-height: 1.4;">
+                                Para cambiar tu contraseña, primero ingresá tu clave actual para confirmar tu identidad:
+                            </p>
+
+                            <div class="pf-form-grupo">
+                                <label for="pass_actual">Contraseña actual:</label>
+                                <input type="password" id="pass_actual" name="password_actual" required
+                                       placeholder="Tu contraseña actual" class="pf-input" autofocus>
                             </div>
-                        {{/error_password}}
 
-                        <p style="color: #a9bfdf; font-size: 13px; margin-bottom: 14px; line-height: 1.4;">
-                            Para cambiar tu contraseña, primero ingresá tu clave actual para confirmar tu identidad:
-                        </p>
-
-                        <div class="pf-form-grupo">
-                            <label for="pass_actual">Contraseña actual:</label>
-                            <input type="password" id="pass_actual" name="password_actual" required placeholder="Tu contraseña actual" class="pf-input" autofocus>
-                        </div>
-
-                        <div class="pf-modal-footer">
-                            <button type="button" class="pf-btn-cancelar" id="btnCancelarModalPassword">Cancelar</button>
-                            <button type="submit" class="pf-btn">Verificar y continuar ➔</button>
-                        </div>
-                    </form>
+                            <div class="pf-modal-footer">
+                                <button type="button" class="pf-btn-cancelar" id="btnCancelarModalPassword">Cancelar
+                                </button>
+                                <button type="submit" class="pf-btn">Verificar y continuar ➔</button>
+                            </div>
+                        </form>
                     {{/pass_verificada}}
 
                     {{#pass_verificada}}
-                    <form action="perfil/cambiarPassword" method="POST" novalidate>
-                        <input type="hidden" name="token_pass" value="{{token_pass}}">
+                        <form action="perfil/cambiarPassword" method="POST" novalidate>
+                            <input type="hidden" name="token_pass" value="{{token_pass}}">
 
-                        <div style="background: rgba(38, 166, 91, 0.2); border: 1px solid #2ecc71; color: #2ecc71; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
-                            ✓ Contraseña actual validada con éxito.
-                        </div>
-
-                        {{#error_password}}
-                            <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; color: #ff7675; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
-                                ⚠️ {{error_password}}
-                            </div>
-                        {{/error_password}}
-
-                        <div style="display: flex; flex-direction: column; gap: 14px;">
-                            <div class="pf-form-grupo">
-                                <label for="pass_nueva">Nueva contraseña:</label>
-                                <input type="password" id="pass_nueva" name="nueva_password" required placeholder="Mínimo 4 caracteres" class="pf-input" autofocus>
+                            <div style="background: rgba(38, 166, 91, 0.2); border: 1px solid #2ecc71; color: #2ecc71; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
+                                ✓ Contraseña actual validada con éxito.
                             </div>
 
-                            <div class="pf-form-grupo">
-                                <label for="pass_repetir">Repetir nueva contraseña:</label>
-                                <input type="password" id="pass_repetir" name="repetir_password" required placeholder="Repetí la nueva contraseña" class="pf-input">
-                            </div>
-                        </div>
+                            {{#error_password}}
+                                <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; color: #ff7675; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 500;">
+                                    ⚠️ {{error_password}}
+                                </div>
+                            {{/error_password}}
 
-                        <div class="pf-modal-footer">
-                            <button type="button" class="pf-btn-cancelar" id="btnCancelarModalPassword">Cancelar</button>
-                            <button type="submit" class="pf-btn">Guardar contraseña</button>
-                        </div>
-                    </form>
+                            <div style="display: flex; flex-direction: column; gap: 14px;">
+                                <div class="pf-form-grupo">
+                                    <label for="pass_nueva">Nueva contraseña:</label>
+                                    <input type="password" id="pass_nueva" name="nueva_password" required
+                                           placeholder="Mínimo 4 caracteres" class="pf-input" autofocus>
+                                </div>
+
+                                <div class="pf-form-grupo">
+                                    <label for="pass_repetir">Repetir nueva contraseña:</label>
+                                    <input type="password" id="pass_repetir" name="repetir_password" required
+                                           placeholder="Repetí la nueva contraseña" class="pf-input">
+                                </div>
+                            </div>
+
+                            <div class="pf-modal-footer">
+                                <button type="button" class="pf-btn-cancelar" id="btnCancelarModalPassword">Cancelar
+                                </button>
+                                <button type="submit" class="pf-btn">Guardar contraseña</button>
+                            </div>
+                        </form>
                     {{/pass_verificada}}
 
                 </div>
@@ -805,20 +830,22 @@
             if (alerta) alerta.innerText = "⏳ Detectando ubicación...";
 
             fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng)
-                .then(function (res) { return res.json(); })
-                .then(function (data) {
-                    if (data && data.address) {
-                        var pais = data.address.country || 'Desconocido';
-                        var ciudad = data.address.city || data.address.town || data.address.village || data.address.state || 'Desconocida';
+                    .then(function (res) {
+                        return res.json();
+                    })
+                    .then(function (data) {
+                        if (data && data.address) {
+                            var pais = data.address.country || 'Desconocido';
+                            var ciudad = data.address.city || data.address.town || data.address.village || data.address.state || 'Desconocida';
 
-                        if (inputPais) inputPais.value = pais;
-                        if (inputCiudad) inputCiudad.value = ciudad;
-                        if (alerta) alerta.innerText = "✓ Ubicación seleccionada: " + ciudad + ", " + pais;
-                    }
-                })
-                .catch(function () {
-                    if (alerta) alerta.innerText = "⚠️ Error al detectar la ciudad. Volvé a hacer clic.";
-                });
+                            if (inputPais) inputPais.value = pais;
+                            if (inputCiudad) inputCiudad.value = ciudad;
+                            if (alerta) alerta.innerText = "✓ Ubicación seleccionada: " + ciudad + ", " + pais;
+                        }
+                    })
+                    .catch(function () {
+                        if (alerta) alerta.innerText = "⚠️ Error al detectar la ciudad. Volvé a hacer clic.";
+                    });
         }
 
         function inicializarMapaEdit() {
@@ -837,7 +864,7 @@
                     attribution: '&copy; OpenStreetMap'
                 }).addTo(mapaEdit);
 
-                markerEdit = L.marker([lat, lng], { draggable: true }).addTo(mapaEdit);
+                markerEdit = L.marker([lat, lng], {draggable: true}).addTo(mapaEdit);
 
                 markerEdit.on('dragend', function (e) {
                     var pos = e.target.getLatLng();
@@ -884,6 +911,7 @@
             if (modalEdit) modalEdit.style.display = 'none';
             limpiarUrlModal();
         }
+
         if (btnCerrarEdit) btnCerrarEdit.addEventListener('click', cerrarModalEdit);
         if (btnCancelarEdit) btnCancelarEdit.addEventListener('click', cerrarModalEdit);
 
@@ -897,6 +925,7 @@
         function cerrarModalPass() {
             window.location.href = window.location.pathname;
         }
+
         if (btnCerrarPass) btnCerrarPass.addEventListener('click', cerrarModalPass);
         if (btnCancelarPass) btnCancelarPass.addEventListener('click', cerrarModalPass);
     })();
