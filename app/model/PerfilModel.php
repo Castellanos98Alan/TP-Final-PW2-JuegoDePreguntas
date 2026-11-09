@@ -13,22 +13,24 @@ class PerfilModel
 
     public function obtenerPerfil($idUsuario)
     {
-        $sql = "SELECT id,
-                nombre_completo,
-                username,
-                foto_perfil,
-                anio_nacimiento,
-                sexo,
-                pais,
-                ciudad,
-                latitud,
-                longitud,
-                puntaje_acumulado,
-                id_rol,
-                DATE_FORMAT(created_at, '%d/%m/%Y') AS miembro_desde
-                FROM usuario
-                WHERE id = :id
-                AND esta_activo = 1";
+        $sql = "SELECT u.id,
+            u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.anio_nacimiento,
+            u.sexo,
+            u.pais,
+            u.ciudad,
+            u.latitud,
+            u.longitud,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_acumulado,
+            u.id_rol,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1";
 
         return $this->database->queryOne($sql, ['id' => $idUsuario]);
     }
@@ -38,7 +40,7 @@ class PerfilModel
         $sql = "SELECT id FROM usuario WHERE username = :username AND id != :id";
         $resultado = $this->database->queryOne($sql, [
             'username' => $username,
-            'id'       => $idUsuario
+            'id' => $idUsuario
         ]);
         return $resultado !== null;
     }
@@ -59,16 +61,16 @@ class PerfilModel
                     WHERE id = :id";
 
             $params = [
-                'id'              => $idUsuario,
+                'id' => $idUsuario,
                 'nombre_completo' => $datos['nombre_completo'],
-                'username'        => $datos['username'],
+                'username' => $datos['username'],
                 'anio_nacimiento' => (int)$datos['anio_nacimiento'],
-                'sexo'            => $datos['sexo'],
-                'pais'            => $datos['pais'],
-                'ciudad'          => $datos['ciudad'],
-                'latitud'         => !empty($datos['latitud']) ? $datos['latitud'] : null,
-                'longitud'        => !empty($datos['longitud']) ? $datos['longitud'] : null,
-                'foto_perfil'     => $nombreFoto
+                'sexo' => $datos['sexo'],
+                'pais' => $datos['pais'],
+                'ciudad' => $datos['ciudad'],
+                'latitud' => !empty($datos['latitud']) ? $datos['latitud'] : null,
+                'longitud' => !empty($datos['longitud']) ? $datos['longitud'] : null,
+                'foto_perfil' => $nombreFoto
             ];
         } else {
             $sql = "UPDATE usuario SET
@@ -83,30 +85,42 @@ class PerfilModel
                     WHERE id = :id";
 
             $params = [
-                'id'              => $idUsuario,
+                'id' => $idUsuario,
                 'nombre_completo' => $datos['nombre_completo'],
-                'username'        => $datos['username'],
+                'username' => $datos['username'],
                 'anio_nacimiento' => (int)$datos['anio_nacimiento'],
-                'sexo'            => $datos['sexo'],
-                'pais'            => $datos['pais'],
-                'ciudad'          => $datos['ciudad'],
-                'latitud'         => !empty($datos['latitud']) ? $datos['latitud'] : null,
-                'longitud'        => !empty($datos['longitud']) ? $datos['longitud'] : null
+                'sexo' => $datos['sexo'],
+                'pais' => $datos['pais'],
+                'ciudad' => $datos['ciudad'],
+                'latitud' => !empty($datos['latitud']) ? $datos['latitud'] : null,
+                'longitud' => !empty($datos['longitud']) ? $datos['longitud'] : null
             ];
         }
 
         return $this->database->execute($sql, $params);
     }
 
-    public function obtenerPosicionRanking($puntaje)
+    public function obtenerPosicionRanking($idUsuario)
     {
         $sql = "SELECT COUNT(*) + 1 AS posicion
-                FROM usuario
-                WHERE esta_activo = 1
-                AND id_rol = 1
-                AND puntaje_acumulado > :puntaje";
+            FROM (
+                SELECT u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)";
 
-        $resultado = $this->database->queryOne($sql, ['puntaje' => $puntaje]);
+        $resultado = $this->database->queryOne($sql, ['id' => $idUsuario]);
 
         return $resultado['posicion'];
     }
@@ -139,7 +153,7 @@ class PerfilModel
     {
         $sql = "SELECT id FROM usuario WHERE id = :id AND password = :password";
         $resultado = $this->database->queryOne($sql, [
-            'id'       => $idUsuario,
+            'id' => $idUsuario,
             'password' => md5($password)
         ]);
 
@@ -150,7 +164,7 @@ class PerfilModel
     {
         $sql = "UPDATE usuario SET password = :password WHERE id = :id";
         return $this->database->execute($sql, [
-            'id'       => $idUsuario,
+            'id' => $idUsuario,
             'password' => md5($nuevaPassword)
         ]);
     }
