@@ -55,7 +55,7 @@ class AdminController
             'usuarios_nuevos' => $this->model->getUsuariosNuevos($periodo),
             'porcentaje_correctas' => $this->model->getPorcentajeCorrectas($periodo),
 
-            'preguntas' => $this->model->getEstadisticasPreguntas(),
+            'preguntas' => $this->model->getEstadisticasPreguntas($periodo),
 
             'paises_json' => json_encode($this->model->getUsuariosPorPais($periodo)),
             'sexos_json' => json_encode($this->model->getUsuariosPorSexo($periodo)),

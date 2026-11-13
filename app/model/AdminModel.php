@@ -77,20 +77,33 @@ class AdminModel
     }
 
     // Estadísticas de preguntas.
-    public function getEstadisticasPreguntas()
+    public function getEstadisticasPreguntas($periodo = null)
     {
+        $filtroFecha = '';
+        if ($periodo) {
+            $filtro = $this->filtroFecha('hr.fecha_respuesta', $periodo);
+            $filtroFecha = "AND $filtro";
+        }
+
         $sql = "SELECT
                     p.id,
                     p.enunciado AS descripcion,
                     c.nombre AS categoria,
-                    p.dificultad,
-                    0 AS veces_mostrada,
-                    0 AS veces_acertada,
-                    'Sin datos' AS dificultad_estadistica,
-                    0 AS porcentaje_aciertos
+                    CASE
+                        WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 15 THEN 'media'
+                        ELSE COALESCE(p.dificultad, 'media')
+                    END AS dificultad,
+                    COUNT(hr.id) AS veces_mostrada,
+                    COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                    CASE
+                        WHEN COUNT(hr.id) = 0 THEN 0
+                        ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                    END AS porcentaje_aciertos
                 FROM pregunta p
                 LEFT JOIN categoria c ON p.categoria_id = c.id
+                LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id $filtroFecha
                 WHERE p.esta_activa = 1
+                GROUP BY p.id, p.enunciado, c.nombre, p.dificultad
                 ORDER BY p.id DESC";
 
         return $this->database->queryAll($sql);
