@@ -1,3 +1,4 @@
+
 <style>
     * {
         box-sizing: border-box;
@@ -5,7 +6,7 @@
 
     .admin-container {
         width: 92%;
-        max-width: 1100px;
+        max-width: 1200px;
         margin: 30px auto 50px;
         padding: 35px 30px;
         background: rgba(7, 20, 42, 0.94);
@@ -51,7 +52,8 @@
         text-align: center;
     }
 
-    .admin-subtitle::before, .admin-subtitle::after {
+    .admin-subtitle::before,
+    .admin-subtitle::after {
         content: "";
         width: 32px;
         height: 1px;
@@ -62,6 +64,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
         margin-bottom: 25px;
         padding-bottom: 12px;
         border-bottom: 1px solid rgba(185, 139, 59, 0.35);
@@ -75,7 +79,7 @@
     }
 
     .btn-gold {
-        padding: 8px 18px;
+        padding: 9px 18px;
         border: 1px solid #F5D78A;
         border-radius: 8px;
         background: linear-gradient(110deg, #F4D47D, #C99A3D);
@@ -85,6 +89,7 @@
         letter-spacing: 1px;
         text-decoration: none;
         display: inline-block;
+        cursor: pointer;
         transition: transform 0.2s, filter 0.2s;
     }
 
@@ -93,10 +98,60 @@
         transform: translateY(-2px);
     }
 
-    /* Tarjetas de Métricas */
+    .btn-print {
+        background: transparent;
+        color: #F1CD73;
+        border: 1px solid #D4AF55;
+    }
+
+    .btn-print:hover {
+        background: #D4AF55;
+        color: #0A1A33;
+    }
+
+    /* Filtros */
+
+    .filter-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 18px;
+        margin-bottom: 28px;
+        background: rgba(16, 39, 73, 0.55);
+        border: 1px solid #315B91;
+        border-radius: 12px;
+    }
+
+    .filter-container label {
+        color: #F1CD73;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .filter-container select {
+        min-width: 180px;
+        padding: 10px 14px;
+        border: 1px solid #D4AF55;
+        border-radius: 7px;
+        background: #102749;
+        color: white;
+        outline: none;
+    }
+
+    .filter-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    /* Tarjetas */
+
     .metrics-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
         gap: 16px;
         margin-bottom: 35px;
     }
@@ -135,17 +190,51 @@
         text-transform: uppercase;
     }
 
-    /* Tabla de Preguntas */
+    /* Secciones */
+
     .section-title {
         color: #F1CD73;
         font-size: 15px;
         font-weight: 700;
         letter-spacing: 1.5px;
-        margin: 25px 0 12px;
+        margin: 30px 0 15px;
         display: flex;
         align-items: center;
         gap: 8px;
     }
+
+    /* Gráficos */
+
+    .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .chart-card {
+        min-width: 0;
+        padding: 20px;
+        background: rgba(16, 39, 73, 0.55);
+        border: 1px solid #315B91;
+        border-radius: 12px;
+    }
+
+    .chart-card h3 {
+        margin: 0 0 20px;
+        color: #F1CD73;
+        font-size: 14px;
+        text-align: center;
+        letter-spacing: 1px;
+    }
+
+    .chart-wrapper {
+        position: relative;
+        height: 280px;
+        width: 100%;
+    }
+
+    /* Tabla */
 
     .table-container {
         width: 100%;
@@ -170,7 +259,6 @@
         font-weight: 600;
         font-size: 11px;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
     }
 
     tbody td {
@@ -195,10 +283,29 @@
         display: inline-block;
     }
 
-    .badge-facil { background: rgba(46, 125, 50, 0.3); border: 1px solid #4CAF50; color: #A5D6A7; }
-    .badge-media { background: rgba(239, 108, 0, 0.3); border: 1px solid #FF9800; color: #FFE082; }
-    .badge-dificil { background: rgba(198, 40, 40, 0.3); border: 1px solid #F44336; color: #FFCDD2; }
-    .badge-sindatos { background: rgba(120, 144, 156, 0.3); border: 1px solid #90A4AE; color: #CFD8DC; }
+    .badge-facil {
+        background: rgba(46, 125, 50, 0.3);
+        border: 1px solid #4CAF50;
+        color: #A5D6A7;
+    }
+
+    .badge-media {
+        background: rgba(239, 108, 0, 0.3);
+        border: 1px solid #FF9800;
+        color: #FFE082;
+    }
+
+    .badge-dificil {
+        background: rgba(198, 40, 40, 0.3);
+        border: 1px solid #F44336;
+        color: #FFCDD2;
+    }
+
+    .badge-sindatos {
+        background: rgba(120, 144, 156, 0.3);
+        border: 1px solid #90A4AE;
+        color: #CFD8DC;
+    }
 
     .tag-category {
         padding: 3px 8px;
@@ -208,47 +315,265 @@
         color: #DCE6F8;
         font-size: 11px;
     }
+
+    .empty-message {
+        color: #88A5CD;
+        text-align: center;
+        padding: 24px;
+    }
+
+    @media (max-width: 750px) {
+        .admin-container {
+            width: 96%;
+            padding: 25px 15px;
+        }
+
+        .charts-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .header-bar {
+            justify-content: center;
+        }
+
+        .filter-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .filter-actions {
+            flex-direction: column;
+        }
+
+        .filter-actions button {
+            width: 100%;
+        }
+    }
+
+    /* Impresión */
+
+    @media print {
+        @page {
+            size: A4;
+            margin: 12mm;
+        }
+
+        body {
+            background: white !important;
+            color: black !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .admin-container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 10px;
+            box-shadow: none;
+            border: none;
+            background: white !important;
+            color: black !important;
+        }
+
+        .filter-container,
+        .header-bar a,
+        .btn-print {
+            display: none !important;
+        }
+
+        .admin-container h1,
+        .section-title,
+        .chart-card h3 {
+            color: #172B4D !important;
+        }
+
+        .metric-card,
+        .chart-card,
+        .table-container {
+            background: white !important;
+            border: 1px solid #aaa !important;
+            break-inside: avoid;
+        }
+
+        .metric-number,
+        .metric-label,
+        tbody td,
+        thead th {
+            color: black !important;
+        }
+
+        thead th {
+            background: #eeeeee !important;
+        }
+
+        .charts-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .chart-wrapper {
+            height: 220px;
+        }
+
+        tr {
+            break-inside: avoid;
+        }
+    }
 </style>
 
 <div class="admin-container">
+
     <div class="admin-emblem" aria-hidden="true">✦</div>
+
     <h1>PANEL DE ADMINISTRADOR</h1>
-    <p class="admin-subtitle">MÉTRICAS & CONTROL DEL SISTEMA</p>
+
+    <p class="admin-subtitle">
+        MÉTRICAS & CONTROL DEL SISTEMA
+    </p>
 
     <div class="header-bar">
         <span class="tag-user">ADMIN: {{username}}</span>
-        <a href="lobby" class="btn-gold">← VOLVER AL LOBBY</a>
+
+        <div class="filter-actions">
+            <button class="btn-gold btn-print"
+                    type="button"
+                    onclick="window.print()">
+                 IMPRIMIR REPORTE
+            </button>
+
+            <a href="lobby" class="btn-gold">
+                ← VOLVER AL LOBBY
+            </a>
+        </div>
     </div>
 
-    <!-- Tarjetas de Métricas -->
+    <!-- FILTROS -->
+
+    <form method="GET" action="admin" class="filter-container">
+
+        <div>
+            <label for="periodo">📅 PERÍODO DEL REPORTE</label>
+        </div>
+
+        <div class="filter-actions">
+
+            <select name="periodo"
+                    id="periodo"
+                    onchange="this.form.submit()">
+
+                <option value="dia" {{#es_dia}}selected{{/es_dia}}>
+                    Día
+                </option>
+
+                <option value="semana" {{#es_semana}}selected{{/es_semana}}>
+                    Semana
+                </option>
+
+                <option value="mes" {{#es_mes}}selected{{/es_mes}}>
+                    Mes
+                </option>
+
+                <option value="anio" {{#es_anio}}selected{{/es_anio}}>
+                    Año
+                </option>
+
+            </select>
+
+        </div>
+
+    </form>
+
+    <!-- MÉTRICAS PRINCIPALES -->
+
+    <div class="section-title">
+        📊 RESUMEN GENERAL
+    </div>
+
     <div class="metrics-grid">
+
         <div class="metric-card">
             <div class="metric-icon">👥</div>
             <div class="metric-number">{{total_jugadores}}</div>
-            <div class="metric-label">Jugadores Totales</div>
+            <div class="metric-label">Jugadores</div>
         </div>
+
         <div class="metric-card">
             <div class="metric-icon">⚔️</div>
             <div class="metric-number">{{total_partidas}}</div>
-            <div class="metric-label">Partidas Jugadas</div>
+            <div class="metric-label">Partidas jugadas</div>
         </div>
+
         <div class="metric-card">
             <div class="metric-icon">📜</div>
             <div class="metric-number">{{preguntas_activas}}</div>
-            <div class="metric-label">Preguntas Activas</div>
+            <div class="metric-label">Preguntas del juego</div>
         </div>
+
+        <div class="metric-card">
+            <div class="metric-icon">📝</div>
+            <div class="metric-number">{{preguntas_creadas}}</div>
+            <div class="metric-label">Preguntas creadas</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-icon">🆕</div>
+            <div class="metric-number">{{usuarios_nuevos}}</div>
+            <div class="metric-label">Usuarios nuevos</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-icon">🎯</div>
+            <div class="metric-number">{{porcentaje_correctas}}%</div>
+            <div class="metric-label">Respuestas correctas</div>
+        </div>
+
         <div class="metric-card">
             <div class="metric-icon">⚠️</div>
             <div class="metric-number">{{reportes_pendientes}}</div>
-            <div class="metric-label">Reportes Pendientes</div>
+            <div class="metric-label">Reportes pendientes</div>
         </div>
+
     </div>
 
-    <!-- Estadísticas de Preguntas -->
+    <!-- GRÁFICOS -->
+
     <div class="section-title">
-        <span>📊 BALANCE Y DIFICULTAD DE PREGUNTAS</span>
+        🌎 DISTRIBUCIÓN DE USUARIOS
     </div>
+
+    <div class="charts-grid">
+
+        <div class="chart-card">
+            <h3>USUARIOS POR PAÍS</h3>
+            <div class="chart-wrapper">
+                <canvas id="graficoPaises"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3>USUARIOS POR SEXO</h3>
+            <div class="chart-wrapper">
+                <canvas id="graficoSexos"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3>USUARIOS POR GRUPO DE EDAD</h3>
+            <div class="chart-wrapper">
+                <canvas id="graficoEdades"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ESTADÍSTICAS DE PREGUNTAS -->
+
+    <div class="section-title">
+        📚 BALANCE Y DIFICULTAD DE PREGUNTAS
+    </div>
+
     <div class="table-container">
+
         <table>
             <thead>
                 <tr>
@@ -260,27 +585,155 @@
                     <th style="text-align: center;">Dificultad</th>
                 </tr>
             </thead>
+
             <tbody>
+
                 {{#preguntas}}
+
                 <tr>
                     <td>{{descripcion}}</td>
-                    <td><span class="tag-category">{{categoria}}</span></td>
-                    <td style="text-align: center;">{{veces_mostrada}}</td>
-                    <td style="text-align: center;">{{veces_acertada}}</td>
-                    <td style="text-align: center; font-weight: 700; color: #F1CD73;">{{porcentaje_aciertos}}%</td>
+
+                    <td>
+                        <span class="tag-category">
+                            {{categoria}}
+                        </span>
+                    </td>
+
                     <td style="text-align: center;">
-                        <span class="badge badge-{{dificultad}}">{{dificultad}}</span>
+                        {{veces_mostrada}}
+                    </td>
+
+                    <td style="text-align: center;">
+                        {{veces_acertada}}
+                    </td>
+
+                    <td style="text-align: center; font-weight: 700; color: #F1CD73;">
+                        {{porcentaje_aciertos}}%
+                    </td>
+
+                    <td style="text-align: center;">
+                        <span class="badge badge-{{dificultad}}">
+                            {{dificultad}}
+                        </span>
                     </td>
                 </tr>
+
                 {{/preguntas}}
+
                 {{^preguntas}}
+
                 <tr>
-                    <td colspan="6" style="text-align: center; color: #88A5CD; padding: 24px;">
+                    <td colspan="6" class="empty-message">
                         No hay preguntas activas registradas en la base de datos.
                     </td>
                 </tr>
+
                 {{/preguntas}}
+
             </tbody>
         </table>
+
     </div>
+
 </div>
+
+<!-- CHART.JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const paises = {{{paises_json}}} || [];
+    const sexos = {{{sexos_json}}} || [];
+    const edades = {{{edades_json}}} || [];
+
+    function crearGrafico(id, datos, tipo, colores) {
+
+        const canvas = document.getElementById(id);
+
+        if (!canvas) return;
+
+        if (datos.length === 0) {
+            canvas.parentElement.innerHTML =
+                '<p class="empty-message">No hay datos disponibles para este período.</p>';
+            return;
+        }
+
+        new Chart(canvas, {
+
+            type: tipo,
+
+            data: {
+                labels: datos.map(item => item.etiqueta || 'Sin especificar'),  //labels toma las etiquetas que devolvió SQL: países, sexos o grupos de edad.
+
+                datasets: [{
+                    label: 'Cantidad de usuarios',
+                    data: datos.map(item => Number(item.cantidad)), // data toma cantidad y Number() transforma el dato a número para que Chart.js lo interprete correctamente
+                    backgroundColor: colores,
+                    borderColor: '#D4AF55',
+                    borderWidth: 1
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#DCE6F8'
+                        }
+                    }
+                },
+
+                scales: tipo === 'bar' ? {
+                    x: {
+                        ticks: {
+                            color: '#DCE6F8'
+                        },
+                        grid: {
+                            color: 'rgba(255,255,255,0.08)'
+                        }
+                    },
+
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0,
+                            color: '#DCE6F8'
+                        },
+                        grid: {
+                            color: 'rgba(255,255,255,0.08)'
+                        }
+                    }
+                } : {}
+            }
+
+        });
+    }
+
+    crearGrafico(
+        'graficoPaises',
+        paises,
+        'bar',
+        '#4F8EDC'
+    );
+
+    crearGrafico(
+        'graficoSexos',
+        sexos,
+        'doughnut',
+        ['#4F8EDC', '#D66CA8', '#D4AF55', '#75B798', '#A78BFA']
+    );
+
+    crearGrafico(
+        'graficoEdades',
+        edades,
+        'bar',
+        '#D4AF55'
+    );
+
+});
+</script>

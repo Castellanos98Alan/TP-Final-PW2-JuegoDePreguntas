@@ -22,6 +22,7 @@ class PartidaController
      */
     public function seleccionar()
     {
+        $this->verificarPuedeJugar();
         $animes = $this->model->obtenerAnimes();
         $errorSeleccion = !empty($_SESSION['error_seleccion']) || ($_GET['error'] ?? null) == 1;
         $errorPreguntas = !empty($_SESSION['error_preguntas']) || ($_GET['error'] ?? null) == 2;
@@ -51,6 +52,7 @@ class PartidaController
      */
     public function nueva()
     {
+        $this->verificarPuedeJugar();
         /*
          * El usuario debe estar logueado.
          */
@@ -131,6 +133,7 @@ class PartidaController
      */
     public function jugar()
     {
+        $this->verificarPuedeJugar();
         /*
          * Si no existe una partida,
          * vuelve a seleccionar anime.
@@ -271,6 +274,7 @@ class PartidaController
      */
     public function responder()
     {
+        $this->verificarPuedeJugar();
         /*
          * Tiene que existir una partida.
          */
@@ -533,6 +537,7 @@ class PartidaController
      */
     public function tiempoAgotado()
     {
+        $this->verificarPuedeJugar();
         if (!isset($_SESSION['partida'], $_SESSION['usuario_id'])) {
             Redirect::to('/partida/seleccionar');
             exit();
@@ -608,6 +613,7 @@ class PartidaController
 
     public function reportar()
     {
+        $this->verificarPuedeJugar();
         if (!isset($_SESSION['usuario_id'], $_SESSION['partida'])) {
             Redirect::to('/login');
             exit();
@@ -672,6 +678,7 @@ class PartidaController
      */
     public function perder()
     {
+        $this->verificarPuedeJugar();
         if (
             !isset($_SESSION['partida']) ||
             empty($_SESSION['partida']['perdio'])
@@ -791,6 +798,7 @@ class PartidaController
      */
     public function ganar()
     {
+        $this->verificarPuedeJugar();
         /*
          * Tiene que existir la partida.
          */
@@ -852,4 +860,39 @@ class PartidaController
             $data
         );
     }
+
+
+    /* Solo los usuarios con rol jugador pueden iniciar o continuar partidas. */
+    private function verificarPuedeJugar()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['usuario_id'])) {
+            header(
+                'Location: ' .
+                rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') .
+                '/login'
+            );
+            exit();
+        }
+
+        $rol = $_SESSION['rol'] ?? $_SESSION['id_rol'] ?? 0;
+
+        if (
+            (string)$rol !== '1' &&
+            strtolower((string)$rol) !== 'jugador'
+        ) {
+            unset($_SESSION['partida']);
+
+            header(
+                'Location: ' .
+                rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') .
+                '/lobby'
+            );
+            exit();
+        }
+    }
+
 }

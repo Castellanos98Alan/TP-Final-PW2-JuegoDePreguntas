@@ -142,3 +142,15 @@ CREATE TABLE usuario_pregunta (
                                   FOREIGN KEY (pregunta_id)
                                       REFERENCES pregunta(id)
 );
+
+
+CREATE TABLE IF NOT EXISTS historial_respuesta (
+                                                   id INT AUTO_INCREMENT PRIMARY KEY,
+                                                   usuario_id INT NOT NULL,
+                                                   pregunta_id INT NOT NULL,
+                                                   fue_correcta TINYINT(1) NOT NULL,
+    fecha_respuesta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id),
+    FOREIGN KEY (pregunta_id) REFERENCES pregunta(id)
+    );
