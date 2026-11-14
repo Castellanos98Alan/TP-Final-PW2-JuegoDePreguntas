@@ -614,14 +614,18 @@ class PartidaController
     public function reportar()
     {
         $this->verificarPuedeJugar();
+
+        header('Content-Type: application/json; charset=utf-8');
+
         if (!isset($_SESSION['usuario_id'], $_SESSION['partida'])) {
-            Redirect::to('/login');
+            http_response_code(401);
+            echo json_encode(['success' => false, 'mensaje' => 'Sesión no válida o expirada.']);
             exit();
         }
 
-        // Solo se puede reportar cuando el jugador perdió.
         if (empty($_SESSION['partida']['perdio'])) {
-            Redirect::to('/partida/jugar');
+            http_response_code(400);
+            echo json_encode(['success' => false, 'mensaje' => 'Solo se puede reportar una vez finalizada la partida.']);
             exit();
         }
 
@@ -637,9 +641,7 @@ class PartidaController
             'Otro'
         ];
 
-        // Comprobamos que la pregunta pertenezca a esta partida.
         $preguntaValida = false;
-
         foreach ($_SESSION['partida']['preguntas'] as $pregunta) {
             if ((int)$pregunta['id'] === (int)$idPregunta) {
                 $preguntaValida = true;
@@ -654,21 +656,24 @@ class PartidaController
             $descripcion === '' ||
             mb_strlen($descripcion) > 2000
         ) {
-            $_SESSION['partida']['mensajeReporte'] =
-                'No se pudo enviar el reporte. Revisá los datos e intentá nuevamente.';
-        } else {
-            $this->model->guardarReporte(
-                $_SESSION['usuario_id'],
-                $idPregunta,
-                $motivo,
-                $descripcion
-            );
-
-            $_SESSION['partida']['mensajeReporte'] =
-                'Gracias. El reporte se guardó correctamente.';
+            echo json_encode([
+                'success' => false,
+                'mensaje' => 'No se pudo enviar el reporte. Revisá los datos e intentá nuevamente.'
+            ]);
+            exit();
         }
 
-        Redirect::to('/partida/perder');
+        $this->model->guardarReporte(
+            $_SESSION['usuario_id'],
+            $idPregunta,
+            $motivo,
+            $descripcion
+        );
+
+        echo json_encode([
+            'success' => true,
+            'mensaje' => 'Gracias. El reporte se guardó correctamente.'
+        ]);
         exit();
     }
 
