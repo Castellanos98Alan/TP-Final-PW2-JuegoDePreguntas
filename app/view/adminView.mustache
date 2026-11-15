@@ -1,4 +1,3 @@
-
 <style>
     * {
         box-sizing: border-box;
@@ -145,6 +144,80 @@
         align-items: center;
         flex-wrap: wrap;
         gap: 10px;
+    }
+
+    .table-filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 14px;
+        padding: 16px 18px;
+        margin-bottom: 14px;
+        background: rgba(16, 39, 73, 0.55);
+        border: 1px solid #315B91;
+        border-radius: 12px;
+    }
+
+    .table-filters .filtro-grupo {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .table-filters label {
+        color: #F1CD73;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .table-filters select {
+        min-width: 170px;
+        padding: 9px 12px;
+        border: 1px solid #D4AF55;
+        border-radius: 7px;
+        background: #102749;
+        color: white;
+        outline: none;
+    }
+
+    .table-filters .contador-resultados {
+        margin-left: auto;
+        color: #A9C2E8;
+        font-size: 12px;
+    }
+
+    th.ordenable {
+        cursor: pointer;
+        user-select: none;
+        white-space: nowrap;
+    }
+
+    th.ordenable:hover {
+        color: #FFFFFF;
+    }
+
+    th.ordenable .flecha {
+        display: inline-block;
+        width: 12px;
+        margin-left: 4px;
+        opacity: 0.45;
+    }
+
+    th.ordenable.activo .flecha {
+        opacity: 1;
+    }
+
+    @media (max-width: 750px) {
+        .table-filters {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .table-filters .contador-resultados {
+            margin-left: 0;
+        }
     }
 
     /* Tarjetas */
@@ -377,6 +450,7 @@
         }
 
         .filter-container,
+        .table-filters,
         .header-bar a,
         .btn-print {
             display: none !important;
@@ -438,7 +512,7 @@
             <button class="btn-gold btn-print"
                     type="button"
                     onclick="window.print()">
-                 IMPRIMIR REPORTE
+                IMPRIMIR REPORTE
             </button>
 
             <a href="lobby" class="btn-gold">
@@ -449,7 +523,7 @@
 
     <!-- FILTROS -->
 
-    <form method="GET" action="admin" class="filter-container">
+    <form method="GET" action="admin" id="formAdmin" class="filter-container">
 
         <div>
             <label for="periodo">📅 PERÍODO DEL REPORTE</label>
@@ -568,30 +642,87 @@
 
     <!-- ESTADÍSTICAS DE PREGUNTAS -->
 
-    <div class="section-title">
+    <div class="section-title" id="balance-preguntas">
         📚 BALANCE Y DIFICULTAD DE PREGUNTAS
+    </div>
+
+    <div class="table-filters">
+
+        <div class="filtro-grupo">
+            <label for="filtroAnime">Anime</label>
+            <select name="anime" id="filtroAnime" form="formAdmin">
+                {{#animes}}
+                    <option value="{{valor}}" {{#seleccionada}}selected{{/seleccionada}}>{{texto}}</option>
+                {{/animes}}
+            </select>
+        </div>
+
+        <div class="filtro-grupo">
+            <label for="filtroCategoria">Categoría</label>
+            <select name="categoria" id="filtroCategoria" form="formAdmin">
+                {{#categorias}}
+                    <option value="{{valor}}" {{#seleccionada}}selected{{/seleccionada}}>{{texto}}</option>
+                {{/categorias}}
+            </select>
+        </div>
+
+        <div class="filtro-grupo">
+            <label for="filtroDificultad">Dificultad</label>
+            <select name="dificultad" id="filtroDificultad" form="formAdmin">
+                {{#dificultades}}
+                    <option value="{{valor}}" {{#seleccionada}}selected{{/seleccionada}}>{{texto}}</option>
+                {{/dificultades}}
+            </select>
+        </div>
+
+        <div class="filtro-grupo">
+            <label for="ordenarPor">Ordenar por</label>
+            <select name="orden" id="ordenarPor" form="formAdmin">
+                {{#ordenes}}
+                    <option value="{{valor}}" {{#seleccionada}}selected{{/seleccionada}}>{{texto}}</option>
+                {{/ordenes}}
+            </select>
+        </div>
+
+        <a href="admin?periodo={{periodo}}#balance-preguntas" class="btn-gold btn-print">
+        LIMPIAR
+        </a>
+
+        <span class="contador-resultados">
+            Mostrando {{cantidad_preguntas}} preguntas
+        </span>
+
     </div>
 
     <div class="table-container">
 
-        <table>
+        <table id="tablaPreguntas">
             <thead>
-                <tr>
-                    <th style="width: 45%;">Pregunta</th>
-                    <th>Categoría</th>
-                    <th style="text-align: center;">Jugada</th>
-                    <th style="text-align: center;">Acertada</th>
-                    <th style="text-align: center;">% Éxito</th>
-                    <th style="text-align: center;">Dificultad</th>
-                </tr>
+            <tr>
+                <th style="width: 38%;">Pregunta</th>
+                <th>Anime</th>
+                <th>Categoría</th>
+                <th class="ordenable" data-campo="jugada" style="text-align: center;" title="Click para ordenar">
+                    Jugada<span class="flecha"></span>
+                </th>
+                <th class="ordenable" data-campo="acertada" style="text-align: center;" title="Click para ordenar">
+                    Acertada<span class="flecha"></span>
+                </th>
+                <th class="ordenable" data-campo="exito" style="text-align: center;" title="Click para ordenar">
+                    % Éxito<span class="flecha"></span>
+                </th>
+                <th style="text-align: center;">Dificultad</th>
+            </tr>
             </thead>
 
             <tbody>
 
-                {{#preguntas}}
+            {{#preguntas}}
 
                 <tr>
                     <td>{{descripcion}}</td>
+
+                    <td>{{anime}}</td>
 
                     <td>
                         <span class="tag-category">
@@ -618,17 +749,17 @@
                     </td>
                 </tr>
 
-                {{/preguntas}}
+            {{/preguntas}}
 
-                {{^preguntas}}
+            {{^preguntas}}
 
                 <tr>
-                    <td colspan="6" class="empty-message">
-                        No hay preguntas activas registradas en la base de datos.
+                    <td colspan="7" class="empty-message">
+                        No hay preguntas que coincidan con los filtros seleccionados.
                     </td>
                 </tr>
 
-                {{/preguntas}}
+            {{/preguntas}}
 
             </tbody>
         </table>
@@ -637,103 +768,150 @@
 
 </div>
 
-<!-- CHART.JS -->
+<!-- DATOS DE LOS GRÁFICOS (JSON del controlador) -->
+
+<div id="datos-graficos" hidden
+     data-paises="{{paises_json}}"
+     data-sexos="{{sexos_json}}"
+     data-edades="{{edades_json}}"></div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
-    const paises = {{{paises_json}}} || [];
-    const sexos = {{{sexos_json}}} || [];
-    const edades = {{{edades_json}}} || [];
+        // Los datos llegan en atributos data-* (ver #datos-graficos) y se leen como JSON.
+        const datosGraficos = document.getElementById('datos-graficos').dataset;
 
-    function crearGrafico(id, datos, tipo, colores) {
+        const paises = JSON.parse(datosGraficos.paises || '[]');
+        const sexos = JSON.parse(datosGraficos.sexos || '[]');
+        const edades = JSON.parse(datosGraficos.edades || '[]');
 
-        const canvas = document.getElementById(id);
+        function crearGrafico(id, datos, tipo, colores) {
 
-        if (!canvas) return;
+            const canvas = document.getElementById(id);
 
-        if (datos.length === 0) {
-            canvas.parentElement.innerHTML =
-                '<p class="empty-message">No hay datos disponibles para este período.</p>';
-            return;
-        }
+            if (!canvas) return;
 
-        new Chart(canvas, {
+            if (datos.length === 0) {
+                canvas.parentElement.innerHTML =
+                        '<p class="empty-message">No hay datos disponibles para este período.</p>';
+                return;
+            }
 
-            type: tipo,
+            new Chart(canvas, {
 
-            data: {
-                labels: datos.map(item => item.etiqueta || 'Sin especificar'),  //labels toma las etiquetas que devolvió SQL: países, sexos o grupos de edad.
+                type: tipo,
 
-                datasets: [{
-                    label: 'Cantidad de usuarios',
-                    data: datos.map(item => Number(item.cantidad)), // data toma cantidad y Number() transforma el dato a número para que Chart.js lo interprete correctamente
-                    backgroundColor: colores,
-                    borderColor: '#D4AF55',
-                    borderWidth: 1
-                }]
-            },
+                data: {
+                    labels: datos.map(item => item.etiqueta || 'Sin especificar'),  //labels toma las etiquetas que devolvió SQL: países, sexos o grupos de edad.
 
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#DCE6F8'
-                        }
-                    }
+                    datasets: [{
+                        label: 'Cantidad de usuarios',
+                        data: datos.map(item => Number(item.cantidad)), // data toma cantidad y Number() transforma el dato a número para que Chart.js lo interprete correctamente
+                        backgroundColor: colores,
+                        borderColor: '#D4AF55',
+                        borderWidth: 1
+                    }]
                 },
 
-                scales: tipo === 'bar' ? {
-                    x: {
-                        ticks: {
-                            color: '#DCE6F8'
-                        },
-                        grid: {
-                            color: 'rgba(255,255,255,0.08)'
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#DCE6F8'
+                            }
                         }
                     },
 
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0,
-                            color: '#DCE6F8'
+                    scales: tipo === 'bar' ? {
+                        x: {
+                            ticks: {
+                                color: '#DCE6F8'
+                            },
+                            grid: {
+                                color: 'rgba(255,255,255,0.08)'
+                            }
                         },
-                        grid: {
-                            color: 'rgba(255,255,255,0.08)'
+
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0,
+                                color: '#DCE6F8'
+                            },
+                            grid: {
+                                color: 'rgba(255,255,255,0.08)'
+                            }
                         }
-                    }
-                } : {}
-            }
+                    } : {}
+                }
 
+            });
+        }
+
+        crearGrafico(
+                'graficoPaises',
+                paises,
+                'bar',
+                '#4F8EDC'
+        );
+
+        crearGrafico(
+                'graficoSexos',
+                sexos,
+                'doughnut',
+                ['#4F8EDC', '#D66CA8', '#D4AF55', '#75B798', '#A78BFA']
+        );
+
+        crearGrafico(
+                'graficoEdades',
+                edades,
+                'bar',
+                '#D4AF55'
+        );
+
+    });
+</script>
+
+<!-- FILTROS DE LA TABLA DE PREGUNTAS -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const formulario = document.getElementById('formAdmin');
+        const selOrden = document.getElementById('ordenarPor');
+
+        if (!formulario || !selOrden) return;
+
+        function enviarFiltros() {
+            formulario.action = 'admin#balance-preguntas';
+            formulario.submit();
+        }
+
+        ['filtroAnime', 'filtroCategoria', 'filtroDificultad', 'ordenarPor'].forEach(function (id) {
+            document.getElementById(id).addEventListener('change', enviarFiltros);
         });
-    }
 
-    crearGrafico(
-        'graficoPaises',
-        paises,
-        'bar',
-        '#4F8EDC'
-    );
+        const actual = selOrden.value.split('_'); // por ejemplo ['exito', 'desc']
 
-    crearGrafico(
-        'graficoSexos',
-        sexos,
-        'doughnut',
-        ['#4F8EDC', '#D66CA8', '#D4AF55', '#75B798', '#A78BFA']
-    );
+        document.querySelectorAll('#tablaPreguntas th.ordenable').forEach(function (th) {
+            const campo = th.dataset.campo;
+            const flecha = th.querySelector('.flecha');
+            const activa = actual[0] === campo;
 
-    crearGrafico(
-        'graficoEdades',
-        edades,
-        'bar',
-        '#D4AF55'
-    );
+            th.classList.toggle('activo', activa);
+            flecha.textContent = activa ? (actual[1] === 'desc' ? '▼' : '▲') : '↕';
 
-});
+            th.addEventListener('click', function () {
+                const dir = (activa && actual[1] === 'desc') ? 'asc' : 'desc';
+                selOrden.value = campo + '_' + dir;
+                enviarFiltros();
+            });
+        });
+    });
 </script>

@@ -4,6 +4,11 @@ namespace app\model;
 
 class AdminModel
 {
+    // Una pregunta con menos respuestas que esto se muestra como dificultad "media".
+    // En 0 se muestra siempre la dificultad guardada en pregunta.dificultad, que es la que
+    // usa el juego (PartidaModel la recalcula recién a partir de las 15 respuestas).
+    const MIN_RESPUESTAS_DIFICULTAD = 0;
+
     private $database;
 
     public function __construct($database)
@@ -76,8 +81,33 @@ class AdminModel
         return $resultado['total'] ?? 0;
     }
 
-    // Estadísticas de preguntas.
-    public function getEstadisticasPreguntas($periodo = null)
+    // Categorías para el select de filtros.
+    public function getCategorias()
+    {
+        $sql = "SELECT id, nombre
+                FROM categoria
+                ORDER BY nombre ASC";
+
+        return $this->database->queryAll($sql);
+    }
+
+    // Animes que tienen al menos una pregunta activa, para el select de filtros.
+    public function getAnimes()
+    {
+        $sql = "SELECT a.id, a.nombre
+                FROM anime a
+                WHERE EXISTS (
+                    SELECT 1
+                    FROM pregunta p
+                    WHERE p.anime_id = a.id AND p.esta_activa = 1
+                )
+                ORDER BY a.nombre ASC";
+
+        return $this->database->queryAll($sql);
+    }
+
+    // Estadísticas de preguntas, con filtros y orden opcionales.
+    public function getEstadisticasPreguntas($periodo = null, $categoriaId = null, $dificultad = null, $orden = null, $animeId = null)
     {
         $filtroFecha = '';
         if ($periodo) {
@@ -85,26 +115,63 @@ class AdminModel
             $filtroFecha = "AND $filtro";
         }
 
-        $sql = "SELECT
-                    p.id,
-                    p.enunciado AS descripcion,
-                    c.nombre AS categoria,
-                    CASE
-                        WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 15 THEN 'media'
-                        ELSE COALESCE(p.dificultad, 'media')
-                    END AS dificultad,
-                    COUNT(hr.id) AS veces_mostrada,
-                    COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
-                    CASE
-                        WHEN COUNT(hr.id) = 0 THEN 0
-                        ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
-                    END AS porcentaje_aciertos
-                FROM pregunta p
-                LEFT JOIN categoria c ON p.categoria_id = c.id
-                LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id $filtroFecha
-                WHERE p.esta_activa = 1
-                GROUP BY p.id, p.enunciado, c.nombre, p.dificultad
-                ORDER BY p.id DESC";
+        $condiciones = [];
+
+        if ($categoriaId !== null) {
+            $condiciones[] = "t.categoria_id = " . (int)$categoriaId;
+        }
+
+        if ($animeId !== null) {
+            $condiciones[] = "t.anime_id = " . (int)$animeId;
+        }
+
+        if (in_array($dificultad, ['facil', 'media', 'dificil'], true)) {
+            $condiciones[] = "t.dificultad = '$dificultad'";
+        }
+
+        $where = $condiciones ? 'WHERE ' . implode(' AND ', $condiciones) : '';
+
+        $ordenes = [
+            'jugada_desc' => 't.veces_mostrada DESC',
+            'jugada_asc' => 't.veces_mostrada ASC',
+            'acertada_desc' => 't.veces_acertada DESC',
+            'acertada_asc' => 't.veces_acertada ASC',
+            'exito_desc' => 't.porcentaje_aciertos DESC',
+            'exito_asc' => 't.porcentaje_aciertos ASC',
+        ];
+
+        $order = isset($ordenes[$orden]) ? $ordenes[$orden] . ', t.id DESC' : 't.id DESC';
+
+        $minimoRespuestas = (int)self::MIN_RESPUESTAS_DIFICULTAD;
+
+        $sql = "SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < $minimoRespuestas THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id $filtroFecha
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                $where
+                ORDER BY $order";
 
         return $this->database->queryAll($sql);
     }
