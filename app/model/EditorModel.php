@@ -24,18 +24,117 @@ class EditorModel
         return $this->database->queryAll($sql);
     }
 
-    public function getPreguntasActivas()
-    {
-        $sql = "SELECT 
+    public function getPreguntasAdministrables(
+        $pagina = 1,
+        $busqueda = '',
+        $animeId = 0,
+        $categoriaId = 0,
+        $estado = ''
+    ) {
+        $limite = 10;
+        $offset = ($pagina - 1) * $limite;
+
+        $sql = "SELECT
                 p.id,
                 p.enunciado AS descripcion,
-                c.nombre AS categoria
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
             FROM pregunta p
             LEFT JOIN categoria c ON p.categoria_id = c.id
-            WHERE p.esta_activa = 1
-            ORDER BY p.id DESC";
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)";
 
-        return $this->database->queryAll($sql);
+        $parametros = [];
+
+        if ($busqueda !== '') {
+            $sql .= " AND p.enunciado LIKE :busqueda";
+            $parametros['busqueda'] = '%' . $busqueda . '%';
+        }
+
+        if ($animeId > 0) {
+            $sql .= " AND p.anime_id = :anime_id";
+            $parametros['anime_id'] = $animeId;
+        }
+
+        if ($categoriaId > 0) {
+            $sql .= " AND p.categoria_id = :categoria_id";
+            $parametros['categoria_id'] = $categoriaId;
+        }
+
+        switch ($estado) {
+
+            case 'activa':
+                $sql .= " AND p.esta_activa = 1
+                  AND p.estado_revision = 'Aprobada'";
+                break;
+
+            case 'inactiva':
+                $sql .= " AND p.esta_activa = 0
+                  AND p.estado_revision = 'Aprobada'";
+                break;
+
+            case 'rechazada':
+                $sql .= " AND p.estado_revision = 'Rechazada'";
+                break;
+
+            case 'reportada':
+                $sql .= " AND p.estado_revision = 'Baja por reportes'";
+                break;
+
+            default:
+                break;
+        }
+
+        $sql .= " ORDER BY p.id DESC
+              LIMIT $limite OFFSET $offset";
+
+        return $this->database->queryAll($sql, $parametros);
+    }
+
+    // revisa la cantidad de preguntas disponibles para meterlas en paginas
+    public function contarPreguntasAdministrables(
+        $busqueda = '',
+        $animeId = 0,
+        $categoriaId = 0,
+        $estado = ''
+    ) {
+        $sql = "SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)";
+
+        $parametros = [];
+
+        if ($busqueda !== '') {
+            $sql .= " AND p.enunciado LIKE :busqueda";
+            $parametros['busqueda'] = '%' . $busqueda . '%';
+        }
+
+        if ($animeId > 0) {
+            $sql .= " AND p.anime_id = :anime_id";
+            $parametros['anime_id'] = $animeId;
+        }
+
+        if ($categoriaId > 0) {
+            $sql .= " AND p.categoria_id = :categoria_id";
+            $parametros['categoria_id'] = $categoriaId;
+        }
+
+        if ($estado === '1' || $estado === '0') {
+            $sql .= " AND p.esta_activa = :estado";
+            $parametros['estado'] = (int)$estado;
+        }
+
+        $resultado = $this->database->queryOne($sql, $parametros);
+
+        return (int)$resultado['total'];
     }
 
     public function getPreguntaPorId($idPregunta)
@@ -47,6 +146,9 @@ class EditorModel
                 p.categoria_id,
                 c.nombre AS categoria,
                 p.dificultad,
+                p.tipo_pregunta,
+                p.estado_revision,
+                p.recurso,
                 p.esta_activa,
                 p.respuesta_a,
                 p.respuesta_b,
@@ -246,6 +348,68 @@ class EditorModel
         ]);
     }
 
+    // Que una pregunta se de debaja automaticamente al llegar a los 10 reportes
+
+    public function contarReportesPendientes($idPregunta)
+    {
+        $sql = "SELECT COUNT(*) AS total
+            FROM reporte_pregunta
+            WHERE pregunta_id = :id
+            AND estado = 'Pendiente'";
+
+        $resultado = $this->database->queryOne($sql, [
+            'id' => $idPregunta
+        ]);
+
+        return (int)$resultado['total'];
+    }
+
+    public function desactivarPorReportes($idPregunta)
+    {
+        $sql = "UPDATE pregunta
+            SET esta_activa = 0
+            WHERE id = :id
+            AND esta_activa = 1";
+
+        return $this->database->execute($sql, [
+            'id' => $idPregunta
+        ]);
+    }
+
+
+
+
+
+
+
+    public function desactivarPregunta($idPregunta)
+    {
+        $sql = "UPDATE pregunta
+            SET esta_activa = 0
+            WHERE id = :id
+            AND esta_activa = 1";
+
+        return $this->database->execute($sql, [
+            'id' => $idPregunta
+        ]);
+    }
+
+
+
+
+    public function reactivarPregunta($idPregunta)
+    {
+        $sql = "UPDATE pregunta
+            SET esta_activa = 1
+            WHERE id = :id
+            AND estado_revision = 'Aprobada'
+            AND esta_activa = 0";
+
+        return $this->database->execute($sql, [
+            'id' => $idPregunta
+        ]);
+    }
+
     public function getAnimesActivos()
     {
         $sql = "SELECT id, nombre
@@ -265,4 +429,101 @@ class EditorModel
 
         return $this->database->queryAll($sql);
     }
+
+    public function getPreguntasBajaPorReportes()
+    {
+        $sql = "SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC";
+
+        return $this->database->queryAll($sql);
+    }
+
+    public function getReportesPorPregunta($idPregunta)
+    {
+        $sql = "SELECT
+                id,
+                motivo,
+                descripcion,
+                created_at
+            FROM reporte_pregunta
+            WHERE pregunta_id = :idPregunta
+            AND estado = 'Pendiente'
+            ORDER BY created_at DESC";
+
+        return $this->database->queryAll($sql, [
+            'idPregunta' => $idPregunta
+        ]);
+    }
+
+
+    public function aprobarPreguntaReportada($idPregunta)
+    {
+        $sql = "UPDATE pregunta
+            SET esta_activa = 1,
+                estado_revision = 'Aprobada'
+            WHERE id = :id
+            AND estado_revision = 'Baja por reportes'";
+
+        return $this->database->execute($sql, [
+            'id' => $idPregunta
+        ]);
+    }
+
+    public function mantenerBajaPreguntaReportada($idPregunta)
+    {
+        $sql = "UPDATE pregunta
+            SET esta_activa = 0,
+                estado_revision = 'Rechazada'
+            WHERE id = :id
+            AND estado_revision = 'Baja por reportes'";
+
+        return $this->database->execute($sql, [
+            'id' => $idPregunta
+        ]);
+    }
+
+    public function cerrarReportesPregunta($idPregunta, $estado)
+    {
+        if (!in_array($estado, ['Revisado', 'Descartado'], true)) {
+            return false;
+        }
+
+        $sql = "UPDATE reporte_pregunta
+            SET estado = :estado
+            WHERE pregunta_id = :idPregunta
+            AND estado = 'Pendiente'";
+
+        return $this->database->execute($sql, [
+            'estado' => $estado,
+            'idPregunta' => $idPregunta
+        ]);
+    }
+
+    public function recuperarPreguntaRechazada($idPregunta)
+    {
+        $sql = "UPDATE pregunta
+            SET estado_revision = 'Aprobada',
+                esta_activa = 1
+            WHERE id = :id
+            AND estado_revision = 'Rechazada'
+            AND esta_activa = 0";
+
+        return $this->database->execute($sql, [
+            'id' => $idPregunta
+        ]);
+    }
+
 }

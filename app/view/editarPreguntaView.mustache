@@ -17,6 +17,8 @@
         font-family: Arial, Helvetica, sans-serif;
     }
 
+
+
     .edit-title {
         margin: 0 0 25px;
         color: #F1CD73;
@@ -137,11 +139,132 @@
             flex-wrap: wrap;
         }
     }
+
+    .pregunta-imagen-container,
+    .pregunta-audio-container {
+        margin: 20px 0;
+        padding: 15px;
+        background: rgba(10, 26, 51, 0.85);
+        border: 1px solid #315B91;
+        border-radius: 10px;
+    }
+
+    .pregunta-imagen {
+        display: block;
+        max-width: 300px;
+        max-height: 250px;
+        width: 100%;
+        object-fit: contain;
+        margin: 12px auto;
+        border-radius: 8px;
+    }
+
+    .pregunta-audio-container audio {
+        width: 100%;
+        margin-top: 12px;
+    }
+
+    .reportes-revision {
+        background: #132c4e;
+        border: 1px solid #b98b3b;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .reportes-revision h3 {
+        color: #f1cd73;
+        margin-bottom: 12px;
+    }
+
+    .reportes-revision h4 {
+        color: #a9c2e8;
+        margin: 20px 0 12px;
+    }
+
+    .reporte-item {
+        background: #0a1a33;
+        padding: 12px 15px;
+        border-left: 3px solid #fbbf24;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+
+    .reporte-item strong {
+        color: #fbbf24;
+    }
+
+    .reporte-item p {
+        color: #e5edff;
+        margin: 8px 0;
+    }
+
+    .reporte-item small {
+        color: #88a5cd;
+    }
+
+    .acciones-revision {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .acciones-revision button {
+        padding: 12px 18px;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .btn-aprobar-revision {
+        background: #168653;
+    }
+
+    .btn-mantener-baja {
+        background: #a43832;
+    }
+
+    .acciones-revision button:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.15);
+    }
 </style>
 
 <div class="edit-container">
 
     <h1 class="edit-title">EDITAR PREGUNTA #{{id}}</h1>
+
+    {{#esBajaPorReportes}}
+
+        <div class="reportes-revision">
+
+            <h3>Pregunta dada de baja por reportes</h3>
+
+            <p>
+                Esta pregunta recibió
+                <strong>{{cantidadReportes}} reportes pendientes</strong>
+                y fue desactivada automáticamente.
+            </p>
+
+            <h4>Motivos y comentarios</h4>
+
+            {{#reportes}}
+                <div class="reporte-item">
+                    <strong>{{motivo}}</strong>
+
+                    <p>{{descripcion}}</p>
+
+                    <small>{{created_at}}</small>
+                </div>
+            {{/reportes}}
+
+        </div>
+
+    {{/esBajaPorReportes}}
 
     <form action="editor/guardarEdicion" method="POST">
 
@@ -201,6 +324,27 @@
             </select>
         </div>
 
+        {{#esImagen}}
+            <div class="pregunta-imagen-container">
+                <label>Imagen de la pregunta:</label>
+
+                <img src="{{recursoUrl}}"
+                     alt="Imagen de la pregunta"
+                     class="pregunta-imagen">
+            </div>
+        {{/esImagen}}
+
+        {{#esAudio}}
+            <div class="pregunta-audio-container">
+                <label>Audio de la pregunta:</label>
+
+                <audio controls preload="metadata">
+                    <source src="{{recursoUrl}}" type="audio/mpeg">
+                    Tu navegador no soporta audio.
+                </audio>
+            </div>
+        {{/esAudio}}
+
         <!-- RESPUESTAS -->
         <div class="options-section-title">
             Opciones de respuesta (Marcá con el radio cuál es la correcta):
@@ -254,5 +398,33 @@
 
         </div>
 
+
+
     </form>
+
+    {{#esBajaPorReportes}}
+
+        <div class="acciones-revision">
+
+            <form action="editor/revisarPreguntaReportada" method="POST">
+                <input type="hidden" name="id_pregunta" value="{{id}}">
+                <input type="hidden" name="accion" value="aprobar">
+
+                <button type="submit" class="btn-aprobar-revision">
+                    Aprobar y reactivar
+                </button>
+            </form>
+
+            <form action="editor/revisarPreguntaReportada" method="POST">
+                <input type="hidden" name="id_pregunta" value="{{id}}">
+                <input type="hidden" name="accion" value="mantener_baja">
+
+                <button type="submit" class="btn-mantener-baja">
+                    Mantener dada de baja
+                </button>
+            </form>
+
+        </div>
+
+    {{/esBajaPorReportes}}
 </div>

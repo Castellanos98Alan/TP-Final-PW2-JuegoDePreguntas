@@ -154,3 +154,12 @@ CREATE TABLE IF NOT EXISTS historial_respuesta (
     FOREIGN KEY (usuario_id) REFERENCES usuario(id),
     FOREIGN KEY (pregunta_id) REFERENCES pregunta(id)
     );
+
+--
+-- Cambio para ver editor
+--
+
+ALTER TABLE pregunta
+    ADD COLUMN estado_revision
+        ENUM('Pendiente', 'Aprobada', 'Rechazada')
+NOT NULL DEFAULT 'Aprobada';

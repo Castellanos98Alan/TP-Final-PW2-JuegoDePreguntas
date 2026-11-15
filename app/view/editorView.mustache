@@ -198,6 +198,244 @@
             min-width: 600px;
         }
     }
+
+    .acciones-pregunta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .acciones-pregunta form {
+        margin: 0;
+    }
+
+    /* Tabla de preguntas */
+    .tabla-preguntas {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    .tabla-preguntas th {
+        padding: 15px;
+        background: #122b4d;
+        color: #72b2ff;
+        text-align: left;
+        font-size: 13px;
+    }
+
+    .tabla-preguntas td {
+        padding: 14px;
+        border-bottom: 1px solid #254469;
+        color: #e5edff;
+        font-size: 13px;
+        overflow-wrap: anywhere;
+    }
+
+    /* Efecto cuando pasamos el mouse */
+    .tabla-preguntas tbody tr {
+        transition: background 0.2s ease;
+    }
+
+    .tabla-preguntas tbody tr:hover {
+        background: rgba(60, 120, 200, 0.15);
+    }
+
+    /* Botones alineados */
+    .acciones-pregunta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .acciones-pregunta form {
+        margin: 0;
+    }
+
+    /* Estilo compartido */
+    .acciones-pregunta .btn-edit,
+    .btn-desactivar,
+    .btn-reactivar {
+        padding: 9px 13px;
+        border-radius: 7px;
+        border: none;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    /* Editar */
+    .acciones-pregunta .btn-edit {
+        background: #2563eb;
+        color: white;
+    }
+
+    /* Desactivar */
+    .btn-desactivar {
+        background: #a43832;
+        color: white;
+    }
+
+    /* Reactivar */
+    .btn-reactivar {
+        background: #168653;
+        color: white;
+    }
+
+    /* Hover de los botones */
+    .acciones-pregunta .btn-edit:hover,
+    .btn-desactivar:hover,
+    .btn-reactivar:hover {
+        filter: brightness(1.2);
+        transform: translateY(-2px);
+    }
+
+
+    .paginacion {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    .btn-pagina {
+        padding: 10px 18px;
+        background: #17365d;
+        border: 1px solid #d4af55;
+        border-radius: 8px;
+        color: #f1cd73;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+
+    .btn-pagina:hover {
+        background: #d4af55;
+        color: #0a1a33;
+    }
+
+    .paginacion span {
+        color: #a9c2e8;
+        font-size: 13px;
+    }
+
+    .filtros-editor {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 20px 0;
+        align-items: center;
+    }
+
+    .filtros-editor input,
+    .filtros-editor select {
+        padding: 11px;
+        background: #0a1a33;
+        border: 1px solid #315b91;
+        border-radius: 8px;
+        color: white;
+        flex: 1 1 170px;
+        min-width: 0;
+    }
+
+    .filtros-editor button,
+    .btn-limpiar {
+        padding: 11px 18px;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .filtros-editor button {
+        background: #d4af55;
+        color: #0a1a33;
+        border: none;
+    }
+
+    .btn-limpiar {
+        background: #17365d;
+        color: white;
+        border: 1px solid #315b91;
+    }
+
+    .filtros-editor button:hover,
+    .btn-limpiar:hover {
+        filter: brightness(1.15);
+    }
+
+    .badge-estado {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        text-align: center;
+        min-width: 120px;
+    }
+
+    .badge-activa {
+        background: rgba(22, 134, 83, 0.18);
+        color: #4ade80;
+        border: 1px solid #168653;
+    }
+
+    .badge-inactiva {
+        background: rgba(120, 130, 150, 0.18);
+        color: #cbd5e1;
+        border: 1px solid #64748b;
+    }
+
+    .badge-rechazada {
+        background: rgba(164, 56, 50, 0.18);
+        color: #f87171;
+        border: 1px solid #a43832;
+    }
+
+    .badge-reportada {
+        background: rgba(251, 191, 36, 0.18);
+        color: #fbbf24;
+        border: 1px solid #f59e0b;
+    }
+
+    .btn-gold {
+        padding: 9px 18px;
+        border: 1px solid #F5D78A;
+        border-radius: 8px;
+        background: linear-gradient(110deg, #F4D47D, #C99A3D);
+        color: #0A1A33;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        transition: transform 0.2s, filter 0.2s;
+    }
+
+    .btn-gold:hover {
+        filter: brightness(1.1);
+        transform: translateY(-2px);
+    }
+
+    .btn-print {
+        background: transparent;
+        color: #F1CD73;
+        border: 1px solid #D4AF55;
+    }
+
+    .btn-print:hover {
+        background: #D4AF55;
+        color: #0A1A33;
+    }
+
+
 </style>
 
 <div class="editor-container">
@@ -219,58 +457,49 @@
     <div class="section-card">
         <div class="section-title">REPORTES DE PREGUNTAS</div>
 
-        <table>
+
+        <table class="tabla-preguntas">
             <thead>
-                <tr>
-                    <th style="width: 45%;">Pregunta Reportada</th>
-                    <th>Motivo</th>
-                    <th>Comentario</th>
-                    <th style="text-align: center;">Acciones</th>
-                </tr>
+            <tr>
+                <th style="width: 45%;">Pregunta reportada</th>
+                <th>Categoría</th>
+                <th>Reportes</th>
+                <th style="text-align: center;">Acciones</th>
+            </tr>
             </thead>
 
             <tbody>
-                {{#reportes_pendientes}}
+            {{#preguntas_baja_reportes}}
                 <tr>
                     <td>
-                        <strong>{{pregunta_descripcion}}</strong>
-                        {{#categoria}}
-                            <br>
-                            <small style="color: #93C5FD;">{{categoria}}</small>
-                        {{/categoria}}
+                        <strong>{{descripcion}}</strong>
                     </td>
 
-                    <td style="color: #FBBF24;">{{motivo}}</td>
-                    <td>{{comentario}}</td>
+                    <td>{{categoria}}</td>
 
-                    <td style="text-align: center; white-space: nowrap;">
-                        <a href="editor/editar?id={{pregunta_id}}"
-                           class="btn-action btn-edit">
-                            Corregir
+                    <td>
+                <span class="cantidad-reportes">
+                    {{cantidad_reportes}} reportes
+                </span>
+                    </td>
+
+                    <td style="text-align: center;">
+                        <a href="editor/editar?id={{id}}"
+                        class="btn-action btn-edit">
+                        Revisar pregunta
                         </a>
-
-                        <form action="editor/resolverReporte"
-                              method="POST"
-                              style="display:inline; margin-left: 5px;">
-
-                            <input type="hidden" name="id_reporte" value="{{reporte_id}}">
-                            <input type="hidden" name="accion" value="resuelto">
-
-                            <button type="submit" class="btn-action btn-approve">
-                                Resolver
-                            </button>
-                        </form>
                     </td>
                 </tr>
-                {{/reportes_pendientes}}
+            {{/preguntas_baja_reportes}}
 
-                {{^reportes_pendientes}}
+            {{^preguntas_baja_reportes}}
                 <tr>
-                    <td colspan="4" style="text-align: center; color: #88A5CD; padding: 16px;">
-                        No hay reportes de preguntas pendientes.
+                    <td colspan="4"
+                        style="text-align: center; color: #88A5CD; padding: 20px;">
+                        No hay preguntas dadas de baja por reportes.
                     </td>
                 </tr>
-                {{/reportes_pendientes}}
+            {{/preguntas_baja_reportes}}
             </tbody>
         </table>
     </div>
@@ -378,17 +607,6 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="dificultad">Dificultad:</label>
-
-                <select name="dificultad" id="dificultad" required>
-                    <option value="">Seleccionar dificultad</option>
-                    <option value="facil">Fácil</option>
-                    <option value="media">Media</option>
-                    <option value="dificil">Difícil</option>
-                </select>
-            </div>
-
             <label style="margin-top: 15px;">
                 Opciones de respuesta (Marcá la opción correcta):
             </label>
@@ -426,43 +644,183 @@
         </form>
     </div>
 
+    <form action="editor" method="POST" class="filtros-editor">
+
+        <input type="text"
+               name="busqueda"
+               placeholder="Buscar pregunta..."
+               value="{{busqueda}}">
+
+        <select name="anime_id">
+            <option value="0">Todos los animes</option>
+
+            {{#animes}}
+                <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                    {{nombre}}
+                </option>
+            {{/animes}}
+        </select>
+
+        <select name="categoria_id">
+            <option value="0">Todas las categorías</option>
+
+            {{#categorias}}
+                <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                    {{nombre}}
+                </option>
+            {{/categorias}}
+        </select>
+
+        <select name="estado">
+            <option value="">Todos los estados</option>
+
+            <option value="activa" {{#estadoActivo}}selected{{/estadoActivo}}>
+                Activas
+            </option>
+
+            <option value="inactiva" {{#estadoInactivo}}selected{{/estadoInactivo}}>
+                Inactivas
+            </option>
+
+            <option value="rechazada" {{#estadoRechazado}}selected{{/estadoRechazado}}>
+                Rechazadas
+            </option>
+
+            <option value="reportada" {{#estadoReportado}}selected{{/estadoReportado}}>
+                Baja por reportes
+            </option>
+        </select>
+
+        <button type="submit">Buscar</button>
+
+        <button type="submit" name="limpiar_filtros" value="1" class="btn-gold btn-print">
+            Limpiar
+        </button>
+
+
+
+    </form>
+
     <!-- 4. EDITAR PREGUNTAS ACTIVAS -->
     <div class="section-card">
-        <div class="section-title">EDITAR PREGUNTAS ACTIVAS</div>
+        <div class="section-title">GESTIONAR PREGUNTAS</div>
 
         <table>
             <thead>
                 <tr>
-                    <th style="width: 60%;">Pregunta</th>
-                    <th>Categoría</th>
-                    <th style="text-align: center;">Acción</th>
+                    <thead>
+                <tr>
+                    <th style="width: 50%;">Pregunta</th>
+                    <th style="width: 10%;">Categoría</th>
+                    <th style="width: 15%; text-align: center">Estado</th>
+                    <th style="width: 25%; text-align: center">Acciones</th>
+                </tr>
+            </thead>
+
                 </tr>
             </thead>
 
             <tbody>
-                {{#activas}}
+            {{#activas}}
                 <tr>
                     <td>{{descripcion}}</td>
                     <td>{{categoria}}</td>
 
-                    <td style="text-align: center;">
-                        <a href="editor/editar?id={{id}}"
-                           class="btn-action btn-edit">
-                            Editar
-                        </a>
-                    </td>
-                </tr>
-                {{/activas}}
+                    <td>
+                        {{#estadoActiva}}
+                            <span class="badge-estado badge-activa">Activa</span>
+                        {{/estadoActiva}}
 
-                {{^activas}}
-                <tr>
-                    <td colspan="3" style="text-align: center; color: #88A5CD; padding: 16px;">
-                        No hay preguntas activas registradas para editar.
+                        {{#estadoInactiva}}
+                            <span class="badge-estado badge-inactiva">Inactiva</span>
+                        {{/estadoInactiva}}
+
+                        {{#estadoRechazada}}
+                            <span class="badge-estado badge-rechazada">Rechazada</span>
+                        {{/estadoRechazada}}
+
+                        {{#estadoReportada}}
+                            <span class="badge-estado badge-reportada">Baja por reportes</span>
+                        {{/estadoReportada}}
+                    </td>
+
+                    <td>
+                        <div class="acciones-pregunta">
+
+                            {{#activa}}
+                                <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
+                                Editar
+                                </a>
+
+                                <form action="editor/desactivar" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id_pregunta" value="{{id}}">
+                                    <button type="submit" class="btn-desactivar">
+                                        Desactivar
+                                    </button>
+                                </form>
+                            {{/activa}}
+
+                            {{#estadoInactiva}}
+                                <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
+                                Editar
+                                </a>
+
+                                <form action="editor/reactivar" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id_pregunta" value="{{id}}">
+                                    <button type="submit" class="btn-reactivar">
+                                        Reactivar
+                                    </button>
+                                </form>
+                            {{/estadoInactiva}}
+
+                            {{#estadoReportada}}
+                                <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
+                                Revisar
+                                </a>
+                            {{/estadoReportada}}
+
+                            {{#estadoRechazada}}
+                                <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
+                                Revisar
+                                </a>
+
+                                <form action="editor/recuperarRechazada" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id_pregunta" value="{{id}}">
+                                    <button type="submit" class="btn-reactivar">
+                                        Aprobar y reactivar
+                                    </button>
+                                </form>
+                            {{/estadoRechazada}}
+
+                        </div>
                     </td>
                 </tr>
-                {{/activas}}
+            {{/activas}}
             </tbody>
         </table>
+
+        <div class="paginacion">
+
+            {{#hayAnterior}}
+                <a href="editor?pagina={{paginaAnterior}}"
+                class="btn-pagina">
+                Anterior
+                </a>
+            {{/hayAnterior}}
+
+            <span>
+        Página {{paginaActual}} de {{totalPaginas}}
+    </span>
+
+            {{#haySiguiente}}
+                <a href="editor?pagina={{paginaSiguiente}}"
+                class="btn-pagina">
+                Siguiente
+                </a>
+            {{/haySiguiente}}
+
+        </div>
+
     </div>
 
 </div>

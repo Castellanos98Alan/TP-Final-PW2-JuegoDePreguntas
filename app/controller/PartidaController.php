@@ -663,12 +663,20 @@ class PartidaController
             exit();
         }
 
-        $this->model->guardarReporte(
+        $reporteGuardado = $this->model->guardarReporte(
             $_SESSION['usuario_id'],
             $idPregunta,
             $motivo,
             $descripcion
         );
+
+        if (!$reporteGuardado) {
+            echo json_encode([
+                'success' => false,
+                'mensaje' => 'Ya reportaste esta pregunta anteriormente.'
+            ]);
+            exit();
+        }
 
         echo json_encode([
             'success' => true,

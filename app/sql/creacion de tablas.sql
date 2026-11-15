@@ -462,3 +462,14 @@ CREATE TABLE historial_respuesta (
                                      FOREIGN KEY (pregunta_id) REFERENCES pregunta(id)
 );
 
+
+ALTER TABLE pregunta
+    MODIFY COLUMN estado_revision
+    ENUM(
+    'Pendiente',
+    'Aprobada',
+    'Rechazada',
+    'Baja por reportes'
+    )
+    NOT NULL DEFAULT 'Aprobada';
+

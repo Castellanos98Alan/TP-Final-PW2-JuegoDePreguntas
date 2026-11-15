@@ -463,17 +463,62 @@ class PartidaModel
     /** Guarda un reporte enviado por un jugador. */
     public function guardarReporte($usuarioId, $preguntaId, $motivo, $descripcion)
     {
-        $sql = "INSERT INTO reporte_pregunta
-                    (usuario_id, pregunta_id, motivo, descripcion)
-                VALUES
-                    (:usuarioId, :preguntaId, :motivo, :descripcion)";
+        // Comprobamos si este usuario ya reportó la pregunta.
+        $sql = "SELECT COUNT(*) AS total
+            FROM reporte_pregunta
+            WHERE usuario_id = :usuarioId
+            AND pregunta_id = :preguntaId";
 
-        return $this->database->execute($sql, [
+        $resultado = $this->database->queryOne($sql, [
+            'usuarioId' => $usuarioId,
+            'preguntaId' => $preguntaId
+        ]);
+
+        if ((int)$resultado['total'] > 0) {
+            return false;
+        }
+
+        // Guardamos el reporte.
+        $sql = "INSERT INTO reporte_pregunta
+                (usuario_id, pregunta_id, motivo, descripcion)
+            VALUES
+                (:usuarioId, :preguntaId, :motivo, :descripcion)";
+
+        $this->database->execute($sql, [
             'usuarioId' => $usuarioId,
             'preguntaId' => $preguntaId,
             'motivo' => $motivo,
             'descripcion' => $descripcion
         ]);
+
+        // Contamos cuántos reportes pendientes tiene.
+        $sql = "SELECT COUNT(DISTINCT usuario_id) AS total
+            FROM reporte_pregunta
+            WHERE pregunta_id = :preguntaId
+            AND estado = 'Pendiente'";
+
+        $resultado = $this->database->queryOne($sql, [
+            'preguntaId' => $preguntaId
+        ]);
+
+        $cantidadReportes = (int)$resultado['total'];
+
+        // Si supera los 10 reportes, se desactiva.
+        if ($cantidadReportes > 0) {
+
+            $sql = "UPDATE pregunta
+            SET esta_activa = 0,
+                estado_revision = 'Baja por reportes'
+            WHERE id = :preguntaId
+            AND esta_activa = 1
+            AND estado_revision = 'Aprobada'";
+
+            $this->database->execute($sql, [
+                'preguntaId' => $preguntaId
+            ]);
+        }
+
+        return true;
     }
 
     public function guardarPartida(
