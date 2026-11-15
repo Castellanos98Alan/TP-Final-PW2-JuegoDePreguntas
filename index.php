@@ -1,4 +1,5 @@
 <?php
+
 use app\Configuration;
 
 session_start();

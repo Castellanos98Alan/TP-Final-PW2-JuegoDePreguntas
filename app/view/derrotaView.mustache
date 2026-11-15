@@ -339,61 +339,62 @@
 
         </div>
 
-        {{#mensajeReporte}}<p>{{mensajeReporte}}</p>{{/mensajeReporte}}
-        {{^mensajeReporte}}
+        <div style="margin: 25px 0; text-align: center;">
+            <button type="button" id="btnToggleReporte"
+                    style="background: transparent; border: 2px solid #d4af37; color: #f4c34a; padding: 10px 22px; border-radius: 999px; font-weight: bold; cursor: pointer; font-size: 15px;">
+                ⚠️ Reportar pregunta
+            </button>
+        </div>
 
-<section style="margin: 25px 0; padding: 22px; border: 1px solid #d8aa32; border-radius: 16px; background: #07162d; color: white;">
-    <h2>¿Encontraste un error?</h2>
-    <p>Seleccioná la pregunta que querés reportar y contanos qué está mal.</p>
+        <section id="seccionReporte" style="display: none; margin: 20px 0; padding: 22px; border: 1px solid #d8aa32; border-radius: 16px; background: #07162d; color: white; text-align: left;">
+            <div id="mensajeReporteAjax" style="display: none; padding: 16px; border-radius: 8px; font-weight: bold; text-align: center; font-size: 16px;"></div>
 
-    {{#mensajeReporte}}
-        <p role="status">{{mensajeReporte}}</p>
-    {{/mensajeReporte}}
+            <div id="cuerpoReporte">
+                <h2 style="margin-top: 0;">¿Encontraste un error?</h2>
+                <p>Seleccioná la pregunta que querés reportar y contanos qué está mal.</p>
 
-    <form action="partida/reportar" method="POST"
-          style="display: grid; gap: 14px;">
+                <form id="formReporte" action="partida/reportar" method="POST" style="display: grid; gap: 14px;">
+                    <label for="preguntaReporte">Pregunta a reportar</label>
+                    <select id="preguntaReporte" name="idPregunta" required style="padding: 12px; border-radius: 8px;">
+                        <option value="">Seleccioná una pregunta</option>
+                        {{#preguntasReporte}}
+                            <option value="{{id}}">{{enunciado}}</option>
+                        {{/preguntasReporte}}
+                    </select>
 
-        <label for="preguntaReporte">Pregunta a reportar</label>
-        <select id="preguntaReporte" name="idPregunta" required
-                style="padding: 12px; border-radius: 8px;">
-            <option value="">Seleccioná una pregunta</option>
+                    <label for="motivoReporte">Motivo</label>
+                    <select id="motivoReporte" name="motivo" required style="padding: 12px; border-radius: 8px;">
+                        <option value="">Seleccioná un motivo</option>
+                        <option value="Respuesta incorrecta">Respuesta incorrecta</option>
+                        <option value="Ninguna opción es correcta">Ninguna opción es correcta</option>
+                        <option value="Enunciado confuso">Enunciado confuso</option>
+                        <option value="Imagen o audio con problemas">Imagen o audio con problemas</option>
+                        <option value="Otro">Otro</option>
+                    </select>
 
-            {{#preguntasReporte}}
-                <option value="{{id}}">{{enunciado}}</option>
-            {{/preguntasReporte}}
-        </select>
+                    <label for="descripcionReporte">Descripción del error</label>
+                    <textarea id="descripcionReporte" name="descripcion" required maxlength="2000" rows="4"
+                              placeholder="Contanos qué encontraste..."
+                              style="padding: 12px; border-radius: 8px;"></textarea>
 
-        <label for="motivoReporte">Motivo</label>
-        <select id="motivoReporte" name="motivo" required
-                style="padding: 12px; border-radius: 8px;">
-            <option value="">Seleccioná un motivo</option>
-            <option value="Respuesta incorrecta">Respuesta incorrecta</option>
-            <option value="Ninguna opción es correcta">Ninguna opción es correcta</option>
-            <option value="Enunciado confuso">Enunciado confuso</option>
-            <option value="Imagen o audio con problemas">Imagen o audio con problemas</option>
-            <option value="Otro">Otro</option>
-        </select>
-
-        <label for="descripcionReporte">Descripción del error</label>
-        <textarea id="descripcionReporte" name="descripcion"
-                  required maxlength="2000" rows="4"
-                  placeholder="Contanos qué encontraste..."
-                  style="padding: 12px; border-radius: 8px;"></textarea>
-
-        <button type="submit"
-                style="padding: 12px; border: 0; border-radius: 8px; cursor: pointer;">
-            Enviar reporte
-        </button>
-    </form>
-</section>
-
-        {{/mensajeReporte}}
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button type="button" id="btnCancelarReporte"
+                                style="padding: 10px 18px; border: 1px solid #777; background: transparent; color: white; border-radius: 8px; cursor: pointer;">
+                            Cancelar
+                        </button>
+                        <button type="submit" id="btnEnviarReporte"
+                                style="padding: 10px 22px; border: 0; border-radius: 8px; cursor: pointer; background: #d8aa32; color: #07162d; font-weight: bold;">
+                            Enviar reporte
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
 
         <p class="mensaje-final">
             Llegaste a responder correctamente
             <strong>{{respuestasCorrectas}}</strong>
             preguntas y sumaste esos puntos a tu ranking.
-
         </p>
 
         <div class="acciones-derrota">
@@ -416,3 +417,76 @@
 
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnToggle = document.getElementById('btnToggleReporte');
+        const btnCancelar = document.getElementById('btnCancelarReporte');
+        const seccionReporte = document.getElementById('seccionReporte');
+        const cuerpoReporte = document.getElementById('cuerpoReporte');
+        const formReporte = document.getElementById('formReporte');
+        const mensajeBox = document.getElementById('mensajeReporteAjax');
+        const btnEnviar = document.getElementById('btnEnviarReporte');
+
+        if (!formReporte) return;
+
+        btnToggle.addEventListener('click', function () {
+            if (seccionReporte.style.display === 'none') {
+                seccionReporte.style.display = 'block';
+                btnToggle.style.display = 'none';
+            } else {
+                seccionReporte.style.display = 'none';
+            }
+        });
+
+        btnCancelar.addEventListener('click', function () {
+            seccionReporte.style.display = 'none';
+            btnToggle.style.display = 'inline-block';
+        });
+
+        formReporte.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            btnEnviar.disabled = true;
+            btnEnviar.textContent = 'Enviando...';
+
+            const formData = new FormData(formReporte);
+
+            try {
+                const res = await fetch(formReporte.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                mensajeBox.style.display = 'block';
+                mensajeBox.textContent = data.mensaje;
+
+                if (data.success) {
+                    cuerpoReporte.style.display = 'none';
+                    mensajeBox.style.background = 'rgba(70, 210, 124, 0.2)';
+                    mensajeBox.style.border = '1px solid #46d27c';
+                    mensajeBox.style.color = '#46d27c';
+                    mensajeBox.style.marginBottom = '0';
+                } else {
+                    mensajeBox.style.background = 'rgba(238, 102, 102, 0.2)';
+                    mensajeBox.style.border = '1px solid #ee6666';
+                    mensajeBox.style.color = '#ff8c8c';
+                    mensajeBox.style.marginBottom = '14px';
+                    btnEnviar.disabled = false;
+                    btnEnviar.textContent = 'Enviar reporte';
+                }
+            } catch (error) {
+                mensajeBox.style.display = 'block';
+                mensajeBox.style.background = 'rgba(238, 102, 102, 0.2)';
+                mensajeBox.style.border = '1px solid #ee6666';
+                mensajeBox.style.color = '#ff8c8c';
+                mensajeBox.style.marginBottom = '14px';
+                mensajeBox.textContent = 'Error de conexión al enviar el reporte.';
+                btnEnviar.disabled = false;
+                btnEnviar.textContent = 'Enviar reporte';
+            }
+        });
+    });
+</script>

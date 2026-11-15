@@ -12,6 +12,7 @@ use app\controller\GrupoController;
 use app\controller\AdminController;
 use app\controller\EditorController;
 use app\controller\RankingController;
+use app\controller\SugerirPreguntaController;
 
 use app\model\BuscadorModel;
 use app\model\LoginModel;
@@ -22,6 +23,7 @@ use app\model\RegistroModel;
 use app\model\AdminModel;
 use app\model\EditorModel;
 use app\model\RankingModel;
+use app\model\SugerirPreguntaModel;
 use MustacheRender;
 use MyDatabase;
 use Router;
@@ -202,6 +204,21 @@ class Configuration
         return new BuscadorController(
             $this->getBuscadorModel(),
             $this->getRender()
+        );
+    }
+
+    public function getSugerirPreguntaController()
+    {
+        return new SugerirPreguntaController(
+            $this->getSugerirPreguntaModel(),
+            $this->getRender()
+        );
+    }
+
+    private function getSugerirPreguntaModel()
+    {
+        return new SugerirPreguntaModel(
+            $this->getDatabase()
         );
     }
 }

@@ -235,8 +235,7 @@
 
         <div class="bs-lista" id="bs-lista">
             {{#jugadores}}
-                <a class="bs-jugador"
-                   href="?controller=perfil&method=show&id={{id}}">
+                <a class="bs-jugador" href="perfil/{{id}}">
                 <img class="bs-avatar" src="{{foto_perfil}}" alt="Foto de {{username}}">
 
                 <div class="bs-info">
@@ -261,7 +260,7 @@
     </section>
 
     <div class="bs-volver">
-        <a href="?controller=lobby&method=show" class="bs-btn">Volver al lobby</a>
+        <a href="lobby" class="bs-btn">Volver al lobby</a>
     </div>
 
 </div>
