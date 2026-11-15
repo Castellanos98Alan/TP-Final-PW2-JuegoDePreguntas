@@ -308,10 +308,16 @@ CREATE TABLE pregunta (
         'facil',
         'media',
         'dificil'
-    ) NOT NULL,
+    ) NOT NULL ,
 
     esta_activa TINYINT(1)
         NOT NULL DEFAULT 1,
+
+    estado_revision ENUM(
+        'Pendiente',
+        'Aprobada',
+        'Rechazada'
+    ) NOT NULL DEFAULT 'Aprobada',
 
     created_at TIMESTAMP
         DEFAULT CURRENT_TIMESTAMP,
@@ -455,11 +461,4 @@ CREATE TABLE historial_respuesta (
                                      FOREIGN KEY (usuario_id) REFERENCES usuario(id),
                                      FOREIGN KEY (pregunta_id) REFERENCES pregunta(id)
 );
-
-
-
-
-ALTER TABLE pregunta
-    MODIFY dificultad ENUM('facil', 'media', 'dificil')
-    NOT NULL DEFAULT 'media';
 

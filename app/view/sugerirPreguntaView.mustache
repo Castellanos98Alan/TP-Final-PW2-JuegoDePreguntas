@@ -1,0 +1,386 @@
+<style>
+    .sugerir-wrapper {
+        width: 100%;
+        max-width: 860px;
+        margin: 25px auto 60px;
+        padding: 0 15px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .sugerir-card {
+        background: rgba(7, 20, 42, 0.94);
+        border: 1px solid #d4a72c;
+        border-radius: 18px;
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 167, 44, 0.15);
+        padding: 30px;
+        color: #DCE6F8;
+    }
+
+    .sugerir-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid rgba(212, 167, 44, 0.35);
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .sugerir-title {
+        color: #F1CD73;
+        font-family: 'Permanent Marker', cursive, sans-serif;
+        font-size: 26px;
+        margin: 0;
+        letter-spacing: 1px;
+    }
+
+    .btn-volver {
+        padding: 8px 16px;
+        border: 1px solid #d4a72c;
+        border-radius: 8px;
+        color: #F1CD73;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        transition: 0.2s;
+        display: inline-block;
+    }
+
+    .btn-volver:hover {
+        background: #d4a72c;
+        color: #071329;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #B6C9E6;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 8px;
+        border: 1px solid #315B91;
+        background: #091732;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-family: inherit;
+        box-sizing: border-box;
+        transition: 0.2s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #F1CD73;
+        box-shadow: 0 0 8px rgba(241, 205, 115, 0.3);
+    }
+
+    .char-info {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        font-size: 12px;
+    }
+
+    .char-hint {
+        color: #a9bfdf;
+    }
+
+    .char-counter {
+        color: #F1CD73;
+        font-weight: bold;
+    }
+
+    /* Selector de tipo multimedia */
+    .media-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+    }
+
+    .btn-media-tab {
+        flex: 1;
+        min-width: 130px;
+        padding: 11px 14px;
+        border: 1px solid #315B91;
+        background: rgba(16, 39, 73, 0.6);
+        color: #c6d7f5;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 13px;
+        text-align: center;
+        transition: 0.2s ease;
+    }
+
+    .btn-media-tab:hover {
+        border-color: #F1CD73;
+        color: #F1CD73;
+    }
+
+    .btn-media-tab.active {
+        border-color: #F1CD73;
+        background: rgba(241, 205, 115, 0.18);
+        color: #F1CD73;
+        box-shadow: 0 0 10px rgba(241, 205, 115, 0.2);
+    }
+
+    .media-upload-box {
+        padding: 16px;
+        background: rgba(16, 39, 73, 0.35);
+        border: 1px dashed #315B91;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    /* Opciones de respuesta */
+    .option-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+        padding: 8px 12px;
+        background: rgba(16, 39, 73, 0.4);
+        border: 1px solid #234575;
+        border-radius: 8px;
+        transition: 0.2s ease;
+    }
+
+    .option-row:hover {
+        border-color: rgba(241, 205, 115, 0.4);
+    }
+
+    .option-row input[type="radio"] {
+        accent-color: #F1CD73;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    .option-letter {
+        font-weight: bold;
+        color: #F1CD73;
+        font-size: 15px;
+        min-width: 18px;
+    }
+
+    /* Alertas */
+    .alert {
+        padding: 14px 18px;
+        border-radius: 8px;
+        margin-bottom: 22px;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .alert-success {
+        background: rgba(16, 185, 129, 0.15);
+        border: 1px solid #10B981;
+        color: #34D399;
+    }
+
+    .alert-error {
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid #EF4444;
+        color: #F87171;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #d4a72c, #f5c84b);
+        color: #06132e;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s ease;
+        margin-top: 15px;
+        box-shadow: 0 0 15px rgba(245, 200, 75, 0.25);
+    }
+
+    .btn-submit:hover {
+        filter: brightness(1.1);
+        transform: translateY(-2px);
+        box-shadow: 0 0 22px rgba(245, 200, 75, 0.4);
+    }
+
+    .info-footer {
+        font-size: 13px;
+        color: #9cb5db;
+        line-height: 1.5;
+        margin-top: 15px;
+    }
+</style>
+
+<div class="sugerir-wrapper">
+    <div class="sugerir-card">
+        <div class="sugerir-header">
+            <h2 class="sugerir-title">💡 Sugerir Nueva Pregunta</h2>
+            <a href="lobby" class="btn-volver">← Volver al Lobby</a>
+        </div>
+
+        {{#mensaje_exito}}
+        <div class="alert alert-success">
+            {{mensaje_exito}}
+        </div>
+        {{/mensaje_exito}}
+
+        {{#mensaje_error}}
+        <div class="alert alert-error">
+            {{mensaje_error}}
+        </div>
+        {{/mensaje_error}}
+
+        <form action="sugerirPregunta/guardar" method="POST" enctype="multipart/form-data">
+            
+            <!-- Anime (Franquicia) -->
+            <div class="form-group">
+                <label for="anime_id">Anime: *</label>
+                <select name="anime_id" id="anime_id" class="form-control" required>
+                    <option value="">-- Seleccionar Anime --</option>
+                    {{#animes}}
+                    <option value="{{id}}">{{nombre}}</option>
+                    {{/animes}}
+                </select>
+            </div>
+
+            <!-- Campo 1: Pregunta -->
+            <div class="form-group">
+                <label for="pregunta">Pregunta: *</label>
+                <input type="text" id="pregunta" name="pregunta" class="form-control" 
+                       placeholder="Ej: ¿Quién es el capitán de la tripulación de Sombrero de Paja?" 
+                       minlength="10" maxlength="100" required 
+                       oninput="actualizarContador('pregunta', 'contador-pregunta', 100)">
+                <div class="char-info">
+                    <span class="char-hint">Mínimo 10 caracteres, máximo 100.</span>
+                    <span id="contador-pregunta" class="char-counter">0 / 100</span>
+                </div>
+            </div>
+
+            <!-- Campo 2: Descripción (separada de la pregunta) -->
+            <div class="form-group">
+                <label for="descripcion">Descripción de la pregunta: *</label>
+                <textarea id="descripcion" name="descripcion" class="form-control" rows="3" 
+                          placeholder="Ej: Contexto adicional o detalle sobre el personaje, saga o escena de la pregunta..." 
+                          minlength="10" maxlength="100" required 
+                          oninput="actualizarContador('descripcion', 'contador-desc', 100)"></textarea>
+                <div class="char-info">
+                    <span class="char-hint">Mínimo 10 caracteres, máximo 100.</span>
+                    <span id="contador-desc" class="char-counter">0 / 100</span>
+                </div>
+            </div>
+
+            <!-- Opciones Multimedia Opcionales (Botones) -->
+            <div class="form-group">
+                <label>Recurso multimedia (Opcional):</label>
+                <div class="media-buttons">
+                    <button type="button" class="btn-media-tab active" id="tab-texto" onclick="seleccionarTipoMedia('texto')">📝 Solo Texto</button>
+                    <button type="button" class="btn-media-tab" id="tab-imagen" onclick="seleccionarTipoMedia('imagen')">🖼️ Agregar Imagen</button>
+                    <button type="button" class="btn-media-tab" id="tab-audio" onclick="seleccionarTipoMedia('audio')">🎵 Agregar Audio</button>
+                </div>
+                <input type="hidden" name="tipo_pregunta" id="tipo_pregunta" value="texto">
+
+                <div id="media-file-input" class="media-upload-box" style="display: none;">
+                    <label id="media-label" for="recurso">Seleccionar archivo:</label>
+                    <input type="file" name="recurso" id="recurso" class="form-control" accept="image/*,audio/*">
+                    <small id="media-hint" style="color: #a9bfdf; display:block; margin-top: 6px; font-size: 12px;"></small>
+                </div>
+            </div>
+
+            <!-- 4 Opciones de respuesta -->
+            <div class="form-group">
+                <label>Opciones de respuesta (Marcá cuál es la respuesta correcta): *</label>
+                
+                <div class="option-row">
+                    <input type="radio" name="correcta" value="0" checked id="opt0" title="Marcar como correcta">
+                    <span class="option-letter">A</span>
+                    <input type="text" name="opciones[]" class="form-control" placeholder="Respuesta A" maxlength="255" required>
+                </div>
+
+                <div class="option-row">
+                    <input type="radio" name="correcta" value="1" id="opt1" title="Marcar como correcta">
+                    <span class="option-letter">B</span>
+                    <input type="text" name="opciones[]" class="form-control" placeholder="Respuesta B" maxlength="255" required>
+                </div>
+
+                <div class="option-row">
+                    <input type="radio" name="correcta" value="2" id="opt2" title="Marcar como correcta">
+                    <span class="option-letter">C</span>
+                    <input type="text" name="opciones[]" class="form-control" placeholder="Respuesta C" maxlength="255" required>
+                </div>
+
+                <div class="option-row">
+                    <input type="radio" name="correcta" value="3" id="opt3" title="Marcar como correcta">
+                    <span class="option-letter">D</span>
+                    <input type="text" name="opciones[]" class="form-control" placeholder="Respuesta D" maxlength="255" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Enviar Pregunta</button>
+
+            <p style="text-align: center; font-size: 11px; color: #7f9bbd; margin-top: 12px; margin-bottom: 0;">
+                * Sujeto a revisión por el equipo de editores.
+            </p>
+        </form>
+    </div>
+</div>
+
+<script>
+function actualizarContador(inputId, contadorId, max) {
+    var elemento = document.getElementById(inputId);
+    var contador = document.getElementById(contadorId);
+    if (elemento && contador) {
+        var len = elemento.value.length;
+        contador.textContent = len + " / " + max;
+        if (len < 10) {
+            contador.style.color = '#F87171';
+        } else {
+            contador.style.color = '#F1CD73';
+        }
+    }
+}
+
+function seleccionarTipoMedia(tipo) {
+    document.getElementById('tipo_pregunta').value = tipo;
+    
+    document.querySelectorAll('.btn-media-tab').forEach(function(btn) {
+        btn.classList.remove('active');
+    });
+
+    var fileInputContainer = document.getElementById('media-file-input');
+    var fileInput = document.getElementById('recurso');
+    var label = document.getElementById('media-label');
+    var hint = document.getElementById('media-hint');
+
+    if (tipo === 'imagen') {
+        document.getElementById('tab-imagen').classList.add('active');
+        fileInputContainer.style.display = 'block';
+        fileInput.accept = 'image/png, image/jpeg, image/jpg, image/webp';
+        label.innerText = 'Adjuntar imagen (JPG, PNG, WEBP):';
+        hint.innerText = 'Se mostrará a los jugadores como imagen o silueta para adivinar.';
+    } else if (tipo === 'audio') {
+        document.getElementById('tab-audio').classList.add('active');
+        fileInputContainer.style.display = 'block';
+        fileInput.accept = 'audio/mp3, audio/mpeg, audio/wav, audio/ogg';
+        label.innerText = 'Adjuntar archivo de audio (MP3, WAV, OGG):';
+        hint.innerText = 'Se reproducirá a los jugadores para que adivinen el personaje, voz o tema musical.';
+    } else {
+        document.getElementById('tab-texto').classList.add('active');
+        fileInputContainer.style.display = 'none';
+        fileInput.value = '';
+    }
+}
+</script>

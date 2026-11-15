@@ -37,4 +37,9 @@ class Redirect
     {
         self::to('/admin');
     }
+
+    public static function toSugerirPregunta()
+    {
+        self::to('/sugerirPregunta');
+    }
 }
