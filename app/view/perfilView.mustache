@@ -507,15 +507,20 @@
                     <div class="pf-stats">
                         <div class="pf-stat">
                             <strong>{{puntaje_acumulado}}</strong>
-                            <span>puntaje acumulado</span>
+                            <span>puntos este mes</span>
                         </div>
 
                         {{#es_jugador}}
                             <div class="pf-stat">
                                 <strong>#{{posicion}}</strong>
-                                <span>en el ranking</span>
+                                <span>en ranking mensual</span>
                             </div>
                         {{/es_jugador}}
+
+                        <div class="pf-stat">
+                            <strong>{{puntaje_historico}}</strong>
+                            <span>total histórico</span>
+                        </div>
 
                         <div class="pf-stat">
                             <strong>{{cantidad_partidas}}</strong>

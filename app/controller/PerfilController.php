@@ -82,6 +82,8 @@ class PerfilController
             'ciudad' => $jugador['ciudad'],
             'ubicacion' => $jugador['ciudad'] . ', ' . $jugador['pais'],
             'puntaje_acumulado' => $jugador['puntaje_acumulado'],
+            'puntaje_mensual' => $jugador['puntaje_mensual'],
+            'puntaje_historico' => $jugador['puntaje_historico'],
             'miembro_desde' => $jugador['miembro_desde'],
             'es_propio' => isset($_SESSION['usuario_id']) && (int)$_SESSION['usuario_id'] === $idUsuario,
             'es_jugador' => $esJugador,

@@ -134,67 +134,333 @@
         background: #d4a72c;
         color: #06132d;
     }
+
+    .ranking-filtros-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+        background: rgba(4, 18, 48, 0.7);
+        border: 1px solid rgba(212, 167, 44, 0.4);
+        padding: 12px 20px;
+        border-radius: 14px;
+    }
+
+    .ranking-filtros-bar label {
+        color: #f5c84b;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .filtro-select {
+        background: #030e26;
+        color: #f3f5fa;
+        border: 1px solid #d4a72c;
+        padding: 7px 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .filtro-select:focus {
+        box-shadow: 0 0 8px rgba(245, 200, 75, 0.5);
+    }
+
+    #rankingCuerpo {
+        transition: opacity 0.25s ease-in-out;
+    }
+
+    /* ===== PAGINACIÓN ===== */
+    .ranking-paginacion {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 22px;
+        flex-wrap: wrap;
+    }
+
+    .pag-btn {
+        padding: 7px 14px;
+        background: rgba(4, 18, 48, 0.85);
+        border: 1px solid rgba(212, 167, 44, 0.5);
+        border-radius: 8px;
+        color: #f5c84b;
+        font-weight: bold;
+        font-size: 13.5px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .pag-btn:hover:not(:disabled) {
+        background: #d4a72c;
+        color: #06132d;
+        box-shadow: 0 0 10px rgba(245, 200, 75, 0.4);
+    }
+
+    .pag-btn.activa {
+        background: #d4a72c;
+        color: #06132d;
+        border-color: #ffd700;
+        box-shadow: 0 0 12px rgba(245, 200, 75, 0.6);
+        pointer-events: none;
+    }
+
+    .pag-btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .pag-info {
+        width: 100%;
+        text-align: center;
+        font-size: 12.5px;
+        color: #8da6cb;
+        margin-top: 10px;
+    }
 </style>
 
 <div class="ranking-container">
     <div class="ranking-header">
         <h1>🏆 SALÓN DE LA FAMA</h1>
-        <p>Ranking general de jugadores por puntaje acumulado total</p>
+        <p>Ranking mensual dinámico con movimiento de posiciones</p>
+    </div>
+
+    <!-- Barra de Filtros Dinámica (AJAX automático) -->
+    <div class="ranking-filtros-bar">
+        <label for="selectMes">📅 Mes:</label>
+        <select id="selectMes" class="filtro-select">
+            {{#meses}}
+                <option value="{{numero}}" {{#seleccionado}}selected{{/seleccionado}}>{{nombre}}</option>
+            {{/meses}}
+        </select>
+
+        <label for="selectAnio">Año:</label>
+        <select id="selectAnio" class="filtro-select">
+            {{#anios}}
+                <option value="{{anio}}" {{#seleccionado}}selected{{/seleccionado}}>{{anio}}</option>
+            {{/anios}}
+        </select>
     </div>
 
     <div class="ranking-card">
-        {{#hay_jugadores}}
-            <table class="ranking-tabla">
-                <thead>
-                <tr>
-                    <th style="width: 70px;">Puesto</th>
-                    <th>Jugador</th>
-                    <th>Ubicación</th>
-                    <th style="text-align: right;">Puntos Totales</th>
+        <table class="ranking-tabla" id="tablaRanking" {{^hay_jugadores}}style="display:none;"{{/hay_jugadores}}>
+            <thead>
+            <tr>
+                <th style="width: 70px;">Puesto</th>
+                <th>Jugador</th>
+                <th>Ubicación</th>
+                <th style="text-align: right;">Puntos Mes</th>
+            </tr>
+            </thead>
+            <tbody id="rankingCuerpo">
+            {{#jugadores}}
+                <tr class="ranking-fila {{#es_usuario_actual}}es-propio{{/es_usuario_actual}}">
+                    <td>
+                    <span class="posicion-badge {{#es_primero}}pos-1{{/es_primero}}{{#es_segundo}}pos-2{{/es_segundo}}{{#es_tercero}}pos-3{{/es_tercero}}">
+                        {{#es_primero}}🥇{{/es_primero}}
+                        {{#es_segundo}}🥈{{/es_segundo}}
+                        {{#es_tercero}}🥉{{/es_tercero}}
+                        {{^es_podio}}#{{posicion}}{{/es_podio}}
+                    </span>
+                    </td>
+                    <td>
+                        <div class="jugador-info">
+                            <img src="public/{{foto_perfil}}" alt="{{username}}" class="avatar-mini">
+                            <div>
+                                <a href="perfil/{{id}}" class="jugador-link">
+                                {{username}} {{#es_usuario_actual}}(Tú){{/es_usuario_actual}}
+                                </a>
+                                <div class="jugador-nombre">{{nombre_completo}}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="color: #a9bfdf; font-size: 13px;">
+                        {{ciudad}}, {{pais}}
+                    </td>
+                    <td class="puntaje-col">
+                        {{puntaje_acumulado}} pts
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                {{#jugadores}}
-                    <tr class="ranking-fila {{#es_usuario_actual}}es-propio{{/es_usuario_actual}}">
+            {{/jugadores}}
+            </tbody>
+        </table>
+
+        <!-- Controles de Paginación -->
+        <div id="paginacionRanking" class="ranking-paginacion" {{^tiene_paginas}}style="display:none;"{{/tiene_paginas}}>
+            <button type="button" class="pag-btn" id="pagAnterior" {{^tiene_anterior}}disabled{{/tiene_anterior}}>‹ Anterior</button>
+            <div id="pagNumeros" style="display:flex; gap:6px; flex-wrap:wrap;">
+                {{#paginas}}
+                    <button type="button" class="pag-btn {{#es_actual}}activa{{/es_actual}}" data-pagina="{{numero}}">{{numero}}</button>
+                {{/paginas}}
+            </div>
+            <button type="button" class="pag-btn" id="pagSiguiente" {{^tiene_siguiente}}disabled{{/tiene_siguiente}}>Siguiente ›</button>
+        </div>
+        <div id="pagInfo" class="pag-info">
+            {{#hay_jugadores}}Página {{pagina_actual}} de {{total_paginas}} ({{total_jugadores}} jugadores){{/hay_jugadores}}
+        </div>
+
+        <div id="rankingVacio" style="{{#hay_jugadores}}display:none;{{/hay_jugadores}} text-align:center; color:#a9bfdf; padding: 40px;">
+            Aún no hay partidas registradas en el período seleccionado.
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const selectMes = document.getElementById('selectMes');
+    const selectAnio = document.getElementById('selectAnio');
+    const rankingCuerpo = document.getElementById('rankingCuerpo');
+    const rankingVacio = document.getElementById('rankingVacio');
+    const tablaRanking = document.getElementById('tablaRanking');
+    const paginacionRanking = document.getElementById('paginacionRanking');
+    const pagNumeros = document.getElementById('pagNumeros');
+    const pagAnterior = document.getElementById('pagAnterior');
+    const pagSiguiente = document.getElementById('pagSiguiente');
+    const pagInfo = document.getElementById('pagInfo');
+
+    let paginaActual = {{pagina_actual}};
+    let totalPaginas = {{total_paginas}};
+
+    async function cargarRankingAjax(pagina = 1) {
+        const mes = selectMes.value;
+        const anio = selectAnio.value;
+        paginaActual = pagina;
+
+        rankingCuerpo.style.opacity = '0.35';
+
+        try {
+            const respuesta = await fetch(`ranking/obtenerRankingAjax?mes=${encodeURIComponent(mes)}&anio=${encodeURIComponent(anio)}&pagina=${encodeURIComponent(paginaActual)}`);
+            if (!respuesta.ok) {
+                throw new Error('Error al consultar el servidor');
+            }
+            const data = await respuesta.json();
+
+            if (!data.success || !data.jugadores || data.jugadores.length === 0) {
+                rankingCuerpo.innerHTML = '';
+                tablaRanking.style.display = 'none';
+                paginacionRanking.style.display = 'none';
+                pagInfo.style.display = 'none';
+                rankingVacio.style.display = 'block';
+                return;
+            }
+
+            tablaRanking.style.display = 'table';
+            rankingVacio.style.display = 'none';
+            totalPaginas = data.total_paginas || 1;
+            paginaActual = data.pagina_actual || 1;
+
+            let htmlFilas = '';
+            data.jugadores.forEach(j => {
+                let badge = `#${j.posicion}`;
+                let clasePos = '';
+
+                if (j.posicion === 1) {
+                    badge = '🥇';
+                    clasePos = 'pos-1';
+                } else if (j.posicion === 2) {
+                    badge = '🥈';
+                    clasePos = 'pos-2';
+                } else if (j.posicion === 3) {
+                    badge = '🥉';
+                    clasePos = 'pos-3';
+                }
+
+                const filaPropia = j.es_usuario_actual ? 'es-propio' : '';
+                const tagTu = j.es_usuario_actual ? ' (Tú)' : '';
+
+                htmlFilas += `
+                    <tr class="ranking-fila ${filaPropia}">
                         <td>
-                        <span class="posicion-badge {{#es_primero}}pos-1{{/es_primero}}{{#es_segundo}}pos-2{{/es_segundo}}{{#es_tercero}}pos-3{{/es_tercero}}">
-                            {{#es_primero}}🥇{{/es_primero}}
-                            {{#es_segundo}}🥈{{/es_segundo}}
-                            {{#es_tercero}}🥉{{/es_tercero}}
-                            {{^es_podio}}#{{posicion}}{{/es_podio}}
-                        </span>
+                            <span class="posicion-badge ${clasePos}">
+                                ${badge}
+                            </span>
                         </td>
                         <td>
                             <div class="jugador-info">
-                                <img src="public/{{foto_perfil}}" alt="{{username}}" class="avatar-mini">
+                                <img src="public/${j.foto_perfil}" alt="${j.username}" class="avatar-mini">
                                 <div>
-                                    <a href="perfil/{{id}}" class="jugador-link">
-                                    {{username}} {{#es_usuario_actual}}(Tú){{/es_usuario_actual}}
+                                    <a href="perfil/${j.id}" class="jugador-link">
+                                        ${j.username}${tagTu}
                                     </a>
-                                    <div class="jugador-nombre">{{nombre_completo}}</div>
+                                    <div class="jugador-nombre">${j.nombre_completo}</div>
                                 </div>
                             </div>
                         </td>
                         <td style="color: #a9bfdf; font-size: 13px;">
-                            {{ciudad}}, {{pais}}
+                            ${j.ciudad}, ${j.pais}
                         </td>
                         <td class="puntaje-col">
-                            {{puntaje_acumulado}} pts
+                            ${j.puntaje_acumulado} pts
                         </td>
                     </tr>
-                {{/jugadores}}
-                </tbody>
-            </table>
-        {{/hay_jugadores}}
+                `;
+            });
 
-        {{^hay_jugadores}}
-            <div style="text-align:center; color:#a9bfdf; padding: 40px;">
-                Aún no hay jugadores registrados en el ranking.
-            </div>
-        {{/hay_jugadores}}
-    </div>
+            rankingCuerpo.innerHTML = htmlFilas;
 
-    <div class="acciones-ranking">
-        <a href="lobby" class="btn-volver">‹ Volver al Lobby</a>
-    </div>
-</div>
+            // Renderizar paginador
+            actualizarControlesPaginacion(data.pagina_actual, data.total_paginas, data.total_jugadores);
+
+        } catch (err) {
+            console.error('Error al actualizar ranking vía AJAX:', err);
+        } finally {
+            rankingCuerpo.style.opacity = '1';
+        }
+    }
+
+    function actualizarControlesPaginacion(actual, total, totalJugadores) {
+        if (total > 1) {
+            paginacionRanking.style.display = 'flex';
+            pagInfo.style.display = 'block';
+            pagInfo.textContent = `Página ${actual} de ${total} (${totalJugadores} jugadores)`;
+
+            pagAnterior.disabled = (actual <= 1);
+            pagSiguiente.disabled = (actual >= total);
+
+            let botonesHtml = '';
+            for (let i = 1; i <= total; i++) {
+                const activa = (i === actual) ? 'activa' : '';
+                botonesHtml += `<button type="button" class="pag-btn ${activa}" data-pagina="${i}">${i}</button>`;
+            }
+            pagNumeros.innerHTML = botonesHtml;
+        } else {
+            paginacionRanking.style.display = 'none';
+            pagInfo.style.display = (totalJugadores > 0) ? 'block' : 'none';
+            if (totalJugadores > 0) {
+                pagInfo.textContent = `Total: ${totalJugadores} jugadores`;
+            }
+        }
+    }
+
+    // Actualización automática al cambiar mes o año
+    selectMes.addEventListener('change', () => cargarRankingAjax(1));
+    selectAnio.addEventListener('change', () => cargarRankingAjax(1));
+
+    // Paginación con AJAX
+    paginacionRanking.addEventListener('click', (e) => {
+        const btnPagina = e.target.closest('[data-pagina]');
+        if (btnPagina) {
+            const pag = parseInt(btnPagina.getAttribute('data-pagina'), 10);
+            if (!isNaN(pag) && pag !== paginaActual) {
+                cargarRankingAjax(pag);
+            }
+            return;
+        }
+
+        if (e.target.closest('#pagAnterior') && paginaActual > 1) {
+            cargarRankingAjax(paginaActual - 1);
+            return;
+        }
+
+        if (e.target.closest('#pagSiguiente') && paginaActual < totalPaginas) {
+            cargarRankingAjax(paginaActual + 1);
+            return;
+        }
+    });
+});
+</script>
