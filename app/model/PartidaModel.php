@@ -676,13 +676,13 @@ class PartidaModel
 
 
 
+
     public function obtenerSiguientePregunta(
         $animesSeleccionados,
         $usuarioId,
         $preguntasUsadas = [],
         $numeroPregunta = 0
-    )
-    {
+    ) {
         if (empty($animesSeleccionados)) {
             return null;
         }
@@ -690,132 +690,181 @@ class PartidaModel
         // 1. Obtenemos el nivel del jugador.
         $nivel = $this->obtenerNivelJugador($usuarioId);
 
+        // 2. Determinamos la dificultad según su nivel.
         if ($nivel === 'inicial') {
             $dificultades = ['facil', 'media', 'dificil'];
             $dificultad = $dificultades[$numeroPregunta % 3];
-
         } elseif ($nivel === 'alto') {
             $dificultad = 'dificil';
-
         } elseif ($nivel === 'bajo') {
             $dificultad = 'facil';
-
         } else {
             $dificultad = 'media';
         }
 
-        // 2. Preparamos los animes seleccionados.
-        $parametros = [
-            'usuarioId' => $usuarioId,
-            'dificultad' => $dificultad
-        ];
-
+        // 3. Preparamos los animes seleccionados.
+        $parametrosAnime = [];
         $placeholdersAnime = [];
 
         foreach ($animesSeleccionados as $indice => $animeId) {
             $clave = 'anime' . $indice;
 
             $placeholdersAnime[] = ':' . $clave;
-            $parametros[$clave] = (int)$animeId;
+            $parametrosAnime[$clave] = (int) $animeId;
         }
 
-        $sql = "SELECT
-                p.id,
-                p.enunciado,
-                p.respuesta_a,
-                p.respuesta_b,
-                p.respuesta_c,
-                p.respuesta_d,
-                p.tipo_pregunta,
-                p.recurso,
-                p.dificultad,
-                a.nombre AS anime,
-                c.nombre AS categoria
+        $condicionAnime = implode(', ', $placeholdersAnime);
 
-            FROM pregunta p
-
-            JOIN anime a
-                ON p.anime_id = a.id
-
-            JOIN categoria c
-                ON p.categoria_id = c.id
-
-            LEFT JOIN usuario_pregunta up
-                ON p.id = up.pregunta_id
-                AND up.usuario_id = :usuarioId
-
-            WHERE p.esta_activa = 1
-
-            AND p.anime_id IN (" .
-            implode(', ', $placeholdersAnime) .
-            ")";
-
-
-// 3. Excluimos SIEMPRE las preguntas
-// que aparecieron en esta partida.
+        // 4. Excluimos las preguntas utilizadas
+        // anteriormente en esta partida.
+        $condicionExclusion = '';
+        $parametrosExclusion = [];
 
         if (!empty($preguntasUsadas)) {
-            $excluidas = [];
+            $placeholdersExclusion = [];
 
             foreach ($preguntasUsadas as $indice => $preguntaId) {
                 $clave = 'excluir' . $indice;
 
-                $excluidas[] = ':' . $clave;
-                $parametros[$clave] = (int)$preguntaId;
+                $placeholdersExclusion[] = ':' . $clave;
+                $parametrosExclusion[$clave] = (int) $preguntaId;
             }
 
-            $sql .= " AND p.id NOT IN (" .
-                implode(', ', $excluidas) . ")";
+            $condicionExclusion = "
+            AND p.id NOT IN (" .
+                implode(', ', $placeholdersExclusion) . ")
+        ";
         }
 
-// 4. Primero buscamos preguntas nunca
-// vistas por el usuario, sin importar
-// si son fáciles, medias o difíciles.
+        // 5. Sorteamos una categoría aleatoria
+        // que tenga preguntas disponibles.
+        $sqlCategoria = "
+        SELECT c.id
+        FROM pregunta p
 
-        $sqlNuevas = $sql . "
-    AND up.pregunta_id IS NULL
+        INNER JOIN categoria c
+            ON p.categoria_id = c.id
 
-    ORDER BY
-        CASE
-            WHEN p.dificultad = :dificultad
-            THEN 0
-            ELSE 1
-        END,
-        RAND()
+        WHERE p.esta_activa = 1
 
-    LIMIT 1";
+        AND p.anime_id IN ($condicionAnime)
+
+        $condicionExclusion
+
+        GROUP BY c.id
+
+        ORDER BY RAND()
+
+        LIMIT 1
+    ";
+
+        $parametrosCategoria = array_merge(
+            $parametrosAnime,
+            $parametrosExclusion
+        );
+
+        $categoriaSeleccionada = $this->database->queryOne(
+            $sqlCategoria,
+            $parametrosCategoria
+        );
+
+        // Si no hay categorías disponibles, no hay pregunta.
+        if (!$categoriaSeleccionada) {
+            return null;
+        }
+
+        $categoriaId = (int) $categoriaSeleccionada['id'];
+
+        // 6. Buscamos una pregunta de la categoría sorteada.
+        // Primero intentamos encontrar una que el usuario no vio.
+        $parametrosPregunta = array_merge(
+            $parametrosAnime,
+            $parametrosExclusion,
+            [
+                'usuarioId' => $usuarioId,
+                'categoriaId' => $categoriaId,
+                'dificultad' => $dificultad
+            ]
+        );
+
+        $sqlBase = "
+        SELECT
+            p.id,
+            p.enunciado,
+            p.respuesta_a,
+            p.respuesta_b,
+            p.respuesta_c,
+            p.respuesta_d,
+            p.tipo_pregunta,
+            p.recurso,
+            p.dificultad,
+            a.nombre AS anime,
+            c.nombre AS categoria
+
+        FROM pregunta p
+
+        INNER JOIN anime a
+            ON p.anime_id = a.id
+
+        INNER JOIN categoria c
+            ON p.categoria_id = c.id
+
+        LEFT JOIN usuario_pregunta up
+            ON p.id = up.pregunta_id
+            AND up.usuario_id = :usuarioId
+
+        WHERE p.esta_activa = 1
+
+        AND p.anime_id IN ($condicionAnime)
+
+        AND c.id = :categoriaId
+
+        $condicionExclusion
+    ";
+
+        // 7. Priorizamos preguntas nunca vistas.
+        $sqlNuevas = $sqlBase . "
+        AND up.pregunta_id IS NULL
+
+        ORDER BY
+            CASE
+                WHEN p.dificultad = :dificultad THEN 0
+                ELSE 1
+            END,
+            RAND()
+
+        LIMIT 1
+    ";
 
         $pregunta = $this->database->queryOne(
             $sqlNuevas,
-            $parametros
+            $parametrosPregunta
         );
 
         if ($pregunta) {
             return $pregunta;
         }
 
-// 5. Si el usuario ya vio todas las preguntas
-// disponibles, reciclamos preguntas de
-// partidas anteriores, pero NUNCA una que
-// ya apareció en esta partida.
+        // 8. Si ya vio todas las preguntas de esa categoría,
+        // permitimos reutilizar una anterior.
+        // Nunca se repite una pregunta de esta partida.
+        $sqlRecicladas = $sqlBase . "
+        ORDER BY
+            CASE
+                WHEN p.dificultad = :dificultad THEN 0
+                ELSE 1
+            END,
+            RAND()
 
-        $sqlRecicladas = $sql . "
-    ORDER BY
-        CASE
-            WHEN p.dificultad = :dificultad
-            THEN 0
-            ELSE 1
-        END,
-        RAND()
-
-    LIMIT 1";
+        LIMIT 1
+    ";
 
         return $this->database->queryOne(
             $sqlRecicladas,
-            $parametros
+            $parametrosPregunta
         );
-
     }
+
 
 
 

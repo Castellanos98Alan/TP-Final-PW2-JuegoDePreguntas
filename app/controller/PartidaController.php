@@ -308,27 +308,26 @@ class PartidaController
         }
 
 
+
         /*
-         * Comprobamos que lleguen los
-         * datos necesarios por POST.
+         * Comprobamos que llegue la respuesta
+         * seleccionada por el jugador.
          */
-        if (
-            !isset($_POST['idPregunta']) ||
-            !isset($_POST['respuesta'])
-        ) {
+        if (!isset($_POST['respuesta'])) {
+            header(
+                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
+            );
+            exit();
+        }
+        if (!isset($_POST['respuesta']) || !is_string($_POST['respuesta'])) {
             header(
                 'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
             );
             exit();
         }
 
-        $idPregunta =
-            $_POST['idPregunta'];
+        $respuesta = strtoupper($_POST['respuesta']);
 
-        $respuesta =
-            strtoupper(
-                $_POST['respuesta']
-            );
 
         /*
          * Buscamos cuál debería ser
@@ -357,6 +356,12 @@ class PartidaController
             ['preguntas']
             [$indiceActual];
 
+        /*
+ * Obtenemos el ID exclusivamente
+ * desde la pregunta guardada en sesión.
+ */
+        $idPregunta = $preguntaActual['id'];
+
         // Validación del servidor: una respuesta después de 8 segundos no vale.
         $inicioPregunta = $_SESSION['partida']['inicio_pregunta'] ?? time();
 
@@ -366,22 +371,6 @@ class PartidaController
         if (time() - $inicioPregunta >= 8) {
             $this->prepararDerrotaPorTiempo($preguntaActual);
             Redirect::to('/partida/perder');
-            exit();
-        }
-
-        /*
-         * Evitamos que alguien cambie
-         * manualmente el idPregunta
-         * desde el navegador.
-         */
-        if (
-            $preguntaActual['id']
-            !=
-            $idPregunta
-        ) {
-            header(
-                'Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/partida/jugar'
-            );
             exit();
         }
 

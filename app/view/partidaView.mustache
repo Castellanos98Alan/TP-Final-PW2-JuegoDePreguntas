@@ -341,11 +341,11 @@
                       method="POST"
                       class="respuestas-grid">
 
-                    <input type="hidden" name="idPregunta" value="{{pregunta.id}}">
-                    <input type="hidden" name="inicioPregunta" value="{{inicioPregunta}}">
-
-                    <!-- Este campo garantiza que siempre se envíe la opción elegida. -->
-                    <input type="hidden" id="respuestaElegida" name="respuesta" value="">
+                    <!-- Este campo envía únicamente la opción elegida. -->
+                    <input type="hidden"
+                           id="respuestaElegida"
+                           name="respuesta"
+                           value="">
 
                     <button type="submit" class="respuesta-btn" data-respuesta="A">
                         <span class="respuesta-letra">A</span>
@@ -366,6 +366,7 @@
                         <span class="respuesta-letra">D</span>
                         <span class="respuesta-texto">{{pregunta.respuesta_d}}</span>
                     </button>
+
                 </form>
 
                 <div class="pie-juego">
