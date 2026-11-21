@@ -320,20 +320,20 @@
                 </div>
 
                 {{#esAudio}}
-                <div class="pregunta-audio-container">
-                    <audio controls>
-                        <source src="{{pregunta.recurso}}" type="audio/mpeg">
-                        Tu navegador no soporta audio.
-                    </audio>
-                </div>
+                    <div class="pregunta-audio-container">
+                        <audio controls>
+                            <source src="partida/recurso?v={{numeroPregunta}}" type="audio/mpeg">
+                            Tu navegador no soporta audio.
+                        </audio>
+                    </div>
                 {{/esAudio}}
 
                 {{#esImagen}}
-                <div class="pregunta-imagen-container">
-                    <img src="{{pregunta.recurso}}"
-                         alt="Imagen de la pregunta"
-                         class="pregunta-imagen">
-                </div>
+                    <div class="pregunta-imagen-container">
+                        <img src="partida/recurso?v={{numeroPregunta}}"
+                        alt="Imagen de la pregunta"
+                        class="pregunta-imagen">
+                    </div>
                 {{/esImagen}}
 
                 <form id="formularioRespuesta"

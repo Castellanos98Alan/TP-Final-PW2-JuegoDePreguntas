@@ -897,4 +897,56 @@ class PartidaController
         }
     }
 
+    public function recurso()
+    {
+        $this->verificarPuedeJugar();
+
+        if (!isset($_SESSION['partida']['preguntas'])) {
+            http_response_code(404);
+            exit();
+        }
+
+        $indiceActual = $_SESSION['partida']['actual'] ?? 0;
+        $preguntaActual = $_SESSION['partida']['preguntas'][$indiceActual] ?? null;
+
+        if (!$preguntaActual || empty($preguntaActual['recurso'])) {
+            http_response_code(404);
+            exit();
+        }
+
+        $rutaArchivo = ltrim($preguntaActual['recurso'], '/\\');
+
+        if (!file_exists($rutaArchivo)) {
+            http_response_code(404);
+            exit();
+        }
+
+        $extension = strtolower(pathinfo($rutaArchivo, PATHINFO_EXTENSION));
+        $tiposMime = [
+            'png'  => 'image/png',
+            'jpg'  => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'webp' => 'image/webp',
+            'gif'  => 'image/gif',
+            'mp3'  => 'audio/mpeg',
+            'wav'  => 'audio/wav',
+            'ogg'  => 'audio/ogg'
+        ];
+
+        $mime = $tiposMime[$extension] ?? 'application/octet-stream';
+
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        header('Content-Type: ' . $mime);
+        header('Content-Length: ' . filesize($rutaArchivo));
+        header('Cache-Control: no-cache, no-store, must-revalidate');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+
+        readfile($rutaArchivo);
+        exit();
+    }
+
 }
