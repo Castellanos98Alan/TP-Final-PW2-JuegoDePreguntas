@@ -23,6 +23,21 @@ class PartidaController
     public function seleccionar()
     {
         $this->verificarPuedeJugar();
+
+        if (!empty($_SESSION['partida']['perdio']) || (($_SESSION['partida']['actual'] ?? 0) >= 15)) {
+            unset($_SESSION['partida']);
+        }
+
+        if ($this->model->obtenerPartidaEnCurso($_SESSION['usuario_id']) && empty($_SESSION['partida'])) {
+            Redirect::to('/lobby');
+            exit();
+        }
+
+        if (!empty($_SESSION['partida'])) {
+            Redirect::to('/partida/jugar');
+            exit();
+        }
+
         $animes = $this->model->obtenerAnimes();
         $errorSeleccion = !empty($_SESSION['error_seleccion']) || ($_GET['error'] ?? null) == 1;
         $errorPreguntas = !empty($_SESSION['error_preguntas']) || ($_GET['error'] ?? null) == 2;
@@ -81,6 +96,11 @@ class PartidaController
         $usuarioId =
             $_SESSION['usuario_id'];
 
+        if ($this->model->obtenerPartidaEnCurso($usuarioId)) {
+            Redirect::to('/lobby');
+            exit();
+        }
+
         /*
          * Pedimos las 15 preguntas al Model.
          */
@@ -110,7 +130,10 @@ class PartidaController
          * Guardamos el estado de la partida
          * dentro de la sesión. para que cuando el usuario recargue la pgina, el contador no se reinicie
          */
+        $idPartida = $this->model->iniciarPartida($usuarioId);
+
         $_SESSION['partida'] = [
+            'id_partida' => $idPartida,
             'preguntas' => [$primeraPregunta],
             'actual' => 0,
             'puntaje' => 0,
@@ -719,11 +742,12 @@ class PartidaController
         // Evitamos registrar varias veces la misma derrota si se recarga
         // la pantalla o el usuario envía un reporte.
         if (empty($_SESSION['partida']['partidaGuardada'])) {
-            $this->model->guardarPartida(
-                $usuarioId,
-                $puntajeFinal,
-                'Perdida'
-            );
+            $idPartida = $_SESSION['partida']['id_partida'] ?? null;
+            if ($idPartida) {
+                $this->model->finalizarPartida($idPartida, $puntajeFinal, 'Perdida');
+            } else {
+                $this->model->guardarPartida($usuarioId, $puntajeFinal, 'Perdida');
+            }
             $_SESSION['partida']['partidaGuardada'] = true;
         }
 
@@ -842,11 +866,12 @@ class PartidaController
         /*
          * Guardamos la partida como Ganada.
          */
-        $this->model->guardarPartida(
-            $usuarioId,
-            $puntaje,
-            'Ganada'
-        );
+        $idPartida = $_SESSION['partida']['id_partida'] ?? null;
+        if ($idPartida) {
+            $this->model->finalizarPartida($idPartida, $puntaje, 'Ganada');
+        } else {
+            $this->model->guardarPartida($usuarioId, $puntaje, 'Ganada');
+        }
 
         $data = [
             'puntaje' => $puntaje

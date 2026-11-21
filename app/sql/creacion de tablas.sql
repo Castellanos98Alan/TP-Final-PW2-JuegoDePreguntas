@@ -356,9 +356,10 @@ CREATE TABLE partida (
         NOT NULL DEFAULT 0,
 
     resultado ENUM(
+        'En curso',
         'Ganada',
         'Perdida'
-    ) NOT NULL,
+    ) NOT NULL DEFAULT 'En curso',
 
     created_at TIMESTAMP
         DEFAULT CURRENT_TIMESTAMP,

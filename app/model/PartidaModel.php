@@ -865,7 +865,48 @@ class PartidaModel
         );
     }
 
+    public function obtenerPartidaEnCurso($usuarioId)
+    {
+        $sql = "SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1";
 
+        return $this->database->queryOne($sql, ['usuarioId' => $usuarioId]);
+    }
+
+    public function iniciarPartida($usuarioId)
+    {
+        $sql = "INSERT INTO partida (id_usuario, puntaje, resultado) 
+                VALUES (:usuarioId, 0, 'En curso')";
+
+        $this->database->execute($sql, ['usuarioId' => $usuarioId]);
+
+        $sqlId = "SELECT id 
+                  FROM partida 
+                  WHERE id_usuario = :usuarioId 
+                  ORDER BY id DESC 
+                  LIMIT 1";
+
+        $res = $this->database->queryOne($sqlId, ['usuarioId' => $usuarioId]);
+
+        return $res ? (int)$res['id'] : null;
+    }
+
+    public function finalizarPartida($idPartida, $puntaje, $resultado)
+    {
+        $sql = "UPDATE partida 
+                SET puntaje = :puntaje, 
+                    resultado = :resultado 
+                WHERE id = :idPartida";
+
+        $this->database->execute($sql, [
+            'idPartida' => $idPartida,
+            'puntaje' => $puntaje,
+            'resultado' => $resultado
+        ]);
+    }
 
 
 }
