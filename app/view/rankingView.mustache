@@ -1,8 +1,13 @@
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     .ranking-container {
         width: 100%;
         max-width: 900px;
         margin: 20px auto 40px;
+        padding: 0 16px;
     }
 
     .ranking-header {
@@ -13,14 +18,15 @@
     .ranking-header h1 {
         font-family: 'Permanent Marker', cursive;
         color: #f5c84b;
-        font-size: 32px;
+        font-size: clamp(24px, 6vw, 32px);
         letter-spacing: 1px;
-        margin-bottom: 6px;
+        margin: 0 0 6px;
     }
 
     .ranking-header p {
         color: #a9bfdf;
         font-size: 15px;
+        margin: 0;
     }
 
     .ranking-card {
@@ -80,6 +86,11 @@
         display: flex;
         align-items: center;
         gap: 12px;
+        min-width: 0;
+    }
+
+    .jugador-info > div {
+        min-width: 0;
     }
 
     .avatar-mini {
@@ -87,6 +98,7 @@
         height: 40px;
         border-radius: 50%;
         object-fit: cover;
+        flex-shrink: 0;
         border: 2px solid #d4a72c;
     }
 
@@ -95,6 +107,7 @@
         text-decoration: none;
         font-weight: bold;
         font-size: 15px;
+        overflow-wrap: anywhere;
     }
 
     .jugador-link:hover {
@@ -104,6 +117,7 @@
     .jugador-nombre {
         font-size: 12px;
         color: #8da6cb;
+        overflow-wrap: anywhere;
     }
 
     .puntaje-col {
@@ -111,6 +125,7 @@
         font-weight: 900;
         color: #f5c84b;
         text-align: right;
+        white-space: nowrap;
     }
 
     .acciones-ranking {
@@ -139,7 +154,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 14px;
+        gap: 16px;
         flex-wrap: wrap;
         margin-bottom: 22px;
         background: rgba(4, 18, 48, 0.7);
@@ -148,10 +163,17 @@
         border-radius: 14px;
     }
 
+    .filtro-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
     .ranking-filtros-bar label {
         color: #f5c84b;
         font-weight: bold;
         font-size: 14px;
+        white-space: nowrap;
     }
 
     .filtro-select {
@@ -222,6 +244,140 @@
         color: #8da6cb;
         margin-top: 10px;
     }
+
+    /* ===== RESPONSIVE MOBILE ===== */
+    @media (max-width: 650px) {
+        .ranking-container {
+            margin: 14px auto 30px;
+            padding: 0 12px;
+        }
+
+        .ranking-header {
+            margin-bottom: 18px;
+        }
+
+        .ranking-header p {
+            font-size: 13px;
+        }
+
+        .ranking-filtros-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .filtro-item {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 5px;
+        }
+
+        .ranking-filtros-bar label {
+            font-size: 12px;
+        }
+
+        .filtro-select {
+            width: 100%;
+            padding: 9px 10px;
+        }
+
+        .ranking-card {
+            padding: 14px 10px;
+            border-radius: 14px;
+            overflow-x: visible;
+        }
+
+        /* Tabla -> tarjetas de leaderboard */
+        .ranking-tabla thead {
+            display: none;
+        }
+
+        .ranking-tabla tbody {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .ranking-tabla tr.ranking-fila {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            column-gap: 10px;
+            row-gap: 4px;
+            align-items: center;
+            padding: 12px;
+            background: rgba(6, 22, 54, 0.72);
+            border: 1px solid rgba(212, 167, 44, 0.3);
+            border-radius: 12px;
+        }
+
+        .ranking-tabla tr.ranking-fila.es-propio {
+            background: rgba(212, 175, 85, 0.18);
+            border: 1px solid #f5c84b;
+        }
+
+        .ranking-tabla td {
+            padding: 0;
+            border-bottom: none;
+        }
+
+        /* Puesto */
+        .ranking-tabla td:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1 / 3;
+            align-self: center;
+        }
+
+        /* Jugador */
+        .ranking-tabla td:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+            min-width: 0;
+        }
+
+        /* Ubicación */
+        .ranking-tabla td:nth-child(3) {
+            grid-column: 2 / 4;
+            grid-row: 2;
+            font-size: 12px !important;
+            color: #8da6cb !important;
+            padding-top: 4px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Puntaje */
+        .ranking-tabla td:nth-child(4) {
+            grid-column: 3;
+            grid-row: 1;
+            align-self: center;
+            font-size: 16px;
+        }
+
+        .avatar-mini {
+            width: 36px;
+            height: 36px;
+        }
+
+        .jugador-info {
+            gap: 9px;
+        }
+
+        .jugador-link {
+            font-size: 14px;
+        }
+
+        .ranking-paginacion {
+            gap: 6px;
+            margin-top: 18px;
+        }
+
+        .pag-btn {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+    }
 </style>
 
 <div class="ranking-container">
@@ -232,19 +388,23 @@
 
     <!-- Barra de Filtros Dinámica (AJAX automático) -->
     <div class="ranking-filtros-bar">
-        <label for="selectMes">📅 Mes:</label>
-        <select id="selectMes" class="filtro-select">
-            {{#meses}}
-                <option value="{{numero}}" {{#seleccionado}}selected{{/seleccionado}}>{{nombre}}</option>
-            {{/meses}}
-        </select>
+        <div class="filtro-item">
+            <label for="selectMes">📅 Mes:</label>
+            <select id="selectMes" class="filtro-select">
+                {{#meses}}
+                    <option value="{{numero}}" {{#seleccionado}}selected{{/seleccionado}}>{{nombre}}</option>
+                {{/meses}}
+            </select>
+        </div>
 
-        <label for="selectAnio">Año:</label>
-        <select id="selectAnio" class="filtro-select">
-            {{#anios}}
-                <option value="{{anio}}" {{#seleccionado}}selected{{/seleccionado}}>{{anio}}</option>
-            {{/anios}}
-        </select>
+        <div class="filtro-item">
+            <label for="selectAnio">Año:</label>
+            <select id="selectAnio" class="filtro-select">
+                {{#anios}}
+                    <option value="{{anio}}" {{#seleccionado}}selected{{/seleccionado}}>{{anio}}</option>
+                {{/anios}}
+            </select>
+        </div>
     </div>
 
     <div class="ranking-card">
@@ -273,7 +433,7 @@
                             <img src="public/{{foto_perfil}}" alt="{{username}}" class="avatar-mini">
                             <div>
                                 <a href="perfil/{{id}}" class="jugador-link">
-                                {{username}} {{#es_usuario_actual}}(Tú){{/es_usuario_actual}}
+                                    {{username}} {{#es_usuario_actual}}(Tú){{/es_usuario_actual}}
                                 </a>
                                 <div class="jugador-nombre">{{nombre_completo}}</div>
                             </div>
@@ -293,7 +453,7 @@
         <!-- Controles de Paginación -->
         <div id="paginacionRanking" class="ranking-paginacion" {{^tiene_paginas}}style="display:none;"{{/tiene_paginas}}>
             <button type="button" class="pag-btn" id="pagAnterior" {{^tiene_anterior}}disabled{{/tiene_anterior}}>‹ Anterior</button>
-            <div id="pagNumeros" style="display:flex; gap:6px; flex-wrap:wrap;">
+            <div id="pagNumeros" style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center;">
                 {{#paginas}}
                     <button type="button" class="pag-btn {{#es_actual}}activa{{/es_actual}}" data-pagina="{{numero}}">{{numero}}</button>
                 {{/paginas}}
@@ -311,69 +471,69 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const selectMes = document.getElementById('selectMes');
-    const selectAnio = document.getElementById('selectAnio');
-    const rankingCuerpo = document.getElementById('rankingCuerpo');
-    const rankingVacio = document.getElementById('rankingVacio');
-    const tablaRanking = document.getElementById('tablaRanking');
-    const paginacionRanking = document.getElementById('paginacionRanking');
-    const pagNumeros = document.getElementById('pagNumeros');
-    const pagAnterior = document.getElementById('pagAnterior');
-    const pagSiguiente = document.getElementById('pagSiguiente');
-    const pagInfo = document.getElementById('pagInfo');
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectMes = document.getElementById('selectMes');
+        const selectAnio = document.getElementById('selectAnio');
+        const rankingCuerpo = document.getElementById('rankingCuerpo');
+        const rankingVacio = document.getElementById('rankingVacio');
+        const tablaRanking = document.getElementById('tablaRanking');
+        const paginacionRanking = document.getElementById('paginacionRanking');
+        const pagNumeros = document.getElementById('pagNumeros');
+        const pagAnterior = document.getElementById('pagAnterior');
+        const pagSiguiente = document.getElementById('pagSiguiente');
+        const pagInfo = document.getElementById('pagInfo');
 
-    let paginaActual = {{pagina_actual}};
-    let totalPaginas = {{total_paginas}};
+        let paginaActual = {{pagina_actual}};
+        let totalPaginas = {{total_paginas}};
 
-    async function cargarRankingAjax(pagina = 1) {
-        const mes = selectMes.value;
-        const anio = selectAnio.value;
-        paginaActual = pagina;
+        async function cargarRankingAjax(pagina = 1) {
+            const mes = selectMes.value;
+            const anio = selectAnio.value;
+            paginaActual = pagina;
 
-        rankingCuerpo.style.opacity = '0.35';
+            rankingCuerpo.style.opacity = '0.35';
 
-        try {
-            const respuesta = await fetch(`ranking/obtenerRankingAjax?mes=${encodeURIComponent(mes)}&anio=${encodeURIComponent(anio)}&pagina=${encodeURIComponent(paginaActual)}`);
-            if (!respuesta.ok) {
-                throw new Error('Error al consultar el servidor');
-            }
-            const data = await respuesta.json();
+            try {
+                const respuesta = await fetch(`ranking/obtenerRankingAjax?mes=${encodeURIComponent(mes)}&anio=${encodeURIComponent(anio)}&pagina=${encodeURIComponent(paginaActual)}`);
+                if (!respuesta.ok) {
+                    throw new Error('Error al consultar el servidor');
+                }
+                const data = await respuesta.json();
 
-            if (!data.success || !data.jugadores || data.jugadores.length === 0) {
-                rankingCuerpo.innerHTML = '';
-                tablaRanking.style.display = 'none';
-                paginacionRanking.style.display = 'none';
-                pagInfo.style.display = 'none';
-                rankingVacio.style.display = 'block';
-                return;
-            }
-
-            tablaRanking.style.display = 'table';
-            rankingVacio.style.display = 'none';
-            totalPaginas = data.total_paginas || 1;
-            paginaActual = data.pagina_actual || 1;
-
-            let htmlFilas = '';
-            data.jugadores.forEach(j => {
-                let badge = `#${j.posicion}`;
-                let clasePos = '';
-
-                if (j.posicion === 1) {
-                    badge = '🥇';
-                    clasePos = 'pos-1';
-                } else if (j.posicion === 2) {
-                    badge = '🥈';
-                    clasePos = 'pos-2';
-                } else if (j.posicion === 3) {
-                    badge = '🥉';
-                    clasePos = 'pos-3';
+                if (!data.success || !data.jugadores || data.jugadores.length === 0) {
+                    rankingCuerpo.innerHTML = '';
+                    tablaRanking.style.display = 'none';
+                    paginacionRanking.style.display = 'none';
+                    pagInfo.style.display = 'none';
+                    rankingVacio.style.display = 'block';
+                    return;
                 }
 
-                const filaPropia = j.es_usuario_actual ? 'es-propio' : '';
-                const tagTu = j.es_usuario_actual ? ' (Tú)' : '';
+                tablaRanking.style.display = 'table';
+                rankingVacio.style.display = 'none';
+                totalPaginas = data.total_paginas || 1;
+                paginaActual = data.pagina_actual || 1;
 
-                htmlFilas += `
+                let htmlFilas = '';
+                data.jugadores.forEach(j => {
+                    let badge = `#${j.posicion}`;
+                    let clasePos = '';
+
+                    if (j.posicion === 1) {
+                        badge = '🥇';
+                        clasePos = 'pos-1';
+                    } else if (j.posicion === 2) {
+                        badge = '🥈';
+                        clasePos = 'pos-2';
+                    } else if (j.posicion === 3) {
+                        badge = '🥉';
+                        clasePos = 'pos-3';
+                    }
+
+                    const filaPropia = j.es_usuario_actual ? 'es-propio' : '';
+                    const tagTu = j.es_usuario_actual ? ' (Tú)' : '';
+
+                    htmlFilas += `
                     <tr class="ranking-fila ${filaPropia}">
                         <td>
                             <span class="posicion-badge ${clasePos}">
@@ -399,68 +559,68 @@ document.addEventListener('DOMContentLoaded', () => {
                         </td>
                     </tr>
                 `;
-            });
+                });
 
-            rankingCuerpo.innerHTML = htmlFilas;
+                rankingCuerpo.innerHTML = htmlFilas;
 
-            // Renderizar paginador
-            actualizarControlesPaginacion(data.pagina_actual, data.total_paginas, data.total_jugadores);
+                // Renderizar paginador
+                actualizarControlesPaginacion(data.pagina_actual, data.total_paginas, data.total_jugadores);
 
-        } catch (err) {
-            console.error('Error al actualizar ranking vía AJAX:', err);
-        } finally {
-            rankingCuerpo.style.opacity = '1';
-        }
-    }
-
-    function actualizarControlesPaginacion(actual, total, totalJugadores) {
-        if (total > 1) {
-            paginacionRanking.style.display = 'flex';
-            pagInfo.style.display = 'block';
-            pagInfo.textContent = `Página ${actual} de ${total} (${totalJugadores} jugadores)`;
-
-            pagAnterior.disabled = (actual <= 1);
-            pagSiguiente.disabled = (actual >= total);
-
-            let botonesHtml = '';
-            for (let i = 1; i <= total; i++) {
-                const activa = (i === actual) ? 'activa' : '';
-                botonesHtml += `<button type="button" class="pag-btn ${activa}" data-pagina="${i}">${i}</button>`;
-            }
-            pagNumeros.innerHTML = botonesHtml;
-        } else {
-            paginacionRanking.style.display = 'none';
-            pagInfo.style.display = (totalJugadores > 0) ? 'block' : 'none';
-            if (totalJugadores > 0) {
-                pagInfo.textContent = `Total: ${totalJugadores} jugadores`;
+            } catch (err) {
+                console.error('Error al actualizar ranking vía AJAX:', err);
+            } finally {
+                rankingCuerpo.style.opacity = '1';
             }
         }
-    }
 
-    // Actualización automática al cambiar mes o año
-    selectMes.addEventListener('change', () => cargarRankingAjax(1));
-    selectAnio.addEventListener('change', () => cargarRankingAjax(1));
+        function actualizarControlesPaginacion(actual, total, totalJugadores) {
+            if (total > 1) {
+                paginacionRanking.style.display = 'flex';
+                pagInfo.style.display = 'block';
+                pagInfo.textContent = `Página ${actual} de ${total} (${totalJugadores} jugadores)`;
 
-    // Paginación con AJAX
-    paginacionRanking.addEventListener('click', (e) => {
-        const btnPagina = e.target.closest('[data-pagina]');
-        if (btnPagina) {
-            const pag = parseInt(btnPagina.getAttribute('data-pagina'), 10);
-            if (!isNaN(pag) && pag !== paginaActual) {
-                cargarRankingAjax(pag);
+                pagAnterior.disabled = (actual <= 1);
+                pagSiguiente.disabled = (actual >= total);
+
+                let botonesHtml = '';
+                for (let i = 1; i <= total; i++) {
+                    const activa = (i === actual) ? 'activa' : '';
+                    botonesHtml += `<button type="button" class="pag-btn ${activa}" data-pagina="${i}">${i}</button>`;
+                }
+                pagNumeros.innerHTML = botonesHtml;
+            } else {
+                paginacionRanking.style.display = 'none';
+                pagInfo.style.display = (totalJugadores > 0) ? 'block' : 'none';
+                if (totalJugadores > 0) {
+                    pagInfo.textContent = `Total: ${totalJugadores} jugadores`;
+                }
             }
-            return;
         }
 
-        if (e.target.closest('#pagAnterior') && paginaActual > 1) {
-            cargarRankingAjax(paginaActual - 1);
-            return;
-        }
+        // Actualización automática al cambiar mes o año
+        selectMes.addEventListener('change', () => cargarRankingAjax(1));
+        selectAnio.addEventListener('change', () => cargarRankingAjax(1));
 
-        if (e.target.closest('#pagSiguiente') && paginaActual < totalPaginas) {
-            cargarRankingAjax(paginaActual + 1);
-            return;
-        }
+        // Paginación con AJAX
+        paginacionRanking.addEventListener('click', (e) => {
+            const btnPagina = e.target.closest('[data-pagina]');
+            if (btnPagina) {
+                const pag = parseInt(btnPagina.getAttribute('data-pagina'), 10);
+                if (!isNaN(pag) && pag !== paginaActual) {
+                    cargarRankingAjax(pag);
+                }
+                return;
+            }
+
+            if (e.target.closest('#pagAnterior') && paginaActual > 1) {
+                cargarRankingAjax(paginaActual - 1);
+                return;
+            }
+
+            if (e.target.closest('#pagSiguiente') && paginaActual < totalPaginas) {
+                cargarRankingAjax(paginaActual + 1);
+                return;
+            }
+        });
     });
-});
 </script>

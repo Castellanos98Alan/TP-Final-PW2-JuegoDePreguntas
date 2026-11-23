@@ -179,8 +179,10 @@
 
     @media (max-width: 700px) {
         .editor-container {
-            width: 96%;
+            width: 100%;
+            margin: 16px auto 30px;
             padding: 20px 14px;
+            border-radius: 14px;
         }
 
         .editor-header {
@@ -189,13 +191,12 @@
             gap: 15px;
         }
 
-        .section-card {
-            padding: 14px;
-            overflow-x: auto;
+        .editor-title {
+            font-size: 22px;
         }
 
-        table {
-            min-width: 600px;
+        .section-card {
+            padding: 14px;
         }
     }
 
@@ -325,6 +326,10 @@
         font-size: 13px;
     }
 
+    .paginacion {
+        flex-wrap: wrap;
+    }
+
     .filtros-editor {
         display: flex;
         gap: 10px;
@@ -373,6 +378,7 @@
     .badge-estado {
         display: inline-block;
         padding: 6px 10px;
+        max-width: 100%;
         border-radius: 999px;
         font-size: 12px;
         font-weight: 700;
@@ -435,7 +441,156 @@
         color: #0A1A33;
     }
 
+    /* ===== RESPONSIVE ===== */
 
+    /* Red de seguridad: si una tabla igual no entra, scrollea ADENTRO de su tarjeta, no la página */
+    .table-wrap {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .celda-acciones {
+        text-align: center;
+    }
+
+    .tabla-vacia {
+        text-align: center;
+        color: #88A5CD;
+        padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+        .section-title {
+            font-size: 14px;
+        }
+
+        .option-row {
+            gap: 10px;
+        }
+
+        .option-row input[type="radio"] {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* filtros: campos a todo el ancho, botones lado a lado */
+        .filtros-editor input,
+        .filtros-editor select {
+            flex: 1 1 100%;
+        }
+
+        .filtros-editor button {
+            flex: 1 1 calc(50% - 5px);
+            min-height: 42px;
+        }
+
+        .section-card .btn-approve[type="submit"] {
+            width: 100%;
+        }
+    }
+
+    /* Tablas -> tarjetas (una por fila). Solo en pantalla: la impresión sigue siendo tabla */
+    @media screen and (max-width: 900px) {
+        .tabla-responsive,
+        .tabla-responsive tbody,
+        .tabla-responsive tr,
+        .tabla-responsive td {
+            display: block;
+            width: 100%;
+        }
+
+        /* encabezado oculto visualmente pero disponible para lectores de pantalla */
+        .tabla-responsive thead {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
+
+        .tabla-responsive tr {
+            margin-bottom: 14px;
+            padding: 4px 0;
+            background: rgba(10, 26, 51, 0.55);
+            border: 1px solid #315B91;
+            border-radius: 10px;
+        }
+
+        .tabla-responsive tbody tr:hover {
+            background: rgba(10, 26, 51, 0.55);
+        }
+
+        .tabla-responsive td {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(49, 91, 145, 0.25);
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .tabla-responsive td:last-child {
+            border-bottom: 0;
+        }
+
+        .tabla-responsive td::before {
+            content: attr(data-label);
+            flex: 0 0 34%;
+            max-width: 34%;
+            text-align: left;
+            color: #93C5FD;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* fila vacía ("No hay ...") */
+        .tabla-responsive td:not([data-label]) {
+            display: block;
+            text-align: center;
+        }
+
+        .tabla-responsive td:not([data-label])::before {
+            content: none;
+        }
+
+        /* enunciado y acciones: etiqueta arriba, contenido debajo a todo el ancho */
+        .tabla-responsive td.celda-principal,
+        .tabla-responsive td.celda-acciones {
+            flex-direction: column;
+            align-items: stretch;
+            text-align: left;
+        }
+
+        .tabla-responsive td.celda-principal::before,
+        .tabla-responsive td.celda-acciones::before {
+            flex: none;
+            max-width: none;
+        }
+
+        .tabla-responsive .acciones-pregunta {
+            justify-content: flex-start;
+        }
+
+        .badge-estado {
+            min-width: 0;
+        }
+
+        /* botones de acción: área táctil cómoda */
+        .btn-action,
+        .btn-desactivar,
+        .btn-reactivar,
+        .acciones-pregunta .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+        }
+    }
 </style>
 
 <div class="editor-container">
@@ -457,51 +612,48 @@
     <div class="section-card">
         <div class="section-title">REPORTES DE PREGUNTAS</div>
 
-
-        <table class="tabla-preguntas">
-            <thead>
-            <tr>
-                <th style="width: 45%;">Pregunta reportada</th>
-                <th>Categoría</th>
-                <th>Reportes</th>
-                <th style="text-align: center;">Acciones</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            {{#preguntas_baja_reportes}}
+        <div class="table-wrap">
+            <table class="tabla-responsive tabla-preguntas">
+                <thead>
                 <tr>
-                    <td>
-                        <strong>{{descripcion}}</strong>
-                    </td>
-
-                    <td>{{categoria}}</td>
-
-                    <td>
-                <span class="cantidad-reportes">
-                    {{cantidad_reportes}} reportes
-                </span>
-                    </td>
-
-                    <td style="text-align: center;">
-                        <a href="editor/editar?id={{id}}"
-                        class="btn-action btn-edit">
-                        Revisar pregunta
-                        </a>
-                    </td>
+                    <th style="width: 45%;">Pregunta reportada</th>
+                    <th>Categoría</th>
+                    <th>Reportes</th>
+                    <th style="text-align: center;">Acciones</th>
                 </tr>
-            {{/preguntas_baja_reportes}}
+                </thead>
 
-            {{^preguntas_baja_reportes}}
-                <tr>
-                    <td colspan="4"
-                        style="text-align: center; color: #88A5CD; padding: 20px;">
-                        No hay preguntas dadas de baja por reportes.
-                    </td>
-                </tr>
-            {{/preguntas_baja_reportes}}
-            </tbody>
-        </table>
+                <tbody>
+                {{#preguntas_baja_reportes}}
+                    <tr>
+                        <td class="celda-principal" data-label="Pregunta reportada">
+                            <strong>{{descripcion}}</strong>
+                        </td>
+
+                        <td data-label="Categoría">{{categoria}}</td>
+
+                        <td data-label="Reportes">
+                            <span class="cantidad-reportes">{{cantidad_reportes}} reportes</span>
+                        </td>
+
+                        <td class="celda-acciones" data-label="Acciones">
+                            <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
+                            Revisar pregunta
+                            </a>
+                        </td>
+                    </tr>
+                {{/preguntas_baja_reportes}}
+
+                {{^preguntas_baja_reportes}}
+                    <tr>
+                        <td colspan="4" class="tabla-vacia">
+                            No hay preguntas dadas de baja por reportes.
+                        </td>
+                    </tr>
+                {{/preguntas_baja_reportes}}
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- 2. PREGUNTAS PENDIENTES -->
@@ -510,58 +662,56 @@
             REVISAR PREGUNTAS NUEVAS (SUGERIDAS)
         </div>
 
-        <table>
-            <thead>
+        <div class="table-wrap">
+            <table class="tabla-responsive">
+                <thead>
                 <tr>
                     <th>Pregunta</th>
                     <th>Categoría</th>
                     <th>Creador</th>
                     <th style="text-align: center;">Acciones</th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
+                <tbody>
                 {{#pendientes}}
-                <tr>
-                    <td>{{descripcion}}</td>
-                    <td>{{categoria}}</td>
-                    <td>{{creador}}</td>
+                    <tr>
+                        <td class="celda-principal" data-label="Pregunta">{{descripcion}}</td>
+                        <td data-label="Categoría">{{categoria}}</td>
+                        <td data-label="Creador">{{creador}}</td>
 
-                    <td style="text-align: center;">
-                        <form action="editor/aprobar"
-                              method="POST"
-                              style="display:inline;">
+                        <td class="celda-acciones" data-label="Acciones">
+                            <div class="acciones-pregunta">
+                                <form action="editor/aprobar" method="POST">
+                                    <input type="hidden" name="id" value="{{id}}">
 
-                            <input type="hidden" name="id" value="{{id}}">
+                                    <button type="submit" class="btn-action btn-approve">
+                                        Aprobar
+                                    </button>
+                                </form>
 
-                            <button type="submit" class="btn-action btn-approve">
-                                Aprobar
-                            </button>
-                        </form>
+                                <form action="editor/rechazar" method="POST">
+                                    <input type="hidden" name="id" value="{{id}}">
 
-                        <form action="editor/rechazar"
-                              method="POST"
-                              style="display:inline; margin-left: 5px;">
-
-                            <input type="hidden" name="id" value="{{id}}">
-
-                            <button type="submit" class="btn-action btn-reject">
-                                Rechazar
-                            </button>
-                        </form>
-                    </td>
-                </tr>
+                                    <button type="submit" class="btn-action btn-reject">
+                                        Rechazar
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
                 {{/pendientes}}
 
                 {{^pendientes}}
-                <tr>
-                    <td colspan="4" style="text-align: center; color: #88A5CD; padding: 16px;">
-                        No hay preguntas pendientes de revisión.
-                    </td>
-                </tr>
+                    <tr>
+                        <td colspan="4" class="tabla-vacia">
+                            No hay preguntas pendientes de revisión.
+                        </td>
+                    </tr>
                 {{/pendientes}}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- 3. AGREGAR NUEVA PREGUNTA -->
@@ -574,12 +724,12 @@
                 <label for="descripcion">Enunciado de la pregunta:</label>
 
                 <input
-                    type="text"
-                    id="descripcion"
-                    name="descripcion"
-                    placeholder="Ej: ¿Quién es el capitán de la tripulación de Sombrero de Paja?"
-                    maxlength="500"
-                    required
+                        type="text"
+                        id="descripcion"
+                        name="descripcion"
+                        placeholder="Ej: ¿Quién es el capitán de la tripulación de Sombrero de Paja?"
+                        maxlength="500"
+                        required
                 >
             </div>
 
@@ -590,7 +740,7 @@
                     <option value="">Seleccionar anime</option>
 
                     {{#animes}}
-                    <option value="{{id}}">{{nombre}}</option>
+                        <option value="{{id}}">{{nombre}}</option>
                     {{/animes}}
                 </select>
             </div>
@@ -602,7 +752,7 @@
                     <option value="">Seleccionar categoría</option>
 
                     {{#categorias}}
-                    <option value="{{id}}">{{nombre}}</option>
+                        <option value="{{id}}">{{nombre}}</option>
                     {{/categorias}}
                 </select>
             </div>
@@ -705,99 +855,96 @@
     <div class="section-card">
         <div class="section-title">GESTIONAR PREGUNTAS</div>
 
-        <table>
-            <thead>
-                <tr>
-                    <thead>
+        <div class="table-wrap">
+            <table class="tabla-responsive">
+                <thead>
                 <tr>
                     <th style="width: 50%;">Pregunta</th>
                     <th style="width: 10%;">Categoría</th>
                     <th style="width: 15%; text-align: center">Estado</th>
                     <th style="width: 25%; text-align: center">Acciones</th>
                 </tr>
-            </thead>
+                </thead>
 
-                </tr>
-            </thead>
+                <tbody>
+                {{#activas}}
+                    <tr>
+                        <td class="celda-principal" data-label="Pregunta">{{descripcion}}</td>
+                        <td data-label="Categoría">{{categoria}}</td>
 
-            <tbody>
-            {{#activas}}
-                <tr>
-                    <td>{{descripcion}}</td>
-                    <td>{{categoria}}</td>
-
-                    <td>
-                        {{#estadoActiva}}
-                            <span class="badge-estado badge-activa">Activa</span>
-                        {{/estadoActiva}}
-
-                        {{#estadoInactiva}}
-                            <span class="badge-estado badge-inactiva">Inactiva</span>
-                        {{/estadoInactiva}}
-
-                        {{#estadoRechazada}}
-                            <span class="badge-estado badge-rechazada">Rechazada</span>
-                        {{/estadoRechazada}}
-
-                        {{#estadoReportada}}
-                            <span class="badge-estado badge-reportada">Baja por reportes</span>
-                        {{/estadoReportada}}
-                    </td>
-
-                    <td>
-                        <div class="acciones-pregunta">
-
-                            {{#activa}}
-                                <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
-                                Editar
-                                </a>
-
-                                <form action="editor/desactivar" method="POST" style="display:inline;">
-                                    <input type="hidden" name="id_pregunta" value="{{id}}">
-                                    <button type="submit" class="btn-desactivar">
-                                        Desactivar
-                                    </button>
-                                </form>
-                            {{/activa}}
+                        <td data-label="Estado">
+                            {{#estadoActiva}}
+                                <span class="badge-estado badge-activa">Activa</span>
+                            {{/estadoActiva}}
 
                             {{#estadoInactiva}}
-                                <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
-                                Editar
-                                </a>
-
-                                <form action="editor/reactivar" method="POST" style="display:inline;">
-                                    <input type="hidden" name="id_pregunta" value="{{id}}">
-                                    <button type="submit" class="btn-reactivar">
-                                        Reactivar
-                                    </button>
-                                </form>
+                                <span class="badge-estado badge-inactiva">Inactiva</span>
                             {{/estadoInactiva}}
 
-                            {{#estadoReportada}}
-                                <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
-                                Revisar
-                                </a>
-                            {{/estadoReportada}}
-
                             {{#estadoRechazada}}
-                                <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
-                                Revisar
-                                </a>
-
-                                <form action="editor/recuperarRechazada" method="POST" style="display:inline;">
-                                    <input type="hidden" name="id_pregunta" value="{{id}}">
-                                    <button type="submit" class="btn-reactivar">
-                                        Aprobar y reactivar
-                                    </button>
-                                </form>
+                                <span class="badge-estado badge-rechazada">Rechazada</span>
                             {{/estadoRechazada}}
 
-                        </div>
-                    </td>
-                </tr>
-            {{/activas}}
-            </tbody>
-        </table>
+                            {{#estadoReportada}}
+                                <span class="badge-estado badge-reportada">Baja por reportes</span>
+                            {{/estadoReportada}}
+                        </td>
+
+                        <td class="celda-acciones" data-label="Acciones">
+                            <div class="acciones-pregunta">
+
+                                {{#activa}}
+                                    <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
+                                    Editar
+                                    </a>
+
+                                    <form action="editor/desactivar" method="POST" style="display:inline;">
+                                        <input type="hidden" name="id_pregunta" value="{{id}}">
+                                        <button type="submit" class="btn-desactivar">
+                                            Desactivar
+                                        </button>
+                                    </form>
+                                {{/activa}}
+
+                                {{#estadoInactiva}}
+                                    <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
+                                    Editar
+                                    </a>
+
+                                    <form action="editor/reactivar" method="POST" style="display:inline;">
+                                        <input type="hidden" name="id_pregunta" value="{{id}}">
+                                        <button type="submit" class="btn-reactivar">
+                                            Reactivar
+                                        </button>
+                                    </form>
+                                {{/estadoInactiva}}
+
+                                {{#estadoReportada}}
+                                    <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
+                                    Revisar
+                                    </a>
+                                {{/estadoReportada}}
+
+                                {{#estadoRechazada}}
+                                    <a href="editor/editar?id={{id}}" class="btn-action btn-edit">
+                                    Revisar
+                                    </a>
+
+                                    <form action="editor/recuperarRechazada" method="POST" style="display:inline;">
+                                        <input type="hidden" name="id_pregunta" value="{{id}}">
+                                        <button type="submit" class="btn-reactivar">
+                                            Aprobar y reactivar
+                                        </button>
+                                    </form>
+                                {{/estadoRechazada}}
+
+                            </div>
+                        </td>
+                    </tr>
+                {{/activas}}
+                </tbody>
+            </table>
+        </div>
 
         <div class="paginacion">
 

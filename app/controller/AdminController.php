@@ -105,7 +105,39 @@ class AdminController
             $listaAnimes[$anime['id']] = $anime['nombre'];
         }
 
-        $preguntas = $this->model->getEstadisticasPreguntas($periodo, $categoriaId, $dificultad, $orden, $animeId);
+        // Paginación de la tabla de preguntas (10 por página, igual que en Editor).
+        $porPagina = 10;
+        $pagina = max(1, (int)($_GET['pagina'] ?? 1));
+
+        $totalPreguntas = $this->model->contarEstadisticasPreguntas($periodo, $categoriaId, $dificultad, $animeId);
+        $totalPaginas = max(1, (int)ceil($totalPreguntas / $porPagina));
+        $pagina = min($pagina, $totalPaginas);
+
+        $preguntas = $this->model->getEstadisticasPreguntas(
+            $periodo,
+            $categoriaId,
+            $dificultad,
+            $orden,
+            $animeId,
+            $pagina,
+            $porPagina
+        );
+
+        $paginaAnterior = $pagina - 1;
+        $paginaSiguiente = $pagina + 1;
+
+        $paramsBase = array_filter([
+            'periodo' => $periodo,
+            'anime' => $animeId,
+            'categoria' => $categoriaId,
+            'dificultad' => $dificultad,
+            'orden' => $orden,
+        ], static function ($v) {
+            return $v !== null && $v !== '';
+        });
+
+        $paginaAnteriorUrl = 'admin?' . http_build_query($paramsBase + ['pagina' => $paginaAnterior]) . '#balance-preguntas';
+        $paginaSiguienteUrl = 'admin?' . http_build_query($paramsBase + ['pagina' => $paginaSiguiente]) . '#balance-preguntas';
 
         $reporte = [
             'total_jugadores' => $this->model->getTotalJugadores(),
@@ -121,7 +153,14 @@ class AdminController
             'porcentaje_correctas' => $this->model->getPorcentajeCorrectas($periodo),
 
             'preguntas' => $preguntas,
-            'cantidad_preguntas' => count($preguntas),
+            'cantidad_preguntas' => $totalPreguntas,
+
+            'paginaActual' => $pagina,
+            'totalPaginas' => $totalPaginas,
+            'hayAnterior' => $pagina > 1,
+            'haySiguiente' => $pagina < $totalPaginas,
+            'paginaAnteriorUrl' => $paginaAnteriorUrl,
+            'paginaSiguienteUrl' => $paginaSiguienteUrl,
 
             'animes' => $this->armarOpciones($listaAnimes, $animeId),
             'categorias' => $this->armarOpciones($listaCategorias, $categoriaId),

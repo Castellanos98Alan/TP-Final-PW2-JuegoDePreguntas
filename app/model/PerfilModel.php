@@ -159,15 +159,19 @@ class PerfilModel
         return $this->database->queryOne($sql, ['idUsuario' => $idUsuario]);
     }
 
-    public function obtenerPartidas($idUsuario)
+    public function obtenerPartidas($idUsuario, $pagina = 1, $limite = 10)
     {
+        $limite = max(1, (int)$limite);
+        $offset = (max(1, (int)$pagina) - 1) * $limite;
+
         $sql = "SELECT id,
                 puntaje,
                 resultado,
                 DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
                 FROM partida
                 WHERE id_usuario = :idUsuario
-                ORDER BY created_at DESC";
+                ORDER BY created_at DESC
+                LIMIT $limite OFFSET $offset";
 
         return $this->database->queryAll($sql, ['idUsuario' => $idUsuario]);
     }

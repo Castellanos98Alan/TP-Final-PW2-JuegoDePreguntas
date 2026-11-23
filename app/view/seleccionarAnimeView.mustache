@@ -1,8 +1,12 @@
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     .seleccion-anime-container {
         width: 100%;
         max-width: 1100px;
-        margin: 0 auto;
+        margin: 0 auto 30px;
         padding: 35px 30px;
         background: rgba(7, 20, 42, 0.94);
         border: 1px solid #B98B3B;
@@ -10,21 +14,24 @@
         box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
         color: #F3F5FA;
     }
+
     .seleccion-anime-container h1 {
         text-align: center;
         font-family: 'Permanent Marker', cursive;
         color: #F1CD73;
-        font-size: clamp(28px, 5vw, 38px);
-        margin-bottom: 8px;
+        font-size: clamp(26px, 6vw, 38px);
+        margin: 0 0 8px;
         letter-spacing: 1px;
         text-shadow: 0 2px 16px rgba(212, 175, 85, 0.2);
     }
+
     .seleccion-anime-container p {
         text-align: center;
         color: #B6C9E6;
         font-size: 15px;
-        margin-bottom: 25px;
+        margin: 0 0 25px;
     }
+
     /* Mensajes de error con estilo anime */
     .mensaje-error {
         max-width: 600px;
@@ -38,6 +45,7 @@
         font-size: 14px;
         font-weight: 500;
     }
+
     /* Cuadrícula de Cartas */
     .animes-grid {
         display: grid;
@@ -45,6 +53,7 @@
         gap: 22px;
         margin-bottom: 35px;
     }
+
     /* Carta individual de Anime */
     .anime-card {
         position: relative;
@@ -56,36 +65,44 @@
         overflow: hidden;
         cursor: pointer;
         user-select: none;
+        -webkit-tap-highlight-color: transparent;
         transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
+
     .anime-card:hover {
         transform: translateY(-4px);
         border-color: #D4AF55;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px rgba(212, 175, 85, 0.25);
     }
+
     /* Escondemos el checkbox original */
     .anime-checkbox {
         position: absolute;
         opacity: 0;
         pointer-events: none;
     }
+
     /* Imagen de portada de la carta */
     .anime-imagen-wrapper {
         position: relative;
         width: 100%;
-        height: 100%;
+        aspect-ratio: 3 / 4;
         background: #050f21;
         overflow: hidden;
     }
+
     .anime-imagen {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
         transition: transform 0.35s ease;
     }
+
     .anime-card:hover .anime-imagen {
         transform: scale(1.05);
     }
+
     /* Gradiente sobre la imagen para resaltar texto */
     .anime-imagen-wrapper::after {
         content: "";
@@ -94,6 +111,7 @@
         background: linear-gradient(to bottom, transparent 60%, rgba(7, 20, 42, 0.95));
         pointer-events: none;
     }
+
     /* Nombre del Anime */
     .anime-nombre {
         padding: 14px 12px;
@@ -108,6 +126,7 @@
         align-items: center;
         justify-content: center;
     }
+
     /* Indicador tipo medalla (Checkmark badge) */
     .card-badge {
         position: absolute;
@@ -127,6 +146,7 @@
         z-index: 2;
         transition: all 0.2s ease;
     }
+
     /* ESTADO SELECCIONADO (cuando el checkbox está marcado) */
     .anime-card:has(.anime-checkbox:checked) {
         border-color: #F1CD73;
@@ -134,15 +154,18 @@
         box-shadow: 0 0 20px rgba(241, 205, 115, 0.38), 0 8px 24px rgba(0, 0, 0, 0.4);
         transform: translateY(-6px) scale(1.02);
     }
+
     .anime-card:has(.anime-checkbox:checked) .anime-nombre {
         color: #F1CD73;
     }
+
     .anime-card:has(.anime-checkbox:checked) .card-badge {
         background: #F1CD73;
         border-color: #F5D78A;
         color: #0A1A33;
         box-shadow: 0 0 8px rgba(241, 205, 115, 0.6);
     }
+
     /* Barra de Botones Inferior */
     .acciones-partida {
         display: flex;
@@ -152,6 +175,7 @@
         padding-top: 15px;
         border-top: 1px solid rgba(58, 86, 128, 0.45);
     }
+
     .btn-volver {
         text-decoration: none;
         padding: 13px 26px;
@@ -162,13 +186,16 @@
         border: 1px solid #315B91;
         color: #DCE6F8;
         background: rgba(16, 39, 73, 0.45);
+        text-align: center;
         transition: all 0.2s ease;
     }
+
     .btn-volver:hover {
         border-color: #D4AF55;
         color: #F1CD73;
         transform: translateY(-2px);
     }
+
     .btn-comenzar {
         padding: 13px 34px;
         border-radius: 8px;
@@ -182,12 +209,85 @@
         box-shadow: 0 4px 15px rgba(212, 175, 85, 0.3);
         transition: all 0.2s ease;
     }
+
     .btn-comenzar:hover {
         filter: brightness(1.1);
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(212, 175, 85, 0.45);
     }
+
+    /* ===== RESPONSIVE MOBILE ===== */
+    @media (max-width: 650px) {
+        .seleccion-anime-container {
+            padding: 20px 14px 16px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+        }
+
+        .seleccion-anime-container p {
+            font-size: 13.5px;
+            margin-bottom: 18px;
+        }
+
+        .animes-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .anime-card {
+            border-radius: 12px;
+        }
+
+        .anime-card:has(.anime-checkbox:checked) {
+            transform: translateY(-3px) scale(1.01);
+        }
+
+        .anime-imagen-wrapper {
+            aspect-ratio: 4 / 5;
+        }
+
+        .card-badge {
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+        }
+
+        .anime-nombre {
+            padding: 10px 8px;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+
+        /* Barra inferior fija para no tener que scrollear hasta el final */
+        .acciones-partida {
+            position: sticky;
+            bottom: 0;
+            margin: 0 -14px -16px;
+            padding: 12px 14px;
+            gap: 10px;
+            background: rgba(7, 20, 42, 0.96);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(212, 175, 85, 0.35);
+            border-radius: 0 0 14px 14px;
+            z-index: 10;
+        }
+
+        .btn-volver {
+            padding: 12px 16px;
+            font-size: 13.5px;
+        }
+
+        .btn-comenzar {
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+    }
 </style>
+
 <div class="seleccion-anime-container">
 
     <h1>Elegí tus animes</h1>
@@ -208,10 +308,7 @@
         </div>
     {{/errorPreguntas}}
 
-    <form
-        action="partida/nueva"
-        method="POST"
-    >
+    <form action="partida/nueva" method="POST">
 
         <div class="animes-grid">
             {{#animes}}
@@ -233,17 +330,11 @@
 
         <div class="acciones-partida">
 
-            <a
-                href="lobby"
-                class="btn-volver"
-            >
+            <a href="lobby" class="btn-volver">
                 Volver
             </a>
 
-            <button
-                type="submit"
-                class="btn-comenzar"
-            >
+            <button type="submit" class="btn-comenzar">
                 Comenzar partida
             </button>
 

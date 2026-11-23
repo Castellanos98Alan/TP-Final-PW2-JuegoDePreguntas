@@ -39,7 +39,24 @@ class PerfilController
         }
 
         $resumen = $this->model->obtenerResumenPartidas($idUsuario);
-        $partidas = $this->model->obtenerPartidas($idUsuario);
+        $resumen = $this->model->obtenerResumenPartidas($idUsuario);
+
+        // Paginación de partidas (10 por página)
+        $porPagina = 10;
+        $pagina = max(1, (int)($_GET['pagina'] ?? 1));
+        $totalPartidas = (int)($resumen['total'] ?? 0);
+        $totalPaginas = max(1, (int)ceil($totalPartidas / $porPagina));
+        $pagina = min($pagina, $totalPaginas);
+
+        $partidas = $this->model->obtenerPartidas($idUsuario, $pagina, $porPagina);
+
+        $paramsBase = [];
+        if ($idPedido !== null && $idPedido !== '') {
+            $paramsBase['id'] = $idUsuario;
+        }
+
+        $paginaAnteriorUrl = 'perfil?' . http_build_query($paramsBase + ['pagina' => $pagina - 1]) . '#historial-partidas';
+        $paginaSiguienteUrl = 'perfil?' . http_build_query($paramsBase + ['pagina' => $pagina + 1]) . '#historial-partidas';
         $esJugador = ((int)$jugador['id_rol'] === 1);
 
         $tieneUbicacion = is_numeric($jugador['latitud']) && is_numeric($jugador['longitud']);
@@ -105,7 +122,14 @@ class PerfilController
             'error_perfil' => $errorPerfil,
             'error_password' => $errorPassword,
             'mensaje_exito' => $mensajeExito,
-            'exito_edicion' => $exitoEdicion
+            'exito_edicion' => $exitoEdicion,
+            'mostrarPaginacion' => $totalPartidas > 0,
+            'paginaActual' => $pagina,
+            'totalPaginas' => $totalPaginas,
+            'hayAnterior' => $pagina > 1,
+            'haySiguiente' => $pagina < $totalPaginas,
+            'paginaAnteriorUrl' => $paginaAnteriorUrl,
+            'paginaSiguienteUrl' => $paginaSiguienteUrl,
         ];
 
         $this->render->renderiza("perfil", $data);

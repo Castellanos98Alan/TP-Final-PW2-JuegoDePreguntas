@@ -1,5 +1,6 @@
 <style>
     .derrota-page {
+        width: 100%;
         min-height: calc(100vh - 140px);
         background:
                 radial-gradient(circle at top left, rgba(255, 90, 90, 0.10), transparent 30%),
@@ -53,6 +54,7 @@
     }
 
     .derrota-subtitulo {
+        overflow-wrap: anywhere;
         margin-top: 12px;
         color: rgba(255, 255, 255, 0.72);
         font-size: 17px;
@@ -81,11 +83,12 @@
         font-weight: 800;
         line-height: 1.4;
         margin: 0;
+        overflow-wrap: anywhere;
     }
 
     .resultado-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 18px;
         margin-top: 28px;
     }
@@ -117,7 +120,7 @@
     .respuestas-lista {
         margin-top: 28px;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 16px;
     }
 
@@ -167,6 +170,8 @@
 
     .respuesta-contenido {
         flex: 1;
+        min-width: 0;
+        overflow-wrap: anywhere;
     }
 
     .respuesta-texto {
@@ -204,6 +209,83 @@
         justify-content: center;
         gap: 14px;
         flex-wrap: wrap;
+    }
+
+    /* ===== Reporte de pregunta ===== */
+    .reporte-toggle-wrap {
+        margin: 25px 0;
+        text-align: center;
+    }
+
+    .btn-reportar {
+        background: transparent;
+        border: 2px solid #d4af37;
+        color: #f4c34a;
+        padding: 10px 22px;
+        border-radius: 999px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .seccion-reporte {
+        margin: 20px 0;
+        padding: 22px;
+        border: 1px solid #d8aa32;
+        border-radius: 16px;
+        background: #07162d;
+        color: white;
+        text-align: left;
+    }
+
+    .mensaje-reporte {
+        padding: 16px;
+        border-radius: 8px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .form-reporte {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    /* select con enunciados largos: sin esto ensanchan toda la pantalla */
+    .form-reporte select,
+    .form-reporte textarea {
+        width: 100%;
+        max-width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        font-family: inherit;
+    }
+
+    .form-reporte-acciones {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .btn-reporte-cancelar {
+        padding: 10px 18px;
+        border: 1px solid #777;
+        background: transparent;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .btn-reporte-enviar {
+        padding: 10px 22px;
+        border: 0;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #d8aa32;
+        color: #07162d;
+        font-weight: bold;
     }
 
     .btn-derrota {
@@ -256,6 +338,76 @@
 
         .pregunta-fallada-texto {
             font-size: 20px;
+        }
+
+        .derrota-page {
+            min-height: 0;
+            padding: 20px 8px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .derrota-card {
+            padding: 24px 14px;
+            border-radius: 18px;
+        }
+
+        .derrota-icono {
+            width: 64px;
+            height: 64px;
+            font-size: 30px;
+        }
+
+        .derrota-subtitulo {
+            font-size: 15px;
+        }
+
+        .pregunta-fallada {
+            padding: 16px;
+        }
+
+        .pregunta-fallada-texto {
+            font-size: 18px;
+        }
+
+        .resultado-box {
+            padding: 16px;
+        }
+
+        .resultado-valor {
+            font-size: 26px;
+        }
+
+        .respuesta-card {
+            padding: 14px;
+            gap: 10px;
+        }
+
+        .respuesta-letra {
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+        }
+
+        .respuesta-texto {
+            font-size: 15px;
+        }
+
+        .btn-reportar {
+            width: 100%;
+        }
+
+        .seccion-reporte {
+            padding: 16px;
+        }
+
+        .form-reporte-acciones {
+            flex-direction: column-reverse;
+        }
+
+        .form-reporte-acciones button {
+            width: 100%;
+            padding: 12px;
         }
     }
 </style>
@@ -339,23 +491,22 @@
 
         </div>
 
-        <div style="margin: 25px 0; text-align: center;">
-            <button type="button" id="btnToggleReporte"
-                    style="background: transparent; border: 2px solid #d4af37; color: #f4c34a; padding: 10px 22px; border-radius: 999px; font-weight: bold; cursor: pointer; font-size: 15px;">
+        <div class="reporte-toggle-wrap">
+            <button type="button" id="btnToggleReporte" class="btn-reportar">
                 ⚠️ Reportar pregunta
             </button>
         </div>
 
-        <section id="seccionReporte" style="display: none; margin: 20px 0; padding: 22px; border: 1px solid #d8aa32; border-radius: 16px; background: #07162d; color: white; text-align: left;">
-            <div id="mensajeReporteAjax" style="display: none; padding: 16px; border-radius: 8px; font-weight: bold; text-align: center; font-size: 16px;"></div>
+        <section id="seccionReporte" class="seccion-reporte" style="display: none;">
+            <div id="mensajeReporteAjax" class="mensaje-reporte" style="display: none;"></div>
 
             <div id="cuerpoReporte">
                 <h2 style="margin-top: 0;">¿Encontraste un error?</h2>
                 <p>Seleccioná la pregunta que querés reportar y contanos qué está mal.</p>
 
-                <form id="formReporte" action="partida/reportar" method="POST" style="display: grid; gap: 14px;">
+                <form id="formReporte" action="partida/reportar" method="POST" class="form-reporte">
                     <label for="preguntaReporte">Pregunta a reportar</label>
-                    <select id="preguntaReporte" name="idPregunta" required style="padding: 12px; border-radius: 8px;">
+                    <select id="preguntaReporte" name="idPregunta" required>
                         <option value="">Seleccioná una pregunta</option>
                         {{#preguntasReporte}}
                             <option value="{{id}}">{{enunciado}}</option>
@@ -363,7 +514,7 @@
                     </select>
 
                     <label for="motivoReporte">Motivo</label>
-                    <select id="motivoReporte" name="motivo" required style="padding: 12px; border-radius: 8px;">
+                    <select id="motivoReporte" name="motivo" required>
                         <option value="">Seleccioná un motivo</option>
                         <option value="Respuesta incorrecta">Respuesta incorrecta</option>
                         <option value="Ninguna opción es correcta">Ninguna opción es correcta</option>
@@ -374,16 +525,13 @@
 
                     <label for="descripcionReporte">Descripción del error</label>
                     <textarea id="descripcionReporte" name="descripcion" required maxlength="2000" rows="4"
-                              placeholder="Contanos qué encontraste..."
-                              style="padding: 12px; border-radius: 8px;"></textarea>
+                              placeholder="Contanos qué encontraste..."></textarea>
 
-                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                        <button type="button" id="btnCancelarReporte"
-                                style="padding: 10px 18px; border: 1px solid #777; background: transparent; color: white; border-radius: 8px; cursor: pointer;">
+                    <div class="form-reporte-acciones">
+                        <button type="button" id="btnCancelarReporte" class="btn-reporte-cancelar">
                             Cancelar
                         </button>
-                        <button type="submit" id="btnEnviarReporte"
-                                style="padding: 10px 22px; border: 0; border-radius: 8px; cursor: pointer; background: #d8aa32; color: #07162d; font-weight: bold;">
+                        <button type="submit" id="btnEnviarReporte" class="btn-reporte-enviar">
                             Enviar reporte
                         </button>
                     </div>

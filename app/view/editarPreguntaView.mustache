@@ -20,6 +20,7 @@
 
 
     .edit-title {
+        overflow-wrap: anywhere;
         margin: 0 0 25px;
         color: #F1CD73;
         font-size: 24px;
@@ -129,14 +130,67 @@
         margin-bottom: 14px;
     }
 
+    /* radio + texto de cada opción: el input puede encogerse en pantallas angostas */
+    .option-row .input-field {
+        flex: 1;
+        min-width: 0;
+    }
+
     @media (max-width: 600px) {
         .edit-container {
-            width: 96%;
-            padding: 24px 18px;
+            width: 100%;
+            margin: 16px auto 30px;
+            padding: 20px 14px;
+            border-radius: 14px;
         }
 
+        .edit-title {
+            font-size: 20px;
+        }
+
+        .option-row {
+            gap: 10px;
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* botones a todo el ancho, fáciles de tocar */
         .actions-bar {
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .btn-save {
+            width: 100%;
+            padding: 14px;
+            font-size: 13px;
+        }
+
+        .btn-cancel {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .pregunta-imagen-container,
+        .pregunta-audio-container {
+            padding: 12px;
+        }
+
+        .reportes-revision {
+            padding: 14px;
+        }
+
+        .acciones-revision {
+            flex-direction: column;
+        }
+
+        .acciones-revision form,
+        .acciones-revision button {
+            width: 100%;
         }
     }
 
@@ -197,6 +251,7 @@
     .reporte-item p {
         color: #e5edff;
         margin: 8px 0;
+        overflow-wrap: anywhere;
     }
 
     .reporte-item small {
@@ -275,13 +330,13 @@
             <label for="descripcion">Enunciado:</label>
 
             <input
-                type="text"
-                id="descripcion"
-                name="descripcion"
-                class="input-field"
-                value="{{descripcion}}"
-                maxlength="500"
-                required
+                    type="text"
+                    id="descripcion"
+                    name="descripcion"
+                    class="input-field"
+                    value="{{descripcion}}"
+                    maxlength="500"
+                    required
             >
         </div>
 
@@ -355,21 +410,21 @@
                 <div class="option-row">
 
                     <input
-                        type="radio"
-                        name="correcta"
-                        value="{{id}}"
-                        class="option-radio"
+                            type="radio"
+                            name="correcta"
+                            value="{{id}}"
+                            class="option-radio"
                         {{checked}}
-                        required
+                            required
                     >
 
                     <input
-                        type="text"
-                        name="opciones[{{id}}]"
-                        class="input-field"
-                        value="{{descripcion}}"
-                        maxlength="255"
-                        required
+                            type="text"
+                            name="opciones[{{id}}]"
+                            class="input-field"
+                            value="{{descripcion}}"
+                            maxlength="255"
+                            required
                     >
 
                 </div>

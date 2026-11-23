@@ -11,6 +11,13 @@
         background-attachment: fixed !important;
     }
 
+    @media (max-width: 768px) {
+        /* background-attachment:fixed falla en iOS/Android */
+        body {
+            background-attachment: scroll !important;
+        }
+    }
+
     .bs-container {
         width: 100%;
         max-width: 1150px;
@@ -45,8 +52,8 @@
     }
 
     .bs-input {
-        flex: 1;
-        min-width: 220px;
+        flex: 1 1 200px;
+        min-width: 0;
         padding: 13px 18px;
         border-radius: 25px;
         border: 1px solid #d4a72c;
@@ -74,12 +81,13 @@
     /* ===== LISTA ===== */
     .bs-lista {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
         gap: 14px;
         margin-top: 20px;
     }
 
     .bs-jugador {
+        min-width: 0;
         display: flex;
         align-items: center;
         gap: 14px;
@@ -209,8 +217,56 @@
     }
 
     @media (max-width: 600px) {
+        .bs-panel {
+            padding: 16px 14px;
+            border-radius: 14px;
+        }
+
+        .bs-panel h2 {
+            font-size: 18px;
+        }
+
+        .bs-input {
+            flex-basis: 100%;
+        }
+
         .bs-lista {
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .bs-volver .bs-btn {
+            flex: 1;
+            max-width: 320px;
+            text-align: center;
+        }
+    }
+
+    /* 320-360px: puntos debajo del nombre para que el usuario no quede cortado */
+    @media (max-width: 360px) {
+        .bs-jugador {
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 12px;
+        }
+
+        .bs-avatar {
+            width: 48px;
+            height: 48px;
+        }
+
+        .bs-puntos {
+            flex-basis: 100%;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            padding-top: 8px;
+            text-align: left;
+            border-top: 1px solid rgba(212, 167, 44, .25);
+        }
+
+        .bs-puntos strong {
+            display: inline;
+            font-size: 16px;
         }
     }
 </style>
@@ -236,20 +292,20 @@
         <div class="bs-lista" id="bs-lista">
             {{#jugadores}}
                 <a class="bs-jugador" href="perfil/{{id}}">
-                <img class="bs-avatar" src="{{foto_perfil}}" alt="Foto de {{username}}">
+                    <img class="bs-avatar" src="{{foto_perfil}}" alt="Foto de {{username}}">
 
-                <div class="bs-info">
-                    <div class="bs-username">
-                        {{username}}{{#es_propio}}<span class="bs-vos">Vos</span>{{/es_propio}}
+                    <div class="bs-info">
+                        <div class="bs-username">
+                            {{username}}{{#es_propio}}<span class="bs-vos">Vos</span>{{/es_propio}}
+                        </div>
+                        <div class="bs-nombre">{{nombre_completo}}</div>
+                        <div class="bs-ubicacion">{{ubicacion}}</div>
                     </div>
-                    <div class="bs-nombre">{{nombre_completo}}</div>
-                    <div class="bs-ubicacion">{{ubicacion}}</div>
-                </div>
 
-                <div class="bs-puntos">
-                    <strong>{{puntaje_acumulado}}</strong>
-                    <span>pts · #{{posicion}}</span>
-                </div>
+                    <div class="bs-puntos">
+                        <strong>{{puntaje_acumulado}}</strong>
+                        <span>pts · #{{posicion}}</span>
+                    </div>
                 </a>
             {{/jugadores}}
         </div>

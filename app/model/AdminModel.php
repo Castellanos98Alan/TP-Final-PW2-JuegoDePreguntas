@@ -21,18 +21,18 @@ class AdminModel
     {
         switch ($periodo) {
             case 'dia':
-                return "DATE($columna) = CURDATE()"; //trae los registros cuya fecha sea igual a la fecha de hoy
+                return "DATE($columna) = CURDATE()";
 
             case 'semana':
-                return "YEARWEEK($columna, 1) = YEARWEEK(CURDATE(), 1)"; //trae los registros que pertenecen a la misma semana que la fecha actual
+                return "YEARWEEK($columna, 1) = YEARWEEK(CURDATE(), 1)";
 
             case 'anio':
-                return "YEAR($columna) = YEAR(CURDATE())";  //traer los registros cuyo año sea igual al año actual
+                return "YEAR($columna) = YEAR(CURDATE())";
 
             case 'mes':
             default:
                 return "YEAR($columna) = YEAR(CURDATE())
-                        AND MONTH($columna) = MONTH(CURDATE())"; //trae los registros que pertenezcan al mismo mes y año actuales
+                        AND MONTH($columna) = MONTH(CURDATE())";
         }
     }
 
@@ -106,8 +106,8 @@ class AdminModel
         return $this->database->queryAll($sql);
     }
 
-    // Estadísticas de preguntas, con filtros y orden opcionales.
-    public function getEstadisticasPreguntas($periodo = null, $categoriaId = null, $dificultad = null, $orden = null, $animeId = null)
+    // Subconsulta base y filtros compartidos para listar y contar estadísticas de preguntas.
+    private function armarConsultaPreguntas($periodo = null, $categoriaId = null, $dificultad = null, $animeId = null)
     {
         $filtroFecha = '';
         if ($periodo) {
@@ -130,22 +130,9 @@ class AdminModel
         }
 
         $where = $condiciones ? 'WHERE ' . implode(' AND ', $condiciones) : '';
-
-        $ordenes = [
-            'jugada_desc' => 't.veces_mostrada DESC',
-            'jugada_asc' => 't.veces_mostrada ASC',
-            'acertada_desc' => 't.veces_acertada DESC',
-            'acertada_asc' => 't.veces_acertada ASC',
-            'exito_desc' => 't.porcentaje_aciertos DESC',
-            'exito_asc' => 't.porcentaje_aciertos ASC',
-        ];
-
-        $order = isset($ordenes[$orden]) ? $ordenes[$orden] . ', t.id DESC' : 't.id DESC';
-
         $minimoRespuestas = (int)self::MIN_RESPUESTAS_DIFICULTAD;
 
-        $sql = "SELECT t.*
-                FROM (
+        return "FROM (
                     SELECT
                         p.id,
                         p.enunciado AS descripcion,
@@ -170,8 +157,50 @@ class AdminModel
                     WHERE p.esta_activa = 1
                     GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
                 ) t
-                $where
-                ORDER BY $order";
+                $where";
+    }
+
+    // Total de preguntas que coinciden con los filtros (para calcular páginas).
+    public function contarEstadisticasPreguntas($periodo = null, $categoriaId = null, $dificultad = null, $animeId = null)
+    {
+        $fromWhere = $this->armarConsultaPreguntas($periodo, $categoriaId, $dificultad, $animeId);
+        $sql = "SELECT COUNT(*) AS total $fromWhere";
+
+        $resultado = $this->database->queryOne($sql);
+
+        return (int)($resultado['total'] ?? 0);
+    }
+
+    // Estadísticas de preguntas, con filtros, orden y paginación.
+    public function getEstadisticasPreguntas(
+        $periodo = null,
+        $categoriaId = null,
+        $dificultad = null,
+        $orden = null,
+        $animeId = null,
+        $pagina = 1,
+        $limite = 10
+    ) {
+        $ordenes = [
+            'jugada_desc' => 't.veces_mostrada DESC',
+            'jugada_asc' => 't.veces_mostrada ASC',
+            'acertada_desc' => 't.veces_acertada DESC',
+            'acertada_asc' => 't.veces_acertada ASC',
+            'exito_desc' => 't.porcentaje_aciertos DESC',
+            'exito_asc' => 't.porcentaje_aciertos ASC',
+        ];
+
+        $order = isset($ordenes[$orden]) ? $ordenes[$orden] . ', t.id DESC' : 't.id DESC';
+
+        $limite = max(1, (int)$limite);
+        $offset = (max(1, (int)$pagina) - 1) * $limite;
+
+        $fromWhere = $this->armarConsultaPreguntas($periodo, $categoriaId, $dificultad, $animeId);
+
+        $sql = "SELECT t.*
+                $fromWhere
+                ORDER BY $order
+                LIMIT $limite OFFSET $offset";
 
         return $this->database->queryAll($sql);
     }
@@ -279,7 +308,6 @@ class AdminModel
         return $this->database->queryAll($sql);
     }
 
-
     // Cantidad de partidas finalizadas según el período.
     public function getPartidasJugadas($periodo)
     {
@@ -294,5 +322,4 @@ class AdminModel
 
         return $resultado['total'] ?? 0;
     }
-
 }

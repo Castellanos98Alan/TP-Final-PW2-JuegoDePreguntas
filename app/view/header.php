@@ -21,8 +21,24 @@
             padding: 0;
         }
 
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        /* Medios nunca más anchos que su contenedor (imágenes, audio, canvas de gráficos) */
+        img, video, canvas, svg {
+            max-width: 100%;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 100%;
+        }
+
         body {
             min-height: 100vh;
+            min-height: 100dvh; /* en celular 100vh incluye la barra del navegador */
             display: flex;
             flex-direction: column;
             font-family: 'Roboto', sans-serif;
@@ -84,7 +100,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 15px;
+            flex-wrap: wrap;
+            gap: 10px 15px;
         }
 
         .brand-link {
@@ -92,6 +109,7 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
+            min-width: 0;
         }
 
         .brand-emblem {
@@ -127,7 +145,10 @@
         .nav-actions {
             display: flex;
             align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
             gap: 12px;
+            min-width: 0;
         }
 
         /* BOTÓN DE PERFIL CON FOTO REAL Y USERNAME */
@@ -167,6 +188,10 @@
             font-size: 14px;
             letter-spacing: 0.5px;
             line-height: 1;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .btn-link {
@@ -229,13 +254,28 @@
             z-index: 1;
         }
 
+        .main-content > * {
+            min-width: 0;
+        }
+
         /* RESPONSIVE */
+        @media (max-width: 768px) {
+            /* background-attachment:fixed falla/va lento en iOS y Android */
+            body {
+                background-attachment: scroll;
+            }
+        }
+
         @media (max-width: 600px) {
             .header-container {
-                padding: 10px 14px;
+                padding: 10px 12px;
+                gap: 8px;
             }
             .brand-text span {
                 display: none;
+            }
+            .brand-text h1 {
+                font-size: 17px;
             }
             .header-user-name {
                 display: none;
@@ -243,9 +283,35 @@
             .header-user-btn {
                 padding: 3px;
             }
+            .nav-actions {
+                gap: 6px;
+            }
             .btn-link {
-                padding: 6px 10px;
+                padding: 8px 10px;
                 font-size: 12px;
+                min-height: 40px; /* área táctil cómoda */
+            }
+            .main-content {
+                padding: 20px 12px;
+            }
+            /* decoración fija: no aporta en pantallas chicas */
+            body::before,
+            body::after {
+                display: none;
+            }
+
+            /* iOS hace zoom automático en campos con letra menor a 16px */
+            input:not([type="radio"]):not([type="checkbox"]):not([type="range"]),
+            select,
+            textarea {
+                font-size: 16px !important;
+            }
+        }
+
+        /* Celulares angostos (320-480): solo el emblema, el nombre del sitio sobra */
+        @media (max-width: 480px) {
+            .brand-text {
+                display: none;
             }
         }
     </style>
@@ -254,7 +320,7 @@
 
 <header class="site-header">
     <div class="header-container">
-        <a href="lobby" class="brand-link">
+        <a href="lobby" class="brand-link" aria-label="Preguntados Anime - ir al lobby">
             <div class="brand-emblem" aria-hidden="true">✦</div>
             <div class="brand-text">
                 <h1>PREGUNTADOS</h1>

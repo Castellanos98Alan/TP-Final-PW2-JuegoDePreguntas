@@ -1,19 +1,79 @@
-<div class="w3-content" style="max-width:900px">
-    <div class="w3-panel card-contenido w3-padding-24 w3-margin-top w3-card">
+<style>
+    .grupo-wrap {
+        width: 100%;
+        max-width: 900px;
+        margin: 10px auto 40px;
+    }
+
+    .grupo-card {
+        padding: 30px;
+        background: rgba(7, 20, 42, 0.94);
+        border: 1px solid #B98B3B;
+        border-radius: 18px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.45);
+        color: #DCE6F8;
+    }
+
+    .grupo-card h2 {
+        color: #F1CD73;
+        font-size: clamp(22px, 5vw, 30px);
+        overflow-wrap: anywhere;
+    }
+
+    .grupo-card p {
+        margin-top: 6px;
+        color: #B6C9E6;
+    }
+
+    .grupo-card hr {
+        margin: 20px 0;
+        border: 0;
+        border-top: 1px solid rgba(185, 139, 59, 0.35);
+    }
+
+    .grupo-card h3 {
+        color: #F1CD73;
+        font-size: 17px;
+    }
+
+    .grupo-lista {
+        list-style: none;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .grupo-lista li {
+        padding: 14px 16px;
+        background: rgba(16, 39, 73, 0.55);
+        border: 1px solid #315B91;
+        border-radius: 10px;
+        overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 600px) {
+        .grupo-card {
+            padding: 20px 14px;
+            border-radius: 14px;
+        }
+    }
+</style>
+
+<div class="grupo-wrap">
+    <div class="grupo-card">
 
         <h2>{{mensaje}}</h2>
         <p>Trabajo Práctico Final - Preguntados</p>
 
         <hr>
 
-        <div class="w3-container">
-            <h3>Integrantes del equipo:</h3>
-            <ul class="w3-ul w3-border w3-white">
-                {{#integrantes}}
-                <li class="w3-padding-16">{{nombre}}</li>
-                {{/integrantes}}
-            </ul>
-        </div>
+        <h3>Integrantes del equipo:</h3>
+        <ul class="grupo-lista">
+            {{#integrantes}}
+                <li>{{nombre}}</li>
+            {{/integrantes}}
+        </ul>
 
     </div>
 </div>

@@ -41,10 +41,27 @@
         text-decoration: none;
         font-size: 12px;
         transition: color 0.2s;
+        display: inline-block;
+        padding: 8px 4px; /* área táctil más cómoda */
     }
 
     .footer-links a:hover {
         color: #F1CD73;
+    }
+
+    .footer-inner > div {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 599px) {
+        .site-footer {
+            padding: 16px 12px;
+        }
+
+        .footer-inner {
+            letter-spacing: 0.5px;
+        }
     }
 
     @media (min-width: 600px) {

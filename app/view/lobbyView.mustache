@@ -1,4 +1,7 @@
 <style>
+    * {
+        box-sizing: border-box;
+    }
 
     body {
         background: linear-gradient(
@@ -43,6 +46,7 @@
         width: 100%;
         max-width: 1150px;
         margin: 10px auto 40px;
+        padding: 0 16px;
         position: relative;
         z-index: 2;
     }
@@ -117,7 +121,7 @@
     .historial h2 {
         color: #f5c84b;
         font-size: 21px;
-        margin-bottom: 18px;
+        margin: 0 0 18px;
         border-bottom: 1px solid rgba(245, 200, 75, .25);
         padding-bottom: 12px;
     }
@@ -149,6 +153,7 @@
     .partida-puntos {
         color: #f5c84b;
         font-weight: bold;
+        white-space: nowrap;
     }
 
     /* JUGAR */
@@ -268,17 +273,19 @@
     }
 
     /* ===========================
-       CREAR PREGUNTA
+       BOTONES INFERIORES
     =========================== */
-    .crear-pregunta {
-        width: 100%;
+    .acciones-extra {
         margin-top: 25px;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
     }
 
     .btn-pregunta {
         width: 360px;
+        max-width: 100%;
         padding: 16px;
         text-align: center;
         border: 1px solid #d4a72c;
@@ -302,37 +309,136 @@
        RESPONSIVE
     =========================== */
     @media (max-width: 900px) {
+        body {
+            background-attachment: scroll !important;
+        }
+
         .zona-juego {
             grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: 18px;
         }
 
-        .estadisticas {
-            grid-template-columns: 1fr;
-        }
-
+        /* En tablet/mobile el botón principal de Jugar va primero */
         .jugar-container {
-            min-height: 290px;
+            order: -1;
+            min-height: 270px;
         }
 
         .ranking {
-            min-height: 240px;
+            min-height: 170px;
         }
     }
 
     @media (max-width: 600px) {
-        .btn-jugar {
-            width: 200px;
-            height: 200px;
+        .container {
+            margin: 8px auto 30px;
+            padding: 0 12px;
+        }
+
+        /* Estadísticas: 2 arriba + 1 a lo ancho abajo */
+        .estadisticas {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .estadistica {
+            padding: 14px 10px;
+            border-radius: 14px;
+        }
+
+        .estadistica:last-child {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 14px;
+        }
+
+        .estadistica:last-child .icono,
+        .estadistica:last-child strong {
+            margin-bottom: 0;
+        }
+
+        .estadistica:last-child strong {
+            font-size: 18px;
+        }
+
+        .estadistica .icono {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .estadistica strong {
             font-size: 22px;
+            margin-bottom: 2px;
+        }
+
+        .estadistica span {
+            font-size: 12px;
+        }
+
+        .panel {
+            padding: 16px;
+            border-radius: 15px;
+        }
+
+        .historial h2 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+        }
+
+        .partida {
+            padding: 11px 2px;
+            font-size: 14px;
+        }
+
+        /* Botón Jugar proporcionado para celular */
+        .jugar-container {
+            min-height: 245px;
+        }
+
+        .btn-jugar {
+            width: 190px;
+            height: 190px;
+            font-size: 21px;
+        }
+
+        .btn-jugar .icono {
+            font-size: 32px;
+            margin-bottom: 6px;
+        }
+
+        .jugar-container::before {
+            width: 215px;
+            height: 215px;
         }
 
         .jugar-container::after {
-            width: 230px;
-            height: 230px;
+            width: 218px;
+            height: 218px;
+        }
+
+        .ranking {
+            min-height: 140px;
+        }
+
+        .btn-ranking {
+            font-size: 19px;
+            padding: 12px 24px;
+        }
+
+        .acciones-extra {
+            margin-top: 16px;
+            gap: 12px;
         }
 
         .btn-pregunta {
             width: 100%;
+            padding: 14px;
+            font-size: 15px;
         }
     }
 </style>
@@ -396,29 +502,29 @@
             {{/partidas}}
         </div>
 
-{{#puede_jugar}}
-        <div class="panel jugar-container">
-            <a href="partida/seleccionar" class="btn-jugar">
-                <div class="icono">⚔</div>
-                <div>Jugar</div>
-                <div>partida</div>
-                <div style="font-size:30px; margin-top:8px;">›</div>
-            </a>
-        </div>
-{{/puede_jugar}}
+        {{#puede_jugar}}
+            <div class="panel jugar-container">
+                <a href="partida/seleccionar" class="btn-jugar">
+                    <div class="icono">⚔</div>
+                    <div>Jugar</div>
+                    <div>partida</div>
+                    <div style="font-size:30px; margin-top:8px;">›</div>
+                </a>
+            </div>
+        {{/puede_jugar}}
 
         <div class="panel ranking">
             <a href="ranking" class="btn-ranking">Ver ranking</a>
         </div>
 
     </section>
-    <div class="crear-pregunta">
+
+    <!-- 3. ACCIONES EXTRA -->
+    <div class="acciones-extra">
         <a href="buscador" class="btn-pregunta">
             🔍 Buscar jugadores &nbsp;&nbsp; ›
         </a>
-    </div>
 
-    <div class="crear-pregunta">
         <a href="sugerirPregunta" class="btn-pregunta">
             💡 Sugerir pregunta &nbsp;&nbsp; ›
         </a>

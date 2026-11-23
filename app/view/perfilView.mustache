@@ -430,6 +430,37 @@
         color: #fff;
     }
 
+    /* ===== PAGINACIÓN ===== */
+    .paginacion {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 22px;
+    }
+
+    .btn-pagina {
+        padding: 10px 18px;
+        background: #17365d;
+        border: 1px solid #d4af55;
+        border-radius: 8px;
+        color: #f1cd73;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+
+    .btn-pagina:hover {
+        background: #d4af55;
+        color: #0a1a33;
+    }
+
+    .paginacion span {
+        color: #a9c2e8;
+        font-size: 13px;
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
         .pf-grid {
@@ -576,7 +607,7 @@
         </div>
 
         <!-- PARTIDAS -->
-        <div class="pf-panel pf-partidas">
+        <div class="pf-panel pf-partidas" id="historial-partidas">
             <h2>🎮 Partidas realizadas</h2>
 
             {{#partidas}}
@@ -592,6 +623,26 @@
             {{^partidas}}
                 <div class="pf-sin-datos">Todavía no jugó ninguna partida.</div>
             {{/partidas}}
+
+            {{#mostrarPaginacion}}
+                <div class="paginacion">
+                    {{#hayAnterior}}
+                        <a href="{{paginaAnteriorUrl}}" class="btn-pagina">
+                            Anterior
+                        </a>
+                    {{/hayAnterior}}
+
+                    <span>
+                        Página {{paginaActual}} de {{totalPaginas}}
+                    </span>
+
+                    {{#haySiguiente}}
+                        <a href="{{paginaSiguienteUrl}}" class="btn-pagina">
+                            Siguiente
+                        </a>
+                    {{/haySiguiente}}
+                </div>
+            {{/mostrarPaginacion}}
         </div>
 
         {{#es_propio}}

@@ -56,6 +56,7 @@
         content: "";
         width: 32px;
         height: 1px;
+        flex-shrink: 0;
         background: #D4AF55;
     }
 
@@ -162,6 +163,7 @@
         display: flex;
         flex-direction: column;
         gap: 6px;
+        min-width: 0;
     }
 
     .table-filters label {
@@ -210,13 +212,33 @@
     }
 
     @media (max-width: 750px) {
-        .table-filters {
-            flex-direction: column;
-            align-items: stretch;
+        .admin-container {
+            width: 96%;
+            padding: 25px 15px;
         }
 
-        .table-filters .contador-resultados {
-            margin-left: 0;
+        .charts-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .header-bar {
+            justify-content: center;
+        }
+
+        .header-bar .tag-user,
+        .header-bar a.btn-gold {
+            display: none;
+        }
+
+        .header-bar .filter-actions {
+            width: 100%;
+            align-items: center;
+        }
+
+        .header-bar .btn-print {
+            width: auto;
+            min-width: 220px;
+            text-align: center;
         }
     }
 
@@ -395,6 +417,38 @@
         padding: 24px;
     }
 
+    /* Paginación */
+
+    .paginacion {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    .btn-pagina {
+        padding: 10px 18px;
+        background: #17365d;
+        border: 1px solid #d4af55;
+        border-radius: 8px;
+        color: #f1cd73;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+
+    .btn-pagina:hover {
+        background: #d4af55;
+        color: #0a1a33;
+    }
+
+    .paginacion span {
+        color: #a9c2e8;
+        font-size: 13px;
+    }
+
     @media (max-width: 750px) {
         .admin-container {
             width: 96%;
@@ -409,6 +463,10 @@
             justify-content: center;
         }
 
+        .header-bar a.btn-gold {
+            display: none;
+        }
+
         .filter-container {
             flex-direction: column;
             align-items: stretch;
@@ -416,10 +474,155 @@
 
         .filter-actions {
             flex-direction: column;
+            align-items: stretch;
         }
 
-        .filter-actions button {
+        .filter-actions button,
+        .filter-actions .btn-gold {
             width: 100%;
+            text-align: center;
+        }
+
+        .filter-container select {
+            width: 100%;
+            min-width: 0;
+        }
+    }
+
+    /* Celulares: tarjetas de métricas de a 2 y gráficos más bajos */
+    @media (max-width: 600px) {
+        .admin-subtitle {
+            letter-spacing: 1.5px;
+        }
+
+        .admin-subtitle::before,
+        .admin-subtitle::after {
+            display: none;
+        }
+
+        .metrics-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        /* si la cantidad es impar, la última ocupa todo el ancho */
+        .metric-card:last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+        }
+
+        .metric-card {
+            padding: 14px 10px;
+        }
+
+        .metric-number {
+            font-size: 22px;
+        }
+
+        .metric-label {
+            font-size: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .chart-card {
+            padding: 14px 10px;
+        }
+
+        .chart-wrapper {
+            height: 240px;
+        }
+    }
+
+    /* Tabla de preguntas -> tarjetas (una por fila). Solo en pantalla: al imprimir sigue siendo tabla.
+       El orden sigue disponible con el selector "Ordenar por". */
+    @media screen and (max-width: 800px) {
+        .table-container {
+            overflow: visible;
+            background: transparent;
+            border: 0;
+        }
+
+        .tabla-responsive,
+        .tabla-responsive tbody,
+        .tabla-responsive tr,
+        .tabla-responsive td {
+            display: block;
+            width: 100%;
+        }
+
+        .tabla-responsive thead {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
+
+        .tabla-responsive tr {
+            margin-bottom: 14px;
+            padding: 4px 0;
+            background: rgba(16, 39, 73, 0.55);
+            border: 1px solid #315B91;
+            border-radius: 10px;
+        }
+
+        .tabla-responsive tbody tr:hover {
+            background: rgba(16, 39, 73, 0.55);
+        }
+
+        .tabla-responsive tbody td {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 9px 14px;
+            border-bottom: 1px solid rgba(49, 91, 145, 0.25);
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        /* la regla base quita el borde de la última fila: se restaura entre celdas de cada tarjeta */
+        .tabla-responsive tbody tr:last-child td {
+            border-bottom: 1px solid rgba(49, 91, 145, 0.25);
+        }
+
+        .tabla-responsive tbody tr td:last-child,
+        .tabla-responsive tbody tr:last-child td:last-child {
+            border-bottom: 0;
+        }
+
+        .tabla-responsive td::before {
+            content: attr(data-label);
+            flex: 0 0 34%;
+            max-width: 34%;
+            text-align: left;
+            color: #F1CD73;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* fila vacía */
+        .tabla-responsive td:not([data-label]) {
+            display: block;
+            text-align: center;
+        }
+
+        .tabla-responsive td:not([data-label])::before {
+            content: none;
+        }
+
+        /* enunciado: etiqueta arriba, texto debajo a todo el ancho */
+        .tabla-responsive td.celda-principal {
+            flex-direction: column;
+            align-items: stretch;
+            text-align: left;
+        }
+
+        .tabla-responsive td.celda-principal::before {
+            flex: none;
+            max-width: none;
         }
     }
 
@@ -451,6 +654,7 @@
 
         .filter-container,
         .table-filters,
+        .paginacion,
         .header-bar a,
         .btn-print {
             display: none !important;
@@ -696,7 +900,7 @@
 
     <div class="table-container">
 
-        <table id="tablaPreguntas">
+        <table id="tablaPreguntas" class="tabla-responsive">
             <thead>
             <tr>
                 <th style="width: 38%;">Pregunta</th>
@@ -720,29 +924,29 @@
             {{#preguntas}}
 
                 <tr>
-                    <td>{{descripcion}}</td>
+                    <td class="celda-principal" data-label="Pregunta">{{descripcion}}</td>
 
-                    <td>{{anime}}</td>
+                    <td data-label="Anime">{{anime}}</td>
 
-                    <td>
+                    <td data-label="Categoría">
                         <span class="tag-category">
                             {{categoria}}
                         </span>
                     </td>
 
-                    <td style="text-align: center;">
+                    <td data-label="Jugada" style="text-align: center;">
                         {{veces_mostrada}}
                     </td>
 
-                    <td style="text-align: center;">
+                    <td data-label="Acertada" style="text-align: center;">
                         {{veces_acertada}}
                     </td>
 
-                    <td style="text-align: center; font-weight: 700; color: #F1CD73;">
+                    <td data-label="% Éxito" style="text-align: center; font-weight: 700; color: #F1CD73;">
                         {{porcentaje_aciertos}}%
                     </td>
 
-                    <td style="text-align: center;">
+                    <td data-label="Dificultad" style="text-align: center;">
                         <span class="badge badge-{{dificultad}}">
                             {{dificultad}}
                         </span>
@@ -764,6 +968,24 @@
             </tbody>
         </table>
 
+    </div>
+
+    <div class="paginacion">
+        {{#hayAnterior}}
+            <a href="{{paginaAnteriorUrl}}" class="btn-pagina">
+                Anterior
+            </a>
+        {{/hayAnterior}}
+
+        <span>
+            Página {{paginaActual}} de {{totalPaginas}}
+        </span>
+
+        {{#haySiguiente}}
+            <a href="{{paginaSiguienteUrl}}" class="btn-pagina">
+                Siguiente
+            </a>
+        {{/haySiguiente}}
     </div>
 
 </div>
@@ -788,6 +1010,9 @@
         const sexos = JSON.parse(datosGraficos.sexos || '[]');
         const edades = JSON.parse(datosGraficos.edades || '[]');
 
+        // En celular: leyenda abajo, letra más chica
+        const esMovil = window.matchMedia('(max-width: 600px)').matches;
+
         function crearGrafico(id, datos, tipo, colores) {
 
             const canvas = document.getElementById(id);
@@ -805,11 +1030,11 @@
                 type: tipo,
 
                 data: {
-                    labels: datos.map(item => item.etiqueta || 'Sin especificar'),  //labels toma las etiquetas que devolvió SQL: países, sexos o grupos de edad.
+                    labels: datos.map(item => item.etiqueta || 'Sin especificar'),
 
                     datasets: [{
                         label: 'Cantidad de usuarios',
-                        data: datos.map(item => Number(item.cantidad)), // data toma cantidad y Number() transforma el dato a número para que Chart.js lo interprete correctamente
+                        data: datos.map(item => Number(item.cantidad)),
                         backgroundColor: colores,
                         borderColor: '#D4AF55',
                         borderWidth: 1
@@ -822,8 +1047,11 @@
 
                     plugins: {
                         legend: {
+                            position: esMovil ? 'bottom' : 'top',
                             labels: {
-                                color: '#DCE6F8'
+                                color: '#DCE6F8',
+                                boxWidth: esMovil ? 12 : 40,
+                                font: {size: esMovil ? 11 : 12}
                             }
                         }
                     },
@@ -831,7 +1059,10 @@
                     scales: tipo === 'bar' ? {
                         x: {
                             ticks: {
-                                color: '#DCE6F8'
+                                color: '#DCE6F8',
+                                autoSkip: true,
+                                maxRotation: 60,
+                                font: {size: esMovil ? 10 : 12}
                             },
                             grid: {
                                 color: 'rgba(255,255,255,0.08)'
@@ -897,7 +1128,7 @@
             document.getElementById(id).addEventListener('change', enviarFiltros);
         });
 
-        const actual = selOrden.value.split('_'); // por ejemplo ['exito', 'desc']
+        const actual = selOrden.value.split('_');
 
         document.querySelectorAll('#tablaPreguntas th.ordenable').forEach(function (th) {
             const campo = th.dataset.campo;
