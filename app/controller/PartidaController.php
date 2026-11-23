@@ -28,9 +28,9 @@ class PartidaController
             unset($_SESSION['partida']);
         }
 
-        if ($this->model->obtenerPartidaEnCurso($_SESSION['usuario_id']) && empty($_SESSION['partida'])) {
-            Redirect::to('/lobby');
-            exit();
+        $partidaVieja = $this->model->obtenerPartidaEnCurso($_SESSION['usuario_id']);
+        if ($partidaVieja && empty($_SESSION['partida'])) {
+            $this->model->finalizarPartida($partidaVieja['id'], 0, 'Perdida');
         }
 
         if (!empty($_SESSION['partida'])) {
@@ -96,9 +96,9 @@ class PartidaController
         $usuarioId =
             $_SESSION['usuario_id'];
 
-        if ($this->model->obtenerPartidaEnCurso($usuarioId)) {
-            Redirect::to('/lobby');
-            exit();
+        $partidaVieja = $this->model->obtenerPartidaEnCurso($usuarioId);
+        if ($partidaVieja) {
+            $this->model->finalizarPartida($partidaVieja['id'], 0, 'Perdida');
         }
 
         /*
