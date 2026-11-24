@@ -32,6 +32,7 @@ class SugerirPreguntaController
 
         $data = [
             'username'       => $_SESSION['username'] ?? 'Jugador',
+            'categorias'     => $this->model->getCategoriasActivas(),
             'animes'         => $this->model->getAnimesActivos(),
             'mensaje_exito'  => $_SESSION['sugerir_exito'] ?? null,
             'mensaje_error'  => $_SESSION['sugerir_error'] ?? null
@@ -166,7 +167,8 @@ class SugerirPreguntaController
             $opciones,
             $correcta,
             $tipoPregunta,
-            $recursoRuta
+            $recursoRuta,
+            (int)($_POST['categoria_id'] ?? 0)
         );
 
         if ($exito) {

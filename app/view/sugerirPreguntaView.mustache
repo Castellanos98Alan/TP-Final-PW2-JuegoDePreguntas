@@ -248,6 +248,11 @@
             
             <!-- Anime (Franquicia) -->
             <div class="form-group">
+                <label for="categoria_id">Categoría: *</label>
+                <select name="categoria_id" id="categoria_id" class="form-control" required>
+                    <option value="">Seleccioná una categoría</option>
+                    {{#categorias}}<option value="{{id}}">{{nombre}}</option>{{/categorias}}
+                </select>
                 <label for="anime_id">Anime: *</label>
                 <select name="anime_id" id="anime_id" class="form-control" required>
                     <option value="">-- Seleccionar Anime --</option>

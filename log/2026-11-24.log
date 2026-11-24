@@ -3958,3 +3958,210 @@
             ) yo
             WHERE r.total > yo.total
                OR (r.total = yo.total AND r.username < yo.username)
+[13:15:08] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[13:15:08] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC LIMIT 5
+[13:15:08] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)
+[13:15:09] [INFO] SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1
+[13:15:09] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[13:15:11] [INFO] SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1
+[13:15:11] [INFO] SELECT COUNT(*) AS total
+            FROM historial_respuesta
+            WHERE usuario_id = :usuarioId
+[13:15:11] [INFO] SELECT fue_correcta
+            FROM historial_respuesta
+            WHERE usuario_id = :usuarioId
+            ORDER BY id DESC
+            LIMIT 15
+[13:15:11] [INFO] 
+        SELECT c.id
+        FROM pregunta p
+
+        INNER JOIN categoria c
+            ON p.categoria_id = c.id AND c.esta_activa = 1
+
+        WHERE p.esta_activa = 1
+
+        AND p.anime_id IN (:anime0)
+
+        
+
+        GROUP BY c.id
+
+        ORDER BY RAND()
+
+        LIMIT 1
+    
+[13:15:11] [INFO] 
+        SELECT
+            p.id,
+            p.enunciado,
+            p.respuesta_a,
+            p.respuesta_b,
+            p.respuesta_c,
+            p.respuesta_d,
+            p.tipo_pregunta,
+            p.recurso,
+            p.dificultad,
+            a.nombre AS anime,
+            c.nombre AS categoria
+
+        FROM pregunta p
+
+        INNER JOIN anime a
+            ON p.anime_id = a.id
+
+        INNER JOIN categoria c
+            ON p.categoria_id = c.id AND c.esta_activa = 1
+
+        LEFT JOIN usuario_pregunta up
+            ON p.id = up.pregunta_id
+            AND up.usuario_id = :usuarioId
+
+        WHERE p.esta_activa = 1
+
+        AND p.anime_id IN (:anime0)
+
+        AND c.id = :categoriaId
+
+        
+    
+        AND up.pregunta_id IS NULL
+
+        ORDER BY
+            CASE
+                WHEN p.dificultad = :dificultad THEN 0
+                ELSE 1
+            END,
+            RAND()
+
+        LIMIT 1
+    
+[13:15:11] [INFO] INSERT INTO partida (id_usuario, puntaje, resultado) 
+                VALUES (:usuarioId, 0, 'En curso')
+[13:15:11] [INFO] SELECT id 
+                  FROM partida 
+                  WHERE id_usuario = :usuarioId 
+                  ORDER BY id DESC 
+                  LIMIT 1
+[13:15:11] [INFO] INSERT INTO usuario_pregunta
+                (
+                    usuario_id,
+                    pregunta_id,
+                    respondida_correctamente
+                )
+            VALUES
+                (
+                    :usuarioId,
+                    :preguntaId,
+                    NULL
+                )
+            ON DUPLICATE KEY UPDATE
+                pregunta_id = pregunta_id
+[13:15:11] [INFO] SELECT COUNT(*) AS total
+            FROM historial_respuesta
+            WHERE usuario_id = :usuarioId
+[13:15:11] [INFO] SELECT fue_correcta
+            FROM historial_respuesta
+            WHERE usuario_id = :usuarioId
+            ORDER BY id DESC
+            LIMIT 15
+[13:15:14] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[13:15:14] [INFO] SELECT id,
+                   puntaje,
+                   resultado,
+                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
+            FROM partida
+            WHERE id_usuario = :idUsuario
+            ORDER BY created_at DESC LIMIT 5
+[13:15:14] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)

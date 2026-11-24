@@ -608,6 +608,44 @@
         </a>
     </div>
 
+    <section class="section-card" id="categorias">
+        <h2 class="section-title">ADMINISTRACIÓN DE CATEGORÍAS</h2>
+        {{#mensajeCategoria}}<p role="status">{{mensajeCategoria}}</p>{{/mensajeCategoria}}
+        <style>
+            .categoria-form { display:flex; flex-wrap:wrap; align-items:end; gap:12px; margin:12px 0; }
+            .categoria-form label { display:flex; flex-direction:column; gap:5px; flex:1 1 180px; min-width:0; }
+            .categoria-form input:not([type=hidden]) { width:100%; padding:9px; border-radius:6px; border:1px solid #315B91; background:#0a1a33; color:#fff; }
+            .categoria-item { padding:12px 0; border-top:1px solid #315B91; }
+            .categoria-item p { margin:8px 0; }
+        </style>
+        <h3>Nueva categoría</h3>
+        <form class="categoria-form" action="editor/guardarCategoria" method="POST">
+            <input type="hidden" name="csrf" value="{{csrfCategoria}}">
+            <input type="hidden" name="id" value="0">
+            <label>Nombre <input name="nombre" maxlength="100" required></label>
+            <label>Descripción <input name="descripcion" maxlength="255"></label>
+            <button class="btn-gold" type="submit">Crear</button>
+        </form>
+        {{#categoriasAdmin}}
+        <div class="categoria-item">
+            <p><strong>{{nombre}}</strong> · {{cantidad}} preguntas · {{#activa}}Activa{{/activa}}{{^activa}}Inactiva{{/activa}}</p>
+            <form class="categoria-form" action="editor/guardarCategoria" method="POST">
+                <input type="hidden" name="csrf" value="{{csrfCategoria}}">
+                <input type="hidden" name="id" value="{{id}}">
+                <label>Nombre <input name="nombre" value="{{nombre}}" maxlength="100" required></label>
+                <label>Descripción <input name="descripcion" value="{{descripcion}}" maxlength="255"></label>
+                <button class="btn-gold" type="submit">Guardar cambios</button>
+            </form>
+            <form action="editor/cambiarEstadoCategoria" method="POST">
+                <input type="hidden" name="csrf" value="{{csrfCategoria}}">
+                <input type="hidden" name="id" value="{{id}}">
+                {{#activa}}<button class="btn-gold" name="activa" value="0" type="submit">Desactivar</button>{{/activa}}
+                {{^activa}}<button class="btn-gold" name="activa" value="1" type="submit">Reactivar</button>{{/activa}}
+            </form>
+        </div>
+        {{/categoriasAdmin}}
+    </section>
+
     <!-- 1. REPORTES DE PREGUNTAS -->
     <div class="section-card">
         <div class="section-title">REPORTES DE PREGUNTAS</div>
