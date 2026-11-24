@@ -163,3 +163,12 @@ ALTER TABLE pregunta
     ADD COLUMN estado_revision
         ENUM('Pendiente', 'Aprobada', 'Rechazada')
 NOT NULL DEFAULT 'Aprobada';
+
+--
+-- Cambio para jugar
+--
+
+ALTER TABLE preguntados2.partida
+    MODIFY COLUMN resultado
+    ENUM('Ganada', 'Perdida', 'En curso') NOT NULL;
+
