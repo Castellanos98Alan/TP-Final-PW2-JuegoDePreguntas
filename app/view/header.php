@@ -316,7 +316,7 @@
         }
     </style>
     <link rel="stylesheet" href="public/css/musicaLobby.css">
-    <script defer src="public/js/musicaLobby.js"></script>
+    <script defer src="public/js/musicaLobby.js?v=4"></script>
 </head>
 <body>
 
@@ -356,7 +356,7 @@
                     <span class="header-user-name"><?= htmlspecialchars($_SESSION['usuario']) ?></span>
                 </a>
                 <a href="login/logout" class="btn-link btn-outline">Cerrar Sesión</a>
-                <?php if ($view === 'lobby'): ?>
+                <?php if ($view !== 'partida'): ?>
                     <div class="musica-config" id="musicaConfig">
                         <button type="button" id="abrirMusica" aria-label="Configurar sonido" aria-expanded="false" aria-controls="panelMusica">⚙</button>
                         <section id="panelMusica" hidden aria-label="Configuración de sonido">
@@ -366,7 +366,7 @@
                             <label><input type="checkbox" id="silenciarMusica"> Silenciar música</label>
                             <p id="estadoMusica" role="status"></p>
                         </section>
-                        <audio id="musicaFondo" preload="none"></audio>
+                        <audio id="musicaFondo" preload="auto"></audio>
                     </div>
                 <?php endif; ?>
             <?php else: ?>

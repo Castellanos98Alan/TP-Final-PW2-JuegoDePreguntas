@@ -591,6 +591,246 @@
             min-height: 40px;
         }
     }
+
+    .categorias-subtitulo {
+        color: #93A9C7;
+        font-size: 14px;
+        margin-bottom: 22px;
+    }
+
+    .categoria-nueva {
+        padding: 20px;
+        margin-bottom: 25px;
+        background: rgba(16, 41, 77, 0.5);
+        border: 1px dashed #D4AF55;
+        border-radius: 14px;
+    }
+
+    .categoria-nueva h3 {
+        color: #F1CD73;
+        font-size: 17px;
+        margin-bottom: 15px;
+    }
+
+    .categoria-form {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 12px;
+    }
+
+    .categoria-form label {
+        flex: 1 1 180px;
+        min-width: 0;
+    }
+
+    .categoria-form label,
+    .categoria-form-editar label {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        color: #93C5FD;
+        font-size: 13px;
+    }
+
+    .categoria-form input:not([type="hidden"]),
+    .categoria-form-editar input:not([type="hidden"]) {
+        width: 100%;
+        padding: 11px;
+        border-radius: 8px;
+        border: 1px solid #315B91;
+        background: #09182D;
+        color: white;
+    }
+
+    .categoria-form input:focus,
+    .categoria-form-editar input:focus {
+        outline: none;
+        border-color: #D4AF55;
+        box-shadow: 0 0 8px rgba(212, 175, 85, 0.2);
+    }
+
+    .categoria-mensaje {
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #D4AF55;
+        border-radius: 8px;
+        color: #F1CD73;
+    }
+
+    .categorias-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+        gap: 18px;
+    }
+
+    .categoria-item {
+        background: linear-gradient(
+                135deg,
+                #132B49,
+                #0B192E
+        );
+
+        border: 1px solid #315B91;
+        border-radius: 15px;
+        padding: 20px;
+
+        transition: border-color 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .categoria-item:hover {
+        border-color: #D4AF55;
+        box-shadow: 0 5px 20px rgba(212, 175, 85, 0.12);
+    }
+
+    .categoria-cabecera {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .categoria-icono {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        background: rgba(212, 175, 85, 0.12);
+        border: 1px solid rgba(212, 175, 85, 0.4);
+        border-radius: 12px;
+
+        color: #F1CD73;
+        font-size: 25px;
+    }
+
+    .categoria-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .categoria-info h3 {
+        color: #F1CD73;
+        font-size: 18px;
+        margin-bottom: 5px;
+        overflow-wrap: anywhere;
+    }
+
+    .categoria-info span {
+        color: #93A9C7;
+        font-size: 12px;
+    }
+
+    .categoria-descripcion {
+        color: #C3D0E4;
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 18px 0;
+        min-height: 42px;
+        overflow-wrap: anywhere;
+    }
+
+    .categoria-estado {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .categoria-estado.activa {
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid rgba(34, 197, 94, 0.4);
+        color: #86EFAC;
+    }
+
+    .categoria-estado.inactiva {
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        color: #FCA5A5;
+    }
+
+    .categoria-acciones {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 10px;
+        border-top: 1px solid #29415F;
+        padding-top: 15px;
+    }
+
+    .btn-categoria-editar,
+    .btn-categoria-desactivar,
+    .btn-categoria-reactivar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+
+        transition: all 0.2s ease;
+    }
+
+    .btn-categoria-editar {
+        background: rgba(212, 175, 85, 0.08);
+        border: 1px solid #D4AF55;
+        color: #F1CD73;
+        list-style: none;
+    }
+
+    .btn-categoria-editar::-webkit-details-marker {
+        display: none;
+    }
+
+    .btn-categoria-editar:hover {
+        background: #D4AF55;
+        color: #09182D;
+    }
+
+    .btn-categoria-desactivar {
+        background: rgba(239, 68, 68, 0.08);
+        border: 1px solid #A54545;
+        color: #FCA5A5;
+    }
+
+    .btn-categoria-desactivar:hover {
+        background: #B91C1C;
+        color: white;
+    }
+
+    .btn-categoria-reactivar {
+        background: rgba(34, 197, 94, 0.08);
+        border: 1px solid #278B52;
+        color: #86EFAC;
+    }
+
+    .btn-categoria-reactivar:hover {
+        background: #15803D;
+        color: white;
+    }
+
+    .categoria-edicion[open] {
+        flex: 1 1 100%;
+    }
+
+    .categoria-form-editar {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 15px;
+        padding: 15px;
+        background: #09182D;
+        border-radius: 10px;
+        border: 1px solid #315B91;
+    }
 </style>
 
 <div class="editor-container">
@@ -609,41 +849,167 @@
     </div>
 
     <section class="section-card" id="categorias">
-        <h2 class="section-title">ADMINISTRACIÓN DE CATEGORÍAS</h2>
-        {{#mensajeCategoria}}<p role="status">{{mensajeCategoria}}</p>{{/mensajeCategoria}}
-        <style>
-            .categoria-form { display:flex; flex-wrap:wrap; align-items:end; gap:12px; margin:12px 0; }
-            .categoria-form label { display:flex; flex-direction:column; gap:5px; flex:1 1 180px; min-width:0; }
-            .categoria-form input:not([type=hidden]) { width:100%; padding:9px; border-radius:6px; border:1px solid #315B91; background:#0a1a33; color:#fff; }
-            .categoria-item { padding:12px 0; border-top:1px solid #315B91; }
-            .categoria-item p { margin:8px 0; }
-        </style>
-        <h3>Nueva categoría</h3>
-        <form class="categoria-form" action="editor/guardarCategoria" method="POST">
-            <input type="hidden" name="csrf" value="{{csrfCategoria}}">
-            <input type="hidden" name="id" value="0">
-            <label>Nombre <input name="nombre" maxlength="100" required></label>
-            <label>Descripción <input name="descripcion" maxlength="255"></label>
-            <button class="btn-gold" type="submit">Crear</button>
-        </form>
-        {{#categoriasAdmin}}
-        <div class="categoria-item">
-            <p><strong>{{nombre}}</strong> · {{cantidad}} preguntas · {{#activa}}Activa{{/activa}}{{^activa}}Inactiva{{/activa}}</p>
-            <form class="categoria-form" action="editor/guardarCategoria" method="POST">
-                <input type="hidden" name="csrf" value="{{csrfCategoria}}">
-                <input type="hidden" name="id" value="{{id}}">
-                <label>Nombre <input name="nombre" value="{{nombre}}" maxlength="100" required></label>
-                <label>Descripción <input name="descripcion" value="{{descripcion}}" maxlength="255"></label>
-                <button class="btn-gold" type="submit">Guardar cambios</button>
-            </form>
-            <form action="editor/cambiarEstadoCategoria" method="POST">
-                <input type="hidden" name="csrf" value="{{csrfCategoria}}">
-                <input type="hidden" name="id" value="{{id}}">
-                {{#activa}}<button class="btn-gold" name="activa" value="0" type="submit">Desactivar</button>{{/activa}}
-                {{^activa}}<button class="btn-gold" name="activa" value="1" type="submit">Reactivar</button>{{/activa}}
+
+        <h2 class="section-title">
+            ADMINISTRACIÓN DE CATEGORÍAS
+        </h2>
+
+        <p class="categorias-subtitulo">
+            Gestioná las categorías disponibles en el juego.
+        </p>
+
+        {{#mensajeCategoria}}
+            <p class="categoria-mensaje" role="status">
+                {{mensajeCategoria}}
+            </p>
+        {{/mensajeCategoria}}
+
+        <!-- CREAR CATEGORÍA -->
+
+        <div class="categoria-nueva">
+
+            <h3>＋ Nueva categoría</h3>
+
+            <form class="categoria-form"
+                  action="editor/guardarCategoria"
+                  method="POST">
+
+                <input type="hidden" name="csrf"
+                       value="{{csrfCategoria}}">
+
+                <input type="hidden" name="id" value="0">
+
+                <label>
+                    Nombre
+                    <input name="nombre"
+                           placeholder="Nombre de la categoría"
+                           maxlength="100" required>
+                </label>
+
+                <label>
+                    Descripción
+                    <input name="descripcion"
+                           placeholder="Descripción de la categoría"
+                           maxlength="255">
+                </label>
+
+                <button class="btn-gold" type="submit">
+                    Crear categoría
+                </button>
+
             </form>
         </div>
-        {{/categoriasAdmin}}
+
+        <!-- LISTADO DE CATEGORÍAS -->
+
+        <div class="categorias-grid">
+
+            {{#categoriasAdmin}}
+
+                <article class="categoria-item">
+
+                    <div class="categoria-cabecera">
+
+                        <div class="categoria-icono">▦</div>
+
+                        <div class="categoria-info">
+                            <h3>{{nombre}}</h3>
+                            <span>{{cantidad}} preguntas</span>
+                        </div>
+
+                        {{#activa}}
+                            <span class="categoria-estado activa">
+                        ● Activa
+                    </span>
+                        {{/activa}}
+
+                        {{^activa}}
+                            <span class="categoria-estado inactiva">
+                        ● Inactiva
+                    </span>
+                        {{/activa}}
+
+                    </div>
+
+                    <p class="categoria-descripcion">
+                        {{descripcion}}
+                    </p>
+
+                    <div class="categoria-acciones">
+
+                        <details class="categoria-edicion">
+
+                            <summary class="btn-categoria-editar">
+                                ✎ Editar
+                            </summary>
+
+                            <form class="categoria-form-editar"
+                                  action="editor/guardarCategoria"
+                                  method="POST">
+
+                                <input type="hidden" name="csrf"
+                                       value="{{csrfCategoria}}">
+
+                                <input type="hidden" name="id"
+                                       value="{{id}}">
+
+                                <label>
+                                    Nombre
+                                    <input name="nombre"
+                                           value="{{nombre}}"
+                                           maxlength="100" required>
+                                </label>
+
+                                <label>
+                                    Descripción
+                                    <input name="descripcion"
+                                           value="{{descripcion}}"
+                                           maxlength="255">
+                                </label>
+
+                                <button class="btn-gold" type="submit">
+                                    Guardar cambios
+                                </button>
+
+                            </form>
+
+                        </details>
+
+                        <form action="editor/cambiarEstadoCategoria"
+                              method="POST">
+
+                            <input type="hidden" name="csrf"
+                                   value="{{csrfCategoria}}">
+
+                            <input type="hidden" name="id"
+                                   value="{{id}}">
+
+                            {{#activa}}
+                                <button class="btn-categoria-desactivar"
+                                        name="activa" value="0"
+                                        type="submit">
+                                    Desactivar
+                                </button>
+                            {{/activa}}
+
+                            {{^activa}}
+                                <button class="btn-categoria-reactivar"
+                                        name="activa" value="1"
+                                        type="submit">
+                                    Reactivar
+                                </button>
+                            {{/activa}}
+
+                        </form>
+
+                    </div>
+
+                </article>
+
+            {{/categoriasAdmin}}
+
+        </div>
+
     </section>
 
     <!-- 1. REPORTES DE PREGUNTAS -->
