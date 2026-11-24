@@ -227,7 +227,7 @@ class PartidaModel
                 JOIN anime a
                     ON p.anime_id = a.id
                 JOIN categoria c
-                    ON p.categoria_id = c.id
+                    ON p.categoria_id = c.id AND c.esta_activa = 1
 
                 LEFT JOIN usuario_pregunta up
                     ON p.id = up.pregunta_id
@@ -285,7 +285,7 @@ class PartidaModel
                 JOIN anime a
                     ON p.anime_id = a.id
                 JOIN categoria c
-                    ON p.categoria_id = c.id
+                    ON p.categoria_id = c.id AND c.esta_activa = 1
 
                 WHERE p.dificultad = :dificultad
 
@@ -743,7 +743,7 @@ class PartidaModel
         FROM pregunta p
 
         INNER JOIN categoria c
-            ON p.categoria_id = c.id
+            ON p.categoria_id = c.id AND c.esta_activa = 1
 
         WHERE p.esta_activa = 1
 
@@ -807,7 +807,7 @@ class PartidaModel
             ON p.anime_id = a.id
 
         INNER JOIN categoria c
-            ON p.categoria_id = c.id
+            ON p.categoria_id = c.id AND c.esta_activa = 1
 
         LEFT JOIN usuario_pregunta up
             ON p.id = up.pregunta_id

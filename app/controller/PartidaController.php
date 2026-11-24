@@ -265,7 +265,7 @@ class PartidaController
 
 
             //se calcula cuánto tiempo pasó desde el inicio y se resta de 8. max(0, ...) evita que el resultado sea negativo.
-            'segundosRestantes' => max(0, 8 - (time() - $_SESSION['partida']['inicio_pregunta'])),
+            'segundosRestantes' => max(0, 12 - (time() - $_SESSION['partida']['inicio_pregunta'])),
             'ultimaPreguntaRespondida' => $_SESSION['partida']['ultimaPreguntaRespondida'] ?? null,
             'reporteEnviado' => !empty($_SESSION['partida']['ultimo_reporte']) && (int)$_SESSION['partida']['ultimo_reporte'] === (int)(($_SESSION['partida']['ultimaPreguntaRespondida']['id'] ?? 0)),
             'mensajeReporte' => $_SESSION['partida']['mensajeReporte'] ?? null,
@@ -874,7 +874,11 @@ class PartidaController
         }
 
         $data = [
-            'puntaje' => $puntaje
+            'puntaje' => $puntaje,
+            'esOnePiece' => $this->esPartidaOnePiece(),
+            'esDragonBall' => $this->esPartidaDragonBall(),
+            'esNaruto' => $this->esPartidaNaruto(),
+            'esPokemon' => $this->esPartidaPokemon(),
         ];
 
         /*
@@ -974,4 +978,61 @@ class PartidaController
         exit();
     }
 
+
+    private function esPartidaOnePiece()
+    {
+        $seleccionados = $_SESSION['partida']['animes'];
+
+        foreach ($this->model->obtenerAnimes() as $anime) {
+            if ($anime['nombre'] === 'One Piece'
+                && in_array($anime['id'], $seleccionados)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function esPartidaNaruto()
+    {
+        $seleccionados = $_SESSION['partida']['animes'] ?? [];
+
+        foreach ($this->model->obtenerAnimes() as $anime) {
+            if ($anime['nombre'] === 'Naruto'
+                && in_array($anime['id'], $seleccionados)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    private function esPartidaDragonBall()
+    {
+        $seleccionados = $_SESSION['partida']['animes'] ?? [];
+
+        foreach ($this->model->obtenerAnimes() as $anime) {
+            if ($anime['nombre'] === 'Dragon Ball'
+                && in_array($anime['id'], $seleccionados)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function esPartidaPokemon()
+    {
+        $seleccionados = $_SESSION['partida']['animes'] ?? [];
+
+        foreach ($this->model->obtenerAnimes() as $anime) {
+            if ($anime['nombre'] === 'Pokémon'
+                && in_array($anime['id'], $seleccionados)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

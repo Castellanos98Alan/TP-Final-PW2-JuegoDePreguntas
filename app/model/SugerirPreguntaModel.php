@@ -17,26 +17,9 @@ class SugerirPreguntaModel
         return $this->database->queryAll($sql);
     }
 
-    public function obtenerIdCategoria($tipoPregunta = 'texto')
+    public function getCategoriasActivas()
     {
-        $nombreCategoria = 'Normal';
-        if ($tipoPregunta === 'audio') {
-            $nombreCategoria = 'Voz';
-        } elseif ($tipoPregunta === 'imagen') {
-            $nombreCategoria = 'Imagen';
-        }
-
-        $sql = "SELECT id FROM categoria WHERE LOWER(nombre) = LOWER(:nombre) LIMIT 1";
-        $categoria = $this->database->queryOne($sql, ['nombre' => $nombreCategoria]);
-
-        if ($categoria && !empty($categoria['id'])) {
-            return (int)$categoria['id'];
-        }
-
-        $sqlFallback = "SELECT id FROM categoria ORDER BY id ASC LIMIT 1";
-        $primera = $this->database->queryOne($sqlFallback);
-
-        return $primera ? (int)$primera['id'] : 1;
+        return $this->database->queryAll("SELECT id, nombre FROM categoria WHERE esta_activa = 1 ORDER BY nombre");
     }
 
     public function crearPreguntaSugerida(
@@ -47,7 +30,8 @@ class SugerirPreguntaModel
         array $opciones = [],
         $correctaIndice = 0,
         $tipoPregunta = 'texto',
-        $recurso = null
+        $recurso = null,
+        $categoriaId = 0
     ) {
         $respuestas = array_values($opciones);
 
@@ -57,7 +41,8 @@ class SugerirPreguntaModel
 
         $letras = ['A', 'B', 'C', 'D'];
         $respuestaCorrecta = $letras[$correctaIndice];
-        $categoriaId = $this->obtenerIdCategoria($tipoPregunta);
+        $categoria = $this->database->queryOne("SELECT id FROM categoria WHERE id = :id AND esta_activa = 1", ['id' => $categoriaId]);
+        if (!$categoria) return false;
 
         $enunciadoFinal = $pregunta;
         if (!empty($descripcion)) {

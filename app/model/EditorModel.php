@@ -526,4 +526,30 @@ class EditorModel
         ]);
     }
 
+
+    public function getCategoriasAdministrables()
+    {
+        return $this->database->queryAll("SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre");
+    }
+
+    public function guardarCategoria($id, $nombre, $descripcion)
+    {
+        $params = ['nombre' => $nombre, 'descripcion' => $descripcion];
+        if ($id === 0) {
+            return $this->database->execute("INSERT INTO categoria (nombre, descripcion, esta_activa)
+                VALUES (:nombre, :descripcion, 1)", $params);
+        }
+        $params['id'] = $id;
+        return $this->database->execute("UPDATE categoria SET nombre = :nombre,
+            descripcion = :descripcion WHERE id = :id", $params);
+    }
+
+    public function cambiarEstadoCategoria($id, $activa)
+    {
+        return $this->database->execute("UPDATE categoria SET esta_activa = :activa WHERE id = :id",
+            ['activa' => $activa, 'id' => $id]);
+    }
+
 }

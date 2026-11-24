@@ -1,4 +1,14 @@
 <style>
+    @keyframes entradaPregunta {
+        from { opacity:0; transform:translateY(12px); }
+        to { opacity:1; transform:translateY(0); }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .pregunta-card, .respuestas-grid { animation:entradaPregunta .35s ease-out both; }
+    }
+    .control-sonido { padding:10px 15px; border:1px solid #d8aa32; background:#07162d; color:white; border-radius:999px; cursor:pointer; font-weight:600; }
+    .control-sonido:focus-visible { outline:3px solid white; outline-offset:3px; }
+
     * {
         box-sizing: border-box;
     }
@@ -252,6 +262,15 @@
         font-weight: 900;
     }
 
+    .nivel-actual {
+        border: 2px solid #ffc107 !important;
+        background: rgba(255, 193, 7, 0.15);
+        color: #ffc107;
+        box-shadow: 0 0 12px rgba(255, 193, 7, 0.5);
+        font-weight: 900;
+        transition: all 0.3s ease;
+    }
+
     .pie-juego {
         margin-top: 20px;
         text-align: center;
@@ -393,8 +412,12 @@
                 <div class="partida-chip">
                     Dificultad: <strong>{{pregunta.dificultad}}</strong>
                 </div>
+                <div class="partida-chip">
+                    Nivel jugador: <strong>{{nivelJugador}}</strong>
+                </div>
             </div>
 
+            <button type="button" id="controlSonido" class="control-sonido" aria-pressed="false">Silenciar sonido</button>
             <div class="puntaje-box">
                 Puntaje: {{puntaje}}
             </div>
@@ -419,7 +442,7 @@
 
                 {{#esAudio}}
                     <div class="pregunta-audio-container">
-                        <audio controls>
+                        <audio controls id="audioPregunta">
                             <source src="partida/recurso?v={{numeroPregunta}}" type="audio/mpeg">
                             Tu navegador no soporta audio.
                         </audio>
@@ -559,4 +582,15 @@
 
         actualizar();
     })();
+</script>
+<script src="public/js/sonidoPartida.js"></script>
+
+<script>
+    const preguntaActual = Number("{{numeroPregunta}}");
+
+    document.querySelectorAll(".escalera .nivel").forEach(nivel => {
+        if (Number(nivel.textContent.trim()) === preguntaActual) {
+            nivel.classList.add("nivel-actual");
+        }
+    });
 </script>

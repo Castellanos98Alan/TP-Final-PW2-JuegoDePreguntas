@@ -157,7 +157,19 @@ class EditorController
         $paginaAnteriorUrl = 'editor?pagina=' . $paginaAnterior . '&' . $filtrosUrl;
         $paginaSiguienteUrl = 'editor?pagina=' . $paginaSiguiente . '&' . $filtrosUrl;
 
+        $categoriasAdmin = $this->model->getCategoriasAdministrables();
+        foreach ($categoriasAdmin as &$cat) {
+            $cat['activa'] = (int)$cat['esta_activa'] === 1;
+        }
+        unset($cat);
+        $_SESSION['csrf_categoria'] = $_SESSION['csrf_categoria'] ?? bin2hex(random_bytes(32));
+        $mensajeCategoria = $_SESSION['mensaje_categoria'] ?? '';
+        unset($_SESSION['mensaje_categoria']);
+
         $datos = [
+            'categoriasAdmin' => $categoriasAdmin,
+            'csrfCategoria' => $_SESSION['csrf_categoria'],
+            'mensajeCategoria' => $mensajeCategoria,
             'username' => $_SESSION['username'] ?? 'Editor',
             'pendientes' => $pendientes,
             'preguntas_pendientes' => $pendientes,
@@ -466,6 +478,50 @@ class EditorController
         }
 
         Redirect::toEditor();
+    }
+
+
+    private function validarAccionCategoria()
+    {
+        $this->verificarPermisos();
+        $token = $_POST['csrf'] ?? null;
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !is_string($token) ||
+            empty($_SESSION['csrf_categoria']) || !hash_equals($_SESSION['csrf_categoria'], $token)) {
+            http_response_code(403);
+            exit('Acción no autorizada');
+        }
+    }
+
+    public function guardarCategoria()
+    {
+        $this->validarAccionCategoria();
+        $id = filter_var($_POST['id'] ?? 0, FILTER_VALIDATE_INT);
+        $nombre = is_string($_POST['nombre'] ?? null) ? trim($_POST['nombre']) : '';
+        $descripcion = is_string($_POST['descripcion'] ?? null) ? trim($_POST['descripcion']) : '';
+        if ($id === false || $id < 0 || $nombre === '' || mb_strlen($nombre) > 100 || mb_strlen($descripcion) > 255) {
+            $_SESSION['mensaje_categoria'] = 'Revisá el nombre y la descripción de la categoría.';
+        } else {
+            try {
+                $ok = $this->model->guardarCategoria($id, $nombre, $descripcion);
+                $_SESSION['mensaje_categoria'] = $ok ? 'Categoría guardada.' : 'No se pudo guardar la categoría.';
+            } catch (\PDOException $e) {
+                $_SESSION['mensaje_categoria'] = ($e->errorInfo[1] ?? 0) == 1062
+                    ? 'Ya existe una categoría con ese nombre.' : 'No se pudo guardar la categoría.';
+            }
+        }
+        Redirect::to('/editor#categorias');
+    }
+
+    public function cambiarEstadoCategoria()
+    {
+        $this->validarAccionCategoria();
+        $id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
+        $estado = $_POST['activa'] ?? '';
+        if ($id > 0 && in_array($estado, ['0', '1'], true)) {
+            $ok = $this->model->cambiarEstadoCategoria($id, (int)$estado);
+            $_SESSION['mensaje_categoria'] = $ok ? 'Estado actualizado.' : 'No se pudo actualizar el estado.';
+        }
+        Redirect::to('/editor#categorias');
     }
 
 }
