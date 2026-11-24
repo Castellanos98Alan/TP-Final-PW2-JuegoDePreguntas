@@ -421,9 +421,16 @@
             Partida perdida
         </h1>
 
-        <p class="derrota-subtitulo">
-            Elegiste una respuesta incorrecta y la partida terminó.
-        </p>
+        {{#motivoDerrotaTiempo}}
+            <p class="derrota-subtitulo">
+                ¡Se te agotó el tiempo para responder y la partida terminó!
+            </p>
+        {{/motivoDerrotaTiempo}}
+        {{^motivoDerrotaTiempo}}
+            <p class="derrota-subtitulo">
+                Elegiste una respuesta incorrecta y la partida terminó.
+            </p>
+        {{/motivoDerrotaTiempo}}
 
         <div class="pregunta-fallada">
             <span class="pregunta-fallada-label">
