@@ -22,12 +22,13 @@ class RankingController
             return;
         }
 
+        $tipo = isset($_GET['tipo']) && $_GET['tipo'] === 'historico' ? 'historico' : 'mensual';
         $mesSeleccionado = isset($_GET['mes']) ? (int)$_GET['mes'] : (int)date('m');
         $anioSeleccionado = isset($_GET['anio']) ? (int)$_GET['anio'] : (int)date('Y');
         $pagina = isset($_GET['pagina']) ? max(1, (int)$_GET['pagina']) : 1;
         $porPagina = 10;
 
-        $resultado = $this->procesarRankingPaginado($mesSeleccionado, $anioSeleccionado, $pagina, $porPagina);
+        $resultado = $this->procesarRankingPaginado($tipo, $mesSeleccionado, $anioSeleccionado, $pagina, $porPagina);
         $meses = $this->obtenerListaMeses($mesSeleccionado);
         $anios = $this->obtenerListaAnios($anioSeleccionado);
 
@@ -40,6 +41,9 @@ class RankingController
         }
 
         $data = [
+            'tipo'             => $tipo,
+            'es_historico'     => ($tipo === 'historico'),
+            'es_mensual'       => ($tipo === 'mensual'),
             'hay_jugadores'    => !empty($resultado['jugadores']),
             'jugadores'        => $resultado['jugadores'],
             'meses'            => $meses,
@@ -69,15 +73,17 @@ class RankingController
             exit;
         }
 
+        $tipo = isset($_GET['tipo']) && $_GET['tipo'] === 'historico' ? 'historico' : 'mensual';
         $mes = isset($_GET['mes']) ? (int)$_GET['mes'] : (int)date('m');
         $anio = isset($_GET['anio']) ? (int)$_GET['anio'] : (int)date('Y');
         $pagina = isset($_GET['pagina']) ? max(1, (int)$_GET['pagina']) : 1;
         $porPagina = 10;
 
-        $resultado = $this->procesarRankingPaginado($mes, $anio, $pagina, $porPagina);
+        $resultado = $this->procesarRankingPaginado($tipo, $mes, $anio, $pagina, $porPagina);
 
         echo json_encode([
             'success'         => true,
+            'tipo'            => $tipo,
             'mes'             => $mes,
             'anio'            => $anio,
             'pagina_actual'   => $resultado['pagina_actual'],
@@ -88,9 +94,13 @@ class RankingController
         exit;
     }
 
-    private function procesarRankingPaginado($mes, $anio, $pagina = 1, $porPagina = 10)
+    private function procesarRankingPaginado($tipo, $mes, $anio, $pagina = 1, $porPagina = 10)
     {
-        $todosJugadores = $this->model->obtenerRankingJugadores($mes, $anio);
+        if ($tipo === 'historico') {
+            $todosJugadores = $this->model->obtenerRankingHistorico();
+        } else {
+            $todosJugadores = $this->model->obtenerRankingJugadores($mes, $anio);
+        }
         $idUsuarioActual = isset($_SESSION['usuario_id']) ? (int)$_SESSION['usuario_id'] : 0;
 
         $posicion = 1;

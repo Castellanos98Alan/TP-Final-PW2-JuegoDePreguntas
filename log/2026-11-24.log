@@ -44536,3 +44536,379 @@
             ) yo
             WHERE r.total > yo.total
                OR (r.total = yo.total AND r.username < yo.username)
+[19:43:31] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[19:43:31] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[19:43:31] [INFO] SELECT id, puntaje, resultado, fecha, numero_partida
+            FROM (
+                SELECT id,
+                       puntaje,
+                       resultado,
+                       DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha,
+                       ROW_NUMBER() OVER (ORDER BY id ASC) AS numero_partida
+                FROM partida
+                WHERE id_usuario = :idUsuario
+            ) AS historial
+            ORDER BY numero_partida DESC
+            LIMIT 5
+[19:43:31] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)
+[19:43:47] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:43:51] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:43:55] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:01] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:07] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:09] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:10] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:13] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:14] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:15] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:15] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:15] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:16] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:17] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:17] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:18] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:44:28] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[19:44:28] [INFO] SELECT id, puntaje, resultado, fecha, numero_partida
+            FROM (
+                SELECT id,
+                       puntaje,
+                       resultado,
+                       DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha,
+                       ROW_NUMBER() OVER (ORDER BY id ASC) AS numero_partida
+                FROM partida
+                WHERE id_usuario = :idUsuario
+            ) AS historial
+            ORDER BY numero_partida DESC
+            LIMIT 5
+[19:44:28] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)
+[19:44:30] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:46:13] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC
+[19:46:14] [INFO] SELECT u.id,
+                       u.username,
+                       u.nombre_completo,
+                       u.foto_perfil,
+                       u.pais,
+                       u.ciudad,
+                       COALESCE(SUM(p.puntaje), 0) AS puntaje_acumulado
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes
+                                   AND YEAR(p.created_at) = :anio
+                WHERE u.id_rol = 1
+                  AND u.esta_activo = 1
+                GROUP BY u.id, u.username, u.nombre_completo, u.foto_perfil, u.pais, u.ciudad
+                ORDER BY puntaje_acumulado DESC, u.username ASC

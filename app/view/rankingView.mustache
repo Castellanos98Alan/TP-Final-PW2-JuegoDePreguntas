@@ -163,6 +163,41 @@
         border-radius: 14px;
     }
 
+    .ranking-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .ranking-tab-btn {
+        padding: 10px 22px;
+        background: rgba(4, 18, 48, 0.75);
+        border: 1px solid rgba(212, 167, 44, 0.4);
+        border-radius: 12px;
+        color: #a9bfdf;
+        font-weight: bold;
+        font-size: 14.5px;
+        cursor: pointer;
+        transition: all 0.25s ease-in-out;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .ranking-tab-btn:hover {
+        background: rgba(212, 167, 44, 0.15);
+        color: #f5c84b;
+        border-color: #d4a72c;
+    }
+
+    .ranking-tab-btn.activa {
+        background: linear-gradient(135deg, #d4a72c, #f5c84b);
+        color: #030e26;
+        border-color: #ffd700;
+        box-shadow: 0 0 14px rgba(245, 200, 75, 0.4);
+    }
+
     .filtro-item {
         display: flex;
         align-items: center;
@@ -257,6 +292,18 @@
         }
 
         .ranking-header p {
+            font-size: 13px;
+        }
+
+        .ranking-tabs {
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .ranking-tab-btn {
+            flex: 1;
+            justify-content: center;
+            padding: 9px 12px;
             font-size: 13px;
         }
 
@@ -385,8 +432,18 @@
         <h1>🏆 SALÓN DE LA FAMA</h1>
     </div>
 
+    <!-- Pestañas Tipo de Ranking -->
+    <div class="ranking-tabs">
+        <button type="button" class="ranking-tab-btn {{^es_historico}}activa{{/es_historico}}" id="tabMensual" data-tipo="mensual">
+            📅 Ranking Mensual
+        </button>
+        <button type="button" class="ranking-tab-btn {{#es_historico}}activa{{/es_historico}}" id="tabHistorico" data-tipo="historico">
+            🏆 Ranking Histórico
+        </button>
+    </div>
+
     <!-- Barra de Filtros Dinámica (AJAX automático) -->
-    <div class="ranking-filtros-bar">
+    <div class="ranking-filtros-bar" id="rankingFiltrosBar" style="{{#es_historico}}display:none;{{/es_historico}}">
         <div class="filtro-item">
             <label for="selectMes">📅 Mes:</label>
             <select id="selectMes" class="filtro-select">
@@ -413,7 +470,7 @@
                 <th style="width: 70px;">Puesto</th>
                 <th>Jugador</th>
                 <th>Ubicación</th>
-                <th style="text-align: right;">Puntos Mes</th>
+                <th style="text-align: right;" id="colPuntos">{{#es_historico}}Puntos Totales{{/es_historico}}{{^es_historico}}Puntos Mes{{/es_historico}}</th>
             </tr>
             </thead>
             <tbody id="rankingCuerpo">
@@ -464,17 +521,30 @@
         </div>
 
         <div id="rankingVacio" style="{{#hay_jugadores}}display:none;{{/hay_jugadores}} text-align:center; color:#a9bfdf; padding: 40px;">
-            Aún no hay partidas registradas en el período seleccionado.
+            <span id="rankingVacioTexto">
+                {{#es_historico}}Aún no hay partidas registradas en el juego.{{/es_historico}}
+                {{^es_historico}}Aún no hay partidas registradas en el período seleccionado.{{/es_historico}}
+            </span>
         </div>
+    </div>
+
+    <!-- Botón Volver al Lobby -->
+    <div class="acciones-ranking">
+        <a href="lobby" class="btn-volver">← Volver al Lobby</a>
     </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        const tabMensual = document.getElementById('tabMensual');
+        const tabHistorico = document.getElementById('tabHistorico');
+        const rankingFiltrosBar = document.getElementById('rankingFiltrosBar');
         const selectMes = document.getElementById('selectMes');
         const selectAnio = document.getElementById('selectAnio');
+        const colPuntos = document.getElementById('colPuntos');
         const rankingCuerpo = document.getElementById('rankingCuerpo');
         const rankingVacio = document.getElementById('rankingVacio');
+        const rankingVacioTexto = document.getElementById('rankingVacioTexto');
         const tablaRanking = document.getElementById('tablaRanking');
         const paginacionRanking = document.getElementById('paginacionRanking');
         const pagNumeros = document.getElementById('pagNumeros');
@@ -482,18 +552,23 @@
         const pagSiguiente = document.getElementById('pagSiguiente');
         const pagInfo = document.getElementById('pagInfo');
 
+        let tipoActual = '{{tipo}}' || 'mensual';
         let paginaActual = {{pagina_actual}};
         let totalPaginas = {{total_paginas}};
 
         async function cargarRankingAjax(pagina = 1) {
-            const mes = selectMes.value;
-            const anio = selectAnio.value;
             paginaActual = pagina;
-
             rankingCuerpo.style.opacity = '0.35';
 
+            let url = `ranking/obtenerRankingAjax?tipo=${encodeURIComponent(tipoActual)}&pagina=${encodeURIComponent(paginaActual)}`;
+            if (tipoActual === 'mensual') {
+                const mes = selectMes.value;
+                const anio = selectAnio.value;
+                url += `&mes=${encodeURIComponent(mes)}&anio=${encodeURIComponent(anio)}`;
+            }
+
             try {
-                const respuesta = await fetch(`ranking/obtenerRankingAjax?mes=${encodeURIComponent(mes)}&anio=${encodeURIComponent(anio)}&pagina=${encodeURIComponent(paginaActual)}`);
+                const respuesta = await fetch(url);
                 if (!respuesta.ok) {
                     throw new Error('Error al consultar el servidor');
                 }
@@ -504,10 +579,14 @@
                     tablaRanking.style.display = 'none';
                     paginacionRanking.style.display = 'none';
                     pagInfo.style.display = 'none';
+                    rankingVacioTexto.textContent = (tipoActual === 'historico') 
+                        ? 'Aún no hay partidas registradas en el juego.' 
+                        : 'Aún no hay partidas registradas en el período seleccionado.';
                     rankingVacio.style.display = 'block';
                     return;
                 }
 
+                colPuntos.textContent = (tipoActual === 'historico') ? 'Puntos Totales' : 'Puntos Mes';
                 tablaRanking.style.display = 'table';
                 rankingVacio.style.display = 'none';
                 totalPaginas = data.total_paginas || 1;
@@ -596,9 +675,35 @@
             }
         }
 
+        function cambiarTipo(nuevoTipo) {
+            if (tipoActual === nuevoTipo) return;
+            tipoActual = nuevoTipo;
+
+            if (tipoActual === 'historico') {
+                tabHistorico.classList.add('activa');
+                tabMensual.classList.remove('activa');
+                rankingFiltrosBar.style.display = 'none';
+                colPuntos.textContent = 'Puntos Totales';
+            } else {
+                tabMensual.classList.add('activa');
+                tabHistorico.classList.remove('activa');
+                rankingFiltrosBar.style.display = 'flex';
+                colPuntos.textContent = 'Puntos Mes';
+            }
+
+            cargarRankingAjax(1);
+        }
+
+        tabMensual.addEventListener('click', () => cambiarTipo('mensual'));
+        tabHistorico.addEventListener('click', () => cambiarTipo('historico'));
+
         // Actualización automática al cambiar mes o año
-        selectMes.addEventListener('change', () => cargarRankingAjax(1));
-        selectAnio.addEventListener('change', () => cargarRankingAjax(1));
+        selectMes.addEventListener('change', () => {
+            if (tipoActual === 'mensual') cargarRankingAjax(1);
+        });
+        selectAnio.addEventListener('change', () => {
+            if (tipoActual === 'mensual') cargarRankingAjax(1);
+        });
 
         // Paginación con AJAX
         paginacionRanking.addEventListener('click', (e) => {
