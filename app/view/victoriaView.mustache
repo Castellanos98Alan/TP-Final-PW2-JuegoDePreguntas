@@ -273,7 +273,917 @@
             padding: 13px 18px;
         }
     }
+
+    /*One piece animacion*/
+
+
+    .corte-zoro {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .mitad-superior,
+    .mitad-inferior {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #10294d, #020617);
+    }
+
+    .mitad-superior {
+        clip-path: polygon(0 0, 100% 0, 100% 15%, 0 85%);
+        animation: corteSuperior 0.9s 0.5s forwards;
+    }
+
+    .mitad-inferior {
+        clip-path: polygon(0 85%, 100% 15%, 100% 100%, 0 100%);
+        animation: corteInferior 0.9s 0.5s forwards;
+    }
+
+    .corte-espada {
+        position: absolute;
+        inset: 0;
+        background: #b9ffdc;
+        opacity: 0;
+        filter: drop-shadow(0 0 20px #00ff88);
+        animation: espada 0.7s forwards;
+    }
+
+    @keyframes corteSuperior {
+        to {
+            transform: translate(-12%, -110%) rotate(-8deg);
+        }
+    }
+
+    @keyframes corteInferior {
+        to {
+            transform: translate(12%, 110%) rotate(8deg);
+        }
+    }
+
+    @keyframes espada {
+        0% {
+            opacity: 1;
+            clip-path: polygon(0 84%, 0 84%, 0 86%, 0 86%);
+        }
+
+        60% {
+            opacity: 1;
+            clip-path: polygon(0 84%, 100% 14%, 100% 16%, 0 86%);
+        }
+
+        100% {
+            opacity: 0;
+            clip-path: polygon(0 84%, 100% 14%, 100% 16%, 0 86%);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .corte-zoro {
+            display: none;
+        }
+    }
+
+    .animacion-naruto {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: #0a172c;
+        overflow: hidden;
+        pointer-events: none;
+        animation: revelarVictoria 0.6s 1.5s forwards;
+    }
+    .kunai {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 150px;
+        height: 50px;
+        opacity: 0;
+        filter: drop-shadow(0 4px 5px #000);
+        animation: lanzarKunai 0.5s var(--delay) both;
+    }
+
+    .kunai::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+                0deg,
+                #64748b 49%,
+                #d5dde7 50%
+        );
+
+        clip-path: polygon(
+                100% 50%,
+                55% 0,
+                39% 36%,
+                13% 36%,
+                13% 64%,
+                39% 64%,
+                55% 100%
+        );
+    }
+
+    .kunai::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 14px;
+        width: 16px;
+        height: 16px;
+        border: 5px solid #aab6c2;
+        border-radius: 50%;
+    }
+
+    .kunai-1 {
+        --x: -65vw;
+        --y: -50vh;
+        --giro: 30deg;
+        --fx: -120px;
+        --fy: -60px;
+        --delay: 0s;
+    }
+
+    .kunai-2 {
+        --x: 65vw;
+        --y: -50vh;
+        --giro: 150deg;
+        --fx: 120px;
+        --fy: -60px;
+        --delay: 0.12s;
+    }
+
+    .kunai-3 {
+        --x: -65vw;
+        --y: 50vh;
+        --giro: -30deg;
+        --fx: -120px;
+        --fy: 60px;
+        --delay: 0.22s;
+    }
+
+    .kunai-4 {
+        --x: 65vw;
+        --y: 50vh;
+        --giro: 210deg;
+        --fx: 120px;
+        --fy: 60px;
+        --delay: 0.32s;
+    }
+
+    .kunai-5 {
+        --x: 0px;
+        --y: -65vh;
+        --giro: 90deg;
+        --fx: 0px;
+        --fy: -100px;
+        --delay: 0.4s;
+    }
+
+    .kunai-6 {
+        --x: 0px;
+        --y: 65vh;
+        --giro: -90deg;
+        --fx: 0px;
+        --fy: 100px;
+        --delay: 0.48s;
+    }
+
+    @keyframes lanzarKunai {
+        0% {
+            opacity: 1;
+            transform:
+                    translate(-50%, -50%)
+                    translate(var(--x), var(--y))
+                    rotate(var(--giro));
+        }
+
+        100% {
+            opacity: 1;
+            transform:
+                    translate(-50%, -50%)
+                    translate(var(--fx), var(--fy))
+                    rotate(var(--giro));
+        }
+    }
+
+    .humo-ninja {
+        position: absolute;
+        inset: -20%;
+        opacity: 0;
+
+        background:
+                radial-gradient(circle at 40% 45%,
+                #ffffff 0%, #aab4bf 16%, transparent 34%),
+                radial-gradient(circle at 60% 55%,
+                #ffffff 0%, #bbc3cd 22%, transparent 40%),
+                radial-gradient(ellipse,
+                #d9e1e8 10%, transparent 65%);
+
+        animation: explosionHumo 1s 1s both;
+    }
+
+    @keyframes explosionHumo {
+        0% {
+            opacity: 0;
+            transform: scale(0.1);
+        }
+
+        45% {
+            opacity: 1;
+            transform: scale(1.8);
+        }
+
+        100% {
+            opacity: 0;
+            transform: scale(3);
+        }
+    }
+
+    @keyframes revelarVictoria {
+        to {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .animacion-naruto {
+            display: none;
+        }
+    }
+
+    /*animacion de dragon ball*/
+
+    .animacion-dragonball {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: #030b1b;
+        overflow: hidden;
+        pointer-events: none;
+
+        animation:
+                temblorDragonBall 0.13s 1.4s 6,
+                revelarDragonBall 0.5s 2.5s forwards;
+    }
+
+    /* Aura de energía */
+
+    .aura-ki {
+        position: absolute;
+        inset: -50%;
+
+        background: repeating-conic-gradient(
+                from 0deg at 32.5% 50%,
+                transparent 0deg 15deg,
+                #339dff80 16deg 18deg,
+                transparent 19deg 30deg
+        );
+
+        opacity: 0;
+        animation: cargarAura 1.45s both;
+    }
+
+    /* Esfera de energía */
+
+    .energia-ki {
+        position: absolute;
+        left: 15%;
+        top: 50%;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+
+        background: radial-gradient(
+                circle,
+                white 20%,
+                #dcfcff 40%,
+                #22baff 65%,
+                #006fff 80%
+        );
+
+        box-shadow:
+                0 0 25px white,
+                0 0 60px #00aaff,
+                0 0 100px #007bff;
+
+        opacity: 0;
+        animation: cargarKi 1.45s both;
+    }
+
+    /* Rayo del Kamehameha */
+
+    .kamehameha {
+        position: absolute;
+        top: 50%;
+        left: 15%;
+        width: 110%;
+        height: 200px;
+        transform-origin: left center;
+
+        background: linear-gradient(
+                0deg,
+                transparent,
+                #005aff 10%,
+                #00baff 22%,
+                #bdf6ff 35%,
+                white 46%,
+                white 54%,
+                #bdf6ff 65%,
+                #00baff 78%,
+                #005aff 90%,
+                transparent
+        );
+
+        filter: drop-shadow(0 0 30px #00bfff);
+        opacity: 0;
+
+        animation: lanzarKamehameha 1s 1.4s both;
+    }
+
+    /* Onda expansiva */
+
+    .onda-expansiva {
+        position: absolute;
+        left: 20%;
+        top: 50%;
+        width: 150px;
+        height: 150px;
+        border: 6px solid #aefaff;
+        border-radius: 50%;
+        box-shadow: 0 0 25px #009dff;
+        opacity: 0;
+
+        animation: expandirOnda 0.9s 1.45s both;
+    }
+
+    /* Destello final */
+
+    .destello-dragonball {
+        position: absolute;
+        inset: 0;
+        background: #d8f8ff;
+        opacity: 0;
+
+        animation: destelloFinal 0.8s 2s both;
+    }
+
+    /* Texto del ataque */
+
+    .texto-kamehameha {
+        position: absolute;
+        top: 14%;
+        width: 100%;
+        text-align: center;
+        font-size: clamp(25px, 6vw, 70px);
+        font-weight: 900;
+        letter-spacing: 3px;
+        color: white;
+        text-shadow: 0 0 20px #00bfff;
+        opacity: 0;
+
+        animation: mostrarKamehameha 1.1s 1.3s both;
+    }
+
+    @keyframes cargarAura {
+        0%, 100% { opacity: 0; }
+        50%, 90% { opacity: 0.7; }
+    }
+
+    @keyframes cargarKi {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.05);
+        }
+
+        20% {
+            opacity: 1;
+        }
+
+        45% {
+            transform: translate(-50%, -50%) scale(0.65);
+        }
+
+        60% {
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+
+        90% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+    }
+
+    @keyframes lanzarKamehameha {
+        0% {
+            opacity: 1;
+            transform: translateY(-50%)
+            scaleX(0.01) scaleY(0.2);
+        }
+
+        25%, 70% {
+            opacity: 1;
+            transform: translateY(-50%)
+            scaleX(1) scaleY(1.3);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translateY(-50%)
+            scaleX(1) scaleY(2.8);
+        }
+    }
+
+    @keyframes expandirOnda {
+        0% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(0.2);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(9);
+        }
+    }
+
+    @keyframes temblorDragonBall {
+        25% {
+            transform: translate(-4px, 3px);
+        }
+
+        75% {
+            transform: translate(4px, -3px);
+        }
+    }
+
+    @keyframes destelloFinal {
+        0%, 100% { opacity: 0; }
+        40% { opacity: 0.95; }
+    }
+
+    @keyframes mostrarKamehameha {
+        0%, 100% { opacity: 0; }
+        20%, 75% { opacity: 1; }
+    }
+
+    @keyframes revelarDragonBall {
+        to {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .animacion-dragonball {
+            display: none;
+        }
+    }
+
+    @keyframes cargarAura {
+        0%, 100% { opacity: 0; }
+        50%, 90% { opacity: 0.7; }
+    }
+
+    @keyframes cargarKi {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.05);
+        }
+
+        20% {
+            opacity: 1;
+        }
+
+        45% {
+            transform: translate(-50%, -50%) scale(0.65);
+        }
+
+        60% {
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+
+        90% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+    }
+
+    @keyframes lanzarKamehameha {
+        0% {
+            opacity: 1;
+            transform: translateY(-50%)
+            scaleX(0.01) scaleY(0.2);
+        }
+
+        25%, 70% {
+            opacity: 1;
+            transform: translateY(-50%)
+            scaleX(1) scaleY(1.3);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translateY(-50%)
+            scaleX(1) scaleY(2.8);
+        }
+    }
+
+    @keyframes expandirOnda {
+        0% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(0.2);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(9);
+        }
+    }
+
+    @keyframes temblorDragonBall {
+        25% {
+            transform: translate(-4px, 3px);
+        }
+
+        75% {
+            transform: translate(4px, -3px);
+        }
+    }
+
+    @keyframes destelloFinal {
+        0%, 100% { opacity: 0; }
+        40% { opacity: 0.95; }
+    }
+
+    @keyframes mostrarKamehameha {
+        0%, 100% { opacity: 0; }
+        20%, 75% { opacity: 1; }
+    }
+
+    @keyframes revelarDragonBall {
+        to {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .animacion-dragonball {
+            display: none;
+        }
+    }
+
+    /* Animacion de pokemon al ganar*/
+
+    .animacion-pokemon {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        overflow: hidden;
+        pointer-events: none;
+
+        background: radial-gradient(
+                ellipse, #19375c, #060e20
+        );
+
+        animation: revelarPokemon 0.65s 3s forwards;
+    }
+
+    .pokeball {
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        left: 50%;
+        top: 50%;
+
+        transform: translate(-50%, -50%);
+
+        filter: drop-shadow(0 10px 15px #0008);
+
+        animation:
+                entradaPokeball 0.7s both,
+                moverPokeball 0.45s 0.8s 3;
+    }
+
+    .pokeball-superior,
+    .pokeball-inferior {
+        position: absolute;
+        width: 100%;
+        height: 50%;
+        box-sizing: border-box;
+        border: 6px solid #161b22;
+    }
+
+    /* Mitad roja */
+
+    .pokeball-superior {
+        top: 0;
+        border-radius: 100px 100px 0 0;
+
+        background: radial-gradient(
+                circle at 28% 22%,
+                #ff9292,
+                #ef2929 45%,
+                #a80c0c
+        );
+
+        transform-origin: 50% 100%;
+
+        animation: abrirPokeball 0.45s 2.15s forwards;
+    }
+
+    /* Mitad blanca */
+
+    .pokeball-inferior {
+        bottom: 0;
+        border-radius: 0 0 100px 100px;
+        background: linear-gradient(white, #bac9dd);
+    }
+
+    /* Botón central */
+
+    .pokeball-boton {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 45px;
+        height: 45px;
+
+        transform: translate(-50%, -50%);
+
+        border: 7px solid #161b22;
+        border-radius: 50%;
+        background: white;
+
+        box-shadow: inset 0 0 0 3px #b9c6d6;
+
+        animation:
+                iluminarBoton 0.45s 0.8s 3,
+                ocultarBoton 0.3s 2.15s forwards;
+    }
+
+    .luz-pokeball {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+
+        background: radial-gradient(
+                circle,
+                white 10%,
+                #c4faff 35%,
+                #3aa5ff 50%,
+                transparent 73%
+        );
+
+        opacity: 0;
+        animation: liberarLuz 0.9s 2.3s both;
+    }
+
+    .rayos-pokemon {
+        position: absolute;
+        inset: -50%;
+
+        background: repeating-conic-gradient(
+                from 0deg,
+                transparent 0deg 19deg,
+                #84ddff88 20deg 24deg,
+                transparent 25deg 36deg
+        );
+
+        opacity: 0;
+        animation: rayosPokemon 1s 2.3s both;
+    }
+
+    .estrellas-pokemon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+    }
+
+    .estrellas-pokemon span {
+        position: absolute;
+        color: #ffdc48;
+        font-size: 40px;
+        text-shadow: 0 0 15px #ffb900;
+
+        opacity: 0;
+        animation: lanzarEstrellas 0.9s 2.35s both;
+    }
+
+    @keyframes entradaPokeball {
+        0% {
+            transform: translate(-50%, -230%)
+            rotate(-200deg);
+            opacity: 0;
+        }
+
+        70% {
+            transform: translate(-50%, -35%)
+            rotate(15deg);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translate(-50%, -50%)
+            rotate(0deg);
+        }
+    }
+
+    @keyframes moverPokeball {
+        0%, 100% {
+            transform: translate(-50%, -50%)
+            rotate(0deg);
+        }
+
+        25% {
+            transform: translate(-50%, -50%)
+            rotate(-22deg);
+        }
+
+        75% {
+            transform: translate(-50%, -50%)
+            rotate(22deg);
+        }
+    }
+
+    @keyframes abrirPokeball {
+        to {
+            transform: translateY(-45px)
+            rotate(-25deg);
+        }
+    }
+
+    @keyframes iluminarBoton {
+        50% {
+            background: #ff6464;
+            box-shadow: 0 0 20px #ff3030;
+        }
+    }
+
+    @keyframes ocultarBoton {
+        to {
+            opacity: 0;
+        }
+    }
+
+    @keyframes liberarLuz {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.1);
+        }
+
+        45% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(4);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(12);
+        }
+    }
+
+    @keyframes rayosPokemon {
+        0%, 100% {
+            opacity: 0;
+        }
+
+        45% {
+            opacity: 1;
+            transform: rotate(20deg);
+        }
+    }
+
+    @keyframes lanzarEstrellas {
+        0% {
+            opacity: 0;
+            transform: rotate(var(--angulo))
+            translateX(0);
+        }
+
+        30% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+            transform: rotate(var(--angulo))
+            translateX(250px)
+            rotate(calc(-1 * var(--angulo)));
+        }
+    }
+
+    @keyframes revelarPokemon {
+        to {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .animacion-pokemon {
+            display: none;
+        }
+    }
+
+
 </style>
+
+
+{{#esOnePiece}}
+    <div class="corte-zoro" aria-hidden="true">
+        <div class="mitad-superior"></div>
+        <div class="mitad-inferior"></div>
+        <div class="corte-espada"></div>
+    </div>
+{{/esOnePiece}}
+
+{{#esNaruto}}
+    {{^esOnePiece}}
+        <div class="animacion-naruto" aria-hidden="true">
+            <div class="kunai kunai-1"></div>
+            <div class="kunai kunai-2"></div>
+            <div class="kunai kunai-3"></div>
+            <div class="kunai kunai-4"></div>
+            <div class="kunai kunai-5"></div>
+            <div class="kunai kunai-6"></div>
+
+            <div class="humo-ninja"></div>
+        </div>
+    {{/esOnePiece}}
+{{/esNaruto}}
+
+{{#esDragonBall}}
+    {{^esOnePiece}}
+        {{^esNaruto}}
+
+            <div class="animacion-dragonball" aria-hidden="true">
+                <div class="aura-ki"></div>
+                <div class="energia-ki"></div>
+                <div class="kamehameha"></div>
+                <div class="onda-expansiva"></div>
+                <div class="destello-dragonball"></div>
+                <div class="texto-kamehameha">¡KAMEHAMEHA!</div>
+            </div>
+
+        {{/esNaruto}}
+    {{/esOnePiece}}
+{{/esDragonBall}}
+
+{{#esPokemon}}
+    {{^esOnePiece}}
+        {{^esNaruto}}
+            {{^esDragonBall}}
+
+                <div class="animacion-pokemon" aria-hidden="true">
+
+                    <div class="rayos-pokemon"></div>
+
+                    <div class="pokeball">
+                        <div class="pokeball-superior"></div>
+                        <div class="pokeball-inferior"></div>
+                        <div class="pokeball-boton"></div>
+                    </div>
+
+                    <div class="luz-pokeball"></div>
+
+                    <div class="estrellas-pokemon">
+                        <span style="--angulo: 0deg">✦</span>
+                        <span style="--angulo: 45deg">✦</span>
+                        <span style="--angulo: 90deg">✦</span>
+                        <span style="--angulo: 135deg">✦</span>
+                        <span style="--angulo: 180deg">✦</span>
+                        <span style="--angulo: 225deg">✦</span>
+                        <span style="--angulo: 270deg">✦</span>
+                        <span style="--angulo: 315deg">✦</span>
+                    </div>
+
+                </div>
+
+            {{/esDragonBall}}
+        {{/esNaruto}}
+    {{/esOnePiece}}
+{{/esPokemon}}
+
+
 
 <div class="victoria-page">
 
