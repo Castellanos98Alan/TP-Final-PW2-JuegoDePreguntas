@@ -76,13 +76,18 @@ class LobbyModel
 
     public function obtenerPartidasDelJugador($idUsuario)
     {
-        $sql = "SELECT id,
-                   puntaje,
-                   resultado,
-                   DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha
-            FROM partida
-            WHERE id_usuario = :idUsuario
-            ORDER BY created_at DESC LIMIT 5";
+        $sql = "SELECT id, puntaje, resultado, fecha, numero_partida
+            FROM (
+                SELECT id,
+                       puntaje,
+                       resultado,
+                       DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha,
+                       ROW_NUMBER() OVER (ORDER BY id ASC) AS numero_partida
+                FROM partida
+                WHERE id_usuario = :idUsuario
+            ) AS historial
+            ORDER BY numero_partida DESC
+            LIMIT 5";
 
         return $this->database->queryAll(
             $sql,

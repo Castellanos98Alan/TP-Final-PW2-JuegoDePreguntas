@@ -350,4 +350,6 @@ class PerfilController
 
         return 'data:image/png;base64,' . base64_encode($png);
     }
+
+
 }
