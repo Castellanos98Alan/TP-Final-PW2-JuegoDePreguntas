@@ -24,6 +24,15 @@ class SugerirPreguntaController
         if (!isset($_SESSION['usuario_id'])) {
             Redirect::toLogin();
         }
+
+        $rol = $_SESSION['rol'] ?? $_SESSION['id_rol'] ?? 0;
+        $esAdmin = ($rol == 3 || strtolower((string)$rol) === 'administrador');
+        $esEditor = ($rol == 2 || strtolower((string)$rol) === 'editor');
+        $esJugador = ((string)$rol === '1' || strtolower((string)$rol) === 'jugador') && !$esAdmin && !$esEditor;
+
+        if (!$esJugador) {
+            Redirect::toLobby();
+        }
     }
 
     public function show()
@@ -31,7 +40,7 @@ class SugerirPreguntaController
         $this->verificarAutenticacion();
 
         $data = [
-            'username'       => $_SESSION['username'] ?? 'Jugador',
+            'username'       => $_SESSION['usuario'] ?? $_SESSION['username'] ?? 'Jugador',
             'categorias'     => $this->model->getCategoriasActivas(),
             'animes'         => $this->model->getAnimesActivos(),
             'mensaje_exito'  => $_SESSION['sugerir_exito'] ?? null,
