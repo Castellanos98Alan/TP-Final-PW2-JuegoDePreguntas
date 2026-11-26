@@ -3679,6 +3679,239 @@ VALUES
     ((SELECT id FROM usuario WHERE username = 'facu5'), 60,  'Ganada'),
     ((SELECT id FROM usuario WHERE username = 'facu6'), 30,  'Ganada');
 
+-- =========================================================
+-- DATOS PRE-CARGADOS PARA EL RANKING (MESES Y AÑOS: 2024, 2025, 2026)
+-- =========================================================
+
+INSERT INTO partida (id_usuario, puntaje, resultado, created_at)
+VALUES
+    -- =====================================================
+    -- AÑO 2024
+    -- =====================================================
+    -- Enero 2024
+    ((SELECT id FROM usuario WHERE username = 'facu'),   25, 'Ganada',  '2024-01-12 14:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  20, 'Ganada',  '2024-01-15 16:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  15, 'Perdida', '2024-01-20 18:10:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  10, 'Perdida', '2024-01-25 20:00:00'),
+
+    -- Febrero 2024
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  30, 'Ganada',  '2024-02-05 10:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  25, 'Ganada',  '2024-02-14 17:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   15, 'Perdida', '2024-02-18 19:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  10, 'Perdida', '2024-02-22 12:00:00'),
+
+    -- Marzo 2024
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  35, 'Ganada',  '2024-03-08 11:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   25, 'Ganada',  '2024-03-12 15:45:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  20, 'Ganada',  '2024-03-19 18:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  10, 'Perdida', '2024-03-24 21:10:00'),
+
+    -- Abril 2024
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  30, 'Ganada',  '2024-04-04 09:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  25, 'Ganada',  '2024-04-11 16:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  15, 'Perdida', '2024-04-18 14:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   10, 'Perdida', '2024-04-26 22:30:00'),
+
+    -- Mayo 2024
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  25, 'Ganada',  '2024-05-06 13:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   20, 'Ganada',  '2024-05-13 17:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  15, 'Ganada',  '2024-05-21 19:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  10, 'Perdida', '2024-05-28 11:50:00'),
+
+    -- Junio 2024
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  30, 'Ganada',  '2024-06-03 15:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  20, 'Ganada',  '2024-06-12 18:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   15, 'Perdida', '2024-06-20 20:10:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  10, 'Perdida', '2024-06-27 10:00:00'),
+
+    -- Julio 2024
+    ((SELECT id FROM usuario WHERE username = 'facu'),   30, 'Ganada',  '2024-07-09 14:45:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  25, 'Ganada',  '2024-07-16 16:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  20, 'Ganada',  '2024-07-22 18:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  10, 'Perdida', '2024-07-29 21:00:00'),
+
+    -- Agosto 2024
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  35, 'Ganada',  '2024-08-05 11:10:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  20, 'Ganada',  '2024-08-14 15:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   15, 'Perdida', '2024-08-20 19:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  10, 'Perdida', '2024-08-27 13:40:00'),
+
+    -- Septiembre 2024
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  30, 'Ganada',  '2024-09-07 10:50:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  25, 'Ganada',  '2024-09-15 16:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  15, 'Perdida', '2024-09-21 17:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  10, 'Perdida', '2024-09-28 20:00:00'),
+
+    -- Octubre 2024
+    ((SELECT id FROM usuario WHERE username = 'facu'),   35, 'Ganada',  '2024-10-04 12:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  25, 'Ganada',  '2024-10-13 14:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  15, 'Perdida', '2024-10-22 18:45:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  10, 'Perdida', '2024-10-29 21:10:00'),
+
+    -- Noviembre 2024
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  30, 'Ganada',  '2024-11-06 15:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  20, 'Ganada',  '2024-11-14 17:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   15, 'Perdida', '2024-11-20 19:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  10, 'Perdida', '2024-11-26 11:30:00'),
+
+    -- Diciembre 2024
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  40, 'Ganada',  '2024-12-08 16:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   25, 'Ganada',  '2024-12-16 18:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  20, 'Ganada',  '2024-12-23 20:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  10, 'Perdida', '2024-12-30 14:00:00'),
+
+    -- =====================================================
+    -- AÑO 2025
+    -- =====================================================
+    -- Enero 2025
+    ((SELECT id FROM usuario WHERE username = 'facu'),   35, 'Ganada',  '2025-01-09 13:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  25, 'Ganada',  '2025-01-14 17:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  20, 'Ganada',  '2025-01-21 19:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  10, 'Perdida', '2025-01-27 21:40:00'),
+
+    -- Febrero 2025
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  40, 'Ganada',  '2025-02-06 10:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  30, 'Ganada',  '2025-02-12 14:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  15, 'Perdida', '2025-02-19 16:50:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   10, 'Perdida', '2025-02-25 18:20:00'),
+
+    -- Marzo 2025
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  35, 'Ganada',  '2025-03-05 11:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   30, 'Ganada',  '2025-03-15 15:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  20, 'Ganada',  '2025-03-22 18:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  15, 'Perdida', '2025-03-28 20:30:00'),
+
+    -- Abril 2025
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  30, 'Ganada',  '2025-04-03 09:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  25, 'Ganada',  '2025-04-11 14:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   20, 'Ganada',  '2025-04-18 16:50:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  10, 'Perdida', '2025-04-25 19:20:00'),
+
+    -- Mayo 2025
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  35, 'Ganada',  '2025-05-07 12:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  25, 'Ganada',  '2025-05-14 16:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  20, 'Ganada',  '2025-05-20 18:45:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   10, 'Perdida', '2025-05-27 21:00:00'),
+
+    -- Junio 2025
+    ((SELECT id FROM usuario WHERE username = 'facu'),   40, 'Ganada',  '2025-06-04 14:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  25, 'Ganada',  '2025-06-12 17:10:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  20, 'Ganada',  '2025-06-19 19:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  15, 'Perdida', '2025-06-26 11:00:00'),
+
+    -- Julio 2025
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  35, 'Ganada',  '2025-07-08 13:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   30, 'Ganada',  '2025-07-15 15:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  20, 'Ganada',  '2025-07-23 18:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  10, 'Perdida', '2025-07-30 20:20:00'),
+
+    -- Agosto 2025
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  40, 'Ganada',  '2025-08-06 10:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  25, 'Ganada',  '2025-08-13 14:50:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  20, 'Ganada',  '2025-08-20 17:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   10, 'Perdida', '2025-08-27 19:40:00'),
+
+    -- Septiembre 2025
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  35, 'Ganada',  '2025-09-04 11:45:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   25, 'Ganada',  '2025-09-12 15:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  20, 'Ganada',  '2025-09-19 18:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  10, 'Perdida', '2025-09-26 21:00:00'),
+
+    -- Octubre 2025
+    ((SELECT id FROM usuario WHERE username = 'facu'),   45, 'Ganada',  '2025-10-05 12:10:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  30, 'Ganada',  '2025-10-14 16:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  20, 'Ganada',  '2025-10-21 19:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  15, 'Perdida', '2025-10-28 21:15:00'),
+
+    -- Noviembre 2025
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  35, 'Ganada',  '2025-11-03 14:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  25, 'Ganada',  '2025-11-11 16:45:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  20, 'Ganada',  '2025-11-18 18:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   15, 'Perdida', '2025-11-25 20:50:00'),
+
+    -- Diciembre 2025
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  40, 'Ganada',  '2025-12-07 10:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   35, 'Ganada',  '2025-12-15 15:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  20, 'Ganada',  '2025-12-22 17:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  15, 'Perdida', '2025-12-29 19:40:00'),
+
+    -- =====================================================
+    -- AÑO 2026
+    -- =====================================================
+    -- Enero 2026
+    ((SELECT id FROM usuario WHERE username = 'facu'),   35, 'Ganada',  '2026-01-08 14:10:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  30, 'Ganada',  '2026-01-15 16:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  20, 'Ganada',  '2026-01-22 18:50:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  10, 'Perdida', '2026-01-29 20:30:00'),
+
+    -- Febrero 2026
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  35, 'Ganada',  '2026-02-05 11:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   30, 'Ganada',  '2026-02-12 15:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  20, 'Ganada',  '2026-02-19 17:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  15, 'Perdida', '2026-02-26 19:45:00'),
+
+    -- Marzo 2026
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  40, 'Ganada',  '2026-03-04 10:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  25, 'Ganada',  '2026-03-11 14:10:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   20, 'Ganada',  '2026-03-18 16:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  10, 'Perdida', '2026-03-25 18:50:00'),
+
+    -- Abril 2026
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  35, 'Ganada',  '2026-04-06 12:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  25, 'Ganada',  '2026-04-13 15:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  20, 'Ganada',  '2026-04-20 18:10:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   15, 'Perdida', '2026-04-27 20:20:00'),
+
+    -- Mayo 2026
+    ((SELECT id FROM usuario WHERE username = 'facu'),   40, 'Ganada',  '2026-05-05 13:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  30, 'Ganada',  '2026-05-12 16:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  20, 'Ganada',  '2026-05-19 18:45:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  10, 'Perdida', '2026-05-26 21:00:00'),
+
+    -- Junio 2026
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  35, 'Ganada',  '2026-06-03 10:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  30, 'Ganada',  '2026-06-10 14:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   20, 'Ganada',  '2026-06-17 16:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  10, 'Perdida', '2026-06-24 19:10:00'),
+
+    -- Julio 2026
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  40, 'Ganada',  '2026-07-07 11:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   30, 'Ganada',  '2026-07-14 15:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  25, 'Ganada',  '2026-07-21 17:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  15, 'Perdida', '2026-07-28 20:00:00'),
+
+    -- Agosto 2026
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  35, 'Ganada',  '2026-08-04 12:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  25, 'Ganada',  '2026-08-11 14:50:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  20, 'Ganada',  '2026-08-18 17:10:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   10, 'Perdida', '2026-08-25 19:30:00'),
+
+    -- Septiembre 2026
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  35, 'Ganada',  '2026-09-02 10:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   30, 'Ganada',  '2026-09-10 14:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  20, 'Ganada',  '2026-09-17 16:45:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  15, 'Perdida', '2026-09-24 19:20:00'),
+
+    -- Octubre 2026
+    ((SELECT id FROM usuario WHERE username = 'facu'),   45, 'Ganada',  '2026-10-06 11:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  30, 'Ganada',  '2026-10-13 15:40:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  20, 'Ganada',  '2026-10-20 18:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  15, 'Perdida', '2026-10-27 20:15:00'),
+
+    -- Noviembre 2026 (Mes actual)
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  45, 'Ganada',  '2026-11-04 12:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   35, 'Ganada',  '2026-11-10 14:30:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  25, 'Ganada',  '2026-11-16 17:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu5'),  20, 'Ganada',  '2026-11-20 19:15:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu4'),  15, 'Perdida', '2026-11-24 11:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  10, 'Perdida', '2026-11-25 16:30:00'),
+
+    -- Diciembre 2026
+    ((SELECT id FROM usuario WHERE username = 'facu3'),  40, 'Ganada',  '2026-12-05 13:00:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu'),   30, 'Ganada',  '2026-12-12 15:20:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu2'),  25, 'Ganada',  '2026-12-19 17:45:00'),
+    ((SELECT id FROM usuario WHERE username = 'facu6'),  15, 'Perdida', '2026-12-26 20:00:00');
+
 
 
 
