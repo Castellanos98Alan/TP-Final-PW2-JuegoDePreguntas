@@ -38,8 +38,9 @@ class LobbyController
         $esAdmin = ($rol == 3 || strtolower((string)$rol) === 'administrador');
         $esEditor = ($rol == 2 || strtolower((string)$rol) === 'editor');
 
-        // Solamente jugadores pueden jugar
+        // Solamente jugadores pueden jugar y sugerir preguntas
         $puedeJugar = !$esAdmin && !$esEditor;
+        $puedeSugerir = !$esAdmin && !$esEditor;
 
         $data = [
             'username' => $jugador['username'],
@@ -53,7 +54,8 @@ class LobbyController
 
             'es_admin' => $esAdmin,
             'es_editor' => $esEditor,
-            'puede_jugar' => $puedeJugar
+            'puede_jugar' => $puedeJugar,
+            'puede_sugerir' => $puedeSugerir
         ];
 
         $this->render->renderiza("lobby", $data);

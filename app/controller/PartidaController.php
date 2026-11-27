@@ -385,13 +385,10 @@ class PartidaController
  */
         $idPregunta = $preguntaActual['id'];
 
-        // Validación del servidor: una respuesta después de 8 segundos no vale.
+        // Validación del servidor: una respuesta después de 12 segundos no vale (con 1s de gracia por latencia).
         $inicioPregunta = $_SESSION['partida']['inicio_pregunta'] ?? time();
 
-
-        //Si pasaron 8 segundos o más, se prepara la
-        //derrota, se redirige y exit() detiene la ejecución para que no se procese la respuesta.
-        if (time() - $inicioPregunta >= 8) {
+        if (time() - $inicioPregunta >= 13) {
             $this->prepararDerrotaPorTiempo($preguntaActual);
             Redirect::to('/partida/perder');
             exit();
@@ -571,9 +568,8 @@ class PartidaController
         $pregunta = $_SESSION['partida']['preguntas'][$indice] ?? null;
         $inicio = $_SESSION['partida']['inicio_pregunta'] ?? time();
 
-        // No aceptar una llamada anticipada al endpoint.
-        // Esta condición evita aceptar una llamada anticipada al método. También comprueba que exista una pregunta válida.
-        if (!$pregunta || time() - $inicio < 8) {
+        // No aceptar una llamada anticipada al endpoint (deben haber pasado al menos 12 segundos).
+        if (!$pregunta || time() - $inicio < 12) {
             Redirect::to('/partida/jugar');
             exit();
         }

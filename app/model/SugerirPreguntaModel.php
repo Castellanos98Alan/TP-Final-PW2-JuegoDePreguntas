@@ -24,7 +24,6 @@ class SugerirPreguntaModel
 
     public function crearPreguntaSugerida(
         $pregunta,
-        $descripcion,
         $animeId,
         $dificultad = 'media',
         array $opciones = [],
@@ -43,11 +42,6 @@ class SugerirPreguntaModel
         $respuestaCorrecta = $letras[$correctaIndice];
         $categoria = $this->database->queryOne("SELECT id FROM categoria WHERE id = :id AND esta_activa = 1", ['id' => $categoriaId]);
         if (!$categoria) return false;
-
-        $enunciadoFinal = $pregunta;
-        if (!empty($descripcion)) {
-            $enunciadoFinal .= " - " . $descripcion;
-        }
 
         $sql = "INSERT INTO pregunta (
             enunciado,
@@ -80,7 +74,7 @@ class SugerirPreguntaModel
         )";
 
         return $this->database->execute($sql, [
-            'enunciado'          => $enunciadoFinal,
+            'enunciado'          => $pregunta,
             'respuesta_a'        => $respuestas[0],
             'respuesta_b'        => $respuestas[1],
             'respuesta_c'        => $respuestas[2],

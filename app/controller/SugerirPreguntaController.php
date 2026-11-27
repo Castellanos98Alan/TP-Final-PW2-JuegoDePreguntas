@@ -24,6 +24,15 @@ class SugerirPreguntaController
         if (!isset($_SESSION['usuario_id'])) {
             Redirect::toLogin();
         }
+
+        $rol = $_SESSION['rol'] ?? $_SESSION['id_rol'] ?? 0;
+        $esAdmin = ($rol == 3 || strtolower((string)$rol) === 'administrador');
+        $esEditor = ($rol == 2 || strtolower((string)$rol) === 'editor');
+        $esJugador = ((string)$rol === '1' || strtolower((string)$rol) === 'jugador') && !$esAdmin && !$esEditor;
+
+        if (!$esJugador) {
+            Redirect::toLobby();
+        }
     }
 
     public function show()
@@ -31,7 +40,7 @@ class SugerirPreguntaController
         $this->verificarAutenticacion();
 
         $data = [
-            'username'       => $_SESSION['username'] ?? 'Jugador',
+            'username'       => $_SESSION['usuario'] ?? $_SESSION['username'] ?? 'Jugador',
             'categorias'     => $this->model->getCategoriasActivas(),
             'animes'         => $this->model->getAnimesActivos(),
             'mensaje_exito'  => $_SESSION['sugerir_exito'] ?? null,
@@ -48,17 +57,14 @@ class SugerirPreguntaController
         $this->verificarAutenticacion();
 
         $pregunta     = trim($_POST['pregunta'] ?? '');
-        $descripcion  = trim($_POST['descripcion'] ?? '');
         $animeId      = (int)($_POST['anime_id'] ?? 0);
         $opciones     = $_POST['opciones'] ?? [];
         $correcta     = isset($_POST['correcta']) ? (int)$_POST['correcta'] : -1;
         $tipoPregunta = $_POST['tipo_pregunta'] ?? 'texto';
         $archivo      = $_FILES['recurso'] ?? null;
 
-        // La dificultad inicial la define automáticamente el sistema
         $dificultadInicial = 'media';
 
-        // 1. Validación de largo de la pregunta
         $largoPregunta = mb_strlen($pregunta);
         if ($largoPregunta < 10 || $largoPregunta > 100) {
             $_SESSION['sugerir_error'] = "La pregunta debe tener entre 10 y 100 caracteres (ingresaste $largoPregunta).";
@@ -66,15 +72,6 @@ class SugerirPreguntaController
             return;
         }
 
-        // 2. Validación de largo de la descripción
-        $largoDescripcion = mb_strlen($descripcion);
-        if ($largoDescripcion < 10 || $largoDescripcion > 100) {
-            $_SESSION['sugerir_error'] = "La descripción debe tener entre 10 y 100 caracteres (ingresaste $largoDescripcion).";
-            Redirect::toSugerirPregunta();
-            return;
-        }
-
-        // 3. Validación de anime seleccionado
         if ($animeId <= 0) {
             $_SESSION['sugerir_error'] = "Debés seleccionar un anime.";
             Redirect::toSugerirPregunta();
@@ -161,7 +158,6 @@ class SugerirPreguntaController
 
         $exito = $this->model->crearPreguntaSugerida(
             $pregunta,
-            $descripcion,
             $animeId,
             $dificultadInicial,
             $opciones,
