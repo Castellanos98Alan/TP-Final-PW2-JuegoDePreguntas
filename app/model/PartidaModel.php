@@ -503,8 +503,8 @@ class PartidaModel
 
         $cantidadReportes = (int)$resultado['total'];
 
-        // Si supera los 10 reportes, se desactiva.
-        if ($cantidadReportes > 0) {
+        // Si alcanza o supera los 10 reportes de usuarios distintos, se desactiva.
+        if ($cantidadReportes >= 10) {
 
             $sql = "UPDATE pregunta
             SET esta_activa = 0,
