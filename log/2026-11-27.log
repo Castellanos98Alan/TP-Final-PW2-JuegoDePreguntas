@@ -11071,3 +11071,1752 @@
                OR (r.total = yo.total AND r.username < yo.username)
 [04:41:54] [INFO] SELECT id, nombre FROM categoria WHERE esta_activa = 1 ORDER BY nombre
 [04:41:54] [INFO] SELECT id, nombre FROM anime WHERE esta_activo = 1 ORDER BY nombre ASC
+[04:46:30] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[04:46:30] [INFO] SELECT id, puntaje, resultado, fecha, numero_partida
+            FROM (
+                SELECT id,
+                       puntaje,
+                       resultado,
+                       DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha,
+                       ROW_NUMBER() OVER (ORDER BY id ASC) AS numero_partida
+                FROM partida
+                WHERE id_usuario = :idUsuario
+            ) AS historial
+            ORDER BY numero_partida DESC
+            LIMIT 5
+[04:46:30] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)
+[20:58:01] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[20:58:01] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[20:58:01] [INFO] SELECT id, puntaje, resultado, fecha, numero_partida
+            FROM (
+                SELECT id,
+                       puntaje,
+                       resultado,
+                       DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha,
+                       ROW_NUMBER() OVER (ORDER BY id ASC) AS numero_partida
+                FROM partida
+                WHERE id_usuario = :idUsuario
+            ) AS historial
+            ORDER BY numero_partida DESC
+            LIMIT 5
+[20:58:01] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)
+[20:58:23] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[20:58:23] [INFO] SELECT id, nombre
+                FROM categoria
+                ORDER BY nombre ASC
+[20:58:23] [INFO] SELECT a.id, a.nombre
+                FROM anime a
+                WHERE EXISTS (
+                    SELECT 1
+                    FROM pregunta p
+                    WHERE p.anime_id = a.id AND p.esta_activa = 1
+                )
+                ORDER BY a.nombre ASC
+[20:58:23] [INFO] SELECT COUNT(*) AS total FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+[20:58:23] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.id DESC
+                LIMIT 10 OFFSET 0
+[20:58:23] [INFO] SELECT COUNT(*) AS total
+                FROM usuario
+                WHERE id_rol = 1
+[20:58:23] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[20:58:23] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[20:58:23] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[20:58:23] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[20:58:23] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[20:58:23] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[20:58:23] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[20:58:23] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[20:58:23] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[20:58:31] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[20:58:31] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[20:58:31] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[20:58:31] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[20:58:31] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[20:58:31] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[20:58:31] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[20:58:32] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[20:58:32] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[20:58:32] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[20:58:32] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[20:58:32] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[20:58:32] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[20:58:32] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[20:58:54] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[20:58:54] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[20:58:54] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[20:58:54] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[20:58:54] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[20:58:54] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[20:58:54] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[20:58:55] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[20:58:55] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[20:58:55] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[20:58:55] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[20:58:55] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[20:58:55] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[20:58:55] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:16:29] [INFO] SELECT id, nombre
+                FROM categoria
+                ORDER BY nombre ASC
+[21:16:29] [INFO] SELECT a.id, a.nombre
+                FROM anime a
+                WHERE EXISTS (
+                    SELECT 1
+                    FROM pregunta p
+                    WHERE p.anime_id = a.id AND p.esta_activa = 1
+                )
+                ORDER BY a.nombre ASC
+[21:16:29] [INFO] SELECT COUNT(*) AS total FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+[21:16:29] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.id DESC
+                LIMIT 10 OFFSET 0
+[21:16:29] [INFO] SELECT COUNT(*) AS total
+                FROM usuario
+                WHERE id_rol = 1
+[21:16:29] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:16:29] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:16:29] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:16:29] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:16:29] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:16:29] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:16:29] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:16:29] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:16:29] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:16:30] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:16:30] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:16:30] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:16:30] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:16:30] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:16:30] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:16:30] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:16:33] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:16:33] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:16:33] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:16:33] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:16:33] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:16:33] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:16:33] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:21:45] [INFO] SELECT id, nombre
+                FROM categoria
+                ORDER BY nombre ASC
+[21:21:45] [INFO] SELECT a.id, a.nombre
+                FROM anime a
+                WHERE EXISTS (
+                    SELECT 1
+                    FROM pregunta p
+                    WHERE p.anime_id = a.id AND p.esta_activa = 1
+                )
+                ORDER BY a.nombre ASC
+[21:21:45] [INFO] SELECT COUNT(*) AS total FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+[21:21:45] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.id DESC
+                LIMIT 10 OFFSET 0
+[21:21:45] [INFO] SELECT COUNT(*) AS total
+                FROM usuario
+                WHERE id_rol = 1
+[21:21:45] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:21:45] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:21:45] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:21:45] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:21:45] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:21:45] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:21:45] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:21:45] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:21:45] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:29:36] [INFO] SELECT id, nombre
+                FROM categoria
+                ORDER BY nombre ASC
+[21:29:36] [INFO] SELECT a.id, a.nombre
+                FROM anime a
+                WHERE EXISTS (
+                    SELECT 1
+                    FROM pregunta p
+                    WHERE p.anime_id = a.id AND p.esta_activa = 1
+                )
+                ORDER BY a.nombre ASC
+[21:29:36] [INFO] SELECT COUNT(*) AS total FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+[21:29:36] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.id DESC
+                LIMIT 10 OFFSET 0
+[21:29:36] [INFO] SELECT COUNT(*) AS total
+                FROM usuario
+                WHERE id_rol = 1
+[21:29:36] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:29:36] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:29:36] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:29:36] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:29:36] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:29:36] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:29:36] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:29:36] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:29:36] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:29:38] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:29:38] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:29:38] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:29:38] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:29:38] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:29:38] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:29:38] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:29:38] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:29:38] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:29:38] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:29:38] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:29:38] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:29:38] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:29:38] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:29:38] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:29:38] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:29:38] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:29:38] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:32:29] [INFO] SELECT id, nombre
+                FROM categoria
+                ORDER BY nombre ASC
+[21:32:29] [INFO] SELECT a.id, a.nombre
+                FROM anime a
+                WHERE EXISTS (
+                    SELECT 1
+                    FROM pregunta p
+                    WHERE p.anime_id = a.id AND p.esta_activa = 1
+                )
+                ORDER BY a.nombre ASC
+[21:32:29] [INFO] SELECT COUNT(*) AS total FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+[21:32:29] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.id DESC
+                LIMIT 10 OFFSET 0
+[21:32:29] [INFO] SELECT COUNT(*) AS total
+                FROM usuario
+                WHERE id_rol = 1
+[21:32:29] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:32:29] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:32:29] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:32:29] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:32:29] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:32:29] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:32:29] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:32:29] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:32:29] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:32:30] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.veces_mostrada DESC, t.id DESC
+                LIMIT 50 OFFSET 0
+[21:32:30] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:32:30] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:32:30] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:32:30] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:32:30] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:32:30] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:32:30] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:32:30] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:32:30] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:32:33] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.veces_mostrada DESC, t.id DESC
+                LIMIT 50 OFFSET 0
+[21:32:33] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:32:33] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:32:33] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:32:33] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:32:33] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:32:33] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:32:33] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:32:33] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:32:33] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:35:51] [INFO] SELECT id, nombre
+                FROM categoria
+                ORDER BY nombre ASC
+[21:35:51] [INFO] SELECT a.id, a.nombre
+                FROM anime a
+                WHERE EXISTS (
+                    SELECT 1
+                    FROM pregunta p
+                    WHERE p.anime_id = a.id AND p.esta_activa = 1
+                )
+                ORDER BY a.nombre ASC
+[21:35:51] [INFO] SELECT COUNT(*) AS total FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+[21:35:51] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.id DESC
+                LIMIT 10 OFFSET 0
+[21:35:51] [INFO] SELECT COUNT(*) AS total
+                FROM usuario
+                WHERE id_rol = 1
+[21:35:51] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:35:51] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:35:51] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:35:51] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:35:51] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:35:51] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:35:51] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:35:51] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:35:51] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:35:53] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.veces_mostrada DESC, t.id DESC
+                LIMIT 10 OFFSET 0
+[21:35:53] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:35:53] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:35:53] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:35:53] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:35:53] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:35:53] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:35:53] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:35:53] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:35:53] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:35:58] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.veces_mostrada DESC, t.id DESC
+                LIMIT 10 OFFSET 0
+[21:35:58] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:35:58] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:35:58] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:35:58] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:35:58] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:35:58] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:35:58] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:35:58] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:35:58] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:40:35] [INFO] SELECT id, nombre
+                FROM categoria
+                ORDER BY nombre ASC
+[21:40:35] [INFO] SELECT a.id, a.nombre
+                FROM anime a
+                WHERE EXISTS (
+                    SELECT 1
+                    FROM pregunta p
+                    WHERE p.anime_id = a.id AND p.esta_activa = 1
+                )
+                ORDER BY a.nombre ASC
+[21:40:35] [INFO] SELECT COUNT(*) AS total FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+[21:40:35] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.id DESC
+                LIMIT 10 OFFSET 0
+[21:40:35] [INFO] SELECT COUNT(*) AS total
+                FROM usuario
+                WHERE id_rol = 1
+[21:40:35] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:40:35] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:40:35] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:40:35] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:40:35] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:40:35] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:40:35] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:40:35] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:40:35] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:40:36] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.veces_mostrada DESC, t.id DESC
+                LIMIT 10 OFFSET 0
+[21:40:36] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:40:36] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:40:36] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:40:36] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:40:36] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:40:36] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:40:36] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:40:36] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:40:36] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+[21:40:42] [INFO] SELECT t.*
+                FROM (
+                    SELECT
+                        p.id,
+                        p.enunciado AS descripcion,
+                        a.id AS anime_id,
+                        a.nombre AS anime,
+                        c.id AS categoria_id,
+                        c.nombre AS categoria,
+                        CASE
+                            WHEN (SELECT COUNT(*) FROM historial_respuesta hr_tot WHERE hr_tot.pregunta_id = p.id) < 0 THEN 'media'
+                            ELSE COALESCE(p.dificultad, 'media')
+                        END AS dificultad,
+                        COUNT(hr.id) AS veces_mostrada,
+                        COALESCE(SUM(hr.fue_correcta), 0) AS veces_acertada,
+                        CASE
+                            WHEN COUNT(hr.id) = 0 THEN 0
+                            ELSE ROUND((SUM(hr.fue_correcta) / COUNT(hr.id)) * 100, 2)
+                        END AS porcentaje_aciertos
+                    FROM pregunta p
+                    LEFT JOIN categoria c ON p.categoria_id = c.id
+                    LEFT JOIN anime a ON p.anime_id = a.id
+                    LEFT JOIN historial_respuesta hr ON p.id = hr.pregunta_id AND YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())
+                    WHERE p.esta_activa = 1
+                    GROUP BY p.id, p.enunciado, a.id, a.nombre, c.id, c.nombre, p.dificultad
+                ) t
+                
+                ORDER BY t.veces_mostrada DESC, t.id DESC
+                LIMIT 10 OFFSET 0
+[21:40:42] [INFO] SELECT u.pais AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.pais
+                ORDER BY cantidad DESC
+[21:40:42] [INFO] SELECT u.sexo AS etiqueta, COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY u.sexo
+[21:40:42] [INFO] SELECT
+                    CASE
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento < 18
+                            THEN 'Menores de 18'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 18 AND 25
+                            THEN '18 a 25'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 26 AND 35
+                            THEN '26 a 35'
+                        WHEN YEAR(CURDATE()) - u.anio_nacimiento BETWEEN 36 AND 50
+                            THEN '36 a 50'
+                        ELSE 'Mayores de 50'
+                    END AS etiqueta,
+                    COUNT(*) AS cantidad
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+                GROUP BY etiqueta
+[21:40:42] [INFO] SELECT COUNT(*) AS total
+                FROM partida p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+                AND p.resultado IN ('Ganada', 'Perdida')
+[21:40:42] [INFO] SELECT COUNT(*) AS total
+                FROM usuario u
+                WHERE u.id_rol = 1 AND YEAR(u.created_at) = YEAR(CURDATE())
+                        AND MONTH(u.created_at) = MONTH(CURDATE())
+[21:40:42] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta p
+                WHERE YEAR(p.created_at) = YEAR(CURDATE())
+                        AND MONTH(p.created_at) = MONTH(CURDATE())
+[21:40:42] [INFO] SELECT COUNT(*) AS total
+                FROM pregunta
+[21:40:42] [INFO] SELECT COUNT(*) AS total
+                FROM reporte_pregunta
+                WHERE estado = 'pendiente'
+[21:40:42] [INFO] SELECT
+                COUNT(*) AS total,
+                SUM(hr.fue_correcta) AS correctas
+            FROM historial_respuesta hr
+            WHERE YEAR(hr.fecha_respuesta) = YEAR(CURDATE())
+                        AND MONTH(hr.fecha_respuesta) = MONTH(CURDATE())

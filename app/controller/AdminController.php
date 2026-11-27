@@ -182,4 +182,122 @@ class AdminController
 
         $this->render->renderiza('admin', $reporte);
     }
+
+    public function descargarPdf()
+    {
+        $this->verificarPermisos();
+
+        $periodo = $_GET['periodo'] ?? 'mes';
+        if (!in_array($periodo, ['dia', 'semana', 'mes', 'anio'], true)) {
+            $periodo = 'mes';
+        }
+
+        $categoriaId = $_GET['categoria'] ?? null;
+        $categoriaId = ($categoriaId !== null && $categoriaId !== '' && ctype_digit((string)$categoriaId) && (int)$categoriaId > 0)
+            ? (int)$categoriaId
+            : null;
+
+        $animeId = $_GET['anime'] ?? null;
+        $animeId = ($animeId !== null && $animeId !== '' && ctype_digit((string)$animeId) && (int)$animeId > 0)
+            ? (int)$animeId
+            : null;
+
+        $dificultad = $_GET['dificultad'] ?? null;
+        if (!in_array($dificultad, ['facil', 'media', 'dificil'], true)) {
+            $dificultad = null;
+        }
+
+        $orden = $_GET['orden'] ?? 'jugada_desc';
+        $pagina = max(1, (int)($_GET['pagina'] ?? 1));
+
+        $preguntas = $this->model->getEstadisticasPreguntas(
+            $periodo,
+            $categoriaId,
+            $dificultad,
+            $orden,
+            $animeId,
+            $pagina,
+            10
+        );
+
+        $paises = $this->model->getUsuariosPorPais($periodo);
+        $sexos = $this->model->getUsuariosPorSexo($periodo);
+        $edades = $this->model->getUsuariosPorEdad($periodo);
+
+        $graficoPaisesUrl = '';
+        if (!empty($paises)) {
+            $chartConfig = [
+                'type' => 'bar',
+                'data' => [
+                    'labels' => array_column($paises, 'etiqueta'),
+                    'datasets' => [[
+                        'label' => 'Usuarios',
+                        'data' => array_map('intval', array_column($paises, 'cantidad')),
+                        'backgroundColor' => '#4F8EDC'
+                    ]]
+                ],
+                'options' => [
+                    'legend' => ['display' => false],
+                    'scales' => ['yAxes' => [['ticks' => ['beginAtZero' => true, 'precision' => 0]]]]
+                ]
+            ];
+            $graficoPaisesUrl = 'https://quickchart.io/chart?w=320&h=180&bkg=white&c=' . urlencode(json_encode($chartConfig));
+        }
+
+        $graficoSexosUrl = '';
+        if (!empty($sexos)) {
+            $chartConfig = [
+                'type' => 'doughnut',
+                'data' => [
+                    'labels' => array_column($sexos, 'etiqueta'),
+                    'datasets' => [[
+                        'data' => array_map('intval', array_column($sexos, 'cantidad')),
+                        'backgroundColor' => ['#4F8EDC', '#D66CA8', '#D4AF55']
+                    ]]
+                ],
+                'options' => ['legend' => ['position' => 'top']]
+            ];
+            $graficoSexosUrl = 'https://quickchart.io/chart?w=280&h=180&bkg=white&c=' . urlencode(json_encode($chartConfig));
+        }
+
+        $graficoEdadesUrl = '';
+        if (!empty($edades)) {
+            $chartConfig = [
+                'type' => 'bar',
+                'data' => [
+                    'labels' => array_column($edades, 'etiqueta'),
+                    'datasets' => [[
+                        'label' => 'Usuarios',
+                        'data' => array_map('intval', array_column($edades, 'cantidad')),
+                        'backgroundColor' => '#D4AF55'
+                    ]]
+                ],
+                'options' => [
+                    'legend' => ['display' => false],
+                    'scales' => ['yAxes' => [['ticks' => ['beginAtZero' => true, 'precision' => 0]]]]
+                ]
+            ];
+            $graficoEdadesUrl = 'https://quickchart.io/chart?w=320&h=180&bkg=white&c=' . urlencode(json_encode($chartConfig));
+        }
+
+        $reporte = [
+            'periodo' => ucfirst($periodo),
+            'total_partidas' => $this->model->getPartidasJugadas($periodo),
+            'usuarios_nuevos' => $this->model->getUsuariosNuevos($periodo),
+            'preguntas_creadas' => $this->model->getPreguntasCreadas($periodo),
+            'preguntas_activas' => $this->model->getTotalPreguntasActivas(),
+            'reportes_pendientes' => $this->model->getTotalReportesPendientes(),
+            'porcentaje_correctas' => $this->model->getPorcentajeCorrectas($periodo),
+            'paises' => $paises,
+            'sexos' => $sexos,
+            'edades' => $edades,
+            'grafico_paises_url' => $graficoPaisesUrl,
+            'grafico_sexos_url' => $graficoSexosUrl,
+            'grafico_edades_url' => $graficoEdadesUrl,
+            'preguntas' => $preguntas
+        ];
+
+        $html = $this->render->renderHtml('reportePdf', $reporte);
+        \PdfHelper::descargarDesdeHtml($html, "reporte-{$periodo}.pdf");
+    }
 }

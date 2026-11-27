@@ -22,4 +22,9 @@ class MustacheRender
         echo $this->mustache->render($view . "View", $data);
         require_once($this->viewPath . "/footer.php");
     }
+
+    public function renderHtml($view, $data = [])
+    {
+        return $this->mustache->render($view . "View", $data);
+    }
 }
