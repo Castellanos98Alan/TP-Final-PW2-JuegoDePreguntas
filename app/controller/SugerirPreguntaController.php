@@ -42,7 +42,7 @@ class SugerirPreguntaController
         $data = [
             'username'       => $_SESSION['usuario'] ?? $_SESSION['username'] ?? 'Jugador',
             'categorias'     => $this->model->getCategoriasActivas(),
-            'animes'         => $this->model->getAnimesActivos(),
+            'animes' => $this->model->getTodosLosAnimes(),
             'mensaje_exito'  => $_SESSION['sugerir_exito'] ?? null,
             'mensaje_error'  => $_SESSION['sugerir_error'] ?? null
         ];

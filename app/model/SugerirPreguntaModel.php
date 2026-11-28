@@ -87,4 +87,12 @@ class SugerirPreguntaModel
             'dificultad'         => $dificultad
         ]);
     }
+
+    public function getTodosLosAnimes()
+    {
+        $sql = "SELECT id, nombre FROM anime
+            ORDER BY nombre ASC";
+
+        return $this->database->queryAll($sql);
+    }
 }

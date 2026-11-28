@@ -552,4 +552,96 @@ class EditorModel
             ['activa' => $activa, 'id' => $id]);
     }
 
+
+    public function getAnimesAdministrables()
+    {
+        $sql = "SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre";
+
+        return $this->database->queryAll($sql);
+    }
+
+    public function guardarAnime($id, $nombre, $imagen)
+    {
+        $params = [
+            'nombre' => $nombre,
+            'imagen' => $imagen
+        ];
+
+        if ($id === 0) {
+            $sql = "INSERT INTO anime
+                (nombre, imagen, esta_activo)
+                VALUES (:nombre, :imagen, 0)";
+
+            return $this->database->execute($sql, $params);
+        }
+
+        $params['id'] = $id;
+
+        $sql = "UPDATE anime
+            SET nombre = :nombre,
+                imagen = :imagen
+            WHERE id = :id";
+
+        return $this->database->execute($sql, $params);
+    }
+
+    public function cambiarEstadoAnime($id, $activo)
+    {
+        $sql = "UPDATE anime
+            SET esta_activo = :activo
+            WHERE id = :id";
+
+        return $this->database->execute($sql, [
+            'activo' => $activo,
+            'id' => $id
+        ]);
+    }
+
+    public function getTodosLosAnimes()
+    {
+        $sql = "SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC";
+
+        return $this->database->queryAll($sql);
+    }
+
+    public function getAnimePorId($id)
+    {
+        $sql = "SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id";
+
+        return $this->database->queryOne($sql, [
+            'id' => $id
+        ]);
+    }
+
+    public function contarPreguntasActivasPorAnime($id)
+    {
+        $sql = "SELECT COUNT(*) AS total
+            FROM pregunta p
+            INNER JOIN categoria c
+                ON p.categoria_id = c.id
+            WHERE p.anime_id = :id
+            AND p.esta_activa = 1
+            AND c.esta_activa = 1";
+
+        $resultado = $this->database->queryOne($sql, [
+            'id' => $id
+        ]);
+
+        return (int)$resultado['total'];
+    }
+
+
+
 }

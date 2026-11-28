@@ -133,7 +133,7 @@ class EditorController
 
         // conservar los datos
 
-        $animes = $this->model->getAnimesActivos();
+        $animes = $this->model->getTodosLosAnimes();
 
         foreach ($animes as &$anime) {
             $anime['selected'] = ((int)$anime['id'] === $animeId);
@@ -166,7 +166,25 @@ class EditorController
         $mensajeCategoria = $_SESSION['mensaje_categoria'] ?? '';
         unset($_SESSION['mensaje_categoria']);
 
+        $animesAdmin = $this->model->getAnimesAdministrables();
+
+        foreach ($animesAdmin as &$anime) {
+            $anime['activo'] = (int)$anime['esta_activo'] === 1;
+        }
+
+        unset($anime);
+
+        $_SESSION['csrf_anime'] = $_SESSION['csrf_anime']
+            ?? bin2hex(random_bytes(32));
+
+        $mensajeAnime = $_SESSION['mensaje_anime'] ?? '';
+
+        unset($_SESSION['mensaje_anime']);
+
         $datos = [
+            'animesAdmin' => $animesAdmin,
+            'csrfAnime' => $_SESSION['csrf_anime'],
+            'mensajeAnime' => $mensajeAnime,
             'categoriasAdmin' => $categoriasAdmin,
             'csrfCategoria' => $_SESSION['csrf_categoria'],
             'mensajeCategoria' => $mensajeCategoria,
@@ -337,7 +355,7 @@ class EditorController
             }
         }
 
-        $animes = $this->model->getAnimesActivos();
+        $animes = $this->model->getTodosLosAnimes();
         foreach ($animes as &$anime) {
             $anime['selected'] = ($anime['id'] == $pregunta['anime_id']);
         }
@@ -523,5 +541,162 @@ class EditorController
         }
         Redirect::to('/editor#categorias');
     }
+
+    private function validarAccionAnime()
+    {
+        $this->verificarPermisos();
+
+        $token = $_POST['csrf'] ?? null;
+
+        if (
+            $_SERVER['REQUEST_METHOD'] !== 'POST' ||
+            !is_string($token) ||
+            empty($_SESSION['csrf_anime']) ||
+            !hash_equals($_SESSION['csrf_anime'], $token)
+        ) {
+            http_response_code(403);
+            exit('Acción no autorizada');
+        }
+    }
+
+    public function guardarAnime()
+    {
+        $this->validarAccionAnime();
+
+        $id = filter_var($_POST['id'] ?? 0, FILTER_VALIDATE_INT);
+        $nombre = trim($_POST['nombre'] ?? '');
+
+        if ($id === false || $id < 0 || $nombre === '' || mb_strlen($nombre) > 100) {
+            $_SESSION['mensaje_anime'] = 'Ingresá un nombre válido.';
+            Redirect::to('/editor#animes');
+            return;
+        }
+
+        try {
+            $imagen = $this->obtenerImagenActualAnime($id);
+
+            if (isset($_FILES['imagen']) &&
+                $_FILES['imagen']['error'] !== UPLOAD_ERR_NO_FILE) {
+
+                $imagen = $this->subirImagenAnime($_FILES['imagen']);
+            }
+
+            if ($imagen === '') {
+                throw new \RuntimeException('Debés seleccionar una imagen.');
+            }
+
+            $ok = $this->model->guardarAnime($id, $nombre, $imagen);
+
+            $_SESSION['mensaje_anime'] = $ok
+                ? 'Anime guardado correctamente.'
+                : 'No se pudo guardar el anime.';
+
+        } catch (\PDOException $e) {
+            $_SESSION['mensaje_anime'] = 'No se pudo guardar el anime.';
+
+        } catch (\RuntimeException $e) {
+            $_SESSION['mensaje_anime'] = $e->getMessage();
+        }
+
+        Redirect::to('/editor#animes');
+    }
+
+    private function obtenerImagenActualAnime($id)
+    {
+        if ($id === 0) {
+            return '';
+        }
+
+        foreach ($this->model->getAnimesAdministrables() as $anime) {
+            if ((int)$anime['id'] === $id) {
+                return $anime['imagen'];
+            }
+        }
+
+        throw new \RuntimeException('El anime no existe.');
+    }
+
+    private function subirImagenAnime($archivo)
+    {
+        if ($archivo['error'] !== UPLOAD_ERR_OK) {
+            throw new \RuntimeException('Error al cargar la imagen.');
+        }
+
+        if ($archivo['size'] > 5 * 1024 * 1024) {
+            throw new \RuntimeException('La imagen supera los 5 MB.');
+        }
+
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $tipo = $finfo->file($archivo['tmp_name']);
+
+        $permitidos = [
+            'image/png' => 'png',
+            'image/jpeg' => 'jpg',
+            'image/webp' => 'webp'
+        ];
+
+        if (!isset($permitidos[$tipo])) {
+            throw new \RuntimeException('Formato de imagen no permitido.');
+        }
+
+        $nombreArchivo = uniqid('anime_') . '.' . $permitidos[$tipo];
+
+        $destino = __DIR__ . '/../../public/img-animes/' . $nombreArchivo;
+
+        if (!move_uploaded_file($archivo['tmp_name'], $destino)) {
+            throw new \RuntimeException('No se pudo guardar la imagen.');
+        }
+
+        return $nombreArchivo;
+    }
+
+    public function cambiarEstadoAnime()
+    {
+        $this->validarAccionAnime();
+
+        $id = (int)($_POST['id'] ?? 0);
+        $estado = $_POST['estado'] ?? '';
+
+        if ($id <= 0 || !in_array($estado, ['0', '1'], true)) {
+            $_SESSION['mensaje_anime'] = 'Datos inválidos.';
+            Redirect::to('/editor#animes');
+            return;
+        }
+
+        $anime = $this->model->getAnimePorId($id);
+
+        if (!$anime) {
+            $_SESSION['mensaje_anime'] = 'El anime no existe.';
+            Redirect::to('/editor#animes');
+            return;
+        }
+
+        if ((int)$estado === 1) {
+
+            $cantidad = $this->model
+                ->contarPreguntasActivasPorAnime($id);
+
+            if ($cantidad === 0) {
+                $_SESSION['mensaje_anime'] =
+                    'El anime no tiene preguntas disponibles.';
+
+                Redirect::to('/editor#animes');
+                return;
+            }
+        }
+
+        $ok = $this->model->cambiarEstadoAnime(
+            $id,
+            (int)$estado
+        );
+
+        $_SESSION['mensaje_anime'] = $ok
+            ? 'Estado del anime actualizado.'
+            : 'No se pudo actualizar el estado.';
+
+        Redirect::to('/editor#animes');
+    }
+
+
 
 }
