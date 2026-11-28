@@ -1196,6 +1196,91 @@
             animation: none;
         }
     }
+
+
+    /* estilo acordeon*/
+
+    /* PANELES COLAPSABLES */
+
+    .panel-cabecera {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+    }
+
+    .panel-cabecera::-webkit-details-marker {
+        display: none;
+    }
+
+    .panel-cabecera .section-title {
+        margin: 0;
+    }
+
+    /* Botón de expandir y contraer */
+
+    .panel-icono {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        background: #142c4c;
+        color: #D4AF55;
+        border: 1px solid #D4AF55;
+        border-radius: 8px;
+        font-size: 23px;
+        font-weight: bold;
+        transition: all 0.25s ease;
+    }
+
+    /* Panel cerrado */
+
+    .panel-icono::before {
+        content: "+";
+    }
+
+    /* Panel abierto */
+
+    .panel-colapsable[open] > .panel-cabecera .panel-icono::before {
+        content: "−";
+    }
+
+    /* Efecto hover */
+
+    .panel-cabecera:hover .panel-icono {
+        background: #D4AF55;
+        color: #091629;
+        box-shadow: 0 0 12px rgba(212, 175, 85, 0.3);
+    }
+
+    /* Contenido interno */
+
+    .panel-contenido {
+        padding-top: 20px;
+    }
+
+    /* Animación de apertura */
+
+    .panel-colapsable[open] > .panel-contenido {
+        animation: expandirPanel 0.3s ease;
+    }
+
+    @keyframes expandirPanel {
+        from {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
 
 <div class="editor-container">
@@ -1213,11 +1298,18 @@
         </a>
     </div>
 
-    <section class="section-card" id="categorias">
+    <details class="section-card panel-colapsable" id="categorias">
 
+        <summary class="panel-cabecera">
         <h2 class="section-title">
             ADMINISTRACIÓN DE CATEGORÍAS
         </h2>
+
+            <span class="panel-icono"></span>
+
+        </summary>
+
+        <div class="panel-contenido">
 
         <p class="categorias-subtitulo">
             Gestioná las categorías disponibles en el juego.
@@ -1377,11 +1469,21 @@
 
     </section>
 
-    <section class="section-card" id="animes">
+        </div>
+    </details>
 
+    <details class="section-card panel-colapsable" id="animes">
+
+        <summary class="panel-cabecera">
         <h2 class="section-title">
             ADMINISTRACIÓN DE ANIMES
         </h2>
+
+            <span class="panel-icono"></span>
+
+        </summary>
+
+        <div class="panel-contenido">
 
         <p class="categorias-subtitulo">
             Gestioná los animes disponibles en el juego.
@@ -1540,12 +1642,22 @@
 
     </section>
 
-
+        </div>
+    </details>
 
 
     <!-- 1. REPORTES DE PREGUNTAS -->
-    <div class="section-card">
+    <details class="section-card panel-colapsable" >
+
+        <summary class="panel-cabecera">
         <div class="section-title">REPORTES DE PREGUNTAS</div>
+
+
+            <span class="panel-icono"></span>
+
+        </summary>
+
+        <div class="panel-contenido">
 
         <div class="table-wrap">
             <table class="tabla-responsive tabla-preguntas">
@@ -1590,12 +1702,22 @@
             </table>
         </div>
     </div>
+    </details>
 
     <!-- 2. PREGUNTAS PENDIENTES -->
-    <div class="section-card">
+    <details class="section-card panel-colapsable" >
+
+        <summary class="panel-cabecera">
+
         <div class="section-title">
             REVISAR PREGUNTAS NUEVAS (SUGERIDAS)
         </div>
+
+            <span class="panel-icono"></span>
+
+        </summary>
+
+        <div class="panel-contenido">
 
         <div class="table-wrap">
             <table class="tabla-responsive">
@@ -1712,6 +1834,9 @@
         </div>
     </div>
 
+
+</details>
+
     <!-- 3. AGREGAR NUEVA PREGUNTA -->
 
     {{#mensajePregunta}}
@@ -1720,8 +1845,19 @@
         </p>
     {{/mensajePregunta}}
 
-    <div class="section-card" id="crear-pregunta">
-        <div class="section-title">AGREGAR NUEVA PREGUNTA</div>
+    <details class="section-card panel-colapsable" id="crear-pregunta">
+
+        <summary class="panel-cabecera">
+
+            <h2 class="section-title">
+                AGREGAR NUEVA PREGUNTA
+            </h2>
+
+            <span class="panel-icono"></span>
+
+        </summary>
+
+        <div class="panel-contenido">
 
         <form action="editor/guardar"
               method="POST"
@@ -1862,6 +1998,9 @@
         </form>
     </div>
 
+
+</details>
+
     <form action="editor" method="POST" class="filtros-editor">
 
         <input type="text"
@@ -1920,8 +2059,19 @@
     </form>
 
     <!-- 4. EDITAR PREGUNTAS ACTIVAS -->
-    <div class="section-card">
-        <div class="section-title">GESTIONAR PREGUNTAS</div>
+    <details class="section-card panel-colapsable" open>
+
+        <summary class="panel-cabecera">
+
+            <h2 class="section-title">
+                GESTIONAR PREGUNTAS
+            </h2>
+
+            <span class="panel-icono"></span>
+
+        </summary>
+
+        <div class="panel-contenido">
 
         <div class="table-wrap">
             <table class="tabla-responsive">
@@ -2039,6 +2189,10 @@
     </div>
 
 </div>
+
+</div>
+
+</details>
 
 <script>
     const botonesMedia = document.querySelectorAll('.editor-media-btn');
