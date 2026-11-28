@@ -2,12 +2,14 @@
     const audio = document.getElementById('musicaFondo');
     if (!audio) return;
 
-    const lista = ['onepiece.mp3', 'naruto.mp3', 'dragonball.mp3', 'pokemon.mp3'];
+    const lista = ['onepiece.mp3', 'naruto.mp3', 'dragonball.mp3', 'pokemon.mp3', 'demonslayer.mp3',
+        'jujutsukaisen.mp3'];
     const boton = document.getElementById('abrirMusica');
     const panel = document.getElementById('panelMusica');
     const volumen = document.getElementById('volumenMusica');
     const valor = document.getElementById('valorMusica');
     const silencio = document.getElementById('silenciarMusica');
+    const siguiente = document.getElementById('siguienteMusica');
     const estado = document.getElementById('estadoMusica');
     const clave = 'preguntadosMusicaProgreso';
 
@@ -74,11 +76,16 @@
         if (document.hidden) guardarProgreso();
     });
 
-    audio.addEventListener('ended', () => {
+    function siguienteTema() {
         indice = (indice + 1 + Math.floor(Math.random() * (lista.length - 1))) % lista.length;
+
         cargarMusica();
         reproducir();
-    });
+    }
+
+    audio.addEventListener('ended', siguienteTema);
+
+    siguiente?.addEventListener('click', siguienteTema);
 
     function abrir(visible) {
         panel.hidden = !visible;

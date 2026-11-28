@@ -10,3 +10,31 @@
 #reproducirMusica { width:100%; background:#071429; color:#f3f5fa; border:1px solid #d4af55; border-radius:6px; padding:9px; }
 #reproducirMusica { margin-top:12px; cursor:pointer; }
 #estadoMusica { font-size:12px; margin-top:8px; color:#b6c9e6; }
+
+#siguienteMusica {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    background: #D4AF55;
+    color: #091629;
+    border: 1px solid #D4AF55;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+#siguienteMusica:hover {
+    background: #f1cd73;
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(212, 175, 85, 0.35);
+}
+
+#siguienteMusica:active {
+    transform: scale(0.97);
+}

@@ -831,6 +831,371 @@
         border-radius: 10px;
         border: 1px solid #315B91;
     }
+
+    .anime-imagen-editor {
+        width: 75px;
+        height: 95px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid #D4AF55;
+        flex-shrink: 0;
+        transition: transform 0.3s ease;
+    }
+
+    .anime-imagen-editor:hover {
+        transform: scale(1.08);
+    }
+
+    .anime-acciones {
+        margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        #animes .categorias-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .editor-media {
+        padding: 18px;
+        margin: 20px 0;
+        background: rgba(10, 25, 50, 0.6);
+        border: 1px solid #D4AF55;
+        border-radius: 12px;
+    }
+
+    .editor-media-botones {
+        display: flex;
+        gap: 12px;
+        margin: 12px 0;
+    }
+
+    .editor-media-btn {
+        flex: 1;
+        padding: 12px;
+        background: #142944;
+        border: 1px solid #315B91;
+        color: #93C5FD;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .editor-media-btn:hover {
+        border-color: #D4AF55;
+        transform: translateY(-2px);
+    }
+
+    .editor-media-btn.seleccionado {
+        background: #D4AF55;
+        border-color: #D4AF55;
+        color: #0B1729;
+        box-shadow: 0 0 12px rgba(212, 175, 85, 0.25);
+    }
+
+    #editorMediaArchivo {
+        margin-top: 15px;
+    }
+
+    #editorRecurso {
+        width: 100%;
+        padding: 12px;
+        margin-top: 8px;
+        border: 1px dashed #315B91;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .editor-preview-imagen {
+        max-width: 100%;
+        max-height: 250px;
+        object-fit: contain;
+        margin: 15px auto;
+        border: 1px solid #D4AF55;
+        border-radius: 10px;
+    }
+
+    .editor-preview-imagen:not([hidden]) {
+        display: block;
+    }
+
+    #editorPreviewAudio {
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .editor-media [hidden] {
+        display: none !important;
+    }
+
+    @media (max-width: 600px) {
+        .editor-media-botones {
+            flex-direction: column;
+        }
+    }
+
+    /* revision de preguntas sugeridas*/
+
+    /* ========================================
+   MODAL DE REVISIÓN DE PREGUNTAS
+======================================== */
+
+    .modal-revision {
+        position: fixed;
+        inset: 0;
+        margin: auto;
+        box-sizing: border-box;
+        width: 600px;
+        max-width: 90vw;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 25px;
+        background: #0d1f37;
+        color: #fff;
+        border: 1px solid #D4AF55;
+        border-radius: 16px;
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Animación de apertura */
+
+    .modal-revision[open] {
+        animation: abrirRevision 0.3s ease;
+    }
+
+    @keyframes abrirRevision {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Fondo oscuro y desenfocado */
+
+    .modal-revision::backdrop {
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(5px);
+    }
+
+    /* Cabecera del modal */
+
+    .revision-cabecera {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #315b91;
+    }
+
+    .revision-cabecera h2 {
+        color: #D4AF55;
+        font-size: 21px;
+        margin: 0;
+    }
+
+    /* Botón de cerrar */
+
+    .revision-cerrar {
+        background: transparent;
+        color: #D4AF55;
+        border: none;
+        font-size: 25px;
+        cursor: pointer;
+        line-height: 1;
+        transition: all 0.2s ease;
+    }
+
+    .revision-cerrar:hover {
+        color: #fff;
+        transform: scale(1.15);
+    }
+
+    /* Etiquetas de anime y categoría */
+
+    .revision-etiquetas {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .revision-etiquetas span {
+        background: #142c4c;
+        border: 1px solid #315b91;
+        color: #93c5fd;
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+    }
+
+    /* Enunciado de la pregunta */
+
+    .modal-revision h3 {
+        text-align: center;
+        margin: 25px 0;
+        color: #fff;
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    /* Imagen de la pregunta */
+
+    .revision-imagen {
+        display: block;
+        max-width: 100%;
+        max-height: 250px;
+        object-fit: contain;
+        margin: 20px auto;
+        border: 1px solid #D4AF55;
+        border-radius: 12px;
+    }
+
+    /* Reproductor de audio */
+
+    .modal-revision audio {
+        display: block;
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    /* Opciones de respuesta */
+
+    .revision-respuestas {
+        display: grid;
+        gap: 12px;
+        margin: 20px 0;
+    }
+
+    .revision-respuestas div {
+        padding: 14px;
+        background: #142c4c;
+        border: 1px solid #315b91;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 14px;
+        transition: all 0.2s ease;
+    }
+
+    .revision-respuestas div:hover {
+        background: #1c385c;
+        border-color: #D4AF55;
+    }
+
+    /* Respuesta correcta */
+
+    .revision-correcta {
+        background: rgba(22, 163, 74, 0.15);
+        border: 1px solid #16a34a;
+        color: #86efac;
+        padding: 14px;
+        border-radius: 8px;
+        margin: 20px 0;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    /* Botones de aprobación y rechazo */
+
+    .modal-revision .acciones-pregunta {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+
+    .modal-revision .acciones-pregunta form {
+        margin: 0;
+    }
+
+    .modal-revision .btn-action {
+        padding: 12px 22px;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .modal-revision .btn-approve {
+        background: #16a34a;
+        color: white;
+    }
+
+    .modal-revision .btn-approve:hover {
+        background: #15803d;
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px rgba(22, 163, 74, 0.35);
+    }
+
+    .modal-revision .btn-reject {
+        background: #dc2626;
+        color: white;
+    }
+
+    .modal-revision .btn-reject:hover {
+        background: #b91c1c;
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px rgba(220, 38, 38, 0.35);
+    }
+
+    /* Barra de desplazamiento */
+
+    .modal-revision::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .modal-revision::-webkit-scrollbar-track {
+        background: #0d1f37;
+    }
+
+    .modal-revision::-webkit-scrollbar-thumb {
+        background: #D4AF55;
+        border-radius: 10px;
+    }
+
+    /* Adaptación a celulares */
+
+    @media (max-width: 600px) {
+        .modal-revision {
+            width: 92vw;
+            max-width: 92vw;
+            padding: 18px;
+        }
+
+        .revision-cabecera h2 {
+            font-size: 17px;
+        }
+
+        .modal-revision h3 {
+            font-size: 16px;
+        }
+
+        .modal-revision .acciones-pregunta {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-revision .btn-action {
+            width: 100%;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .modal-revision[open] {
+            animation: none;
+        }
+    }
 </style>
 
 <div class="editor-container">
@@ -1012,6 +1377,172 @@
 
     </section>
 
+    <section class="section-card" id="animes">
+
+        <h2 class="section-title">
+            ADMINISTRACIÓN DE ANIMES
+        </h2>
+
+        <p class="categorias-subtitulo">
+            Gestioná los animes disponibles en el juego.
+        </p>
+
+        {{#mensajeAnime}}
+            <p class="categoria-mensaje" role="status">
+                {{mensajeAnime}}
+            </p>
+        {{/mensajeAnime}}
+
+        <div class="categoria-nueva">
+
+            <h3>＋ Nuevo anime</h3>
+
+            <form class="categoria-form"
+                  action="editor/guardarAnime"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                <input type="hidden" name="csrf"
+                       value="{{csrfAnime}}">
+
+                <input type="hidden" name="id" value="0">
+
+                <label>
+                    Nombre
+                    <input type="text"
+                           name="nombre"
+                           placeholder="Ej: Black Clover"
+                           maxlength="100" required>
+                </label>
+
+                <label>
+                    Imagen
+                    <input type="file"
+                           name="imagen"
+                           accept="image/png,image/jpeg,image/webp"
+                           required>
+                </label>
+
+                <button class="btn-gold" type="submit">
+                    Crear anime
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="categorias-grid">
+
+            {{#animesAdmin}}
+
+                <article class="categoria-item">
+
+                    <div class="categoria-cabecera">
+
+                        <img src="public/img-animes/{{imagen}}"
+                             alt="{{nombre}}"
+                             class="anime-imagen-editor">
+
+                        <div class="categoria-info">
+                            <h3>{{nombre}}</h3>
+                            <span>{{cantidad}} preguntas disponibles</span>
+                        </div>
+
+                        {{#activo}}
+                            <span class="categoria-estado activa">
+                        ● Activo
+                    </span>
+                        {{/activo}}
+
+                        {{^activo}}
+                            <span class="categoria-estado inactiva">
+                        ● Inactivo
+                    </span>
+                        {{/activo}}
+
+                    </div>
+
+                    <div class="categoria-acciones anime-acciones">
+
+                        <details class="categoria-edicion">
+
+                            <summary class="btn-categoria-editar">
+                                ✎ Editar
+                            </summary>
+
+                            <form class="categoria-form-editar"
+                                  action="editor/guardarAnime"
+                                  method="POST"
+                                  enctype="multipart/form-data">
+
+                                <input type="hidden" name="csrf"
+                                       value="{{csrfAnime}}">
+
+                                <input type="hidden" name="id"
+                                       value="{{id}}">
+
+                                <label>
+                                    Nombre
+                                    <input name="nombre"
+                                           value="{{nombre}}"
+                                           maxlength="100" required>
+                                </label>
+
+                                <label>
+                                    Cambiar imagen (opcional)
+                                    <input type="file"
+                                           name="imagen"
+                                           accept="image/png,image/jpeg,image/webp">
+                                </label>
+
+                                <button class="btn-gold" type="submit">
+                                    Guardar cambios
+                                </button>
+
+                            </form>
+
+                        </details>
+
+                        <form action="editor/cambiarEstadoAnime"
+                              method="POST">
+
+                            <input type="hidden" name="csrf"
+                                   value="{{csrfAnime}}">
+
+                            <input type="hidden" name="id"
+                                   value="{{id}}">
+
+                            {{#activo}}
+                                <button class="btn-categoria-desactivar"
+                                        name="estado" value="0"
+                                        type="submit">
+                                    Desactivar
+                                </button>
+                            {{/activo}}
+
+                            {{^activo}}
+                                <button class="btn-categoria-reactivar"
+                                        name="estado" value="1"
+                                        type="submit">
+                                    Activar
+                                </button>
+                            {{/activo}}
+
+                        </form>
+
+                    </div>
+
+                </article>
+
+            {{/animesAdmin}}
+
+        </div>
+
+    </section>
+
+
+
+
     <!-- 1. REPORTES DE PREGUNTAS -->
     <div class="section-card">
         <div class="section-title">REPORTES DE PREGUNTAS</div>
@@ -1086,22 +1617,85 @@
 
                         <td class="celda-acciones" data-label="Acciones">
                             <div class="acciones-pregunta">
-                                <form action="editor/aprobar" method="POST">
-                                    <input type="hidden" name="id" value="{{id}}">
 
-                                    <button type="submit" class="btn-action btn-approve">
-                                        Aprobar
+                                    <button type="button"
+                                            class="btn-action btn-edit"
+                                            onclick="document.getElementById('revisar-{{id}}').showModal()">
+                                        Revisar
                                     </button>
-                                </form>
-
-                                <form action="editor/rechazar" method="POST">
-                                    <input type="hidden" name="id" value="{{id}}">
-
-                                    <button type="submit" class="btn-action btn-reject">
-                                        Rechazar
-                                    </button>
-                                </form>
                             </div>
+
+                            <dialog id="revisar-{{id}}" class="modal-revision">
+
+                                <div class="revision-cabecera">
+                                    <h2>Revisar pregunta sugerida</h2>
+
+                                    <button type="button"
+                                            class="revision-cerrar"
+                                            onclick="this.closest('dialog').close()">
+                                        ✕
+                                    </button>
+                                </div>
+
+                                <div class="revision-etiquetas">
+                                    <span>Anime: {{anime}}</span>
+                                    <span>Categoría: {{categoria}}</span>
+                                </div>
+
+                                <h3>{{descripcion}}</h3>
+
+                                {{#esImagen}}
+                                    <img src="{{recursoUrl}}"
+                                         class="revision-imagen"
+                                         alt="Imagen de la pregunta">
+                                {{/esImagen}}
+
+                                {{#esAudio}}
+                                    <audio controls
+                                           preload="none"
+                                           src="{{recursoUrl}}">
+                                    </audio>
+                                {{/esAudio}}
+
+                                <div class="revision-respuestas">
+
+                                    <div>A. {{respuesta_a}}</div>
+
+                                    <div>B. {{respuesta_b}}</div>
+
+                                    <div>C. {{respuesta_c}}</div>
+
+                                    <div>D. {{respuesta_d}}</div>
+
+                                </div>
+
+                                <p class="revision-correcta">
+                                    Respuesta correcta: {{respuesta_correcta}}
+                                </p>
+
+                                <div class="acciones-pregunta">
+
+                                    <form action="editor/aprobar" method="POST">
+                                        <input type="hidden" name="id" value="{{id}}">
+
+                                        <button type="submit"
+                                                class="btn-action btn-approve">
+                                            Aprobar pregunta
+                                        </button>
+                                    </form>
+
+                                    <form action="editor/rechazar" method="POST">
+                                        <input type="hidden" name="id" value="{{id}}">
+
+                                        <button type="submit"
+                                                class="btn-action btn-reject">
+                                            Rechazar pregunta
+                                        </button>
+                                    </form>
+
+                                </div>
+
+                            </dialog>
                         </td>
                     </tr>
                 {{/pendientes}}
@@ -1119,10 +1713,19 @@
     </div>
 
     <!-- 3. AGREGAR NUEVA PREGUNTA -->
-    <div class="section-card">
+
+    {{#mensajePregunta}}
+        <p class="categoria-mensaje" role="status">
+            {{mensajePregunta}}
+        </p>
+    {{/mensajePregunta}}
+
+    <div class="section-card" id="crear-pregunta">
         <div class="section-title">AGREGAR NUEVA PREGUNTA</div>
 
-        <form action="editor/guardar" method="POST">
+        <form action="editor/guardar"
+              method="POST"
+              enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="descripcion">Enunciado de la pregunta:</label>
@@ -1161,6 +1764,66 @@
                 </select>
             </div>
 
+            <div class="editor-media">
+
+                <label>Tipo de pregunta:</label>
+
+                <div class="editor-media-botones">
+
+                    <button type="button"
+                            class="editor-media-btn seleccionado"
+                            data-tipo="texto">
+                        📝 Solo texto
+                    </button>
+
+                    <button type="button"
+                            class="editor-media-btn"
+                            data-tipo="imagen">
+                        🖼️ Imagen
+                    </button>
+
+                    <button type="button"
+                            class="editor-media-btn"
+                            data-tipo="audio">
+                        🎵 Audio
+                    </button>
+
+                </div>
+
+                <input type="hidden"
+                       name="tipo_pregunta"
+                       id="editorTipoPregunta"
+                       value="texto">
+
+                <div id="editorMediaArchivo" hidden>
+
+                    <label for="editorRecurso" id="editorMediaLabel">
+                        Seleccionar archivo:
+                    </label>
+
+                    <input type="file"
+                           name="recurso"
+                           id="editorRecurso"
+                           disabled>
+
+                    <p class="form-help">
+                        Tamaño máximo: 5 MB.
+                    </p>
+
+                    <img id="editorPreviewImagen"
+                         class="editor-preview-imagen"
+                         alt="Vista previa"
+                         hidden>
+
+                    <audio id="editorPreviewAudio"
+                           controls
+                           hidden>
+                    </audio>
+
+                </div>
+
+            </div>
+
             <label style="margin-top: 15px;">
                 Opciones de respuesta (Marcá la opción correcta):
             </label>
@@ -1186,7 +1849,8 @@
             </div>
 
             <p class="form-help">
-                La pregunta se guardará como pendiente hasta que un editor o administrador la apruebe.
+                La pregunta se aprobará automáticamente y estará disponible
+                para jugar si su anime y categoría están activos.
             </p>
 
             <button type="submit"
@@ -1375,3 +2039,91 @@
     </div>
 
 </div>
+
+<script>
+    const botonesMedia = document.querySelectorAll('.editor-media-btn');
+    const tipoPregunta = document.getElementById('editorTipoPregunta');
+    const contenedorArchivo = document.getElementById('editorMediaArchivo');
+    const archivo = document.getElementById('editorRecurso');
+    const previewImagen = document.getElementById('editorPreviewImagen');
+    const previewAudio = document.getElementById('editorPreviewAudio');
+    const mediaLabel = document.getElementById('editorMediaLabel');
+
+    let urlPreview = null;
+
+    function limpiarPreview() {
+        previewAudio.pause();
+
+        previewImagen.hidden = true;
+        previewAudio.hidden = true;
+
+        previewImagen.removeAttribute('src');
+        previewAudio.removeAttribute('src');
+        previewAudio.load();
+
+        if (urlPreview) {
+            URL.revokeObjectURL(urlPreview);
+            urlPreview = null;
+        }
+    }
+
+    botonesMedia.forEach(boton => {
+
+        boton.addEventListener('click', () => {
+
+            botonesMedia.forEach(b => {
+                b.classList.remove('seleccionado');
+            });
+
+            boton.classList.add('seleccionado');
+
+            const tipo = boton.dataset.tipo;
+
+            tipoPregunta.value = tipo;
+
+            archivo.value = '';
+            limpiarPreview();
+
+            contenedorArchivo.hidden = tipo === 'texto';
+            archivo.disabled = tipo === 'texto';
+            archivo.required = tipo !== 'texto';
+
+            if (tipo === 'imagen') {
+                archivo.accept = '.jpg,.jpeg,.png,.webp';
+                mediaLabel.textContent = 'Seleccionar imagen:';
+            }
+
+            if (tipo === 'audio') {
+                archivo.accept = '.mp3,.wav,.ogg';
+                mediaLabel.textContent = 'Seleccionar audio:';
+            }
+        });
+    });
+
+    archivo.addEventListener('change', () => {
+
+        limpiarPreview();
+
+        const seleccionado = archivo.files[0];
+
+        if (!seleccionado) return;
+
+        if (seleccionado.size > 5 * 1024 * 1024) {
+            alert('El archivo no puede superar los 5 MB.');
+            archivo.value = '';
+            return;
+        }
+
+        urlPreview = URL.createObjectURL(seleccionado);
+
+        if (tipoPregunta.value === 'imagen') {
+            previewImagen.src = urlPreview;
+            previewImagen.hidden = false;
+        }
+
+        if (tipoPregunta.value === 'audio') {
+            previewAudio.src = urlPreview;
+            previewAudio.hidden = false;
+        }
+    });
+</script>

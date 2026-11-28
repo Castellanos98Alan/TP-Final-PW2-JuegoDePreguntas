@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preguntados Anime</title>
 
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -315,8 +316,8 @@
             }
         }
     </style>
-    <link rel="stylesheet" href="public/css/musicaLobby.css">
-    <script defer src="public/js/musicaLobby.js?v=4"></script>
+    <link rel="stylesheet" href="public/css/musicaLobby.css?v=2">
+    <script defer src="public/js/musicaLobby.js?v=5"></script>
 </head>
 <body>
 
@@ -364,6 +365,9 @@
                             <label for="volumenMusica">Volumen <output id="valorMusica">30%</output></label>
                             <input id="volumenMusica" type="range" min="0" max="100" value="30">
                             <label><input type="checkbox" id="silenciarMusica"> Silenciar música</label>
+                            <button type="button" id="siguienteMusica">
+                                ⏭ Siguiente tema
+                            </button>
                             <p id="estadoMusica" role="status"></p>
                         </section>
                         <audio id="musicaFondo" preload="auto"></audio>

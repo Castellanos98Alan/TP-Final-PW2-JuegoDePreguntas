@@ -79,3 +79,3695 @@
               AND p.esta_activa = 0
             GROUP BY p.id, p.enunciado, c.nombre
             ORDER BY cantidad_reportes DESC
+[15:47:11] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[15:47:11] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[15:47:11] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[15:47:11] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[15:47:11] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[15:47:11] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[15:47:11] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[15:47:11] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[15:47:11] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[15:53:45] [INFO] SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id
+[15:53:45] [INFO] UPDATE anime
+            SET esta_activo = :activo
+            WHERE id = :id
+[15:53:45] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[15:53:45] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[15:53:45] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[15:53:45] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[15:53:45] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[15:53:45] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[15:53:45] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[15:53:45] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[15:53:45] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[15:53:50] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[15:53:50] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[15:53:50] [INFO] SELECT id, puntaje, resultado, fecha, numero_partida
+            FROM (
+                SELECT id,
+                       puntaje,
+                       resultado,
+                       DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha,
+                       ROW_NUMBER() OVER (ORDER BY id ASC) AS numero_partida
+                FROM partida
+                WHERE id_usuario = :idUsuario
+            ) AS historial
+            ORDER BY numero_partida DESC
+            LIMIT 5
+[15:53:50] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)
+[15:53:52] [INFO] SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1
+[15:53:52] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[15:54:06] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[15:54:06] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[15:54:06] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[15:54:06] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[15:54:06] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[15:54:06] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[15:54:06] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[15:54:06] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[15:54:06] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[15:54:06] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[15:54:12] [INFO] SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id
+[15:54:12] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+            INNER JOIN categoria c
+                ON p.categoria_id = c.id
+            WHERE p.anime_id = :id
+            AND p.esta_activa = 1
+            AND c.esta_activa = 1
+[15:54:12] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[15:54:12] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[15:54:12] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[15:54:12] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[15:54:12] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[15:54:12] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[15:54:12] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[15:54:12] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[15:54:12] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[15:55:47] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[15:55:47] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[15:55:47] [INFO] SELECT id, puntaje, resultado, fecha, numero_partida
+            FROM (
+                SELECT id,
+                       puntaje,
+                       resultado,
+                       DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha,
+                       ROW_NUMBER() OVER (ORDER BY id ASC) AS numero_partida
+                FROM partida
+                WHERE id_usuario = :idUsuario
+            ) AS historial
+            ORDER BY numero_partida DESC
+            LIMIT 5
+[15:55:47] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)
+[15:55:49] [INFO] SELECT id, nombre FROM categoria WHERE esta_activa = 1 ORDER BY nombre
+[15:55:49] [INFO] SELECT id, nombre FROM anime
+            ORDER BY nombre ASC
+[16:08:29] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[16:08:29] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[16:08:29] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[16:08:29] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[16:08:29] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[16:08:29] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[16:08:29] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[16:08:29] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[16:08:29] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[16:08:29] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[16:08:59] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[16:08:59] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[16:08:59] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[16:08:59] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[16:08:59] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[16:08:59] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[16:08:59] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[16:08:59] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[16:08:59] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[16:13:06] [INFO] INSERT INTO pregunta (
+        enunciado,
+        respuesta_a,
+        respuesta_b,
+        respuesta_c,
+        respuesta_d,
+        respuesta_correcta,
+        anime_id,
+        categoria_id,
+        tipo_pregunta,
+        recurso,
+        dificultad,
+        esta_activa,
+        estado_revision
+    ) VALUES (
+        :enunciado,
+        :respuesta_a,
+        :respuesta_b,
+        :respuesta_c,
+        :respuesta_d,
+        :respuesta_correcta,
+        :anime_id,
+        :categoria_id,
+        :tipo_pregunta,
+        :recurso,
+        :dificultad,
+        0,
+        'Pendiente'
+    )
+[16:13:06] [INFO] SELECT 
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[16:13:06] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[16:13:06] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[16:13:06] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[16:13:06] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[16:13:06] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[16:13:06] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[16:13:06] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[16:13:06] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[16:42:21] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.tipo_pregunta,
+                p.estado_revision,
+                p.recurso,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[16:42:21] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[16:42:21] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[16:42:30] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.tipo_pregunta,
+                p.estado_revision,
+                p.recurso,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[16:42:30] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[16:42:30] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[16:47:00] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[16:47:00] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[16:47:00] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[16:47:00] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[16:47:00] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[16:47:00] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[16:47:00] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[16:47:00] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[16:47:00] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[16:47:47] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[16:47:47] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[16:47:47] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[16:47:47] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[16:47:47] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[16:47:47] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[16:47:47] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[16:47:47] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[16:47:47] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[16:49:48] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[16:49:48] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[16:49:48] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[16:49:48] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[16:49:48] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[16:49:48] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[16:49:48] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[16:49:48] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[16:49:48] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[16:51:48] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[16:51:48] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[16:51:48] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[16:51:48] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[16:51:48] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[16:51:48] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[16:51:48] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[16:51:48] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[16:51:48] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[16:51:59] [INFO] UPDATE pregunta
+            SET esta_activa = 1,
+                estado_revision = 'Aprobada'
+            WHERE id = :id
+[16:51:59] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[16:51:59] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[16:51:59] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[16:51:59] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[16:51:59] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[16:51:59] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[16:51:59] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[16:51:59] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[16:51:59] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[17:27:36] [INFO] INSERT INTO pregunta (
+        enunciado,
+        respuesta_a,
+        respuesta_b,
+        respuesta_c,
+        respuesta_d,
+        respuesta_correcta,
+        anime_id,
+        categoria_id,
+        tipo_pregunta,
+        recurso,
+        dificultad,
+        esta_activa,
+        estado_revision
+    ) VALUES (
+        :enunciado,
+        :respuesta_a,
+        :respuesta_b,
+        :respuesta_c,
+        :respuesta_d,
+        :respuesta_correcta,
+        :anime_id,
+        :categoria_id,
+        :tipo_pregunta,
+        :recurso,
+        :dificultad,
+        0,
+        'Aprobada'
+    )
+[17:27:36] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:27:36] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[17:27:36] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[17:27:36] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[17:27:36] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:27:36] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[17:27:36] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[17:27:36] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:27:36] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[17:33:28] [INFO] INSERT INTO pregunta (
+        enunciado,
+        respuesta_a,
+        respuesta_b,
+        respuesta_c,
+        respuesta_d,
+        respuesta_correcta,
+        anime_id,
+        categoria_id,
+        tipo_pregunta,
+        recurso,
+        dificultad,
+        esta_activa,
+        estado_revision
+    ) VALUES (
+        :enunciado,
+        :respuesta_a,
+        :respuesta_b,
+        :respuesta_c,
+        :respuesta_d,
+        :respuesta_correcta,
+        :anime_id,
+        :categoria_id,
+        :tipo_pregunta,
+        :recurso,
+        :dificultad,
+        1,
+        'Aprobada'
+    )
+[17:33:28] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:33:28] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[17:33:28] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[17:33:28] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[17:33:28] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:33:28] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[17:33:28] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[17:33:28] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:33:28] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[17:33:36] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.tipo_pregunta,
+                p.estado_revision,
+                p.recurso,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[17:33:36] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[17:33:36] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:33:46] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:33:46] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[17:33:46] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[17:33:46] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[17:33:46] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:33:46] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[17:33:46] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[17:33:46] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:33:46] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[17:33:52] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                p.anime_id,
+                p.categoria_id,
+                c.nombre AS categoria,
+                p.dificultad,
+                p.tipo_pregunta,
+                p.estado_revision,
+                p.recurso,
+                p.esta_activa,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.id = :id
+[17:33:52] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[17:33:52] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:33:55] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:33:55] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[17:33:55] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[17:33:55] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[17:33:55] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:33:55] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[17:33:55] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[17:33:55] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:33:55] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[17:46:20] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:46:20] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[17:46:20] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[17:46:20] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[17:46:20] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:46:20] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[17:46:20] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[17:46:20] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:46:20] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[17:46:35] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:46:35] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[17:46:35] [INFO] SELECT id, puntaje, resultado, fecha, numero_partida
+            FROM (
+                SELECT id,
+                       puntaje,
+                       resultado,
+                       DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha,
+                       ROW_NUMBER() OVER (ORDER BY id ASC) AS numero_partida
+                FROM partida
+                WHERE id_usuario = :idUsuario
+            ) AS historial
+            ORDER BY numero_partida DESC
+            LIMIT 5
+[17:46:35] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)
+[17:46:40] [INFO] SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1
+[17:46:40] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[17:48:08] [INFO] SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1
+[17:48:08] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[17:50:21] [INFO] SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1
+[17:50:21] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[17:50:37] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[17:50:37] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:50:37] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[17:50:37] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[17:50:37] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[17:50:37] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:50:37] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[17:50:37] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[17:50:37] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:50:37] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[17:58:55] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[17:58:55] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[17:58:55] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[17:58:55] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[17:58:55] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[17:58:55] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[17:58:55] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[17:58:55] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[17:58:55] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:01:14] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:01:14] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:01:14] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:01:14] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:01:14] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:01:14] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:01:14] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:01:14] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:01:14] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:03:41] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:03:41] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:03:41] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:03:41] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:03:41] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:03:41] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:03:41] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:03:41] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:03:41] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:04:38] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:04:38] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:04:38] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:04:38] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:04:38] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:04:38] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:04:38] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:04:38] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:04:38] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:10:44] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:10:44] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:10:44] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:10:44] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:10:44] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:10:44] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:10:44] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:10:44] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:10:44] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:11:58] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:11:58] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:11:58] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:11:58] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:11:58] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:11:58] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:11:58] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:11:58] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:11:58] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:13:45] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:13:45] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:13:45] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:13:45] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:13:45] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:13:45] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:13:45] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:13:45] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:13:45] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:14:07] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[18:14:07] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[18:14:07] [INFO] SELECT id, puntaje, resultado, fecha, numero_partida
+            FROM (
+                SELECT id,
+                       puntaje,
+                       resultado,
+                       DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha,
+                       ROW_NUMBER() OVER (ORDER BY id ASC) AS numero_partida
+                FROM partida
+                WHERE id_usuario = :idUsuario
+            ) AS historial
+            ORDER BY numero_partida DESC
+            LIMIT 5
+[18:14:07] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)
+[18:14:10] [INFO] SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1
+[18:14:10] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[18:14:18] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[18:14:18] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:14:18] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:14:18] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:14:18] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:14:18] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:14:18] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:14:18] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:14:18] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:14:18] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:14:24] [INFO] SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id
+[18:14:24] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+            INNER JOIN categoria c
+                ON p.categoria_id = c.id
+            WHERE p.anime_id = :id
+            AND p.esta_activa = 1
+            AND c.esta_activa = 1
+[18:14:24] [INFO] UPDATE anime
+            SET esta_activo = :activo
+            WHERE id = :id
+[18:14:24] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:14:24] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:14:24] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:14:24] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:14:24] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:14:24] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:14:24] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:14:24] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:14:24] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:14:28] [INFO] SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id
+[18:14:28] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+            INNER JOIN categoria c
+                ON p.categoria_id = c.id
+            WHERE p.anime_id = :id
+            AND p.esta_activa = 1
+            AND c.esta_activa = 1
+[18:14:28] [INFO] UPDATE anime
+            SET esta_activo = :activo
+            WHERE id = :id
+[18:14:28] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:14:28] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:14:28] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:14:28] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:14:28] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:14:28] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:14:28] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:14:28] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:14:28] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:14:39] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[18:14:40] [INFO] SELECT u.nombre_completo,
+            u.username,
+            u.foto_perfil,
+            u.pais,
+            u.ciudad,
+            u.id_rol,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id
+                        AND MONTH(p.created_at) = MONTH(CURRENT_DATE())
+                        AND YEAR(p.created_at) = YEAR(CURRENT_DATE())), 0) AS puntaje_acumulado,
+            COALESCE((SELECT SUM(p.puntaje)
+                      FROM partida p
+                      WHERE p.id_usuario = u.id), 0) AS puntaje_historico,
+            DATE_FORMAT(u.created_at, '%d/%m/%Y') AS miembro_desde
+            FROM usuario u
+            WHERE u.id = :id
+            AND u.esta_activo = 1
+[18:14:40] [INFO] SELECT id, puntaje, resultado, fecha, numero_partida
+            FROM (
+                SELECT id,
+                       puntaje,
+                       resultado,
+                       DATE_FORMAT(created_at, '%d/%m/%Y') AS fecha,
+                       ROW_NUMBER() OVER (ORDER BY id ASC) AS numero_partida
+                FROM partida
+                WHERE id_usuario = :idUsuario
+            ) AS historial
+            ORDER BY numero_partida DESC
+            LIMIT 5
+[18:14:40] [INFO] SELECT COUNT(*) + 1 AS posicion
+            FROM (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes1
+                                   AND YEAR(p.created_at) = :anio1
+                WHERE u.id_rol = 1 AND u.esta_activo = 1
+                GROUP BY u.id, u.username
+            ) r
+            CROSS JOIN (
+                SELECT u.id, u.username, COALESCE(SUM(p.puntaje), 0) AS total
+                FROM usuario u
+                LEFT JOIN partida p ON u.id = p.id_usuario
+                                   AND MONTH(p.created_at) = :mes2
+                                   AND YEAR(p.created_at) = :anio2
+                WHERE u.id = :id
+                GROUP BY u.id, u.username
+            ) yo
+            WHERE r.total > yo.total
+               OR (r.total = yo.total AND r.username < yo.username)
+[18:14:40] [INFO] SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1
+[18:14:40] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[18:14:43] [INFO] SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1
+[18:14:43] [INFO] SELECT COUNT(*) AS total
+            FROM historial_respuesta
+            WHERE usuario_id = :usuarioId
+[18:14:43] [INFO] SELECT fue_correcta
+            FROM historial_respuesta
+            WHERE usuario_id = :usuarioId
+            ORDER BY id DESC
+            LIMIT 15
+[18:14:43] [INFO] 
+        SELECT c.id
+        FROM pregunta p
+
+        INNER JOIN categoria c
+            ON p.categoria_id = c.id AND c.esta_activa = 1
+
+        WHERE p.esta_activa = 1
+
+        AND p.anime_id IN (:anime0)
+
+        
+
+        GROUP BY c.id
+
+        ORDER BY RAND()
+
+        LIMIT 1
+    
+[18:14:43] [INFO] SELECT id 
+                FROM partida 
+                WHERE id_usuario = :usuarioId 
+                AND resultado = 'En curso' 
+                LIMIT 1
+[18:14:43] [INFO] SELECT id, nombre, imagen
+                FROM anime
+                WHERE esta_activo = 1
+                ORDER BY nombre ASC
+[18:14:56] [INFO] SELECT id, username, id_rol, foto_perfil
+        FROM usuario
+        WHERE username = :usuario
+        AND password = :password
+        AND esta_activo = 1
+[18:14:56] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:14:56] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:14:56] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:14:56] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:14:56] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:14:56] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:14:56] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:14:56] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:14:56] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:17:23] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:17:23] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:17:23] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:17:23] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:17:23] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:17:23] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:17:23] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:17:23] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:17:23] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:17:25] [INFO] SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id
+[18:17:25] [INFO] UPDATE anime
+            SET esta_activo = :activo
+            WHERE id = :id
+[18:17:25] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:17:25] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:17:25] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:17:25] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:17:25] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:17:25] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:17:25] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:17:25] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:17:25] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:17:26] [INFO] SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id
+[18:17:26] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+            INNER JOIN categoria c
+                ON p.categoria_id = c.id
+            WHERE p.anime_id = :id
+            AND p.esta_activa = 1
+            AND c.esta_activa = 1
+[18:17:26] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:17:26] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:17:26] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:17:26] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:17:26] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:17:26] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:17:26] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:17:26] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:17:26] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:17:37] [INFO] SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id
+[18:17:37] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+            INNER JOIN categoria c
+                ON p.categoria_id = c.id
+            WHERE p.anime_id = :id
+            AND p.esta_activa = 1
+            AND c.esta_activa = 1
+[18:17:37] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:17:37] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:17:37] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:17:37] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:17:37] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:17:37] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:17:37] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:17:37] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:17:37] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:18:28] [INFO] SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id
+[18:18:28] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+            INNER JOIN categoria c
+                ON p.categoria_id = c.id
+            WHERE p.anime_id = :id
+            AND p.esta_activa = 1
+            AND c.esta_activa = 1
+[18:18:28] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:18:28] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:18:28] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:18:28] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:18:28] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:18:28] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:18:28] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:18:28] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:18:28] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:18:36] [INFO] SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id
+[18:18:36] [INFO] UPDATE anime
+            SET esta_activo = :activo
+            WHERE id = :id
+[18:18:36] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:18:36] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:18:36] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:18:36] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:18:36] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:18:36] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:18:36] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:18:36] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:18:36] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC
+[18:18:38] [INFO] SELECT id, nombre, imagen, esta_activo
+            FROM anime
+            WHERE id = :id
+[18:18:38] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+            INNER JOIN categoria c
+                ON p.categoria_id = c.id
+            WHERE p.anime_id = :id
+            AND p.esta_activa = 1
+            AND c.esta_activa = 1
+[18:18:38] [INFO] UPDATE anime
+            SET esta_activo = :activo
+            WHERE id = :id
+[18:18:38] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                a.nombre AS anime,
+                c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
+                'Sugerida' AS creador
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
+            WHERE p.estado_revision = 'Pendiente'
+            ORDER BY p.id DESC
+[18:18:38] [INFO] SELECT COUNT(*) AS total
+            FROM pregunta p
+             WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+)
+[18:18:38] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                p.esta_activa,
+                p.estado_revision
+            FROM pregunta p
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE p.estado_revision IN (
+    'Aprobada',
+    'Baja por reportes',
+    'Rechazada'
+) ORDER BY p.id DESC
+              LIMIT 10 OFFSET 0
+[18:18:38] [INFO] SELECT id, nombre
+            FROM anime
+            ORDER BY nombre ASC
+[18:18:38] [INFO] SELECT id, nombre
+            FROM categoria
+            WHERE esta_activa = 1
+            ORDER BY nombre ASC
+[18:18:38] [INFO] SELECT c.id, c.nombre, c.descripcion, c.esta_activa,
+            (SELECT COUNT(*) FROM pregunta p WHERE p.categoria_id = c.id) AS cantidad
+            FROM categoria c ORDER BY c.nombre
+[18:18:38] [INFO] SELECT a.id, a.nombre, a.imagen, a.esta_activo,
+            (SELECT COUNT(*)
+             FROM pregunta p
+             INNER JOIN categoria c ON p.categoria_id = c.id
+             WHERE p.anime_id = a.id
+             AND p.esta_activa = 1
+             AND c.esta_activa = 1) AS cantidad
+            FROM anime a
+            ORDER BY a.nombre
+[18:18:38] [INFO] SELECT 
+                r.id AS reporte_id,
+                r.motivo,
+                r.descripcion AS comentario,
+                r.pregunta_id,
+                p.enunciado AS pregunta_descripcion,
+                c.nombre AS categoria
+            FROM reporte_pregunta r
+            INNER JOIN pregunta p ON r.pregunta_id = p.id
+            LEFT JOIN categoria c ON p.categoria_id = c.id
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id DESC
+[18:18:38] [INFO] SELECT
+                p.id,
+                p.enunciado AS descripcion,
+                c.nombre AS categoria,
+                COUNT(DISTINCT r.usuario_id) AS cantidad_reportes
+            FROM pregunta p
+            LEFT JOIN categoria c
+                ON p.categoria_id = c.id
+            LEFT JOIN reporte_pregunta r
+                ON r.pregunta_id = p.id
+                AND r.estado = 'Pendiente'
+            WHERE p.estado_revision = 'Baja por reportes'
+              AND p.esta_activa = 0
+            GROUP BY p.id, p.enunciado, c.nombre
+            ORDER BY cantidad_reportes DESC

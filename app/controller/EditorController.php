@@ -54,6 +54,26 @@ class EditorController
 
         $pendientes = $this->model->getPreguntasPendientes();
 
+        foreach ($pendientes as &$pregunta) {
+
+            $tipo = $pregunta['tipo_pregunta'];
+
+            $pregunta['esImagen'] = in_array(
+                    $tipo,
+                    ['imagen', 'silueta', 'objeto', 'recompensa'],
+                    true
+                ) && !empty($pregunta['recurso']);
+
+            $pregunta['esAudio'] = $tipo === 'audio'
+                && !empty($pregunta['recurso']);
+
+            $pregunta['recursoUrl'] = !empty($pregunta['recurso'])
+                ? '/Preguntados/' . ltrim($pregunta['recurso'], '/')
+                : '';
+        }
+
+        unset($pregunta);
+
         $pagina = max(1, (int)($_GET['pagina'] ?? 1));
 
         $filtros = $_SESSION['filtros_editor'] ?? [];
@@ -181,6 +201,10 @@ class EditorController
 
         unset($_SESSION['mensaje_anime']);
 
+        $mensajePregunta = $_SESSION['mensaje_pregunta'] ?? '';
+
+        unset($_SESSION['mensaje_pregunta']);
+
         $datos = [
             'animesAdmin' => $animesAdmin,
             'csrfAnime' => $_SESSION['csrf_anime'],
@@ -212,6 +236,8 @@ class EditorController
             'paginaAnteriorUrl' => $paginaAnteriorUrl,
             'paginaSiguienteUrl' => $paginaSiguienteUrl,
             'preguntas_baja_reportes' => $this->model->getPreguntasBajaPorReportes(),
+            'mensajePregunta' => $mensajePregunta,
+
 
         ];
 
@@ -274,6 +300,10 @@ class EditorController
         $opciones = $_POST['opciones'] ?? [];
         $correcta = isset($_POST['correcta']) ? (int)$_POST['correcta'] : -1;
 
+        $tipoPregunta = $_POST['tipo_pregunta'] ?? 'texto';
+        $archivo = $_FILES['recurso'] ?? null;
+        $recursoRuta = null;
+
         $dificultadesValidas = ['facil', 'media', 'dificil'];
 
         if (
@@ -292,7 +322,9 @@ class EditorController
                 $categoriaId,
                 $dificultad,
                 $opciones,
-                $correcta
+                $correcta,
+                $tipoPregunta,
+                $recursoRuta
             );
         }
 
@@ -676,9 +708,10 @@ class EditorController
             $cantidad = $this->model
                 ->contarPreguntasActivasPorAnime($id);
 
-            if ($cantidad === 0) {
+            if ($cantidad < 30) {
                 $_SESSION['mensaje_anime'] =
-                    'El anime no tiene preguntas disponibles.';
+                    'El anime necesita un mínimo de 30 preguntas disponibles. '
+                    . 'Actualmente tiene ' . $cantidad . '.';
 
                 Redirect::to('/editor#animes');
                 return;
@@ -697,6 +730,74 @@ class EditorController
         Redirect::to('/editor#animes');
     }
 
+    private function subirRecursoPregunta($archivo, $tipoPregunta)
+    {
+        if (!$archivo || $archivo['error'] !== UPLOAD_ERR_OK) {
+            throw new \RuntimeException(
+                'Debés seleccionar un archivo válido.'
+            );
+        }
+
+        if ($archivo['size'] > 5 * 1024 * 1024) {
+            throw new \RuntimeException(
+                'El archivo no puede superar los 5 MB.'
+            );
+        }
+
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mime = $finfo->file($archivo['tmp_name']);
+
+        if ($tipoPregunta === 'imagen') {
+
+            $formatosPermitidos = [
+                'image/jpeg' => 'jpg',
+                'image/png' => 'png',
+                'image/webp' => 'webp'
+            ];
+
+            $directorio = 'public/img-preguntas/';
+            $prefijo = 'preg_img_';
+
+        } else {
+
+            $formatosPermitidos = [
+                'audio/mpeg' => 'mp3',
+                'audio/wav' => 'wav',
+                'audio/x-wav' => 'wav',
+                'audio/ogg' => 'ogg',
+                'application/ogg' => 'ogg'
+            ];
+
+            $directorio = 'public/audio/';
+            $prefijo = 'preg_audio_';
+        }
+
+        if (!isset($formatosPermitidos[$mime])) {
+            throw new \RuntimeException(
+                'El formato del archivo no está permitido.'
+            );
+        }
+
+        $extension = $formatosPermitidos[$mime];
+
+        $nombreArchivo = uniqid($prefijo, true)
+            . '.' . $extension;
+
+        $rutaRelativa = $directorio . $nombreArchivo;
+
+        $rutaAbsoluta = __DIR__ . '/../../' . $rutaRelativa;
+
+        if (!move_uploaded_file(
+            $archivo['tmp_name'],
+            $rutaAbsoluta
+        )) {
+            throw new \RuntimeException(
+                'No se pudo guardar el archivo.'
+            );
+        }
+
+        return $rutaRelativa;
+    }
 
 
 }

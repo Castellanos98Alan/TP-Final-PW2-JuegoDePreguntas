@@ -11,13 +11,22 @@ class EditorModel
     }
     public function getPreguntasPendientes()
     {
-        $sql = "SELECT 
+        $sql = "SELECT
                 p.id,
                 p.enunciado AS descripcion,
+                a.nombre AS anime,
                 c.nombre AS categoria,
+                p.respuesta_a,
+                p.respuesta_b,
+                p.respuesta_c,
+                p.respuesta_d,
+                p.respuesta_correcta,
+                p.tipo_pregunta,
+                p.recurso,
                 'Sugerida' AS creador
             FROM pregunta p
             LEFT JOIN categoria c ON p.categoria_id = c.id
+            LEFT JOIN anime a ON p.anime_id = a.id
             WHERE p.estado_revision = 'Pendiente'
             ORDER BY p.id DESC";
 
@@ -296,11 +305,14 @@ class EditorModel
         $categoriaId,
         $dificultad,
         array $opciones,
-        $correctaIndice
+        $correctaIndice,
+        $tipoPregunta = 'texto',
+        $recurso = null
     ) {
         $respuestas = array_values($opciones);
 
-        if (count($respuestas) !== 4 || !isset($respuestas[$correctaIndice])) {
+        if (count($respuestas) !== 4 ||
+            !isset($respuestas[$correctaIndice])) {
             return false;
         }
 
@@ -308,32 +320,34 @@ class EditorModel
         $respuestaCorrecta = $letras[$correctaIndice];
 
         $sql = "INSERT INTO pregunta (
-            enunciado,
-            respuesta_a,
-            respuesta_b,
-            respuesta_c,
-            respuesta_d,
-            respuesta_correcta,
-            anime_id,
-            categoria_id,
-            tipo_pregunta,
-            dificultad,
-            esta_activa,
-            estado_revision
-        ) VALUES (
-            :enunciado,
-            :respuesta_a,
-            :respuesta_b,
-            :respuesta_c,
-            :respuesta_d,
-            :respuesta_correcta,
-            :anime_id,
-            :categoria_id,
-            'texto',
-            :dificultad,
-            0,
-            'Pendiente'
-        )";
+        enunciado,
+        respuesta_a,
+        respuesta_b,
+        respuesta_c,
+        respuesta_d,
+        respuesta_correcta,
+        anime_id,
+        categoria_id,
+        tipo_pregunta,
+        recurso,
+        dificultad,
+        esta_activa,
+        estado_revision
+    ) VALUES (
+        :enunciado,
+        :respuesta_a,
+        :respuesta_b,
+        :respuesta_c,
+        :respuesta_d,
+        :respuesta_correcta,
+        :anime_id,
+        :categoria_id,
+        :tipo_pregunta,
+        :recurso,
+        :dificultad,
+        1,
+        'Aprobada'
+    )";
 
         return $this->database->execute($sql, [
             'enunciado' => $descripcion,
@@ -344,7 +358,10 @@ class EditorModel
             'respuesta_correcta' => $respuestaCorrecta,
             'anime_id' => $animeId,
             'categoria_id' => $categoriaId,
-            'dificultad' => $dificultad
+            'tipo_pregunta' => $tipoPregunta,
+            'recurso' => $recurso,
+            'dificultad' => $dificultad,
+
         ]);
     }
 
