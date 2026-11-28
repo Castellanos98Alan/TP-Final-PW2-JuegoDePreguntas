@@ -3913,5 +3913,344 @@ VALUES
     ((SELECT id FROM usuario WHERE username = 'facu6'),  15, 'Perdida', '2026-12-26 20:00:00');
 
 
+-- PREGUNTAS DE DEMON SLAYER
+
+USE preguntados2;
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad,
+    esta_activa,
+    estado_revision
+) VALUES
+
+-- ==========================================
+-- 10 PREGUNTAS FÁCILES
+-- ==========================================
+
+('¿Cuál es el apellido de Tanjiro?',
+ 'Agatsuma', 'Kamado', 'Hashibira', 'Tomioka',
+ 'B', 6, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Cómo se llama la hermana de Tanjiro?',
+ 'Kanao', 'Shinobu', 'Mitsuri', 'Nezuko',
+ 'D', 6, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Qué personaje utiliza una máscara de jabalí?',
+ 'Inosuke', 'Zenitsu', 'Genya', 'Tanjiro',
+ 'A', 6, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Quién es el principal antagonista de Demon Slayer?',
+ 'Akaza', 'Rui', 'Muzan Kibutsuji', 'Enmu',
+ 'C', 6, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Qué respiración utiliza principalmente Zenitsu?',
+ 'Respiración del Agua', 'Respiración del Trueno',
+ 'Respiración del Viento', 'Respiración de la Bestia',
+ 'B', 6, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Qué objeto lleva Nezuko en la boca?',
+ 'Un trozo de bambú', 'Una cuerda', 'Una piedra', 'Una venda',
+ 'A', 6, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Quién es el Pilar de la Llama?',
+ 'Giyu Tomioka', 'Tengen Uzui', 'Obanai Iguro', 'Kyojuro Rengoku',
+ 'D', 6, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Qué respiración desarrolló Inosuke?',
+ 'Respiración de la Niebla', 'Respiración del Amor',
+ 'Respiración de la Bestia', 'Respiración del Sonido',
+ 'C', 6, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿En qué se convierte Nezuko al comienzo de la historia?',
+ 'En un demonio', 'En un Pilar', 'En una espada', 'En un espíritu',
+ 'A', 6, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Qué sentido tiene especialmente desarrollado Tanjiro?',
+ 'La vista', 'El olfato', 'El oído', 'El gusto',
+ 'B', 6, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
 
 
+-- ==========================================
+-- 10 PREGUNTAS MEDIAS
+-- ==========================================
+
+('¿Quién entrenó a Tanjiro antes de la Selección Final?',
+ 'Jigoro Kuwajima', 'Giyu Tomioka',
+ 'Sakonji Urokodaki', 'Kagaya Ubuyashiki',
+ 'C', 6, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿De qué color es la primera espada Nichirin de Tanjiro?',
+ 'Negro', 'Rojo', 'Azul', 'Verde',
+ 'A', 6, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Qué posición ocupa Akaza entre las Lunas Superiores?',
+ 'Primera', 'Segunda', 'Cuarta', 'Tercera',
+ 'D', 6, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Cómo se llama el hermano menor de Sanemi Shinazugawa?',
+ 'Muichiro', 'Genya', 'Sabito', 'Senjuro',
+ 'B', 6, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Qué demonios comparten la posición de Luna Superior Seis en el Distrito del Entretenimiento?',
+ 'Akaza y Doma', 'Rui y Enmu',
+ 'Daki y Gyutaro', 'Gyokko y Hantengu',
+ 'C', 6, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Qué respiración utiliza Mitsuri Kanroji?',
+ 'Respiración del Amor', 'Respiración de la Flor',
+ 'Respiración del Insecto', 'Respiración de la Serpiente',
+ 'A', 6, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Cómo se llama el herrero que fabrica la primera espada de Tanjiro?',
+ 'Kozo Kanamori', 'Kotetsu', 'Tecchin', 'Hotaru Haganezuka',
+ 'D', 6, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Qué Pilar acompaña a Tanjiro en el Distrito del Entretenimiento?',
+ 'Obanai Iguro', 'Tengen Uzui',
+ 'Gyomei Himejima', 'Sanemi Shinazugawa',
+ 'B', 6, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Quién es la hermana mayor de Shinobu Kocho?',
+ 'Kanao Tsuyuri', 'Aoi Kanzaki', 'Kanae Kocho', 'Tamayo',
+ 'C', 6, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Qué demonio controla los sueños durante el arco del Tren Infinito?',
+ 'Enmu', 'Rui', 'Doma', 'Gyokko',
+ 'A', 6, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+
+-- ==========================================
+-- 10 PREGUNTAS DIFÍCILES
+-- Contienen spoilers del manga.
+-- ==========================================
+
+('¿Cuál era el nombre humano de Kokushibo?',
+ 'Yoriichi Tsugikuni', 'Hakuji', 'Keizo', 'Michikatsu Tsugikuni',
+ 'D', 6, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Cuál era el nombre de Akaza antes de convertirse en demonio?',
+ 'Hakuji', 'Michikatsu', 'Ume', 'Kaigaku',
+ 'A', 6, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Cómo se llamaba la esposa de Yoriichi Tsugikuni?',
+ 'Koyuki', 'Tamayo', 'Uta', 'Amane',
+ 'C', 6, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Qué instrumento utiliza Nakime para controlar el Castillo Infinito?',
+ 'Un shamisen', 'Un biwa', 'Un koto', 'Una flauta',
+ 'B', 6, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Qué emoción representa el clon Sekido de Hantengu?',
+ 'Alegría', 'Tristeza', 'Placer', 'Ira',
+ 'D', 6, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Cómo se llama la undécima postura de la Respiración del Agua creada por Giyu?',
+ 'Calma absoluta', 'Rueda de agua',
+ 'Dragón del cambio', 'Cascada descendente',
+ 'A', 6, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Qué flor buscaba Muzan para superar su debilidad ante el sol?',
+ 'Glicina blanca', 'Loto rojo',
+ 'Lirio araña azul', 'Crisantemo negro',
+ 'C', 6, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Cómo se llamaba el hermano gemelo de Muichiro Tokito?',
+ 'Senjuro', 'Yuichiro', 'Takeo', 'Sabito',
+ 'B', 6, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Cómo se llamaba la prometida de Akaza cuando era humano?',
+ 'Uta', 'Kanae', 'Amane', 'Koyuki',
+ 'D', 6, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Qué tipo de arma utiliza Gyomei Himejima?',
+ 'Un hacha y una maza unidos por una cadena',
+ 'Dos espadas dentadas',
+ 'Una espada flexible',
+ 'Una lanza de doble filo',
+ 'A', 6, 1, 'texto', NULL, 'dificil', 1, 'Aprobada');
+
+-- PREGUNTAS DE JUJUTSU KAISEN
+
+USE preguntados2;
+
+INSERT INTO pregunta (
+    enunciado,
+    respuesta_a,
+    respuesta_b,
+    respuesta_c,
+    respuesta_d,
+    respuesta_correcta,
+    anime_id,
+    categoria_id,
+    tipo_pregunta,
+    recurso,
+    dificultad,
+    esta_activa,
+    estado_revision
+) VALUES
+
+-- ==========================================
+-- 10 PREGUNTAS FÁCILES
+-- ==========================================
+
+('¿Cómo se llama el protagonista de Jujutsu Kaisen?',
+ 'Megumi Fushiguro', 'Yuji Itadori',
+ 'Yuta Okkotsu', 'Toge Inumaki',
+ 'B', 5, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Qué objeto consume Yuji al comienzo de la historia?',
+ 'Una espada maldita', 'Un talismán',
+ 'Un ojo maldito', 'Un dedo de Sukuna',
+ 'D', 5, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Quién es conocido como el Rey de las Maldiciones?',
+ 'Ryomen Sukuna', 'Mahito', 'Jogo', 'Suguru Geto',
+ 'A', 5, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Qué profesor suele llevar los ojos cubiertos?',
+ 'Kento Nanami', 'Masamichi Yaga',
+ 'Satoru Gojo', 'Atsuya Kusakabe',
+ 'C', 5, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Qué herramientas utiliza principalmente Nobara?',
+ 'Una katana y una lanza', 'Un martillo y clavos',
+ 'Un arco y flechas', 'Una cadena y un cuchillo',
+ 'B', 5, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Qué apariencia tiene Panda?',
+ 'Un oso panda', 'Un tigre', 'Un lobo', 'Un gorila',
+ 'A', 5, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Cuántos dedos de Sukuna existen originalmente?',
+ '5', '10', '15', '20',
+ 'D', 5, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Quién utiliza la Técnica de las Diez Sombras?',
+ 'Yuji Itadori', 'Aoi Todo',
+ 'Megumi Fushiguro', 'Kento Nanami',
+ 'C', 5, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Cuál es el apellido de Nobara?',
+ 'Kugisaki', 'Zenin', 'Ieiri', 'Miwa',
+ 'A', 5, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+('¿Quién es el protagonista de Jujutsu Kaisen 0?',
+ 'Satoru Gojo', 'Yuta Okkotsu',
+ 'Yuji Itadori', 'Suguru Geto',
+ 'B', 5, 1, 'texto', NULL, 'facil', 1, 'Aprobada'),
+
+
+-- ==========================================
+-- 10 PREGUNTAS MEDIAS
+-- ==========================================
+
+('¿Cómo se llama la técnica innata de Aoi Todo?',
+ 'Black Flash', 'Infinity',
+ 'Boogie Woogie', 'Divergent Fist',
+ 'C', 5, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Qué proporción utiliza la técnica maldita de Nanami?',
+ '7:3', '5:5', '8:2', '6:4',
+ 'A', 5, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Quién es el padre de Megumi Fushiguro?',
+ 'Suguru Geto', 'Naobito Zenin',
+ 'Kento Nanami', 'Toji Fushiguro',
+ 'D', 5, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Qué técnica utiliza Toge Inumaki?',
+ 'Manipulación de sangre', 'Discurso maldito',
+ 'Manipulación de sombras', 'Manipulación de almas',
+ 'B', 5, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Cómo se llama la hermana gemela de Maki Zenin?',
+ 'Kasumi', 'Shoko', 'Mai', 'Utahime',
+ 'C', 5, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Quién creó a Panda?',
+ 'Masamichi Yaga', 'Satoru Gojo',
+ 'Yoshinobu Gakuganji', 'Suguru Geto',
+ 'A', 5, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Qué personaje utiliza la técnica de Transfiguración Ociosa?',
+ 'Jogo', 'Hanami', 'Dagon', 'Mahito',
+ 'D', 5, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Cómo se llama la amiga de la infancia de Yuta Okkotsu?',
+ 'Riko Amanai', 'Rika Orimoto',
+ 'Tsumiki Fushiguro', 'Maki Zenin',
+ 'B', 5, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Qué técnica maldita utiliza Suguru Geto?',
+ 'Manipulación de sangre', 'Construcción',
+ 'Manipulación de espíritus malditos', 'Discurso maldito',
+ 'C', 5, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+('¿Cuál era el nombre real de Ultimate Mechamaru?',
+ 'Kokichi Muta', 'Takuma Ino',
+ 'Junpei Yoshino', 'Kiyotaka Ijichi',
+ 'A', 5, 1, 'texto', NULL, 'media', 1, 'Aprobada'),
+
+
+-- ==========================================
+-- 10 PREGUNTAS DIFÍCILES
+-- Contienen spoilers del manga.
+-- ==========================================
+
+('¿Cuánto dura la energía maldita ilimitada de Hakari después de conseguir un premio mayor?',
+ '3 minutos y 30 segundos',
+ '5 minutos y 11 segundos',
+ '4 minutos exactos',
+ '4 minutos y 11 segundos',
+ 'D', 5, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿A quién pertenecía originalmente la técnica antigravedad utilizada por Kenjaku?',
+ 'Kaori Itadori', 'Yuki Tsukumo',
+ 'Suguru Geto', 'Shoko Ieiri',
+ 'A', 5, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Qué profesión tenía Hiromi Higuruma antes de convertirse en hechicero?',
+ 'Médico', 'Profesor', 'Abogado', 'Policía',
+ 'C', 5, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Cuál es la propiedad especial de la energía maldita de Hajime Kashimo?',
+ 'El calor', 'La electricidad', 'El magnetismo', 'La gravedad',
+ 'B', 5, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Quién utiliza la técnica de manipulación del cielo?',
+ 'Yorozu', 'Uraume', 'Mei Mei', 'Takako Uro',
+ 'D', 5, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Qué propiedad puede añadir Yuki Tsukumo a su cuerpo mediante su técnica?',
+ 'Masa virtual', 'Temperatura',
+ 'Velocidad ilimitada', 'Electricidad',
+ 'A', 5, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Cómo se llama el ataque de energía maldita característico de Ryu Ishigori?',
+ 'Maximum Meteor', 'Hollow Purple',
+ 'Granite Blast', 'Piercing Blood',
+ 'C', 5, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Quién posee una técnica capaz de materializar aquello que considera gracioso?',
+ 'Kinji Hakari', 'Fumihiko Takaba',
+ 'Hiromi Higuruma', 'Hajime Kashimo',
+ 'B', 5, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Cuál es el nombre del shikigami que actúa como juez en el dominio de Higuruma?',
+ 'Mahoraga', 'Garuda', 'Rika', 'Judgeman',
+ 'D', 5, 1, 'texto', NULL, 'dificil', 1, 'Aprobada'),
+
+('¿Qué técnica innata utiliza Yorozu?',
+ 'Construcción', 'Manipulación de sangre',
+ 'Manipulación de hielo', 'Técnica de proyección',
+ 'A', 5, 1, 'texto', NULL, 'dificil', 1, 'Aprobada');
