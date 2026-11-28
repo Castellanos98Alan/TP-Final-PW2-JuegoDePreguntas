@@ -98,17 +98,6 @@
         transform: translateY(-2px);
     }
 
-    .btn-print {
-        background: transparent;
-        color: #F1CD73;
-        border: 1px solid #D4AF55;
-    }
-
-    .btn-print:hover {
-        background: #D4AF55;
-        color: #0A1A33;
-    }
-
     /* Filtros */
 
     .filter-container {
@@ -233,12 +222,6 @@
         .header-bar .filter-actions {
             width: 100%;
             align-items: center;
-        }
-
-        .header-bar .btn-print {
-            width: auto;
-            min-width: 220px;
-            text-align: center;
         }
     }
 
@@ -625,78 +608,6 @@
             max-width: none;
         }
     }
-
-    /* Impresión */
-
-    @media print {
-        @page {
-            size: A4;
-            margin: 12mm;
-        }
-
-        body {
-            background: white !important;
-            color: black !important;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-
-        .admin-container {
-            width: 100%;
-            max-width: none;
-            margin: 0;
-            padding: 10px;
-            box-shadow: none;
-            border: none;
-            background: white !important;
-            color: black !important;
-        }
-
-        .filter-container,
-        .table-filters,
-        .paginacion,
-        .header-bar a,
-        .btn-print {
-            display: none !important;
-        }
-
-        .admin-container h1,
-        .section-title,
-        .chart-card h3 {
-            color: #172B4D !important;
-        }
-
-        .metric-card,
-        .chart-card,
-        .table-container {
-            background: white !important;
-            border: 1px solid #aaa !important;
-            break-inside: avoid;
-        }
-
-        .metric-number,
-        .metric-label,
-        tbody td,
-        thead th {
-            color: black !important;
-        }
-
-        thead th {
-            background: #eeeeee !important;
-        }
-
-        .charts-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .chart-wrapper {
-            height: 220px;
-        }
-
-        tr {
-            break-inside: avoid;
-        }
-    }
 </style>
 
 <div class="admin-container">
@@ -713,11 +624,11 @@
         <span class="tag-user">ADMIN: {{username}}</span>
 
         <div class="filter-actions">
-            <button class="btn-gold btn-print"
-                    type="button"
-                    onclick="window.print()">
-                IMPRIMIR REPORTE
-            </button>
+            <a href="admin/descargarPdf?periodo={{periodo}}"
+               class="btn-gold"
+               target="_blank">
+                DESCARGAR REPORTE (PDF)
+            </a>
 
             <a href="lobby" class="btn-gold">
                 ← VOLVER AL LOBBY
@@ -888,7 +799,7 @@
             </select>
         </div>
 
-        <a href="admin?periodo={{periodo}}#balance-preguntas" class="btn-gold btn-print">
+        <a href="admin?periodo={{periodo}}#balance-preguntas" class="btn-gold">
         LIMPIAR
         </a>
 
